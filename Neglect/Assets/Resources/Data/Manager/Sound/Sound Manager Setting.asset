@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c967f60d31fb4bf88afb693c1b5141e0, type: 3}
+  m_Name: Sound Manager Setting
+  m_EditorClassIdentifier: 
+  mixer: {fileID: 24100000, guid: 5e495dbe377bc944db5acb4e48371758, type: 2}
+  audioCanvasPrefab: {fileID: 4534640340717875209, guid: 2cabedb831e2d3e4fb98bfc7a6342317, type: 3}
+  groupBlockPrefab: {fileID: 2245163622122601867, guid: b230ddc759af47747ab069194053cbea, type: 3}
+  groupParentName: Group Grid
