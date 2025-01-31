@@ -70,3 +70,41 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+
+###
+# Unity generated files
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+
+# Visual Studio / Rider generated files
+.vscode/
+.vs/
+.idea/
+*.sln
+*.csproj
+*.pidb
+*.suo
+*.user
+*.unityproj
+*.booproj
+*.swp
+*.tmp
+*.userprefs
+
+# ScriptableObject settings
+*.so
+
+# Crashlytics generated files
+crashlytics-build.properties
+
+# Unity Smart Merge
+*.merge.txt
+
+# Gradle cache
+.gradle/
