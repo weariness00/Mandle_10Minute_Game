@@ -11,13 +11,12 @@ namespace Manager
     {
         public SoundManagerSetting setting;
 
-        private const string mixerPath = "Data/Manager/Sound/Sound Manager Setting";
         private static readonly string Volume = "Volume"; 
-
+ 
         public void Awake()
         {
-            setting = Resources.Load<SoundManagerSetting>(mixerPath);
-            Debug.Assert(setting != null, $"Resources/{mixerPath}\n경로에 Sound Manager Setting 스크립터블 오브젝트가 존재하지 않습니다.");
+            setting = SoundManagerSettingsProviderHelper.setting;
+            Debug.Assert(setting != null, $"Sound Manager Setting 스크립터블 오브젝트가 존재하지 않습니다.");
             if(ReferenceEquals(setting, null)) return;
             var audioUIDictionary = setting.InstantiateGroupBlock();
             
