@@ -261,9 +261,9 @@ MonoBehaviour:
         m_Calls: []
   DebugActive: 0
   FeedbacksList:
-  - rid: 4130654134232678510
-  - rid: 4130654134232678511
-  - rid: 4130654134232678512
+  - rid: 4130654134232678528
+  - rid: 4130654134232678529
+  - rid: 4130654134232678530
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   StopFeedbacksOnDisable: 0
@@ -271,11 +271,11 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 4130654134232678510
+    - rid: 4130654134232678528
       type: {class: MMF_Fade, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
       data:
         Active: 1
-        UniqueID: -562033181
+        UniqueID: -1160759978
         Label: Fade
         ChannelMode: 0
         Channel: 0
@@ -383,11 +383,11 @@ MonoBehaviour:
         TargetPosition: {x: 0, y: 0, z: 0}
         PositionOffset: {x: 0, y: 0, z: 0}
         TargetFader: {fileID: 1505376229}
-    - rid: 4130654134232678511
+    - rid: 4130654134232678529
       type: {class: MMF_HoldingPause, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
       data:
         Active: 1
-        UniqueID: 1959549192
+        UniqueID: -497346693
         Label: Holding Pause
         ChannelMode: 0
         Channel: 0
@@ -465,11 +465,11 @@ MonoBehaviour:
         ScriptDriven: 0
         AutoResume: 0
         AutoResumeAfter: 0.25
-    - rid: 4130654134232678512
+    - rid: 4130654134232678530
       type: {class: MMF_Fade, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
       data:
         Active: 1
-        UniqueID: -2059659765
+        UniqueID: 1806482966
         Label: Fade
         ChannelMode: 0
         Channel: 0
@@ -1757,7 +1757,7 @@ MonoBehaviour:
   AutoInitialization: 1
   SafeMode: 3
   Direction: 0
-  AutoChangeDirectionOnEnd: 1
+  AutoChangeDirectionOnEnd: 0
   AutoPlayOnStart: 0
   AutoPlayOnEnable: 0
   ForceTimescaleMode: 0
@@ -1839,12 +1839,12 @@ MonoBehaviour:
         m_Calls: []
   DebugActive: 0
   FeedbacksList:
-  - rid: 4130654134232678513
-  - rid: 4130654134232678514
-  - rid: 4130654134232678515
-  - rid: 4130654134232678516
-  - rid: 4130654134232678517
-  - rid: 4130654134232678518
+  - rid: 4130654134232678531
+  - rid: 4130654134232678532
+  - rid: 4130654134232678533
+  - rid: 4130654134232678534
+  - rid: 4130654134232678535
+  - rid: 4130654134232678536
   KeepPlayModeChanges: 0
   PerformanceMode: 1
   StopFeedbacksOnDisable: 0
@@ -1852,11 +1852,11 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 4130654134232678513
+    - rid: 4130654134232678531
       type: {class: MMF_Position, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
       data:
         Active: 1
-        UniqueID: 7057837
+        UniqueID: -1448517145
         Label: Position
         ChannelMode: 0
         Channel: 0
@@ -1873,7 +1873,7 @@ MonoBehaviour:
           NumberOfRepeats: 0
           RepeatForever: 0
           DelayBetweenRepeats: 1
-          PlayCount: 8
+          PlayCount: 2
           LimitPlayCount: 0
           MaxPlayCount: 3
           SetPlayCountToZeroOnReset: 0
@@ -2135,11 +2135,11 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-    - rid: 4130654134232678514
+    - rid: 4130654134232678532
       type: {class: MMF_SquashAndStretch, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
       data:
         Active: 1
-        UniqueID: -217098134
+        UniqueID: -1545058627
         Label: Squash and Stretch
         ChannelMode: 0
         Channel: 0
@@ -2156,7 +2156,7 @@ MonoBehaviour:
           NumberOfRepeats: 0
           RepeatForever: 0
           DelayBetweenRepeats: 1
-          PlayCount: 8
+          PlayCount: 2
           LimitPlayCount: 0
           MaxPlayCount: 3
           SetPlayCountToZeroOnReset: 0
@@ -2252,11 +2252,11 @@ MonoBehaviour:
         AllowAdditivePlays: 0
         DetermineScaleOnPlay: 0
         DestinationScale: 32
-    - rid: 4130654134232678515
+    - rid: 4130654134232678533
       type: {class: MMF_HoldingPause, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
       data:
         Active: 1
-        UniqueID: -878709166
+        UniqueID: 1863585196
         Label: Holding Pause
         ChannelMode: 0
         Channel: 0
@@ -2273,7 +2273,7 @@ MonoBehaviour:
           NumberOfRepeats: 0
           RepeatForever: 0
           DelayBetweenRepeats: 1
-          PlayCount: 8
+          PlayCount: 2
           LimitPlayCount: 0
           MaxPlayCount: 3
           SetPlayCountToZeroOnReset: 0
@@ -2334,11 +2334,11 @@ MonoBehaviour:
         ScriptDriven: 0
         AutoResume: 0
         AutoResumeAfter: 0.25
-    - rid: 4130654134232678516
+    - rid: 4130654134232678534
       type: {class: MMF_Position, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
       data:
         Active: 1
-        UniqueID: 807944013
+        UniqueID: -51883521
         Label: Position
         ChannelMode: 0
         Channel: 0
@@ -2355,7 +2355,7 @@ MonoBehaviour:
           NumberOfRepeats: 0
           RepeatForever: 0
           DelayBetweenRepeats: 1
-          PlayCount: 8
+          PlayCount: 2
           LimitPlayCount: 0
           MaxPlayCount: 3
           SetPlayCountToZeroOnReset: 0
@@ -2617,11 +2617,11 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-    - rid: 4130654134232678517
+    - rid: 4130654134232678535
       type: {class: MMF_HoldingPause, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
       data:
         Active: 1
-        UniqueID: 1826008673
+        UniqueID: -1506583764
         Label: Holding Pause
         ChannelMode: 0
         Channel: 0
@@ -2638,7 +2638,7 @@ MonoBehaviour:
           NumberOfRepeats: 0
           RepeatForever: 0
           DelayBetweenRepeats: 1
-          PlayCount: 8
+          PlayCount: 2
           LimitPlayCount: 0
           MaxPlayCount: 3
           SetPlayCountToZeroOnReset: 0
@@ -2699,11 +2699,11 @@ MonoBehaviour:
         ScriptDriven: 0
         AutoResume: 0
         AutoResumeAfter: 0.25
-    - rid: 4130654134232678518
+    - rid: 4130654134232678536
       type: {class: MMF_SquashAndStretch, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
       data:
         Active: 1
-        UniqueID: -1313342796
+        UniqueID: -1621544667
         Label: Squash and Stretch
         ChannelMode: 0
         Channel: 0
@@ -2720,7 +2720,7 @@ MonoBehaviour:
           NumberOfRepeats: 0
           RepeatForever: 0
           DelayBetweenRepeats: 1
-          PlayCount: 8
+          PlayCount: 2
           LimitPlayCount: 0
           MaxPlayCount: 3
           SetPlayCountToZeroOnReset: 0
