@@ -8,7 +8,7 @@ namespace GamePlay
     {
         private void Awake()
         {
-            var soundManager = SoundManager.Instance;
+            var resolutionManager = ResolutionManager.Instance;
         }
     }
 }
