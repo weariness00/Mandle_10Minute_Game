@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Quest
+namespace Quest.Container
 {
     /// <summary>
     /// 예시용

@@ -39,5 +39,6 @@ namespace Quest
     {
         None,
         GameRank, // 게임 랭크
+        Notification, // 알림
     }
 }
