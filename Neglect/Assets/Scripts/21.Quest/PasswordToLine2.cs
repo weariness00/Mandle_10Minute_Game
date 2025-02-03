@@ -1,26 +1,26 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PasswordToLine : MonoBehaviour
+public class PasswordToLine2 : MonoBehaviour
 {
     // Start is called before the first frame update
-    [Tooltip("ÆĞ½º¿öµå Á¡µé")]
-    public List<GameObject> PasswordPointers = new List<GameObject>(); // ÆĞ½º¿öµå Á¡µé
+    [Tooltip("íŒ¨ìŠ¤ì›Œë“œ ì ë“¤")]
+    public List<GameObject> PasswordPointers = new List<GameObject>(); // íŒ¨ìŠ¤ì›Œë“œ ì ë“¤
 
-    [Tooltip("ÆĞ½º¿öµå ¶óÀÎ")]
+    [Tooltip("íŒ¨ìŠ¤ì›Œë“œ ë¼ì¸")]
     public LineRenderer[] PasswordLine = new LineRenderer[10];
 
-    private List<int> InputPassword = new List<int>(); //ÇöÀç ÀÔ·Â¹ŞÀº ÆĞ½º¿öµå
+    private List<int> InputPassword = new List<int>(); //í˜„ì¬ ì…ë ¥ë°›ì€ íŒ¨ìŠ¤ì›Œë“œ
 
-    [Tooltip("µå·¡±× Å½Áö ¹üÀ§")]
-    public double DetectedRange = 0.3f; // Á¡°ú ¸¶¿ì½º»çÀÌ Å½Áö ¹üÀ§
+    [Tooltip("ë“œë˜ê·¸ íƒì§€ ë²”ìœ„")]
+    public double DetectedRange = 0.3f; // ì ê³¼ ë§ˆìš°ìŠ¤ì‚¬ì´ íƒì§€ ë²”ìœ„
 
-    private bool IsCrack = false; // ÆĞ½º¿öµå Çª´Â ÁßÀÎÁö 
+    private bool IsCrack = false; // íŒ¨ìŠ¤ì›Œë“œ í‘¸ëŠ” ì¤‘ì¸ì§€ 
 
-    [Tooltip("Á¤´ä ÆĞ½º¿öµå")]
+    [Tooltip("ì •ë‹µ íŒ¨ìŠ¤ì›Œë“œ")]
     public List<int> AnswerPassword;
 
 
@@ -81,7 +81,7 @@ public class PasswordToLine : MonoBehaviour
         if (Mouse.current.leftButton.wasReleasedThisFrame)
         {
             IsCrack = false;
-            Debug.Log("ºñ¹Ğ¹øÈ£ Ã¼Å© »óÅÂ :" + PasswordCheck());
+            Debug.Log("ë¹„ë°€ë²ˆí˜¸ ì²´í¬ ìƒíƒœ :" + PasswordCheck());
             InputPassword.Clear();
             LineClear();
         }
@@ -93,8 +93,8 @@ public class PasswordToLine : MonoBehaviour
         {
             PasswordLine[i].positionCount = 0;
         }
-    }  //¶óÀÎ Å¬¸®¾î
-    public bool PasswordCheck()  //ÀÔ·Â ºñ¹Ğ¹øÈ£¶û Á¤´ä ºñ¹Ğ¹øÈ£¶û ºñ±³
+    }  //ë¼ì¸ í´ë¦¬ì–´
+    public bool PasswordCheck()  //ì…ë ¥ ë¹„ë°€ë²ˆí˜¸ë‘ ì •ë‹µ ë¹„ë°€ë²ˆí˜¸ë‘ ë¹„êµ
     {
         bool flag = true;
         if (AnswerPassword.Count != InputPassword.Count)
@@ -122,8 +122,8 @@ public class PasswordToLine : MonoBehaviour
             return true;
         }
         return false;
-    } // ¼± ÀÕ±â ½ÃÀÛ
-    public int DetectedPoint(Vector3 MousePosition) //°¡Àå °¡±î¿î Á¡ ÀÎµ¦½º ¹İÈ¯ ¾øÀ¸¸é -1
+    } // ì„  ì‡ê¸° ì‹œì‘
+    public int DetectedPoint(Vector3 MousePosition) //ê°€ì¥ ê°€ê¹Œìš´ ì  ì¸ë±ìŠ¤ ë°˜í™˜ ì—†ìœ¼ë©´ -1
     {
         MousePosition.z = 0;        
         float MinDistance = 9999999f;
@@ -131,7 +131,7 @@ public class PasswordToLine : MonoBehaviour
         int ClosePointerIndex = -1;
         for (int i = 0; i < PasswordPointers.Count; i++)
         {
-            if (InputPassword.Contains(i))//ÀÌ¹Ì ÀÔ·ÂµÈ ¼ıÀÚ Á¦¿Ü
+            if (InputPassword.Contains(i))//ì´ë¯¸ ì…ë ¥ëœ ìˆ«ì ì œì™¸
                 continue;
 
             PreDistance = Vector2.Distance(MousePosition, PasswordPointers[i].transform.localPosition);
