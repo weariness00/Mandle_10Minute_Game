@@ -1,6 +1,4 @@
-﻿using System;
-using UniRx;
-using UnityEngine;
+﻿using UnityEngine;
 using Util;
 
 namespace GamePlay.MiniGame

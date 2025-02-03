@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Running Ground
+  - Running Obstacle
+  - Running Score Line
   layers:
   - Default
   - TransparentFX
