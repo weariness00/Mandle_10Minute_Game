@@ -1,0 +1,47 @@
+using UnityEngine;
+
+namespace Util
+{
+    [System.Serializable]
+    public class MinMax<T>
+    {
+        public T Min
+        {
+            get => _min;
+            set => _min = value;
+        }
+
+        public T Max
+        {
+            get => _max;
+            set => _max = value;
+        }
+
+        [SerializeField] private T _min;
+        [SerializeField] private T _max;
+        
+        public MinMax()
+        {
+            _min = default;
+            _max = default;
+        }
+        
+        public MinMax(T min, T max)
+        {
+            _min = min;
+            _max = max;
+        }
+    }
+    
+    public static class MinMaxValueExtension
+    {
+        public static int Length(this MinMax<int> value)
+        {
+            return Mathf.Abs(value.Min) + Mathf.Abs(value.Max);
+        }
+        public static int Length(this MinMax<float> value)
+        {
+            return (int)(Mathf.Abs(value.Min) + Mathf.Abs(value.Max));
+        }
+    }
+}
