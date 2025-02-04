@@ -4,13 +4,12 @@ using System;
 
 namespace Quest.Container
 {
-    public class Quest_SpamMassage : QuestBase
+    public class Quest_Calling : QuestBase
     {
-        public PopUpPad spamPopUp;
+        public PopUpPad callingPopUpPrefab;
         
         public override void OnCompleted()
         {
-            state = QuestState.Completed;
         }
 
         public override void OnError(Exception error)
@@ -24,8 +23,7 @@ namespace Quest.Container
         public override void Play()
         {
             base.Play();
-            var spawnSpam = UIManager.InstantiateFromPhone(spamPopUp);
-            spawnSpam.gameObject.SetActive(true);
+            var popUp = UIManager.InstantiateFromPhone(callingPopUpPrefab);
         }
     }
 }

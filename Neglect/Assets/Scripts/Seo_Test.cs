@@ -8,13 +8,17 @@ namespace SeoTestTestTest
 {
     public class Seo_Test : MonoBehaviour
     {
-        public QuestBase quest;
+        public int questId;
 
         public FlappingGameManager flappingGameManager;
         public TMP_Text scoreText;
         public void Start()
         {
-            if(quest) quest.Play();
+            if (questId != -1)
+            {
+                var quest = QuestManager.QuestList.GetQuestID(questId).Instantiate();
+                quest.Play();
+            }
 
             if (flappingGameManager)
             {

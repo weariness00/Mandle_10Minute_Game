@@ -24,13 +24,19 @@ namespace Util
                 if (componet != null)
                 {
                     _instance = componet;
+                    if(_instance is Singleton<T> s1)
+                        s1.Initialize();
                     return;
                 }
 
                 var singletonObject = new GameObject(typeof(T).Name);
                 _instance = singletonObject.AddComponent<T>();
+                if(_instance is Singleton<T> s)
+                    s.Initialize();
                 DontDestroyOnLoad(_instance.gameObject);
             }
         }
+
+        protected virtual void Initialize() {}
     }
 }
