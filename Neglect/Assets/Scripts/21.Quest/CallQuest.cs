@@ -35,6 +35,7 @@ public class CallQuest : MonoBehaviour
 
     [Header("데이터베이스에서 가져올 정보")]
     [Space]
+    public string Question;
     public string[] replyString;
     public int[] replygage;
 
@@ -65,7 +66,7 @@ public class CallQuest : MonoBehaviour
     {
         ResetObject();
 
-        // 대화 내용 재설정 코드 넣을 것.
+        // 데이터베이스 재설정 코드 넣을 것.
 
         Sequence UiSeq = DOTween.Sequence();
         UiSeq.AppendCallback(() =>
@@ -74,7 +75,9 @@ public class CallQuest : MonoBehaviour
         });
         UiSeq.Append(OtherChat.gameObject.transform.DOLocalMoveY(10f, 0.5f).From().SetRelative(true)).Join(OtherChat.DOFade(0f, 0f)).Join(OtherChat.DOFade(1f, 0.5f));
         UiSeq.AppendCallback(() =>
-        { OtherText.gameObject.SetActive(true); });
+        { OtherText.gameObject.SetActive(true);
+            OtherText.text = Question;
+        });
         // ~ 상대 말풍선 애니메이션
 
 
@@ -100,8 +103,7 @@ public class CallQuest : MonoBehaviour
                 SelectTexts[i].text = replyString[i];
             }
         });
-
-        // 버튼 나오는 애니메이션
+        //~ 버튼 나오는 애니메이션
     }
 
     public void ChoiceBttons(int index) //버튼 클릭시
@@ -133,6 +135,8 @@ public class CallQuest : MonoBehaviour
 
         float PreChatGage = ChatGage;
         ChatGage = (ChatGage + replygage[index] > 100) ? 100 : ChatGage + replygage[index];
+        ChatGage = (ChatGage < 0) ? 0 : ChatGage;
+
         UiSeq.Append(
         DOTween.To(() => PreChatGage, x =>
         {ChatGage = x;gage.SetPosition(1, new Vector3(ChatGage, 0, 0));},ChatGage, 1f ));
