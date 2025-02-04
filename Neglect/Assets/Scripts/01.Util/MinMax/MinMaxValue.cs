@@ -149,6 +149,12 @@ namespace Util
         // Current의 값을 Max로 변경
         public void SetMax() => Current = Max;
 
+        public void SetMax(T value)
+        {
+            _max = value;
+            Current = Max;
+        }
+
         public float MinMaxRandom()
         {
             if (this is MinMaxValue<int> value)

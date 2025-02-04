@@ -6,8 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: "Assets/Scenes/\uC11C\uB3D9\uC6B0.unity"
-    guid: fdde43f22605d5a488d5867b6ce94be6
+    path: Assets/Scenes/Real.unity
+    guid: f044bfbf742e7404b9c243597dbca1f6
+  - enabled: 1
+    path: Assets/Scenes/Flapping Game.unity
+    guid: 87bbd1d2bf89ad547b3074629e1581e2
+  - enabled: 1
+    path: Assets/Scenes/Running Game.unity
+    guid: 8aa8db1bce4d60b4a93ed55dc8cc6e55
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 1733243a1b3c9964fa8c02e29867ed75, type: 2}
-    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 966680d73de680e4cbd9b58d3dc793a6, type: 3}
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 1e73e90dd5618a342a289a080882cc6f, type: 3}

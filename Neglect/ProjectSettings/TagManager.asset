@@ -7,6 +7,9 @@ TagManager:
   - Running Ground
   - Running Obstacle
   - Running Score Line
+  - Flapping Obstacle
+  - Flapping Score Line
+  - Flapping Player
   layers:
   - Default
   - TransparentFX
@@ -17,6 +20,7 @@ TagManager:
   - 
   - 
   - 
+  - Phone
   - 
   - 
   - 
@@ -38,8 +42,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Additional Scene
   m_SortingLayers:
   - name: Default
     uniqueID: 0

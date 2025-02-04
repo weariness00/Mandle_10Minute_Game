@@ -13,32 +13,27 @@ namespace Quest
         [Tooltip("퀘스트 진행 상태")]public QuestState state = QuestState.NotStarted;
 
         protected IDisposable subscription; // 퀘스트 매니저에서 구독하면 자동 할당됨
-        
-        public void Awake()
-        {
 
-        }
-
-        public void Play()
+        public virtual void Play()
         {
             subscription?.Dispose();
             subscription = QuestManager.Instance.Add(this);
             state = QuestState.InProgress;
         }
 
-        public void Stop()
+        public virtual void Stop()
         {
             subscription?.Dispose();
             state = QuestState.Failed;
         }
 
-        public void Pause()
+        public virtual void Pause()
         {
             subscription?.Dispose();
             state = QuestState.Wait;
         }
 
-        public void Complete()
+        public virtual void Complete()
         {
             subscription?.Dispose();
             OnCompleted();
