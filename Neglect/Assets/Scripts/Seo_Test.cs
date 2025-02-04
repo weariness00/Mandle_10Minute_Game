@@ -16,7 +16,7 @@ namespace SeoTestTestTest
         {
             if (questId != -1)
             {
-                var quest = QuestManager.QuestList.GetQuestID(questId).Instantiate();
+                var quest = Instantiate(QuestManager.QuestList.GetQuestID(questId));
                 quest.Play();
             }
 

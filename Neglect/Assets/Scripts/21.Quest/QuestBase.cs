@@ -5,7 +5,9 @@ namespace Quest
 {
     public abstract partial class QuestBase : MonoBehaviour
     {
-        [Tooltip("퀘스트 제목")] public string questTitle;
+        [Tooltip("퀘스트 ID")] public int questID;
+        [Tooltip("퀘스트 제목")] public string questName;
+        [Tooltip("퀘스트 난이도")] public QuestLevel level;
         [Tooltip("퀘스트 타입")] public QuestEvent eventType = QuestEvent.None;
 
         [Space] 
@@ -40,7 +42,7 @@ namespace Quest
         public virtual void Complete()
         {
             subscription?.Dispose();
-            if (nextQuestID != -1) QuestManager.QuestList.GetQuestID(nextQuestID).Instantiate();
+            if (nextQuestID != -1) Instantiate(QuestManager.QuestList.GetQuestID(nextQuestID)).Play();
             OnCompleted();
         }
     }
