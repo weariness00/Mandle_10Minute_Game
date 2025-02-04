@@ -8,7 +8,11 @@ namespace Manager
     {
         public void Awake()
         {
-            InitRunningInput();
+            _running = new();
+            _flapping = new();
+            
+            _running.Init();
+            _flapping.Init();
         }
     }
     
@@ -18,14 +22,32 @@ namespace Manager
         public static Running running => Instance._running;
         public class Running
         {
-            public readonly RunningInput input = new();
+            public RunningInput input;
             public Vector2 MovePosition => input.Player.Move.ReadValue<Vector2>();
             public bool SlidingDown => input.Player.Sliding.ReadValue<float>() > 0f;
+            
+            public void Init()
+            {
+                input = new();
+                input.Enable();
+            }
         }
+    }
 
-        public void InitRunningInput()
+    public partial class InputManager
+    {
+        private Flapping _flapping;
+        public static Flapping flapping => Instance._flapping;
+        public class Flapping
         {
-            _running = new();
+            public FlappingInput input;
+            public bool IsJump => input.Player.Jump.ReadValue<float>() > 0f;
+
+            public void Init()
+            {
+                input = new();
+                input.Enable();
+            }
         }
     }
 }

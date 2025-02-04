@@ -13,6 +13,7 @@ namespace Util
     {
         public bool isStartSpawn = false; // 이 컴포넌트가 생성되자마자 스폰하게 할 것인지
         [Tooltip("Count와 상관없이 계속 스폰 할 건지")] public bool isLoop = false;
+        [Tooltip("생성 잠시 중단")] public bool isPause;
         [Tooltip("스폰이 시작되면 첫 딜레이 없이 바로 스폰할 것인지")] public bool isSpawnImmediate = false;
         [Tooltip("딜레이가 있다면 몇초로 할 것인지")]public float startSpawnDelay = 1f;
         
@@ -35,7 +36,7 @@ namespace Util
     
         public float[] spawnIntervals; // 스폰 간격, 1개일 경우 반복 여러개일 경우 순차적으로 실행
         private int _spawnIntervalCount = -1;
-        private float intervalTime = 0f;
+        private MinMaxValue<float> intervalTimer = new();
     
         public UnityAction<GameObject> SpawnSuccessAction; // 스폰 되면 실행하는 이벤트
         private Coroutine SpawnCoroutine;
@@ -65,12 +66,21 @@ namespace Util
             Stop();
         }
 
-        public void Play() => SpawnCoroutine ??= StartCoroutine(SpawnerEnumerator());
+        public void Play()
+        {
+            isPause = false;
+            SpawnCoroutine ??= StartCoroutine(SpawnerEnumerator());
+        }
 
         public void Stop()
         {
             StopCoroutine(SpawnCoroutine);
             SpawnCoroutine = null;
+        }
+
+        public void Pause()
+        {
+            isPause = true;
         }
 
         private IEnumerator SpawnerEnumerator()
@@ -80,8 +90,16 @@ namespace Util
             
             while (!spawnCount.IsMax || isLoop)
             {
-                Spawn();
-                yield return new WaitForSeconds(intervalTime);
+                if (isPause == false)
+                {
+                    intervalTimer.Current -= Time.deltaTime;
+                    if (intervalTimer.IsMin)
+                    {
+                        Spawn();
+                        intervalTimer.SetMax();
+                    }
+                }
+                yield return null;
             } 
         }
 
@@ -97,11 +115,12 @@ namespace Util
         private void NextObject()
         {
             if (isRandomObject)
-                _SpawnObjectOrderCount = Random.Range(0, spawnObjectOrders.Length);
+                _SpawnObjectOrderCount = spawnObjectOrders.Length == 0 ? Random.Range(0, spawnObjectList.Count) : Random.Range(0, spawnObjectOrders.Length);
             else
                 _SpawnObjectOrderCount++;
 
-            if (spawnObjectOrders.Length - 1 < _SpawnObjectOrderCount) _SpawnObjectOrderCount = 0;
+            if (spawnObjectOrders.Length != 0 && spawnObjectOrders.Length - 1 < _SpawnObjectOrderCount) _SpawnObjectOrderCount = 0;
+            else if (spawnObjectList.Count - 1 < _SpawnObjectOrderCount) _SpawnObjectOrderCount = 0;
             currentSpawnObject = spawnObjectList[_SpawnObjectOrderCount];
         }
     
@@ -134,7 +153,7 @@ namespace Util
         {
             if (spawnIntervals.Length == 0)
             {
-                intervalTime = 1;
+                intervalTimer.SetMax(1);
                 return;
             }
 
@@ -149,7 +168,7 @@ namespace Util
             
             if (spawnIntervals.Length == 0) interval = 0;
             else interval = spawnIntervals[_spawnIntervalCount];
-            intervalTime = interval;
+            intervalTimer.SetMax(interval);
         }
     }
 
