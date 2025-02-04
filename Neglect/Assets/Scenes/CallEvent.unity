@@ -1956,6 +1956,7 @@ MonoBehaviour:
   - {fileID: 1676259958}
   ChatGage: 0
   gage: {fileID: 2003247162}
+  Question: quest1
   replyString:
   - 40
   - 30

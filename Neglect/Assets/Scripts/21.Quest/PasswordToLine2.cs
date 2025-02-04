@@ -1,4 +1,5 @@
-﻿using System.Collections;
+using Manager;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,7 +14,7 @@ public class PasswordToLine2 : MonoBehaviour
     [Tooltip("패스워드 라인")]
     public LineRenderer[] PasswordLine = new LineRenderer[10];
 
-    private List<int> InputPassword = new List<int>(); //현재 입력받은 패스워드
+    public List<int> InputPassword = new List<int>(); //현재 입력받은 패스워드
 
     [Tooltip("드래그 탐지 범위")]
     public double DetectedRange = 0.3f; // 점과 마우스사이 탐지 범위
@@ -75,6 +76,7 @@ public class PasswordToLine2 : MonoBehaviour
             if (AddPointer >= 0)
             {
                 InputPassword.Add(AddPointer);
+                CheckSkipNumber();
             }
         }
 
@@ -85,6 +87,36 @@ public class PasswordToLine2 : MonoBehaviour
             InputPassword.Clear();
             LineClear();
         }
+    }
+    public void CheckSkipNumber()
+    {
+        
+        int BackIndex = InputPassword.Count-1;
+       if (IsSkip())
+        {
+            int storeIndex = InputPassword[BackIndex];
+            int MiddleNumber = (InputPassword[BackIndex] + InputPassword[BackIndex - 1]) / 2;
+            if (!InputPassword.Contains(MiddleNumber))
+            {
+                InputPassword[BackIndex] = (InputPassword[BackIndex] + InputPassword[BackIndex - 1]) / 2;
+                InputPassword.Add(storeIndex);
+            }
+
+        }
+    }
+    public bool IsSkip()
+    {
+        int BackIndex = InputPassword.Count - 1;
+        int A = InputPassword[BackIndex];
+        int B = InputPassword[BackIndex - 1];
+        int[,] C = new int[,] { { 0, 2 }, { 3, 5 }, { 6, 8 }, { 0, 8 }, { 2, 6 } , { 0, 6 }, { 1, 7 }, { 2, 8 } };
+        for(int i = 0; i < 8; i++)
+        {
+            if ((A == C[i, 0] && B == C[i, 1]) || (B == C[i, 0] && A == C[i, 1]))
+                return true;
+        }
+        return false;
+
     }
 
     public void LineClear()
