@@ -57,13 +57,10 @@ namespace GamePlay.MiniGame
         {
             foreach (GameObject rootGameObject in scene.GetRootGameObjects())
             {
-                var i = LayerMask.NameToLayer("Additional Scene");
-                var i2 = LayerMask.GetMask("Additional Scene");
-                var b = i == i2;
-                if (rootGameObject.layer == i)
+                // 미니 게임 씬에 있는 모든 객체는 Phone 레이어를 가지도록 변경
+                foreach (Transform t in rootGameObject.GetComponentsInChildren<Transform>(true))
                 {
-                    rootGameObject.SetActive(false);
-                    break;
+                    t.gameObject.layer = LayerMask.NameToLayer("Phone");
                 }
             }
 

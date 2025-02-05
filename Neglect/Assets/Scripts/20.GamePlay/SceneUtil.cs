@@ -9,8 +9,12 @@ namespace GamePlay
 {
     public class SceneUtil : Singleton<SceneUtil>
     {
+        private static readonly string PhoneScene = "Phone";
         private static readonly string FlappingGameScene = "Flapping Game";
-        
+
+        public static void AddPhone() => SceneManager.LoadScene(PhoneScene, LoadSceneMode.Additive);
+        public static void AsyncAddPhone(Action<Scene> loadedAction = null) =>Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(PhoneScene, loadedAction));
+
         public static bool TryGetFlappingScene(out Scene scene)
         {
             scene = SceneManager.GetSceneByName(FlappingGameScene);
@@ -26,7 +30,23 @@ namespace GamePlay
             {
                 yield return null;
             }
-            loadedAction?.Invoke(SceneManager.GetSceneByName(sceneName));
+            var scene = SceneManager.GetSceneByName(sceneName);
+            UnloadedObject(scene);
+            loadedAction?.Invoke(scene);
+        }
+
+        private void UnloadedObject(Scene scene)
+        {
+            // 씬 로드 되면 일단 미니게임 초기화 하고 멈추기
+            foreach (GameObject rootGameObject in scene.GetRootGameObjects())
+            {
+                // Additional Scene 레이어에 해당하는 오브젝트 비활성화
+                if (rootGameObject.layer == LayerMask.NameToLayer("Additional Scene"))
+                {
+                    rootGameObject.SetActive(false);
+                    break;
+                }
+            }
         }
     }
 }
