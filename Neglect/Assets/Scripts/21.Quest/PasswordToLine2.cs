@@ -25,6 +25,11 @@ public class PasswordToLine2 : MonoBehaviour
     public List<int> AnswerPassword;
 
 
+
+    [Header("패스워드 완료 후 계좌 이체")]
+
+    public GameObject BankTranfer;
+
     public void Init()
     {
         IsCrack = false;
@@ -42,24 +47,15 @@ public class PasswordToLine2 : MonoBehaviour
         for (int i = 1; i < InputPassword.Count; i++)
         {
             PasswordLine[i].positionCount = 2;
-            PasswordLine[i].SetPosition(0, PasswordPointers[InputPassword[i-1]].transform.localPosition);
-            PasswordLine[i].SetPosition(1, PasswordPointers[InputPassword[i]].transform.localPosition);
+            PasswordLine[i].SetPosition(0, PasswordPointers[InputPassword[i-1]].transform.position);
+            PasswordLine[i].SetPosition(1, PasswordPointers[InputPassword[i]].transform.position);
         }
         Vector3 curmouse = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         curmouse.z = 0;
         PasswordLine[InputPassword.Count].positionCount = 2;
-        PasswordLine[InputPassword.Count].SetPosition(0, PasswordPointers[InputPassword[InputPassword.Count - 1]].transform.localPosition);
+        PasswordLine[InputPassword.Count].SetPosition(0, PasswordPointers[InputPassword[InputPassword.Count - 1]].transform.position);
         PasswordLine[InputPassword.Count].SetPosition(1, curmouse);
-        /*
-        PasswordLine.positionCount = InputPassword.Count+1;
-        for (int i = 0; i < InputPassword.Count; i++)
-        {
-            PasswordLine.SetPosition(i, PasswordPointers[InputPassword[i]].transform.localPosition);
-        }
-        Vector3 curmouse = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        curmouse.z = 0;
-        PasswordLine.SetPosition(InputPassword.Count, curmouse);
-        */
+        
     }
 
     public void Update()
@@ -88,7 +84,7 @@ public class PasswordToLine2 : MonoBehaviour
             LineClear();
         }
     }
-    public void CheckSkipNumber()
+    public void CheckSkipNumber() // 비정상적인 패스워드 입력시 수정
     {
         
         int BackIndex = InputPassword.Count-1;
@@ -104,7 +100,7 @@ public class PasswordToLine2 : MonoBehaviour
 
         }
     }
-    public bool IsSkip()
+    public bool IsSkip() // 비정상적인 패스워드 입력 체크
     {
         int BackIndex = InputPassword.Count - 1;
         int A = InputPassword[BackIndex];
@@ -166,7 +162,7 @@ public class PasswordToLine2 : MonoBehaviour
             if (InputPassword.Contains(i))//이미 입력된 숫자 제외
                 continue;
 
-            PreDistance = Vector2.Distance(MousePosition, PasswordPointers[i].transform.localPosition);
+            PreDistance = Vector2.Distance(MousePosition, PasswordPointers[i].transform.position);
             if (MinDistance > PreDistance)
             {
                 ClosePointerIndex = i;
