@@ -1,4 +1,6 @@
-﻿using TMPro;
+﻿using MoreMountains.Feedbacks;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -6,7 +8,8 @@ using UnityEngine.UI;
 
 namespace GamePlay.PopUp
 {
-    public class PopUpPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerMoveHandler
+    [RequireComponent(typeof(MMF_Player))]
+    public partial class PopUpPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerMoveHandler
     {
         public bool isClick;
         [Tooltip("얼마만큼 움직여야 팝업이 제거되는지")] public Vector2 destroyMoveDistance = new(300,100);
@@ -17,26 +20,47 @@ namespace GamePlay.PopUp
         public Button rightButton;
         public Image viewIcon;
         public TMP_Text viewExplain;
-        
+
+        private RectTransform rectTransform;
         private bool isX;
         private bool isY;
         private Vector3 originPosition;
+
+        public void OnEnable()
+        {
+            MMFInit();
+            spawnFeel.PlayFeedbacks();
+        }
+
+#if UNITY_EDITOR
+        public void Reset()
+        {
+            rectTransform = GetComponent<RectTransform>();
+            spawnFeel = GetComponent<MMF_Player>();
+            
+        }
         
+        public void OnValidate()
+        {
+            MMFInit();
+        }
+#endif
+
         public void OnPointerDown(PointerEventData eventData)
         {
             isClick = true;
             isX = false;
             isY = false;
 
-            originPosition = transform.position;
+            originPosition = transform.localPosition;
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
             isClick = false;
 
-            if ((isX && Vector3.Distance(transform.position, originPosition) > destroyMoveDistance.x) ||
-                (isY && Vector3.Distance(transform.position, originPosition) > destroyMoveDistance.y))
+            if ((isX && Vector3.Distance(transform.localPosition, originPosition) > destroyMoveDistance.x) ||
+                (isY && Vector3.Distance(transform.localPosition, originPosition) > destroyMoveDistance.y))
             {
                 // 사라지는 연출
                 destroyPopUpEvent?.Invoke();
@@ -45,7 +69,7 @@ namespace GamePlay.PopUp
             }
             else
             {
-                transform.position = originPosition;
+                transform.localPosition = originPosition;
             }
         }
 
@@ -67,11 +91,33 @@ namespace GamePlay.PopUp
                     }
                 }
                 else if(isX)
-                    transform.position += new Vector3(eventData.delta.x, 0, 0);
+                    transform.localPosition += new Vector3(eventData.delta.x, 0, 0);
                 else if(isY)
-                    transform.position += new Vector3(0, eventData.delta.y, 0);
+                    transform.localPosition += new Vector3(0, eventData.delta.y, 0);
                 
             }
+        }
+    }
+    
+    public partial class PopUpPad
+    {
+        [Header("MMF 관련")]
+        private MMF_Player spawnFeel;
+        private string mmfPositionLabel = "Spawn Position";
+        private MMF_Position mmfPosition;
+
+        private void MMFInit()
+        {
+            if(rectTransform == null) rectTransform = GetComponent<RectTransform>();
+            if(spawnFeel == null) spawnFeel = GetComponent<MMF_Player>();
+            if(mmfPosition == null) mmfPosition = new(){Label = mmfPositionLabel};
+            var mmfPos = spawnFeel.GetFeedbacksOfType<MMF_Position>().FirstOrDefault(p => p.Label == mmfPositionLabel);
+            if(mmfPos == null) spawnFeel.AddFeedback(mmfPosition);
+            
+            mmfPosition.AnimatePositionTarget = gameObject;
+            mmfPosition.InitialPosition.y = rectTransform.sizeDelta.y;
+            mmfPosition.DestinationPosition = Vector3.zero;
+            mmfPosition.AnimatePositionDuration = 1f;
         }
     }
 }
