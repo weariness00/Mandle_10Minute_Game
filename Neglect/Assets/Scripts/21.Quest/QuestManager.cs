@@ -1,13 +1,25 @@
-﻿using System;
+﻿using GamePlay;
+using System;
 using System.Collections.Generic;
 using UniRx;
+using UnityEngine;
 using Util;
 
 namespace Quest
 {
     public class QuestManager : Singleton<QuestManager>
     {
+        private QuestDataList _questList;
+        public static QuestDataList QuestList => Instance._questList;
         private Dictionary<QuestEvent, Subject<object>> questDictionary = new();
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+            _questList = QuestSettingProviderHelper.setting;
+            Debug.Assert(_questList != null, $"{nameof(QuestDataList)}가 존재하지 않습니다");
+            if(ReferenceEquals(_questList, null)) return;
+        }
 
         // 퀘스트를 매니저에 추가
         public IDisposable Add(QuestBase quest)

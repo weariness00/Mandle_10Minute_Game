@@ -10,6 +10,7 @@ TagManager:
   - Flapping Obstacle
   - Flapping Score Line
   - Flapping Player
+  - Phone Canvas
   layers:
   - Default
   - TransparentFX
