@@ -31,7 +31,7 @@ public class CallQuest : MonoBehaviour
     [Space]
     [Header("게이지")]
     public float ChatGage;
-    public LineRenderer gage;
+    public Image GageBar;
 
     [Header("데이터베이스에서 가져올 정보")]
     [Space]
@@ -133,13 +133,11 @@ public class CallQuest : MonoBehaviour
         // ~ 내 채팅 나오는 애니메이션
 
 
-        float PreChatGage = ChatGage;
         ChatGage = (ChatGage + replygage[index] > 100) ? 100 : ChatGage + replygage[index];
         ChatGage = (ChatGage < 0) ? 0 : ChatGage;
 
         UiSeq.Append(
-        DOTween.To(() => PreChatGage, x =>
-        {ChatGage = x;gage.SetPosition(1, new Vector3(ChatGage, 0, 0));},ChatGage, 1f ));
+        GageBar.DOFillAmount(ChatGage/100f , 1f));
         // 게이지 차는 애니메이션
 
 
