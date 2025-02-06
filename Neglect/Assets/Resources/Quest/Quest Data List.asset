@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a90638f902743658769512a63d36567, type: 3}
   m_Name: Quest Data List
   m_EditorClassIdentifier: 
-  questPrefabList:
+  questList:
   - {fileID: -3935435828359494835, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
   - {fileID: 6602697485518075991, guid: 1bf8f649de91f5048bbfdd91941a8aed, type: 3}
-  csvFile: {fileID: 0}
+  prefabList: []
+  questDataTableCSV: {fileID: 4900000, guid: ba640051d0b9978439f2967798cbe803, type: 3}
+  prefabDataTableCSV: {fileID: 4900000, guid: 9738289ef29fa4341aa4e42b0a57dd8e, type: 3}
