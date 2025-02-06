@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Quest
@@ -13,7 +14,8 @@ namespace Quest
         [Space] 
         [Tooltip("퀘스트 진행 상태")] public QuestState state = QuestState.NotStarted;
 
-        [HideInInspector] public int nextQuestID;
+        public List<QuestPrefab> questPrefabList = new();
+        [HideInInspector] public QuestBase nextQuest;
         
         protected IDisposable subscription; // 퀘스트 매니저에서 구독하면 자동 할당됨
 
@@ -23,6 +25,11 @@ namespace Quest
             {
                 subscription?.Dispose();
                 subscription = QuestManager.Instance.Add(this);
+                
+                // 퀘스틑 관련 프리펩 스폰
+                foreach (QuestPrefab prefab in questPrefabList)
+                    Instantiate(prefab, transform);
+                
                 state = QuestState.InProgress;
             }
         }
@@ -42,7 +49,7 @@ namespace Quest
         public virtual void Complete()
         {
             subscription?.Dispose();
-            if (nextQuestID != -1) Instantiate(QuestManager.QuestList.GetQuestID(nextQuestID)).Play();
+            if (nextQuest != null) Instantiate(nextQuest).Play();
             OnCompleted();
         }
     }

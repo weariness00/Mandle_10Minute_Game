@@ -100,7 +100,7 @@ namespace GamePlay
             {
                 string settingPath = EditorPrefs.GetString(DefaultKey + SettingKey, string.Empty);
                 setting = AssetDatabase.LoadAssetAtPath<QuestDataList>(settingPath);
-                Debug.Assert(setting != null, "해당 경로에 Sound Manager Setting 데이터가 존재하지 않습니다.");
+                Debug.Assert(setting != null, $"해당 경로에 {nameof(QuestDataList)} 데이터가 존재하지 않습니다.");
             }
         }
 #else

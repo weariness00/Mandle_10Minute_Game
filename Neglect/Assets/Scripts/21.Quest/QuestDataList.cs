@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Util;
 
 namespace Quest
@@ -10,8 +11,10 @@ namespace Quest
     [CreateAssetMenu(fileName = "Quest Data List", menuName = "Game/Quest List", order = 0)]
     public class QuestDataList : ScriptableObject
     {
-        [SerializeField] private QuestBase[] questPrefabList;
-        [SerializeField] private TextAsset csvFile;
+        [SerializeField][Tooltip("퀘스트 로직이 담긴 프리펩")] private QuestBase[] questList;
+        [SerializeField][Tooltip("퀘스트가 소환할 프리펩")] private QuestPrefab[] prefabList;
+        [SerializeField] private TextAsset questDataTableCSV;
+        [SerializeField] private TextAsset prefabDataTableCSV;
         // [SerializeField] private List<QuestScriptableObject> easyQuestList;
         // [SerializeField] private List<QuestScriptableObject> normalQuestList;
         // [SerializeField] private List<QuestScriptableObject> hardQuestList;
@@ -19,12 +22,22 @@ namespace Quest
 
         public QuestBase GetQuestID(int id)
         {
-            return questPrefabList.First(q => q.questID == id);
+            return questList.FirstOrDefault(q => q.questID == id);
         }
 
         public QuestBase GetQuestName(string questName)
         {
-            return questPrefabList.First(q => q.questName == questName);
+            return questList.FirstOrDefault(q => q.questName == questName);
+        }
+
+        public QuestPrefab GetPrefabID(int id)
+        {
+            return prefabList.FirstOrDefault(q => q.id == id);
+        }
+
+        public QuestPrefab GetPrefabName(string Name)
+        {
+            return prefabList.FirstOrDefault(q => q.name == Name);
         }
 
 #if UNITY_EDITOR
@@ -34,7 +47,8 @@ namespace Quest
         /// </summary>
         public void SetQuestList()
         {
-            questPrefabList = Resources.LoadAll<QuestBase>("Quest");
+            questList = Resources.LoadAll<QuestBase>("Quest");
+            prefabList = Resources.LoadAll<QuestPrefab>("Quest");
             EditorUtility.SetDirty(this);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
@@ -43,36 +57,54 @@ namespace Quest
         }
         
         [MenuItem("Assets/Create/Game/Init CSV")]
-        public static void InitCSV()
+        public static void InitData()
         {
-            QuestSettingProviderHelper.setting.SetCSVData();
+            QuestSettingProviderHelper.setting.SetQuestCSVData();
+            QuestSettingProviderHelper.setting.SetPrefabCSVData();
         }
         
-        public void SetCSVData()
+        public void SetQuestCSVData()
         {
-            Debug.Assert(csvFile != null, "CSV파일이 없어서 퀘스트 데이터를 셋팅하지 못했습니다.");
-            var path = AssetDatabase.GetAssetPath(csvFile);
-            path = path.Replace("Assets/", "");
-            path = path.Replace("Resources/", "");
-            path = path.Replace(".asset", "");
-            var csv = CSVReader.Read(path);
-            foreach (Dictionary<string,object> data in csv)
+            var questCSV = questDataTableCSV.GetCSV();
+            foreach (Dictionary<string,object> data in questCSV)
             {
-                int id = (int)data["이벤트 ID"];
-                string eName = (string)data["이벤트 이름"];
-                QuestLevel level = (QuestLevel)data["이벤트 난이도"];
-                int nextID = (int)data["후속 이벤트 ID"];
+                var id = data.DynamicCast<int>("EventID");
+                var eName = data.DynamicCast<string>("Name");
+                var level = data.DynamicCast<QuestLevel>("Level");
+                var nextQuestID = data.DynamicCast<int>("NextEventID");
+                var spawnPrefabNameArray = data.DynamicCast<string[]>("PrefabName");
 
-                var quest = questPrefabList.First(q => q.questID == id);
+                var quest = GetQuestID(id);
                 if (quest != null)
                 {
                     quest.questName = eName;
                     quest.level = level;
-                    quest.nextQuestID = nextID;
-                    
+                    quest.nextQuest = GetQuestID(nextQuestID);
+                    quest.questPrefabList.Clear();
+                    foreach (string prefabName in spawnPrefabNameArray)
+                    {
+                        var prefab = GetPrefabName(prefabName);
+                        if(prefab != null) quest.questPrefabList.Add(prefab);
+                    }
                     EditorUtility.SetDirty(quest);
                     PrefabUtility.SavePrefabAsset(quest.gameObject);
                 }
+            }
+            AssetDatabase.Refresh();
+        }
+
+        public void SetPrefabCSVData()
+        {
+            var prefabCSV = prefabDataTableCSV.GetCSV();
+            foreach (Dictionary<string, object> data in prefabCSV)
+            {
+                var id = data.DynamicCast<int>("PrefabID");
+                var prefabName = data.DynamicCast<string>("PrefabName");
+
+                var perfab = GetPrefabID(id);
+                perfab.name = prefabName;
+                EditorUtility.SetDirty(perfab);
+                PrefabUtility.SavePrefabAsset(perfab.gameObject);
             }
             AssetDatabase.Refresh();
         }
@@ -92,7 +124,7 @@ namespace Quest
                 script.SetQuestList();
             }
             if (GUILayout.Button("Init CSV"))
-                script.SetCSVData();
+                script.SetQuestCSVData();
         }
     }
 #endif
