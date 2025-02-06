@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ce097ac506eb79b4d98b46cab66d3ba8
+guid: 7c7b7c45ca6aaab4bb0de9a0235a07ce
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,190 +123,253 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MInigame_C_Slide-Sheet_0
+      name: MInigame_C_Jump_sdx-Sheet_0
       rect:
         serializedVersion: 2
-        x: 85
-        y: 45
-        width: 65
-        height: 145
+        x: 83
+        y: 43
+        width: 69
+        height: 149
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fccc4b00f07b91c45bc3a0ec93b77cbd
-      internalID: 721738924
+      spriteID: 39c2db03019c3d54e861f906ec7c7c11
+      internalID: -1550678657
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MInigame_C_Slide-Sheet_1
+      name: MInigame_C_Jump_sdx-Sheet_1
       rect:
         serializedVersion: 2
-        x: 335
-        y: 45
-        width: 80
-        height: 175
+        x: 313
+        y: 43
+        width: 93
+        height: 133
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1c41f7a09d09ef74ca266a9c691038d9
-      internalID: -1723698786
+      spriteID: 8da46037ca36882428668f85d6d4f8c8
+      internalID: -943051933
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MInigame_C_Slide-Sheet_2
+      name: MInigame_C_Jump_sdx-Sheet_2
       rect:
         serializedVersion: 2
-        x: 550
-        y: 55
-        width: 5
-        height: 5
+        x: 568
+        y: 43
+        width: 83
+        height: 133
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 46afe0f97322c414f93e3235cfe7cb98
-      internalID: -819282428
+      spriteID: 3996489d41042024989cd18c05e0a37e
+      internalID: 351655782
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MInigame_C_Slide-Sheet_3
+      name: MInigame_C_Jump_sdx-Sheet_3
       rect:
         serializedVersion: 2
-        x: 555
-        y: 45
-        width: 115
-        height: 135
+        x: 823
+        y: 43
+        width: 84
+        height: 174
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bac8b648816b2ef4491e23acbecd3ac1
-      internalID: -1676050888
+      spriteID: 679a9a4a37a2a0a49aa7744dba493ff6
+      internalID: 713919915
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MInigame_C_Slide-Sheet_4
+      name: MInigame_C_Jump_sdx-Sheet_4
       rect:
         serializedVersion: 2
-        x: 780
-        y: 45
-        width: 170
-        height: 95
+        x: 1069
+        y: 64
+        width: 102
+        height: 172
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5a7b5fd4a61a9044e88dbebd38d15910
-      internalID: -1430349298
+      spriteID: aa9c806bf2dd7054abe67978d41cd8d0
+      internalID: 596472634
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MInigame_C_Slide-Sheet_5
+      name: MInigame_C_Jump_sdx-Sheet_5
       rect:
         serializedVersion: 2
-        x: 1030
-        y: 45
-        width: 175
-        height: 85
+        x: 1323
+        y: 99
+        width: 104
+        height: 143
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ee57e42276325ca46a54d0f56df73d2c
-      internalID: -241456503
+      spriteID: 26929c392c2d3b1489d4ae7ee27cb056
+      internalID: 284321646
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MInigame_C_Slide-Sheet_6
+      name: MInigame_C_Jump_sdx-Sheet_6
       rect:
         serializedVersion: 2
-        x: 1275
-        y: 45
-        width: 180
-        height: 95
+        x: 1573
+        y: 99
+        width: 104
+        height: 143
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c9d49761098a4204e9e811c9ec878002
-      internalID: 673284452
+      spriteID: ed796ec42076a054b880e4ceafe8ad49
+      internalID: -2143161719
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MInigame_C_Slide-Sheet_7
+      name: MInigame_C_Jump_sdx-Sheet_7
       rect:
         serializedVersion: 2
-        x: 1530
-        y: 45
-        width: 170
-        height: 95
+        x: 1829
+        y: 93
+        width: 92
+        height: 153
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5bceae638df7f2642acd5293a5f17b1b
-      internalID: 1421491921
+      spriteID: e1b7289619c193a4db604f015244dacf
+      internalID: 1194300475
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MInigame_C_Slide-Sheet_8
+      name: MInigame_C_Jump_sdx-Sheet_8
       rect:
         serializedVersion: 2
-        x: 550
-        y: 45
-        width: 15
-        height: 5
+        x: 2078
+        y: 93
+        width: 94
+        height: 153
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ba88071c273b3fe4bb322e06cacf2449
-      internalID: -1159822794
+      spriteID: 3383b1aa6ba949346b71de1fa9866e50
+      internalID: -715750843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MInigame_C_Jump_sdx-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 2339
+        y: 44
+        width: 73
+        height: 206
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c8173970bace36449f4a9e41be736eb
+      internalID: -460944755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MInigame_C_Jump_sdx-Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 2588
+        y: 44
+        width: 74
+        height: 206
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf61074a39af61d419eb7a58126773c8
+      internalID: 733745659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MInigame_C_Jump_sdx-Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 2838
+        y: 43
+        width: 79
+        height: 178
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aed13c40d8ab248418939372f9bada08
+      internalID: 971229349
       vertices: []
       indices: 
       edges: []
@@ -322,15 +385,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      MInigame_C_Slide-Sheet_0: 721738924
-      MInigame_C_Slide-Sheet_1: -1723698786
-      MInigame_C_Slide-Sheet_2: -819282428
-      MInigame_C_Slide-Sheet_3: -1676050888
-      MInigame_C_Slide-Sheet_4: -1430349298
-      MInigame_C_Slide-Sheet_5: -241456503
-      MInigame_C_Slide-Sheet_6: 673284452
-      MInigame_C_Slide-Sheet_7: 1421491921
-      MInigame_C_Slide-Sheet_8: -1159822794
+      MInigame_C_Jump_sdx-Sheet_0: -1550678657
+      MInigame_C_Jump_sdx-Sheet_1: -943051933
+      MInigame_C_Jump_sdx-Sheet_10: 733745659
+      MInigame_C_Jump_sdx-Sheet_11: 971229349
+      MInigame_C_Jump_sdx-Sheet_2: 351655782
+      MInigame_C_Jump_sdx-Sheet_3: 713919915
+      MInigame_C_Jump_sdx-Sheet_4: 596472634
+      MInigame_C_Jump_sdx-Sheet_5: 284321646
+      MInigame_C_Jump_sdx-Sheet_6: -2143161719
+      MInigame_C_Jump_sdx-Sheet_7: 1194300475
+      MInigame_C_Jump_sdx-Sheet_8: -715750843
+      MInigame_C_Jump_sdx-Sheet_9: -460944755
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
