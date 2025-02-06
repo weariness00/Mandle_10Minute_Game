@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Manager;
 using UniRx;
 using UnityEngine;
@@ -19,9 +19,12 @@ namespace GamePlay.MiniGame.RunningGame
         private Vector3 originPosition;
         private Vector3 jumpDestinationPosition;
         
+        public Animator animator;
+
         public void Awake()
         {
             rigidbody2D = GetComponentInChildren<Rigidbody2D>();
+            animator = GetComponent<Animator>();
         }
 
         public void Update()
@@ -36,8 +39,15 @@ namespace GamePlay.MiniGame.RunningGame
 
         public void OnCollisionEnter2D(Collision2D other)
         {
-            if(other.gameObject.CompareTag("Running Ground"))
-                isJumping = false;
+            if (other.gameObject.CompareTag("Running Ground"))
+            {
+                if (isJumping)
+                {
+                    animator.SetTrigger("Landing");
+                    isJumping = false;
+                }
+            }
+            isJumping = false;
         }
 
         public void OnTriggerEnter2D(Collider2D other)
@@ -65,8 +75,10 @@ namespace GamePlay.MiniGame.RunningGame
                 jumpTime.SetMin();
                 originPosition = transform.position;
                 jumpDestinationPosition = transform.position + jumpForce * Vector3.up;
+                animator.SetTrigger("Jump");
             }
         }
+
     }
 }
 
