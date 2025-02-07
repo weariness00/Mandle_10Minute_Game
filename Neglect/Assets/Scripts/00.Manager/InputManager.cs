@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Util;
 
 namespace Manager
@@ -23,6 +24,8 @@ namespace Manager
         public class Running
         {
             public RunningInput input;
+            public InputAction Sliding => input.Player.Sliding;
+            
             public Vector2 MovePosition => input.Player.Move.ReadValue<Vector2>();
             public bool SlidingDown => input.Player.Sliding.ReadValue<float>() > 0f;
             
