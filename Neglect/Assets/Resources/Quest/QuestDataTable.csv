@@ -6,3 +6,5 @@
 //,,,3:어려움,,,,
 Header,EventID,Name,Level,NextEventID,PrefabID1,PrefabID2,PrefabID3
 ,1,,1,1,"[2,3]",,
+,2,Quest_Password,2,-1,[2],,
+,3,Quest_Bank,3,-1,"[2,3]",,
