@@ -2625,7 +2625,7 @@ GameObject:
   - component: {fileID: 9060640327001606600}
   - component: {fileID: -1332960413431058835}
   m_Layer: 0
-  m_Name: Bank_Event
+  m_Name: Bank Money Transfer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

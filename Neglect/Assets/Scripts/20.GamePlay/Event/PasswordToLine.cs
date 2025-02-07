@@ -1,152 +1,193 @@
+using Manager;
+using MoreMountains.Feedbacks;
+using MoreMountains.Tools;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
-public class PasswordToLine : MonoBehaviour
+namespace GamePlay.Event
 {
-    // Start is called before the first frame update
-    [Tooltip("ÆĞ½º¿öµå Á¡µé")]
-    public List<GameObject> PasswordPointers = new List<GameObject>(); // ÆĞ½º¿öµå Á¡µé
-
-    [Tooltip("ÆĞ½º¿öµå ¶óÀÎ")]
-    public LineRenderer[] PasswordLine = new LineRenderer[10];
-
-    private List<int> InputPassword = new List<int>(); //ÇöÀç ÀÔ·Â¹ŞÀº ÆĞ½º¿öµå
-
-    [Tooltip("µå·¡±× Å½Áö ¹üÀ§")]
-    public double DetectedRange = 0.3f; // Á¡°ú ¸¶¿ì½º»çÀÌ Å½Áö ¹üÀ§
-
-    private bool IsCrack = false; // ÆĞ½º¿öµå Çª´Â ÁßÀÎÁö 
-
-    [Tooltip("Á¤´ä ÆĞ½º¿öµå")]
-    public List<int> AnswerPassword;
-
-
-    public void Init()
+    public class PasswordToLine : MonoBehaviour
     {
-        IsCrack = false;
-        InputPassword.Clear();
-        LineClear();
-    }
+        [Header("ì •ë‹µ íŒ¨ìŠ¤ì›Œë“œ")]
+        public List<int> AnswerPassword;
+        [Space]
 
-    public void RePositionPointers()
-    {
 
-    }
+        // Start is called before the first frame update
+        [Tooltip("íŒ¨ìŠ¤ì›Œë“œ ì ë“¤")]
+        public List<GameObject> PasswordPointers = new List<GameObject>(); // íŒ¨ìŠ¤ì›Œë“œ ì ë“¤
 
-    public void LineDraw()
-    {
-        for (int i = 1; i < InputPassword.Count; i++)
+        [Tooltip("íŒ¨ìŠ¤ì›Œë“œ ë¼ì¸")]
+        public LineRenderer[] PasswordLine = new LineRenderer[10];
+
+        public List<int> InputPassword = new List<int>(); //í˜„ì¬ ì…ë ¥ë°›ì€ íŒ¨ìŠ¤ì›Œë“œ
+
+        [Tooltip("ë“œë˜ê·¸ íƒì§€ ë²”ìœ„")]
+        public double DetectedRange = 0.3f; // ì ê³¼ ë§ˆìš°ìŠ¤ì‚¬ì´ íƒì§€ ë²”ìœ„
+        private bool IsCrack = false; // íŒ¨ìŠ¤ì›Œë“œ í‘¸ëŠ” ì¤‘ì¸ì§€ 
+        private int CurrentView = 0; //í˜„ì¬ í™”ë©´
+
+
+        public void Awake()
         {
-            PasswordLine[i].positionCount = 2;
-            PasswordLine[i].SetPosition(0, PasswordPointers[InputPassword[i-1]].transform.localPosition);
-            PasswordLine[i].SetPosition(1, PasswordPointers[InputPassword[i]].transform.localPosition);
+            Init();
         }
-        Vector3 curmouse = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        curmouse.z = 0;
-        PasswordLine[InputPassword.Count].positionCount = 2;
-        PasswordLine[InputPassword.Count].SetPosition(0, PasswordPointers[InputPassword[InputPassword.Count - 1]].transform.localPosition);
-        PasswordLine[InputPassword.Count].SetPosition(1, curmouse);
-        /*
-        PasswordLine.positionCount = InputPassword.Count+1;
-        for (int i = 0; i < InputPassword.Count; i++)
-        {
-            PasswordLine.SetPosition(i, PasswordPointers[InputPassword[i]].transform.localPosition);
-        }
-        Vector3 curmouse = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        curmouse.z = 0;
-        PasswordLine.SetPosition(InputPassword.Count, curmouse);
-        */
-    }
-
-    public void Update()
-    {
-        if (Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            IsCrack = StartCrack();
-        }
-
-        if (Mouse.current.leftButton.isPressed && IsCrack)
-        {
-            LineDraw();
-            int AddPointer = DetectedPoint(Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()));
-            if (AddPointer >= 0)
-            {
-                InputPassword.Add(AddPointer);
-            }
-        }
-
-        if (Mouse.current.leftButton.wasReleasedThisFrame)
+        //íŒ¨ìŠ¤ì›Œë“œ
+        public void Init()
         {
             IsCrack = false;
-            Debug.Log("ºñ¹Ğ¹øÈ£ Ã¼Å© »óÅÂ :" + PasswordCheck());
             InputPassword.Clear();
             LineClear();
         }
-    }
 
-    public void LineClear()
-    {
-        for (int i = 0; i < 10; i++)
+        public void LineDraw()
         {
-            PasswordLine[i].positionCount = 0;
+            for (int i = 1; i < InputPassword.Count; i++)
+            {
+                PasswordLine[i].positionCount = 2;
+                PasswordLine[i].SetPosition(0, PasswordPointers[InputPassword[i - 1]].transform.position);
+                PasswordLine[i].SetPosition(1, PasswordPointers[InputPassword[i]].transform.position);
+            }
+            Vector3 curmouse = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            curmouse.z = 0;
+            PasswordLine[InputPassword.Count].positionCount = 2;
+            PasswordLine[InputPassword.Count].SetPosition(0, PasswordPointers[InputPassword[InputPassword.Count - 1]].transform.position);
+            PasswordLine[InputPassword.Count].SetPosition(1, curmouse);
+
         }
-    }  //¶óÀÎ Å¬¸®¾î
-    public bool PasswordCheck()  //ÀÔ·Â ºñ¹Ğ¹øÈ£¶û Á¤´ä ºñ¹Ğ¹øÈ£¶û ºñ±³
-    {
-        bool flag = true;
-        if (AnswerPassword.Count != InputPassword.Count)
+        public void Update()
         {
+            if (CurrentView != 0)
+                return;
+            if (Mouse.current.leftButton.wasPressedThisFrame)
+            {
+                IsCrack = StartCrack();
+            }
+
+            if (Mouse.current.leftButton.isPressed && IsCrack)
+            {
+                LineDraw();
+                int AddPointer = DetectedPoint(Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()));
+                if (AddPointer >= 0)
+                {
+                    InputPassword.Add(AddPointer);
+                    CheckSkipNumber();
+                }
+            }
+
+            if (Mouse.current.leftButton.wasReleasedThisFrame)
+            {
+                IsCrack = false;
+                if (PasswordCheck())
+                {
+                    Debug.Log("íŒ¨í„´ ì™„ë£Œ");
+                }
+                InputPassword.Clear();
+                LineClear();
+
+            }
+        }
+        public void CheckSkipNumber() // ë¹„ì •ìƒì ì¸ íŒ¨ìŠ¤ì›Œë“œ ì…ë ¥ì‹œ ìˆ˜ì •
+        {
+            int BackIndex = InputPassword.Count - 1;
+            if (IsSkip())
+            {
+                int storeIndex = InputPassword[BackIndex];
+                int MiddleNumber = (InputPassword[BackIndex] + InputPassword[BackIndex - 1]) / 2;
+                if (!InputPassword.Contains(MiddleNumber))
+                {
+                    InputPassword[BackIndex] = (InputPassword[BackIndex] + InputPassword[BackIndex - 1]) / 2;
+                    InputPassword.Add(storeIndex);
+                }
+
+            }
+        }
+        public bool IsSkip() // ë¹„ì •ìƒì ì¸ íŒ¨ìŠ¤ì›Œë“œ ì…ë ¥ ì²´í¬
+        {
+            int BackIndex = InputPassword.Count - 1;
+            int A = InputPassword[BackIndex];
+            int B = InputPassword[BackIndex - 1];
+            int[,] C = new int[,] { { 0, 2 }, { 3, 5 }, { 6, 8 }, { 0, 8 }, { 2, 6 }, { 0, 6 }, { 1, 7 }, { 2, 8 } };
+            for (int i = 0; i < 8; i++)
+            {
+                if (A == C[i, 0] && B == C[i, 1] || B == C[i, 0] && A == C[i, 1])
+                    return true;
+            }
             return false;
-        }
 
-        for(int i = 0;  i < InputPassword.Count; i++)
+        }
+        public void LineClear()
         {
-            if (InputPassword[i] != AnswerPassword[i])
+            for (int i = 0; i < 10; i++)
             {
-                flag = false;
-                break;
+                PasswordLine[i].positionCount = 0;
             }
-        }
-
-        return flag;
-    }
-    public bool StartCrack()
-    {
-        int StartNum = DetectedPoint(Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()));
-        if(StartNum >= 0)
+        }  //ë¼ì¸ í´ë¦¬ì–´
+        public bool PasswordCheck()  //ì…ë ¥ ë¹„ë°€ë²ˆí˜¸ë‘ ì •ë‹µ ë¹„ë°€ë²ˆí˜¸ë‘ ë¹„êµ
         {
-            InputPassword.Add(StartNum);
-            return true;
-        }
-        return false;
-    } // ¼± ÀÕ±â ½ÃÀÛ
-    public int DetectedPoint(Vector3 MousePosition) //°¡Àå °¡±î¿î Á¡ ÀÎµ¦½º ¹İÈ¯ ¾øÀ¸¸é -1
-    {
-        MousePosition.z = 0;        
-        float MinDistance = 9999999f;
-        float PreDistance = 9999999f;
-        int ClosePointerIndex = -1;
-        for (int i = 0; i < PasswordPointers.Count; i++)
-        {
-            if (InputPassword.Contains(i))//ÀÌ¹Ì ÀÔ·ÂµÈ ¼ıÀÚ Á¦¿Ü
-                continue;
-
-            PreDistance = Vector2.Distance(MousePosition, PasswordPointers[i].transform.localPosition);
-            if (MinDistance > PreDistance)
+            bool flag = true;
+            if (AnswerPassword.Count != InputPassword.Count)
             {
-                ClosePointerIndex = i;
-                MinDistance = PreDistance;
+                return false;
             }
+
+            for (int i = 0; i < InputPassword.Count; i++)
+            {
+                if (InputPassword[i] != AnswerPassword[i])
+                {
+                    flag = false;
+                    break;
+                }
+            }
+
+            return flag;
         }
 
-        if (MinDistance <= DetectedRange)
+
+        public bool StartCrack()
         {
-            return ClosePointerIndex;
-        }
+            int StartNum = DetectedPoint(Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()));
+            if (StartNum >= 0)
+            {
+                InputPassword.Add(StartNum);
+                return true;
+            }
+            return false;
+        } // ì„  ì‡ê¸° ì‹œì‘
+        public int DetectedPoint(Vector3 MousePosition) //ê°€ì¥ ê°€ê¹Œìš´ ì  ì¸ë±ìŠ¤ ë°˜í™˜ ì—†ìœ¼ë©´ -1
+        {
+            MousePosition.z = 0;
+            float MinDistance = 9999999f;
+            float PreDistance = 9999999f;
+            int ClosePointerIndex = -1;
+            for (int i = 0; i < PasswordPointers.Count; i++)
+            {
+                if (InputPassword.Contains(i))//ì´ë¯¸ ì…ë ¥ëœ ìˆ«ì ì œì™¸
+                    continue;
 
-        return -1;
+                PreDistance = Vector2.Distance(MousePosition, PasswordPointers[i].transform.position);
+                if (MinDistance > PreDistance)
+                {
+                    ClosePointerIndex = i;
+                    MinDistance = PreDistance;
+                }
+            }
+
+            if (MinDistance <= DetectedRange)
+            {
+                return ClosePointerIndex;
+            }
+
+            return -1;
+        }
+        /// íŒ¨ìŠ¤ì›Œë“œ
+
+
     }
 }
