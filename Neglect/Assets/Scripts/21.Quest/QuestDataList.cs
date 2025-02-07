@@ -72,7 +72,7 @@ namespace Quest
                 var eName = data.DynamicCast<string>("Name");
                 var level = data.DynamicCast<QuestLevel>("Level");
                 var nextQuestID = data.DynamicCast<int>("NextEventID");
-                var spawnPrefabNameArray = data.DynamicCast<string[]>("PrefabName");
+                var spawnPrefabIDArray = data.DynamicCast<int[]>("PrefabID");
 
                 var quest = GetQuestID(id);
                 if (quest != null)
@@ -81,9 +81,9 @@ namespace Quest
                     quest.level = level;
                     quest.nextQuest = GetQuestID(nextQuestID);
                     quest.questPrefabList.Clear();
-                    foreach (string prefabName in spawnPrefabNameArray)
+                    foreach (var prefabID in spawnPrefabIDArray)
                     {
-                        var prefab = GetPrefabName(prefabName);
+                        var prefab = GetPrefabID(prefabID);
                         if(prefab != null) quest.questPrefabList.Add(prefab);
                     }
                     EditorUtility.SetDirty(quest);
