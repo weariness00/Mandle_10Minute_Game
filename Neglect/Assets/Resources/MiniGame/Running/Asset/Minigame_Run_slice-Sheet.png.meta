@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c33fca4ed8b6da941bd0b40eb5936695
+guid: bb5bc38066998df4ba33bd3e9f8a9aed
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -106,165 +106,131 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MInigame_C_Slide_sdx-Sheet_0
+      name: Minigame_Run_slice-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 250
-        height: 250
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 90
+        height: 160
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 82c4b21b19d753f4f9d50156a9ba531a
-      internalID: -630658936
+      spriteID: 29fb800d3e0ca8d4f807bf489df55a24
+      internalID: -1257829525
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MInigame_C_Slide_sdx-Sheet_1
+      name: Minigame_Run_slice-Sheet_1
       rect:
         serializedVersion: 2
-        x: 250
+        x: 90
         y: 0
-        width: 250
-        height: 250
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 90
+        height: 160
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 47e9d27e8aa369c4a83db1cf45eaf459
-      internalID: 1089250826
+      spriteID: 945a9a183184dc742aae8c01a570703f
+      internalID: 1969333382
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MInigame_C_Slide_sdx-Sheet_2
+      name: Minigame_Run_slice-Sheet_2
       rect:
         serializedVersion: 2
-        x: 500
+        x: 180
         y: 0
-        width: 250
-        height: 250
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 90
+        height: 160
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b42d8bcc610a851408ff6391821567e4
-      internalID: -375488407
+      spriteID: 7a15e9d8688582b47ba2c560e5a23fc8
+      internalID: 334725832
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MInigame_C_Slide_sdx-Sheet_3
+      name: Minigame_Run_slice-Sheet_3
       rect:
         serializedVersion: 2
-        x: 750
+        x: 270
         y: 0
-        width: 250
-        height: 250
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 90
+        height: 160
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1b4c86f7db4ac5c488481a9626ad98ca
-      internalID: -893685558
+      spriteID: 45f06bac4a570154193fdedea21c8d07
+      internalID: -941880169
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MInigame_C_Slide_sdx-Sheet_4
+      name: Minigame_Run_slice-Sheet_4
       rect:
         serializedVersion: 2
-        x: 1000
+        x: 360
         y: 0
-        width: 250
-        height: 250
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 90
+        height: 160
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b2631d3e2565efe45859ffba011bc4d2
-      internalID: -1816322756
+      spriteID: ffdaac13a37b63a408be7f4154dc6113
+      internalID: 1975862004
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MInigame_C_Slide_sdx-Sheet_5
+      name: Minigame_Run_slice-Sheet_5
       rect:
         serializedVersion: 2
-        x: 1250
+        x: 450
         y: 0
-        width: 250
-        height: 250
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 90
+        height: 160
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 098ad612f0f95434388d1fc52aef53c3
-      internalID: 697493298
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MInigame_C_Slide_sdx-Sheet_6
-      rect:
-        serializedVersion: 2
-        x: 1500
-        y: 0
-        width: 250
-        height: 250
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dc16e1993b6ad0748a0c65e1a8c12bb5
-      internalID: 1285916792
+      spriteID: d526c520566cd3743a2ed1f803b0bb24
+      internalID: 26997875
       vertices: []
       indices: 
       edges: []
@@ -280,13 +246,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      MInigame_C_Slide_sdx-Sheet_0: -630658936
-      MInigame_C_Slide_sdx-Sheet_1: 1089250826
-      MInigame_C_Slide_sdx-Sheet_2: -375488407
-      MInigame_C_Slide_sdx-Sheet_3: -893685558
-      MInigame_C_Slide_sdx-Sheet_4: -1816322756
-      MInigame_C_Slide_sdx-Sheet_5: 697493298
-      MInigame_C_Slide_sdx-Sheet_6: 1285916792
+      Minigame_Run_slice-Sheet_0: -1257829525
+      Minigame_Run_slice-Sheet_1: 1969333382
+      Minigame_Run_slice-Sheet_2: 334725832
+      Minigame_Run_slice-Sheet_3: -941880169
+      Minigame_Run_slice-Sheet_4: 1975862004
+      Minigame_Run_slice-Sheet_5: 26997875
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

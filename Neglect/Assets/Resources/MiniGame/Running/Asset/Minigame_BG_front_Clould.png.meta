@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3d27bc5092f3528469efdf42373e489b
+guid: 96f696bc880bccd4990a79faf38a8707
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -106,144 +106,152 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MInigame_C_Run_sdx-Sheet_0
+      name: Minigame_BG_front_Clould_0
       rect:
         serializedVersion: 2
-        x: 85
-        y: 45
-        width: 65
-        height: 145
+        x: 405
+        y: 410
+        width: 5
+        height: 5
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fcacc5958b9b3e14391a51426f5ef260
-      internalID: -299477878
+      spriteID: e2b65ffb87d72f142bd0828a4e73ff3e
+      internalID: -579471504
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MInigame_C_Run_sdx-Sheet_1
+      name: Running Game Glound 2
       rect:
         serializedVersion: 2
-        x: 325
-        y: 45
-        width: 75
-        height: 140
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 275
+        y: 0
+        width: 300
+        height: 400
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 063810d1db6c3614f90f533d2f99256c
-      internalID: 1803607964
+      spriteID: 0463de531dbc49e4c86eea5cbc04a0bf
+      internalID: -2048650922
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MInigame_C_Run_sdx-Sheet_2
+      name: Minigame_BG_front_Clould_2
       rect:
         serializedVersion: 2
-        x: 580
-        y: 45
-        width: 75
-        height: 150
+        x: 745
+        y: 295
+        width: 5
+        height: 5
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8835e1de9d5ee1e48847f1e19b0525ea
-      internalID: 473898184
+      spriteID: e083828ea73f2ed469db58f86856fba5
+      internalID: -481080892
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MInigame_C_Run_sdx-Sheet_3
+      name: Minigame_BG_front_Clould_3
       rect:
         serializedVersion: 2
-        x: 835
-        y: 45
-        width: 70
-        height: 145
+        x: 745
+        y: 285
+        width: 5
+        height: 5
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a9ce59952885e4545bcace39d4d52561
-      internalID: 13204652
+      spriteID: 94b4aca5798133241874d954eeb0105a
+      internalID: 121654801
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MInigame_C_Run_sdx-Sheet_4
+      name: Minigame_BG_front_Clould_4
       rect:
         serializedVersion: 2
-        x: 1085
-        y: 45
-        width: 65
-        height: 140
+        x: 155
+        y: 260
+        width: 5
+        height: 5
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 60417667ef70f00429ff3f2df88f8724
-      internalID: 1114331253
+      spriteID: b09eeab8c5a990844aa2e168c2ca5d35
+      internalID: 1835591515
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MInigame_C_Run_sdx-Sheet_5
+      name: Running Game Glound 3
       rect:
         serializedVersion: 2
-        x: 1335
-        y: 45
-        width: 65
-        height: 145
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 645
+        y: 0
+        width: 140
+        height: 280
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0a789f45e4a932847ae324b61f3eda2e
-      internalID: -913220852
+      spriteID: 5595efcb823da4449a684f20e07d64a1
+      internalID: -1738046702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Running Game Glound 1
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 0
+        width: 165
+        height: 255
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ea7e29ee44a94445b1458719246e3c8
+      internalID: 675571683
       vertices: []
       indices: 
       edges: []
@@ -259,12 +267,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      MInigame_C_Run_sdx-Sheet_0: -299477878
-      MInigame_C_Run_sdx-Sheet_1: 1803607964
-      MInigame_C_Run_sdx-Sheet_2: 473898184
-      MInigame_C_Run_sdx-Sheet_3: 13204652
-      MInigame_C_Run_sdx-Sheet_4: 1114331253
-      MInigame_C_Run_sdx-Sheet_5: -913220852
+      Minigame_BG_front_Clould_0: -579471504
+      Minigame_BG_front_Clould_2: -481080892
+      Minigame_BG_front_Clould_3: 121654801
+      Minigame_BG_front_Clould_4: 1835591515
+      Running Game Glound 1: 675571683
+      Running Game Glound 2: -2048650922
+      Running Game Glound 3: -1738046702
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

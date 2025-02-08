@@ -106,7 +106,7 @@ namespace GamePlay.MiniGame.RunningGame
             if (!isSliding && InputManager.running.SlidingDown)
             {
                 collider2D.size = slidingColliderBoxSize;
-                collider2D.offset = new Vector2(originCollideroffset.x, -(originColliderSize.y - slidingColliderBoxSize.y) / 2f);
+                collider2D.offset = new Vector2(originCollideroffset.x, originCollideroffset.y -(originColliderSize.y - slidingColliderBoxSize.y) / 2f);
                 
                 isSliding = true;
                 animator.StartSliding();
