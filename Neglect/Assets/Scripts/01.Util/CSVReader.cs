@@ -23,17 +23,38 @@ namespace Util
             {
                 if (objectValue is T value)
                     return value;
+                if (typeof(T).IsArray)
+                {
+                    var type = typeof(T).GetElementType();
+                    var array = Array.CreateInstance(typeof(T).GetElementType(), 1);
+                    if (objectValue.GetType() == typeof(T).GetElementType())
+                        array.SetValue(objectValue, 0);
+                    else
+                        array = Array.CreateInstance(type, 0);
+                    if (array is T value2)
+                        return value2;
+                }
+                
+                // T가 List일 때
+                if (typeof(T).IsGenericType && typeof(T).GetGenericTypeDefinition() == typeof(List<>))
+                {
+                    var list = (System.Collections.IList)Activator.CreateInstance(typeof(T));
+                    if (objectValue.GetType() == typeof(T).GetElementType())
+                    {
+                        list.Add(objectValue); // 단일 값을 리스트에 추가
+                    }
+                    return (T)list; // List<T>를 T로 변환
+                }
             }
-
-            if (typeof(T).IsArray)
+            return default;
+        }
+        
+        public static T DynamicCast<T>(this Dictionary<string,object> dictionary, string key, T defaultValue)
+        {
+            if (dictionary.TryGetValue(key, out var objectValue))
             {
-                var empty = Array.CreateInstance(typeof(T).GetElementType(), 0);
-                if(empty is T value)
+                if (objectValue is T value)
                     return value;
-            }
-            if (typeof(T).IsGenericType && typeof(T).GetGenericTypeDefinition() == typeof(List<>))
-            {
-                return (T)Activator.CreateInstance(typeof(T));
             }
             return default;
         }
@@ -61,7 +82,6 @@ namespace Util
         static string SPLIT_RE = @",(?=(?:[^""]*""[^""]*"")*(?![^""]*""))";
         static string LINE_SPLIT_RE = @"\r\n|\n\r|\n|\r";
         static char[] TRIM_CHARS = { '\"' };
-        private static readonly char[] ListTrim_Char = { '[', ']' };
         
         public static T DynamicCast<T>(object objectValue) where T : new()
         {
@@ -91,10 +111,9 @@ namespace Util
                 for (var j = 0; j < header.Length && j < lineValues.Length; j++)
                 {
                     string value = lineValues[j];
-                    value = value.TrimStart(TRIM_CHARS).TrimEnd(TRIM_CHARS).Replace("\\", "");
-                    if (value.StartsWith(ListTrim_Char[0]) && value.EndsWith(ListTrim_Char[1]))
+                    if (value.StartsWith(TRIM_CHARS[0]) && value.EndsWith(TRIM_CHARS[0]))
                     {
-                        value = value.TrimStart(ListTrim_Char).TrimEnd(ListTrim_Char).Replace("\\", "");
+                        value = value.TrimStart(TRIM_CHARS).TrimEnd(TRIM_CHARS).Replace("\\", "");
                         var values = Regex.Split(value, SPLIT_RE);
                         bool isString = true;
                         bool isFloat = false;
@@ -135,6 +154,7 @@ namespace Util
                     }
                     else
                     {
+                        value = value.TrimStart(TRIM_CHARS).TrimEnd(TRIM_CHARS).Replace("\\", "");
                         object finalvalue = value;
                         int n;
                         float f;
