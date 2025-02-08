@@ -21,7 +21,12 @@ namespace GamePlay.MiniGame
         {
             playTime.SetMin();
         }
-        
+
+        public virtual void Start()
+        {
+            
+        }
+
         public virtual void Update()
         {
             if (isGamePlay.Value)
@@ -32,9 +37,12 @@ namespace GamePlay.MiniGame
 
         public virtual void OnDestroy()
         {
-            renderTexture.Release();
-            Destroy(renderTexture);
-            renderTexture = null;
+            if (renderTexture)
+            {
+                renderTexture.Release();
+                Destroy(renderTexture);
+                renderTexture = null;
+            }
         }
 
         public virtual void GamePlay()
@@ -80,6 +88,11 @@ namespace GamePlay.MiniGame
             phoneCamera.cullingMask = LayerMask.GetMask("Phone");
             phoneCamera.targetTexture = renderTexture;
             Destroy(phoneCamera.gameObject.GetComponent<AudioListener>());
+        }
+
+        public void SetGameSpeed(float value)
+        {
+            gameSpeed.Value = value;
         }
     }
 }
