@@ -33,7 +33,7 @@ namespace GamePlay.MiniGame.RunningGame
         private List<Vector2> ForegroundSize = new List<Vector2>(); // 생성된 전경 크기
         private List<Vector2> FloorSize = new List<Vector2>(); // 생성된 바닥 크기
 
-        [Header("배경 속도")]
+        [Header("배경 속도 ")]
         public MinMaxValue<int> BackgroundSpeed = new MinMaxValue<int>(); //배경이미지 속도
         public MinMaxValue<int> MiddlegroundSpeed = new MinMaxValue<int>(); //중경이미지 속도
         public MinMaxValue<int> ForegroundSpeed = new MinMaxValue<int>(); //전경이미지 속도
