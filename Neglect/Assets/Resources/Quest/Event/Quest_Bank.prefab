@@ -45,9 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   questID: 3
-  questName: Quest_Bank
-  level: 0
-  eventType: 0
+  questName: 
+  type: 0
   state: 0
-  questPrefabList: []
-  nextQuest: {fileID: 0}

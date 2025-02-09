@@ -10,7 +10,7 @@ namespace Quest
     {
         private QuestDataList _questList;
         public static QuestDataList QuestList => Instance._questList;
-        private Dictionary<QuestEvent, Subject<object>> questDictionary = new();
+        private Dictionary<QuestType, Subject<object>> questDictionary = new();
 
         protected override void Initialize()
         {
@@ -23,12 +23,12 @@ namespace Quest
         // 퀘스트를 매니저에 추가
         public IDisposable Add(QuestBase quest)
         {
-            if (!questDictionary.TryGetValue(quest.eventType, out var subject))
+            if (!questDictionary.TryGetValue(quest.type, out var subject))
             {
                 subject = new();
-                questDictionary.Add(quest.eventType, subject);
+                questDictionary.Add(quest.type, subject);
             }
-            return subject.Subscribe(quest);
+            return subject.Subscribe(quest.OnNext);
         }
         
         /// <summary>
@@ -37,19 +37,12 @@ namespace Quest
         /// </summary>
         /// <param name="eventType">진행중인 퀘스트 이벤트</param>
         /// <param name="value">이벤트 값</param>
-        public void OnValueChange(QuestEvent eventType, object value)
+        public void OnValueChange(QuestType eventType, object value)
         {
             if (questDictionary.TryGetValue(eventType, out var subject))
             {
                 subject.OnNext(value);
             }
         }
-    }
-
-    public enum QuestEvent
-    {
-        None,
-        GameRank, // 게임 랭크
-        Notification, // 알림
     }
 }
