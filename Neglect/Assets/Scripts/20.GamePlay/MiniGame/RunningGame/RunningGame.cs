@@ -1,7 +1,8 @@
 ﻿using System;
 using Manager;
+using System.Collections.Generic;
 using UniRx;
-using UnityEngine;
+using Util;
 
 namespace GamePlay.MiniGame.RunningGame
 {
@@ -10,19 +11,29 @@ namespace GamePlay.MiniGame.RunningGame
     public partial class RunningGame : MiniGameBase
     {
         public static float GameSpeed = 1f;
+        
         public PlayerData[] playerDataArray = new PlayerData[3];
+
+        public List<ObjectSpawner> obstacleSpawnerList;
 
         public override void Awake()
         {
             base.Awake();
-            GameSpeed = 1f;
             
             InputManager.running.input.Enable();
         }
 
-        public void ChangeSpeed(float speed)
+        public override void Start()
         {
-            GameSpeed = speed;
+            base.Start();
+            gameSpeed.Subscribe(value =>
+            {
+                GameSpeed = value;
+                foreach (ObjectSpawner spawner in obstacleSpawnerList)
+                {
+                    spawner.timeScale = value;
+                }
+            });
         }
     }
 

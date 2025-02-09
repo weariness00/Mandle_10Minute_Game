@@ -16,6 +16,7 @@ namespace Util
         [Tooltip("생성 잠시 중단")] public bool isPause;
         [Tooltip("스폰이 시작되면 첫 딜레이 없이 바로 스폰할 것인지")] public bool isSpawnImmediate = false;
         [Tooltip("딜레이가 있다면 몇초로 할 것인지")]public float startSpawnDelay = 1f;
+        [Tooltip("스폰 간격에 곱샘해준다.")] public float timeScale = 1f;
         
         // 해당 random은 아래의 리스트의 원소상에서의 랜덤임
         public bool isRandomObject = false; // 랜덤한 객체를 소환할 것인지
@@ -36,13 +37,15 @@ namespace Util
     
         public float[] spawnIntervals; // 스폰 간격, 1개일 경우 반복 여러개일 경우 순차적으로 실행
         private int _spawnIntervalCount = -1;
-        private MinMaxValue<float> intervalTimer = new();
+        [HideInInspector] public MinMaxValue<float> intervalTimer = new(true);
     
         public UnityAction<GameObject> SpawnSuccessAction; // 스폰 되면 실행하는 이벤트
         private Coroutine SpawnCoroutine;
 
         public void Start()
         {
+            intervalTimer.isOverMin = true;
+            
             spawnPlace.Initialize();
             
             if (isStartSpawn)
@@ -92,11 +95,10 @@ namespace Util
             {
                 if (isPause == false)
                 {
-                    intervalTimer.Current -= Time.deltaTime;
+                    intervalTimer.Current -= Time.deltaTime * timeScale;
                     if (intervalTimer.IsMin)
                     {
                         Spawn();
-                        intervalTimer.SetMax();
                     }
                 }
                 yield return null;
@@ -168,7 +170,10 @@ namespace Util
             
             if (spawnIntervals.Length == 0) interval = 0;
             else interval = spawnIntervals[_spawnIntervalCount];
+
+            var dis = intervalTimer.Current;
             intervalTimer.SetMax(interval);
+            intervalTimer.Current += dis;
         }
     }
 
