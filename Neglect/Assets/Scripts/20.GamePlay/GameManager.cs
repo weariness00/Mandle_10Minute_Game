@@ -16,7 +16,7 @@ namespace GamePlay
             SceneUtil.AsyncAddPhone();
         
             // 테스트용
-            SceneUtil.AsyncAddFlappingGame(scene =>
+            SceneUtil.AsyncAddRunningGame(scene =>
             {
                 // 씬 로드 되면 일단 미니게임 초기화 하고 멈추기
                 foreach (GameObject rootGameObject in scene.GetRootGameObjects())
@@ -25,7 +25,6 @@ namespace GamePlay
                     if (miniGameManager != null)
                     {
                         miniGameManager.InitLoadedScene(scene);
-                        miniGameManager.GameStop();
                         currentMiniGame = miniGameManager;
                         break;
                     }

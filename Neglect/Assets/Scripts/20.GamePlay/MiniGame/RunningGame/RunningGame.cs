@@ -2,6 +2,8 @@
 using Manager;
 using System.Collections.Generic;
 using UniRx;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using Util;
 
 namespace GamePlay.MiniGame.RunningGame
@@ -26,6 +28,16 @@ namespace GamePlay.MiniGame.RunningGame
         public override void Start()
         {
             base.Start();
+            
+            foreach (ObjectSpawner spawner in obstacleSpawnerList)
+            {
+                spawner.SpawnSuccessAction.AddListener(obj =>
+                {
+                    obj.layer = LayerMask.NameToLayer("Phone");
+                    SceneManager.MoveGameObjectToScene(obj, SceneUtil.GetRunningGameScene());
+                });
+            }
+            
             gameSpeed.Subscribe(value =>
             {
                 GameSpeed = value;

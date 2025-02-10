@@ -16,8 +16,6 @@ namespace SeoTestTestTest
         {
             if (questId != -1)
             {
-                var quest = Instantiate(QuestManager.QuestList.GetQuestID(questId));
-                quest.Play();
             }
 
             if (flappingGameManager)

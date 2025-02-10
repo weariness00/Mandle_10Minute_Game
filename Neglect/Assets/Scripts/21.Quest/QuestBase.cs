@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -62,6 +63,45 @@ namespace Quest
     {
         // QuestManager를 통해 특수한 값이 전달되었을떄 사용
         public abstract void OnNext(object value);
+    }
+
+    public partial class QuestBase : IComparable, IComparable<int>, IComparable<QuestBase>
+    {
+        public int CompareTo(object obj)
+        {
+            if (obj is int id)
+                return this.questID.CompareTo(id);
+
+            return 0;
+        }
+
+        public int Compare(object x, object y)
+        {
+            if (x is QuestBase quest)
+                return quest.CompareTo(y);
+
+            return 0;
+        }
+
+        public int CompareTo(QuestBase other)
+        {
+            if (ReferenceEquals(this, other))
+            {
+                return 0;
+            }
+
+            if (ReferenceEquals(null, other))
+            {
+                return 1;
+            }
+
+            return questID.CompareTo(other.questID);
+        }
+        
+        public int CompareTo(int otherID)
+        {
+            return questID.CompareTo(otherID);
+        }
     }
 }
 

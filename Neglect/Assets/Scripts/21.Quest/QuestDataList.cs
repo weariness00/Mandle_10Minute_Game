@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -12,7 +11,7 @@ namespace Quest
     {
         public static QuestDataList Instance => QuestSettingProviderHelper.setting;
         
-        [SerializeField] [Tooltip("퀘스트 로직이 담긴 프리펩")] private QuestBase[] questList;
+        [SerializeField] [Tooltip("퀘스트 로직이 담긴 프리펩")] private QuestBase[] questArray;
         [SerializeField] [Tooltip("퀘스트 데이터 테이블")] private EventData[] eventDataArray;
 
         public QuestBase InstantiateQuest(int id)
@@ -22,24 +21,35 @@ namespace Quest
             quest.eventData = data;
             return quest;
         }
-        
-        public QuestBase GetQuestID(int id) => questList.FirstOrDefault(q => q.questID == id);
-        public EventData GetDataID(int id) => eventDataArray.FirstOrDefault(d => d.id == id);
+
+        public QuestBase GetQuestID(int id)
+        {
+            var index = Array.BinarySearch(questArray, id);
+            return index >= 0 ? questArray[index] : null;
+        }
+
+        public EventData GetDataID(int id)
+        {
+            var index = Array.BinarySearch(eventDataArray, id);
+            return index >= 0 ? eventDataArray[index] : null;
+        }
 
 #if UNITY_EDITOR
         [SerializeField] private TextAsset eventDataTableCSV;
-        [SerializeField] private TextAsset questDataTableCSV;
+        [SerializeField] private TextAsset questPrefabDataTableCSV;
         [SerializeField] private TextAsset textDataTableCSV;
         
-        public void AddQuest(QuestBase questPrefab) => questList = questList.Concat(new [] {questPrefab}).ToArray();
-        public void RemoveQuest(QuestBase questPrefab) => questList = questList.Where(q => q != questPrefab).ToArray();
+        public void AddQuest(QuestBase questPrefab) => questArray = questArray.Concat(new [] {questPrefab}).ToArray();
+        public void RemoveQuest(QuestBase questPrefab) => questArray = questArray.Where(q => q.questID != questPrefab.questID).ToArray();
         
         /// <summary>
         /// 모든 퀘스트 list에 저장
         /// </summary>
         public void SetQuestList()
         {
-            questList = Resources.LoadAll<QuestBase>("Quest");
+            questArray = Resources.LoadAll<QuestBase>("Quest").ToArray();
+            Array.Sort(questArray);
+            
             EditorUtility.SetDirty(this);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
@@ -49,6 +59,7 @@ namespace Quest
         
         public void InitData()
         {
+            Array.Sort(questArray);
             QuestSettingProviderHelper.setting.SetEventCSV();
         }
 
@@ -60,12 +71,15 @@ namespace Quest
             SetQuestTextData(out var questTextArray);
             for (var i = 0; i < eventCSV.Count; i++)
             {
+                var data = new EventData();
                 var csv = eventCSV[i];
-                eventDataArray[i].id = csv.DynamicCast<int>("ID");
-                eventDataArray[i].level = csv.DynamicCast<QuestLevel>("Level", QuestLevel.None);
-                eventDataArray[i].prefab = GetQuestID(csv.DynamicCast<int>("PrefabID", -1));
+                data.id = csv.DynamicCast<int>("ID");
+                data.level = csv.DynamicCast<QuestLevel>("Level", QuestLevel.None);
+                data.prefab = GetQuestID(csv.DynamicCast<int>("PrefabID", -1));
                 var textList = csv.DynamicCast<int[]>("TextList", Array.Empty<int>());
-                eventDataArray[i].textArray = questTextArray.Where(d => textList.FirstOrDefault(ti => ti == d.id) != 0).Select(d => d.text).ToArray();
+                data.textArray = questTextArray.Where(d => textList.FirstOrDefault(ti => ti == d.id) != 0).Select(d => d.text).ToArray();
+
+                eventDataArray[i] = data;
             }
 
             //후속 이벤트들 할당

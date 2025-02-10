@@ -4,7 +4,7 @@
 //,예시),,1:쉬움,다음 이벤트 ID를 나타낸다.,필요하지 않을 경우 “X”로 표기한다.,,
 //,1xxx,,2:중간,없을 경우 -1으로 표기,,,
 //,,,3:어려움,,,,
-Header,EventID,Name,Level,NextEventID,PrefabID,PrefabID2,PrefabID3
-,1,,1,1,3,"3,3,3,3,3,3,",
-,2,Quest_Password,2,-1,[2],,
-,3,Quest_Bank,3,-1,"[2,3]",,
+Header,ID,Name,Level,PrefabID,TextList,AcceptEventID,IgnoreEventID
+,1000,엄마 전화,1,1000,,1002,
+,1001,엄마 카톡,2,1001,,,
+,1002,은행,3,1002,,,

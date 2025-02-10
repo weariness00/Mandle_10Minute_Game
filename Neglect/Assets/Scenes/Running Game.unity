@@ -371,6 +371,9 @@ MonoBehaviour:
     _isMax: 1
     isOverMax: 0
     isOverMin: 0
+  SpawnSuccessAction:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &484790171
 GameObject:
   m_ObjectHideFlags: 0
@@ -1269,6 +1272,7 @@ MonoBehaviour:
     _isMax: 0
     isOverMax: 0
     isOverMin: 0
+  gameName: 
   playerDataArray:
   - score:
       value: 10000
@@ -1729,15 +1733,15 @@ Canvas:
   m_GameObject: {fileID: 1900557407}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_RenderMode: 1
+  m_Camera: {fileID: 1088109112}
+  m_PlaneDistance: 10
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -1845,6 +1849,9 @@ MonoBehaviour:
     _isMax: 1
     isOverMax: 0
     isOverMin: 0
+  SpawnSuccessAction:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2104558760
 GameObject:
   m_ObjectHideFlags: 0

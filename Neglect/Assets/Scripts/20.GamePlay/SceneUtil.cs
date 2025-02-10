@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GamePlay.Phone;
+using System;
 using System.Collections;
 using UniRx;
 using UnityEngine;
@@ -10,10 +11,19 @@ namespace GamePlay
     public class SceneUtil : Singleton<SceneUtil>
     {
         private static readonly string PhoneScene = "Phone";
+        private static readonly string RunningGameScene = "Running Game";
         private static readonly string FlappingGameScene = "Flapping Game";
 
         public static void AddPhone() => SceneManager.LoadScene(PhoneScene, LoadSceneMode.Additive);
         public static void AsyncAddPhone(Action<Scene> loadedAction = null) =>Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(PhoneScene, loadedAction));
+
+        public static Scene GetRunningGameScene() => SceneManager.GetSceneByName(RunningGameScene);
+        public static bool TryGetRunningGameScene(out Scene scene)
+        {
+            scene = SceneManager.GetSceneByName(RunningGameScene);
+            return scene.IsValid() && scene.isLoaded;
+        }
+        public static void AsyncAddRunningGame(Action<Scene> loadedAction = null) =>Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(RunningGameScene, loadedAction));
 
         public static bool TryGetFlappingScene(out Scene scene)
         {
@@ -32,16 +42,29 @@ namespace GamePlay
             }
             var scene = SceneManager.GetSceneByName(sceneName);
             UnloadedObject(scene);
+            AppLoad(scene);
             loadedAction?.Invoke(scene);
+        }
+
+        private void AppLoad(Scene scene)
+        {
+            foreach (GameObject rootGameObject in scene.GetRootGameObjects())
+            {
+                var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
+                if (app != null)
+                {
+                    app.OnLoad();
+                    break;
+                }
+            }
         }
 
         private void UnloadedObject(Scene scene)
         {
-            // 씬 로드 되면 일단 미니게임 초기화 하고 멈추기
             foreach (GameObject rootGameObject in scene.GetRootGameObjects())
             {
-                // Additional Scene 레이어에 해당하는 오브젝트 비활성화
-                if (rootGameObject.layer == LayerMask.NameToLayer("Additional Scene"))
+                // Unloaded Scene 레이어에 해당하는 오브젝트 비활성화
+                if (rootGameObject.layer == LayerMask.NameToLayer("Unloaded Scene"))
                 {
                     rootGameObject.SetActive(false);
                     break;

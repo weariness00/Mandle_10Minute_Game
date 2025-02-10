@@ -1,4 +1,5 @@
-﻿using Manager;
+﻿using GamePlay.Phone;
+using Manager;
 using System;
 using UniRx;
 using UnityEngine;
@@ -8,14 +9,11 @@ using Util;
 
 namespace GamePlay.MiniGame
 {
-    public class MiniGameBase : MonoBehaviour
+    public partial class MiniGameBase : MonoBehaviour
     {
         public ReactiveProperty<bool> isGamePlay = new(true);
         public ReactiveProperty<float> gameSpeed = new(1f);
         [SerializeField] protected MinMaxValue<float> playTime = new(0,0, 60 * 10);
-
-        private RawImage renderTextureImage;
-        private RenderTexture renderTexture;
 
         public virtual void Awake()
         {
@@ -32,16 +30,6 @@ namespace GamePlay.MiniGame
             if (isGamePlay.Value)
             {
                 playTime.Current += Time.deltaTime;
-            }
-        }
-
-        public virtual void OnDestroy()
-        {
-            if (renderTexture)
-            {
-                renderTexture.Release();
-                Destroy(renderTexture);
-                renderTexture = null;
             }
         }
 
@@ -63,6 +51,8 @@ namespace GamePlay.MiniGame
 
         public void InitLoadedScene(Scene scene)
         {
+            var phone = FindObjectOfType<PhoneControl>();
+            
             foreach (GameObject rootGameObject in scene.GetRootGameObjects())
             {
                 // 미니 게임 씬에 있는 모든 객체는 Phone 레이어를 가지도록 변경
@@ -70,29 +60,49 @@ namespace GamePlay.MiniGame
                 {
                     t.gameObject.layer = LayerMask.NameToLayer("Phone");
                 }
+
+                // 카메라에 따라 마우스 클릭 위치 변경 가능
+                foreach (var canvas in rootGameObject.GetComponentsInChildren<Canvas>())
+                {
+                    canvas.worldCamera = phone.phoneCamera;
+                }
             }
-
-            // 폰 카메라에 사용될 Render Texture 생성
-            renderTexture = new RenderTexture(960, 600, 16);
-            renderTexture.Create();
-
-            renderTextureImage = UIManager.InstantiateRenderTextureImage(960, 600);
-            renderTextureImage.rectTransform.anchorMin = Vector2.zero;
-            renderTextureImage.rectTransform.anchorMax = Vector2.one;
-            renderTextureImage.rectTransform.offsetMin = Vector2.zero;
-            renderTextureImage.rectTransform.offsetMax = Vector2.zero;
-            renderTextureImage.texture = renderTexture;
-            
-            // 폰 카메라 생성 & 셋팅
-            var phoneCamera = Instantiate(Camera.main);
-            phoneCamera.cullingMask = LayerMask.GetMask("Phone");
-            phoneCamera.targetTexture = renderTexture;
-            Destroy(phoneCamera.gameObject.GetComponent<AudioListener>());
         }
 
         public void SetGameSpeed(float value)
         {
             gameSpeed.Value = value;
+        }
+
+    }
+
+    public partial class MiniGameBase : IPhoneApplication
+    {
+        public string gameName;
+        public string AppName => gameName;
+
+        public void OnLoad()
+        {
+
+        }
+
+        public void OnPlay()
+        {
+            GamePlay();
+        }
+
+        public void OnResume()
+        {
+            GamePlay();
+        }
+
+        public void OnPause()
+        {
+            GameStop();
+        }
+
+        public void OnExit()
+        {
         }
     }
 }
