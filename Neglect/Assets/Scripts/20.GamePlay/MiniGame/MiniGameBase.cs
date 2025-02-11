@@ -1,10 +1,7 @@
 ﻿using GamePlay.Phone;
-using Manager;
-using System;
 using UniRx;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using Util;
 
 namespace GamePlay.MiniGame
@@ -78,30 +75,31 @@ namespace GamePlay.MiniGame
 
     public partial class MiniGameBase : IPhoneApplication
     {
-        public string gameName;
+        [Header("App 관련")]
+        [SerializeField] private string gameName;
+        [SerializeField] private Sprite appIcon;
+        
         public string AppName => gameName;
+        public Sprite AppIcon { get => appIcon; set => appIcon = value; }
 
-        public void OnLoad()
+        public virtual void AppInstall()
         {
-
+            InitLoadedScene(gameObject.scene);
         }
 
-        public void OnPlay()
+        public virtual void AppPlay()
         {
-            GamePlay();
         }
 
-        public void OnResume()
+        public virtual void AppResume()
         {
-            GamePlay();
         }
 
-        public void OnPause()
+        public virtual void AppPause()
         {
-            GameStop();
         }
 
-        public void OnExit()
+        public virtual void AppUnInstall()
         {
         }
     }

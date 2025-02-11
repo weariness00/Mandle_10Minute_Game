@@ -17,6 +17,7 @@ namespace GamePlay.Phone
         public Canvas phoneCanvas;
         public Transform phoneTransform;
         public ApplicationControl applicationControl;
+        public bool isInMousePosition;
         
         public void Awake()
         {
@@ -186,6 +187,12 @@ namespace GamePlay.Phone
             Vector2 cameraPosition = phoneCamera.transform.position * unitToPixel; // 카메라의 현재 위치를 viewport 위치로 전환
             Vector2 phoneMousePosition = (mousePosition - objPosition + cameraPosition - screenSize / 2) * viewRatio + renderTextureSize / 2;
 
+            isInMousePosition = false;
+            if(phoneMousePosition.x < 0 || phoneMousePosition.x > renderTextureSize.x ||
+               phoneMousePosition.y < 0 || phoneMousePosition.y > renderTextureSize.y)
+                return;
+
+            isInMousePosition = true;
             pointerData.position = phoneMousePosition;
             rayCastResults.Clear();
             EventSystem.current.RaycastAll(pointerData, rayCastResults);

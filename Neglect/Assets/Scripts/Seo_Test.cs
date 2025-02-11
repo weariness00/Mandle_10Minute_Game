@@ -1,4 +1,6 @@
-﻿using GamePlay.MiniGame.FlappingGame;
+﻿using GamePlay;
+using GamePlay.MiniGame.FlappingGame;
+using GamePlay.Phone;
 using Quest;
 using TMPro;
 using UniRx;
@@ -12,6 +14,12 @@ namespace SeoTestTestTest
 
         public FlappingGameManager flappingGameManager;
         public TMP_Text scoreText;
+
+        [Header("Phone 관련")]
+        public PhoneControl phoneControl;
+        public string miniGameName;
+        public bool isMiniGameAddToApp;
+        
         public void Start()
         {
             if (questId != -1)
@@ -21,6 +29,40 @@ namespace SeoTestTestTest
             if (flappingGameManager)
             {
                 if (scoreText) flappingGameManager.score.Subscribe(value => scoreText.text = $"{value}");
+            }
+
+            if (isMiniGameAddToApp)
+            {
+                if (miniGameName == "Running Game")
+                {
+                    SceneUtil.AsyncAddRunningGame(scene =>
+                    {
+                        foreach (GameObject rootGameObject in scene.GetRootGameObjects())
+                        {
+                            var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
+                            if(app != null) phoneControl.applicationControl.AddApp(app);
+                        }
+                    });
+                }
+                else
+                {
+                    SceneUtil.AsyncAddFlappingGame(scene =>
+                    {
+                        foreach (GameObject rootGameObject in scene.GetRootGameObjects())
+                        {
+                            var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
+                            if(app != null) phoneControl.applicationControl.AddApp(app);
+                        }
+                    });
+                    SceneUtil.AsyncAddRunningGame(scene =>
+                    {
+                        foreach (GameObject rootGameObject in scene.GetRootGameObjects())
+                        {
+                            var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
+                            if(app != null) phoneControl.applicationControl.AddApp(app);
+                        }
+                    });
+                }
             }
         }
     }

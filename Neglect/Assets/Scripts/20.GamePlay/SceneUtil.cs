@@ -42,21 +42,7 @@ namespace GamePlay
             }
             var scene = SceneManager.GetSceneByName(sceneName);
             UnloadedObject(scene);
-            AppLoad(scene);
             loadedAction?.Invoke(scene);
-        }
-
-        private void AppLoad(Scene scene)
-        {
-            foreach (GameObject rootGameObject in scene.GetRootGameObjects())
-            {
-                var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
-                if (app != null)
-                {
-                    app.OnLoad();
-                    break;
-                }
-            }
         }
 
         private void UnloadedObject(Scene scene)

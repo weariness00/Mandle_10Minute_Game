@@ -7,13 +7,13 @@ namespace GamePlay.MiniGame.RunningGame
 {
     public class LifeUI : MonoBehaviour
     {
+        public RunningPlayer player;
         public Transform lifeGroupTransform;
         public Image lifePrefab;
         public List<Image> lifeImageList = new();
         
         public void Awake()
         {
-            var player = FindObjectOfType<RunningPlayer>();
             Debug.Assert(player != null, "Running Player가 존재하지 않습니다.");
 
             for (int i = 0; i < player.life.Value; i++)
