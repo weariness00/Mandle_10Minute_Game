@@ -5,6 +5,7 @@ using Quest;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Quest_ChargeNow : QuestBase
 {
@@ -17,31 +18,34 @@ public class Quest_ChargeNow : QuestBase
 
     }
 
+  
     public override void Play()
     {
         base.Play();
 
         var ChargerPopup = UIManager.InstantiateFromPhone(notification);
         ChargerPopup.gameObject.SetActive(true);
-
         var Charger = Instantiate(charger , SpawnPos , transform.rotation);
         Charger.gameObject.SetActive(true);
+
+        Charger.ClearAction += Complete;
+        ChargerPopup.IgnoreAction += Ignore;
     }
-    public void init()
+
+    private void Update()
     {
-        charger.ClearAction += Complete;
-        notification.IgnoreAction += Ignore;
+
     }
 
     public override void Complete()
     {
         base.Complete();
-
+   
     }
 
     public override void Ignore()
     {
         base.Ignore();
-
+        
     }
 }

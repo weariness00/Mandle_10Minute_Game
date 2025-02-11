@@ -22,6 +22,7 @@ namespace GamePlay.Event
         public bool isDragging; // 드래그 중인가?
         public bool isClear; // 이벤트를 완수 했는가?
 
+
         public Action ClearAction;
 
         [Header("MMF 애니메이션")]
@@ -34,12 +35,16 @@ namespace GamePlay.Event
 
             if (Mouse.current.leftButton.wasPressedThisFrame && !isClear)
             {
-                isDragging = true;
-                float chargerZ = Camera.main.WorldToScreenPoint(Charger.transform.position).z;
-                Vector2 pointerPosition = Mouse.current.position.ReadValue();
-                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(pointerPosition.x, pointerPosition.y, chargerZ));
+                
+                if (CheckClickCharger()) // 충전기 클릭?
+                {
+                    isDragging = true;
+                    float chargerZ = Camera.main.WorldToScreenPoint(Charger.transform.position).z;
+                    Vector2 pointerPosition = Mouse.current.position.ReadValue();
+                    Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(pointerPosition.x, pointerPosition.y, chargerZ));
 
-                offset = Charger.transform.localPosition -  worldPosition;
+                    offset = Charger.transform.localPosition - worldPosition;
+                }
             }
 
             if (isDragging && !isClear)
@@ -60,10 +65,12 @@ namespace GamePlay.Event
             }
 
         }
-
-        public bool CheckClickCharger(Vector3 ClickPos)
+        public bool CheckClickCharger()
         {
-            return true;
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());  // 마우스 위치를 월드 좌표로 변환
+            RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+
+            return (hit.collider != null && hit.collider.gameObject == Charger);
         }
 
         public void EventClaer()
