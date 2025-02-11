@@ -44,7 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a42e19cb992be104b8bc017fb05e68ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questID: 3
+  questID: 1002
   questName: 
   type: 0
   state: 0
+  eventData:
+    id: 0
+    level: 0
+    prefab: {fileID: 0}
+    textArray: []

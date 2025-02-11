@@ -41,7 +41,7 @@ namespace Util
         
         public static List<Dictionary<string,object>> ReadHorizon(this TextAsset csvFile)
         {
-            Debug.Assert(csvFile != null, "CSV파일이 없어서 퀘스트 데이터를 셋팅하지 못했습니다.");
+            Debug.Assert(csvFile != null, "CSV파일이 없어서 데이터를 셋팅하지 못했습니다.");
             var path = GetResourcePathToCSV(csvFile);
             var csv = CSVReader.ReadHorizon(path);
             return csv;
@@ -49,7 +49,7 @@ namespace Util
 
         public static Dictionary<string, List<object>> ReadVertical(this TextAsset csvFile)
         {
-            Debug.Assert(csvFile != null, "CSV파일이 없어서 퀘스트 데이터를 셋팅하지 못했습니다.");
+            Debug.Assert(csvFile != null, "CSV파일이 없어서 데이터를 셋팅하지 못했습니다.");
             var path = GetResourcePathToCSV(csvFile);
             var csv = CSVReader.ReadVertical(path);
             return csv;

@@ -76,7 +76,7 @@ namespace GamePlay.MiniGame.RunningGame
                 obstacle.isCollision = true;
                 immortalTime.SetMax();
                 life.Value--;
-                hitEffect.PlayFeedbacks();
+                if(hitEffect) hitEffect.PlayFeedbacks();
             }
         }
         

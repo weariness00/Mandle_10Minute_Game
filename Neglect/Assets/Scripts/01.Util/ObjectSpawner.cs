@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
@@ -39,7 +37,7 @@ namespace Util
         private int _spawnIntervalCount = -1;
         [HideInInspector] public MinMaxValue<float> intervalTimer = new(true);
     
-        public UnityAction<GameObject> SpawnSuccessAction; // 스폰 되면 실행하는 이벤트
+        public UnityEvent<GameObject> SpawnSuccessAction; // 스폰 되면 실행하는 이벤트
         private Coroutine SpawnCoroutine;
 
         public void Start()
@@ -112,6 +110,8 @@ namespace Util
             NextInterval();
             var obj = Instantiate(currentSpawnObject, _currentSpawnPlace.position, _currentSpawnPlace.rotation, parentTransform);
             spawnCount.Current++;
+            
+            SpawnSuccessAction.Invoke(obj);
         }
 
         private void NextObject()

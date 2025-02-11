@@ -1,7 +1,10 @@
-﻿using System;
+﻿using GamePlay.Phone;
+using System;
 using Manager;
 using System.Collections.Generic;
 using UniRx;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using Util;
 
 namespace GamePlay.MiniGame.RunningGame
@@ -11,9 +14,19 @@ namespace GamePlay.MiniGame.RunningGame
     public partial class RunningGame : MiniGameBase
     {
         public static float GameSpeed = 1f;
+
+        public GameObject runningGameObjectRoot;
+        public GameObject runningGameCanvasRoot;
+
+        [Header("Lobby 관련")] 
+        public Canvas lobbyCanvas;
+        public GameObject lobbyObject;
+        
+        [Header("In Game 관련")]
+        public Canvas inGameCanvas;
+        public GameObject inGameObject;
         
         public PlayerData[] playerDataArray = new PlayerData[3];
-
         public List<ObjectSpawner> obstacleSpawnerList;
 
         public override void Awake()
@@ -26,6 +39,19 @@ namespace GamePlay.MiniGame.RunningGame
         public override void Start()
         {
             base.Start();
+
+            if (FindObjectOfType<PhoneControl>() != null)
+            {
+                foreach (ObjectSpawner spawner in obstacleSpawnerList)
+                {
+                    spawner.SpawnSuccessAction.AddListener(obj =>
+                    {
+                        obj.layer = LayerMask.NameToLayer("Phone");
+                        SceneManager.MoveGameObjectToScene(obj, SceneUtil.GetRunningGameScene());
+                    });
+                }
+            }
+            
             gameSpeed.Subscribe(value =>
             {
                 GameSpeed = value;
@@ -41,18 +67,40 @@ namespace GamePlay.MiniGame.RunningGame
     public partial class RunningGame
     {
         public PlayerData GetPlayerData() => playerDataArray[0];
-    }
 
-    public partial class RunningGame
-    {
         [Serializable]
         public class PlayerData
         {
             public ReactiveProperty<int> score = new(0);
             public string name;
         }
+        
+        public override void GamePlay()
+        {
+            base.GamePlay();
+            lobbyCanvas.gameObject.SetActive(false);
+            lobbyObject.gameObject.SetActive(false);
+            
+            inGameCanvas.gameObject.SetActive(true);
+            inGameObject.gameObject.SetActive(true);
+        }
     }
 
-    
+    public partial class RunningGame
+    {
+        public override void AppInstall()
+        {
+            base.AppInstall();
+            runningGameObjectRoot.SetActive(false);
+            runningGameCanvasRoot.SetActive(false);
+        }
+
+        public override void AppPlay()
+        {
+            base.AppPlay();
+            runningGameObjectRoot.SetActive(true);
+            runningGameCanvasRoot.SetActive(true);
+        }
+    }
 }
 
