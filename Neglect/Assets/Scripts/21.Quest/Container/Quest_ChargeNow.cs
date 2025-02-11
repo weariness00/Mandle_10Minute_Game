@@ -1,18 +1,47 @@
+using GamePlay.Event;
+using GamePlay.PopUp;
+using Manager;
+using Quest;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Quest_ChargeNow : MonoBehaviour
+public class Quest_ChargeNow : QuestBase
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public ChargeNotification notification;
+    public ChargerConnect charger;
+    public Vector3 SpawnPos;
+    public override void OnNext(object value)
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Play()
     {
-        
+        base.Play();
+
+        var ChargerPopup = UIManager.InstantiateFromPhone(notification);
+        ChargerPopup.gameObject.SetActive(true);
+
+        var Charger = Instantiate(charger , SpawnPos , transform.rotation);
+        Charger.gameObject.SetActive(true);
+    }
+    public void init()
+    {
+        charger.ClearAction += Complete;
+        notification.IgnoreAction += Ignore;
+    }
+
+    public override void Complete()
+    {
+        base.Complete();
+
+    }
+
+    public override void Ignore()
+    {
+        base.Ignore();
+
     }
 }

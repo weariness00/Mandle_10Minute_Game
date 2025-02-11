@@ -1,7 +1,9 @@
 using MoreMountains.Feedbacks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace GamePlay.Event
@@ -20,6 +22,7 @@ namespace GamePlay.Event
         public bool isDragging; // 드래그 중인가?
         public bool isClear; // 이벤트를 완수 했는가?
 
+        public Action ClearAction;
 
         [Header("MMF 애니메이션")]
         public MMF_Player ResetPostion;      // 충전기 복귀 애니메이션
@@ -67,6 +70,7 @@ namespace GamePlay.Event
         {
             isClear = true;
             TargetPostion.PlayFeedbacks();
+            ClearAction();
         }
 
         public bool IsChargerNearTarget()
