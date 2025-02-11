@@ -1,3 +1,5 @@
+using GamePlay.Event;
+using Manager;
 using Quest;
 using System;
 using System.Collections;
@@ -8,6 +10,8 @@ namespace Quest.Container
 {
     public class Quest_Password : QuestBase
     {
+
+        public PasswordToLine Password;
         public override void OnNext(object value)
         {
         }
@@ -15,6 +19,8 @@ namespace Quest.Container
         public override void Play()
         {
             base.Play();
+            var PasswordObj = UIManager.InstantiateFromPhone(Password);
+            PasswordObj.gameObject.SetActive(true);
         }
     }
 }
