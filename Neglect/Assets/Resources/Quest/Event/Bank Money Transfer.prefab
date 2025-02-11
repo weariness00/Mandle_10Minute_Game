@@ -2623,7 +2623,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6455472978550129903}
   - component: {fileID: 9060640327001606600}
-  - component: {fileID: -1332960413431058835}
   m_Layer: 0
   m_Name: Bank Money Transfer
   m_TagString: Untagged
@@ -2670,19 +2669,6 @@ MonoBehaviour:
   PassbookOwner: Smith
   BankTransfer: {fileID: 8976941299774180814}
   BankFinish: {fileID: 3057159176977442252}
---- !u!114 &-1332960413431058835
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4075018776222206184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff3b58468ee34b9eb2392c70a5863a6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 3
 --- !u!1 &5101451365623640278
 GameObject:
   m_ObjectHideFlags: 0

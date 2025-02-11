@@ -17,14 +17,16 @@ namespace GamePlay.MiniGame.RunningGame
         public void OnTriggerExit2D(Collider2D other)
         {
             // 플레이어와 충돌하지 않았을때만 점수 추가
-            if (!isCollision && other.CompareTag("Running Score Line"))
+            if (other.CompareTag("Running Score Line"))
             {
-                var runningGame = FindObjectOfType<RunningGame>();
-                if (runningGame != null)
+                if (!isCollision)
                 {
-                    runningGame.GetPlayerData().score.Value += extraScore;
+                    var runningGame = FindObjectOfType<RunningGame>();
+                    if (runningGame != null)
+                    {
+                        runningGame.GetPlayerData().score.Value += extraScore;
+                    }
                 }
-                
                 Destroy(gameObject, 2f);
             }
         }

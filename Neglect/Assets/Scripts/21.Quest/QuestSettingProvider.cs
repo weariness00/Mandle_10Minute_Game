@@ -4,7 +4,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace GamePlay
+namespace Quest
 {
     public class QuestSettingProvider
     {
@@ -21,12 +21,17 @@ namespace GamePlay
                     // 설정 창에 표시할 UI
                     QuestSettingProviderHelper.IsDebug = EditorGUILayout.Toggle("Is Debug", QuestSettingProviderHelper.IsDebug); 
                     EditorGUILayout.LabelField("Quest Data", EditorStyles.boldLabel);
-                    QuestSettingProviderHelper.setting = (QuestDataList)EditorGUILayout.ObjectField(
+                    var setting = QuestSettingProviderHelper.setting = (QuestDataList)EditorGUILayout.ObjectField(
                         $"Quest Data List",
                         QuestSettingProviderHelper.setting,
                         typeof(QuestDataList),
                         false
                     );
+
+                    if (setting != null)
+                    {
+                        Editor.CreateEditor(setting).OnInspectorGUI();
+                    }
                     
                     // setting이 변경되었을 경우 Save() 호출
                     if (GUI.changed)

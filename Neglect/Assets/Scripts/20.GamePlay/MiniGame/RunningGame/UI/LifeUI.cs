@@ -7,13 +7,13 @@ namespace GamePlay.MiniGame.RunningGame
 {
     public class LifeUI : MonoBehaviour
     {
+        public RunningPlayer player;
         public Transform lifeGroupTransform;
         public Image lifePrefab;
         public List<Image> lifeImageList = new();
         
         public void Awake()
         {
-            var player = FindObjectOfType<RunningPlayer>();
             Debug.Assert(player != null, "Running Player가 존재하지 않습니다.");
 
             for (int i = 0; i < player.life.Value; i++)
@@ -27,6 +27,7 @@ namespace GamePlay.MiniGame.RunningGame
 
         public void ChangeLife(int value)
         {
+            if(value < 0) return;
             if (value > lifeImageList.Count)
             {
                 var length = value - lifeImageList.Count;
@@ -39,12 +40,15 @@ namespace GamePlay.MiniGame.RunningGame
             else
             {
                 var length = lifeImageList.Count - value;
-                for (int i = 0; i < length; i++)
+                if (length > 0)
                 {
-                    var lastIndex = lifeImageList.Count - 1;
-                    var image = lifeImageList[lastIndex];
-                    lifeImageList.RemoveAt(lastIndex);
-                    Destroy(image.gameObject);
+                    for (int i = 0; i < length; i++)
+                    {
+                        var lastIndex = lifeImageList.Count - 1;
+                        var image = lifeImageList[lastIndex];
+                        lifeImageList.RemoveAt(lastIndex);
+                        Destroy(image.gameObject);
+                    }
                 }
             }
         }

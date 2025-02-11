@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,15 +9,12 @@ namespace Quest
     {
         [Tooltip("퀘스트 ID")] public int questID;
         [Tooltip("퀘스트 제목")] public string questName;
-        [Tooltip("퀘스트 난이도")] public QuestLevel level;
-        [Tooltip("퀘스트 타입")] public QuestEvent eventType = QuestEvent.None;
+        [Tooltip("퀘스트 타입")] public QuestType type = QuestType.None;
 
         [Space] 
         [Tooltip("퀘스트 진행 상태")] public QuestState state = QuestState.NotStarted;
 
-        public List<QuestPrefab> questPrefabList = new();
-        [HideInInspector] public QuestBase nextQuest;
-        
+        [HideInInspector] public EventData eventData;
         protected IDisposable subscription; // 퀘스트 매니저에서 구독하면 자동 할당됨
 
         public virtual void Play()
@@ -26,18 +24,20 @@ namespace Quest
                 subscription?.Dispose();
                 subscription = QuestManager.Instance.Add(this);
                 
-                // 퀘스틑 관련 프리펩 스폰
-                foreach (QuestPrefab prefab in questPrefabList)
-                    Instantiate(prefab, transform);
-                
                 state = QuestState.InProgress;
             }
         }
 
-        public virtual void Stop()
+        public virtual void Ignore()
         {
             subscription?.Dispose();
             state = QuestState.Failed;
+
+            if (eventData.acceptEvent.id != -1)
+            {
+                var quest = QuestDataList.Instance.InstantiateQuest(eventData.acceptEvent.id);
+                quest.eventData = eventData.acceptEvent;
+            }
         }
 
         public virtual void Pause()
@@ -49,16 +49,59 @@ namespace Quest
         public virtual void Complete()
         {
             subscription?.Dispose();
-            if (nextQuest != null) Instantiate(nextQuest).Play();
-            OnCompleted();
+            state = QuestState.Completed;
+
+            if (eventData.ignoreEvent.id != -1)
+            {
+                var quest = QuestDataList.Instance.InstantiateQuest(eventData.ignoreEvent.id);
+                quest.eventData = eventData.ignoreEvent;
+            }
         }
     }
 
-    public abstract partial class QuestBase : IObserver<object>
+    public abstract partial class QuestBase
     {
-        public abstract void OnCompleted();
-        public abstract void OnError(Exception error);
+        // QuestManager를 통해 특수한 값이 전달되었을떄 사용
         public abstract void OnNext(object value);
+    }
+
+    public partial class QuestBase : IComparable, IComparable<int>, IComparable<QuestBase>
+    {
+        public int CompareTo(object obj)
+        {
+            if (obj is int id)
+                return this.questID.CompareTo(id);
+
+            return 0;
+        }
+
+        public int Compare(object x, object y)
+        {
+            if (x is QuestBase quest)
+                return quest.CompareTo(y);
+
+            return 0;
+        }
+
+        public int CompareTo(QuestBase other)
+        {
+            if (ReferenceEquals(this, other))
+            {
+                return 0;
+            }
+
+            if (ReferenceEquals(null, other))
+            {
+                return 1;
+            }
+
+            return questID.CompareTo(other.questID);
+        }
+        
+        public int CompareTo(int otherID)
+        {
+            return questID.CompareTo(otherID);
+        }
     }
 }
 

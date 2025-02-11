@@ -10,37 +10,53 @@ namespace Util
 {
     static class CSVReaderExtension
     {
-        public static T DynamicCast<T>(this object objectValue)
+        public static T DynamicCast<T>(this object objectValue) => objectValue.DynamicCast<T>(default);
+        public static T DynamicCast<T>(this object objectValue, T defaultValue)
         {
             if (objectValue is T value)
                 return value;
-            return default;
+            return defaultValue;
         }
-
-        public static T DynamicCast<T>(this Dictionary<string,object> dictionary, string key)
+        public static T DynamicCast<T>(this Dictionary<string, object> dictionary, string key) => dictionary.DynamicCast<T>(key, default);
+        public static T DynamicCast<T>(this Dictionary<string,object> dictionary, string key, T defaultValue)
         {
             if (dictionary.TryGetValue(key, out var objectValue))
             {
                 if (objectValue is T value)
                     return value;
             }
+            return defaultValue;
+        }
 
-            if (typeof(T).IsArray)
+        public static List<T> DynamicCastList<T>(this List<object> objectValue) => objectValue.DynamicCastList<T>(default);
+        public static List<T> DynamicCastList<T>(this List<object> objectValue, T defaultData)
+        {
+            List<T> list = new(objectValue.Count);
+            foreach (T value in objectValue)
             {
-                var empty = Array.CreateInstance(typeof(T).GetElementType(), 0);
-                if(empty is T value)
-                    return value;
+                list.Add(value.DynamicCast<T>(defaultData));
             }
-            if (typeof(T).IsGenericType && typeof(T).GetGenericTypeDefinition() == typeof(List<>))
-            {
-                return (T)Activator.CreateInstance(typeof(T));
-            }
-            return default;
+            return list;
         }
         
-        public static List<Dictionary<string,object>> GetCSV(this TextAsset csvFile)
+        public static List<Dictionary<string,object>> ReadHorizon(this TextAsset csvFile)
         {
-            Debug.Assert(csvFile != null, "CSV파일이 없어서 퀘스트 데이터를 셋팅하지 못했습니다.");
+            Debug.Assert(csvFile != null, "CSV파일이 없어서 데이터를 셋팅하지 못했습니다.");
+            var path = GetResourcePathToCSV(csvFile);
+            var csv = CSVReader.ReadHorizon(path);
+            return csv;
+        }
+
+        public static Dictionary<string, List<object>> ReadVertical(this TextAsset csvFile)
+        {
+            Debug.Assert(csvFile != null, "CSV파일이 없어서 데이터를 셋팅하지 못했습니다.");
+            var path = GetResourcePathToCSV(csvFile);
+            var csv = CSVReader.ReadVertical(path);
+            return csv;
+        }
+
+        private static string GetResourcePathToCSV(this TextAsset csvFile)
+        {
             var path = AssetDatabase.GetAssetPath(csvFile);
             
             // Resource 포함 이전 경로 제거
@@ -51,8 +67,7 @@ namespace Util
             
             // 확장자 제거
             path = path.Replace(".csv", "");
-            var csv = CSVReader.Read(path);
-            return csv;
+            return path;
         }
     }
     
@@ -61,7 +76,6 @@ namespace Util
         static string SPLIT_RE = @",(?=(?:[^""]*""[^""]*"")*(?![^""]*""))";
         static string LINE_SPLIT_RE = @"\r\n|\n\r|\n|\r";
         static char[] TRIM_CHARS = { '\"' };
-        private static readonly char[] ListTrim_Char = { '[', ']' };
         
         public static T DynamicCast<T>(object objectValue) where T : new()
         {
@@ -70,7 +84,7 @@ namespace Util
             return new T();
         }
         
-        public static List<Dictionary<string, object>> Read(string file)
+        public static List<Dictionary<string, object>> ReadHorizon(string file)
         {
             var list = new List<Dictionary<string, object>>();
             TextAsset data = Resources.Load<TextAsset>(file);
@@ -81,8 +95,10 @@ namespace Util
             if (lines.Length <= 1) return list;
 
             // 나중에 값이 안들어 있는 경우에 빈 값을 넣어주도록 바꾸어야한다.
-            var header = FindHeader(data, "header");
-            for (var i = 0; i < lines.Length - 1; i++)
+            var headerData = FindHeader(data, "header");
+            var header = headerData.Item1;
+            var headerIndex = headerData.Item2;
+            for (var i = headerIndex; i < lines.Length - 1; i++)
             {
                 var lineValues = Regex.Split(lines[i], SPLIT_RE);
                 if (lineValues.Length == 0 || lineValues[0] == "//" || lineValues[0].ToLower() == "header") continue;
@@ -91,10 +107,9 @@ namespace Util
                 for (var j = 0; j < header.Length && j < lineValues.Length; j++)
                 {
                     string value = lineValues[j];
-                    value = value.TrimStart(TRIM_CHARS).TrimEnd(TRIM_CHARS).Replace("\\", "");
-                    if (value.StartsWith(ListTrim_Char[0]) && value.EndsWith(ListTrim_Char[1]))
+                    if (value.StartsWith(TRIM_CHARS[0]) && value.EndsWith(TRIM_CHARS[0]))
                     {
-                        value = value.TrimStart(ListTrim_Char).TrimEnd(ListTrim_Char).Replace("\\", "");
+                        value = value.TrimStart(TRIM_CHARS).TrimEnd(TRIM_CHARS).Replace("\\", "");
                         var values = Regex.Split(value, SPLIT_RE);
                         bool isString = true;
                         bool isFloat = false;
@@ -135,6 +150,7 @@ namespace Util
                     }
                     else
                     {
+                        value = value.TrimStart(TRIM_CHARS).TrimEnd(TRIM_CHARS).Replace("\\", "");
                         object finalvalue = value;
                         int n;
                         float f;
@@ -154,7 +170,94 @@ namespace Util
             return list;
         }
 
-        private static string[] FindHeader(TextAsset data, string headerName)
+        public static Dictionary<string, List<object>> ReadVertical(string file)
+        {
+            Dictionary<string, List<object>> entry = new();
+            TextAsset data = Resources.Load<TextAsset>(file);
+            if (data == null) return new();
+
+            var lines = Regex.Split(data.text, LINE_SPLIT_RE);
+
+            if (lines.Length <= 1) return entry;
+
+            // 나중에 값이 안들어 있는 경우에 빈 값을 넣어주도록 바꾸어야한다.
+            var headerData = FindHeader(data, "header");
+            var header = headerData.Item1;
+            var headerIndex = headerData.Item2;
+
+            foreach (string str in header)
+                entry.Add(str, new());
+            
+            for (var i = headerIndex + 1; i < lines.Length - 1; i++)
+            {
+                var lineValues = Regex.Split(lines[i], SPLIT_RE);
+                if (lineValues.Length == 0 || lineValues[0] == "//" || lineValues[0].ToLower() == "header") continue;
+                for (var j = 0; j < header.Length && j < lineValues.Length; j++)
+                {
+                    string value = lineValues[j];
+                    if (value.StartsWith(TRIM_CHARS[0]) && value.EndsWith(TRIM_CHARS[0]))
+                    {
+                        value = value.TrimStart(TRIM_CHARS).TrimEnd(TRIM_CHARS).Replace("\\", "");
+                        var values = Regex.Split(value, SPLIT_RE);
+                        bool isString = true;
+                        bool isFloat = false;
+                        foreach (string v in values)
+                        {
+                            if (int.TryParse(v, out var nn))
+                            {
+                                isString = false;
+                            }
+                            else if (float.TryParse(v, out var ff))
+                            {
+                                isFloat = true;
+                                isString = false;
+                                break;
+                            }
+                        }
+
+                        object objectValue = null;
+                        if (isString)
+                        {
+                            objectValue = values;
+                        }
+                        else if (isFloat)
+                        {
+                            float[] f = new float[values.Length];
+                            for (var index = 0; index < values.Length; index++)
+                                float.TryParse(values[index], out f[index]);
+                            objectValue = f;
+                        }
+                        else
+                        {
+                            int[] n = new int[values.Length];
+                            for (var index = 0; index < values.Length; index++)
+                                int.TryParse(values[index], out n[index]);
+                            objectValue = n;
+                        }
+                        entry[header[j]].Add(objectValue);
+                    }
+                    else
+                    {
+                        value = value.TrimStart(TRIM_CHARS).TrimEnd(TRIM_CHARS).Replace("\\", "");
+                        object finalvalue = value;
+                        int n;
+                        float f;
+                        if (int.TryParse(value, out n))
+                        {
+                            finalvalue = n;
+                        }
+                        else if (float.TryParse(value, out f))
+                        {
+                            finalvalue = f;
+                        }
+                        entry[header[j]].Add(finalvalue);
+                    }
+                }
+            }
+            return entry;
+        }
+
+        private static Tuple<string[], int> FindHeader(TextAsset data, string headerName)
         {
             var lines = Regex.Split(data.text, LINE_SPLIT_RE);
             for (var i = 0; i < lines.Length; i++)
@@ -163,11 +266,11 @@ namespace Util
                 if (values.Length == 0 || values[0] == "//") continue;
                 if (values[0].ToLower() == headerName)
                 {
-                    return Regex.Split(lines[i], SPLIT_RE);
+                    return new(Regex.Split(lines[i], SPLIT_RE), i);
                 }
             }
 
-            return Array.Empty<string>();
+            return new(Array.Empty<string>(), -1);
         }
     }
 }

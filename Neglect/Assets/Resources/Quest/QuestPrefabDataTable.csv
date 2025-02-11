@@ -6,6 +6,7 @@
 //,예시),
 //,3xxx,
 //,,
-Header,PrefabID,PrefabName
-,2,Password_Event
-,3,Bank_Event
+,PrefabID,Name
+,1000,팝업
+,1001,카톡
+,1002,은행

@@ -8,14 +8,6 @@ namespace Quest.Container
 {
     public class Quest_Password : QuestBase
     {
-        public override void OnCompleted()
-        {
-        }
-
-        public override void OnError(Exception error)
-        {
-        }
-
         public override void OnNext(object value)
         {
         }
