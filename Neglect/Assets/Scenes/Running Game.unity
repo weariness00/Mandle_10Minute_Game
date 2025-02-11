@@ -886,15 +886,15 @@ MonoBehaviour:
   IsPause: 0
   LeftPosX: 0
   BackgroundPrefab:
-  - {fileID: 4125974149732999222, guid: 4cf5b34471617754cbc9180fccaca354, type: 3}
+  - {fileID: -6910750901725559448, guid: 9252647228b680743962d556a1430928, type: 3}
   MiddlegroundPrefab:
-  - {fileID: 6737356874767081800, guid: 6c241b129268b544f8375caca33e5c1b, type: 3}
+  - {fileID: -3984077211921614465, guid: 6c241b129268b544f8375caca33e5c1b, type: 3}
   ForegroundPrefab:
-  - {fileID: 9185019163331685063, guid: d24e715f6a77b7e4a86d7922bcd57565, type: 3}
-  - {fileID: 6554824413266285295, guid: 57769d645a4f490488e6af6ab84ce572, type: 3}
-  - {fileID: 3185204053042386158, guid: c8afe0a60ac76d44d87291683839f933, type: 3}
+  - {fileID: -6763217169109982796, guid: d24e715f6a77b7e4a86d7922bcd57565, type: 3}
+  - {fileID: 7564605461850289199, guid: c8afe0a60ac76d44d87291683839f933, type: 3}
+  - {fileID: -1983409251761628584, guid: 57769d645a4f490488e6af6ab84ce572, type: 3}
   FloorPrefab:
-  - {fileID: 9118854144560189357, guid: 440467b89a19cb646b7486004ead1167, type: 3}
+  - {fileID: 891204723058673006, guid: 440467b89a19cb646b7486004ead1167, type: 3}
   BackgroundObject: []
   MiddlegroundObject: []
   ForegroundObject: []
@@ -902,7 +902,7 @@ MonoBehaviour:
   BackgroundSpeed:
     _min: 0
     _max: 5
-    _current: 1
+    _current: 5
     _isMin: 1
     _isMax: 1
     isOverMax: 0
@@ -927,6 +927,30 @@ MonoBehaviour:
     _min: 0
     _max: 5
     _current: 4
+    _isMin: 1
+    _isMax: 1
+    isOverMax: 0
+    isOverMin: 0
+  CloseFogSpeed:
+    _min: 3
+    _max: 5
+    _current: 3
+    _isMin: 1
+    _isMax: 1
+    isOverMax: 0
+    isOverMin: 0
+  MiddleFogSpeed:
+    _min: 2
+    _max: 3
+    _current: 2
+    _isMin: 1
+    _isMax: 1
+    isOverMax: 0
+    isOverMin: 0
+  FarFogSpeed:
+    _min: 1
+    _max: 1
+    _current: 1
     _isMin: 1
     _isMax: 1
     isOverMax: 0
@@ -966,7 +990,7 @@ MonoBehaviour:
   BackgroundCount:
     _min: 0
     _max: 4
-    _current: 4
+    _current: 1
     _isMin: 1
     _isMax: 1
     isOverMax: 0
@@ -974,7 +998,7 @@ MonoBehaviour:
   MiddlegroundCount:
     _min: 0
     _max: 6
-    _current: 5
+    _current: 0
     _isMin: 1
     _isMax: 1
     isOverMax: 0
@@ -995,10 +1019,10 @@ MonoBehaviour:
     _isMax: 1
     isOverMax: 0
     isOverMin: 0
-  BackgroundPos: {x: -10, y: -2, z: 3}
-  MiddlegroundPos: {x: -10, y: -2, z: 2}
+  BackgroundPos: {x: -10, y: 0, z: 4}
+  MiddlegroundPos: {x: -10, y: -2, z: 3}
   ForegroundPos: {x: -10, y: -5, z: 1}
-  FloorPos: {x: -10, y: -4.4, z: -1}
+  FloorPos: {x: -10, y: -4.5, z: -1}
   BackParent: {fileID: 1728156903}
   MidParent: {fileID: 606977178}
   ForeParent: {fileID: 541177623}
