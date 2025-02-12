@@ -7,7 +7,7 @@ namespace Quest.Container
 {
     public class Quest_PopUp : QuestBase
     {
-        public PopUpPad popUp;
+        public PopUpPad popUpPrefab;
 
         public override void OnNext(object value)
         {
@@ -16,8 +16,10 @@ namespace Quest.Container
         public override void Play()
         {
             base.Play();
-            var spawnSpam = UIManager.InstantiateFromPhone(popUp);
-            spawnSpam.gameObject.SetActive(true);
+            var popUp = PhoneUtil.InstantiateUI(popUpPrefab);
+            popUp.leftButton.onClick.AddListener(Complete);
+            popUp.rightButton.onClick.AddListener(Ignore);
+            popUp.destroyPopUpEvent.AddListener(Ignore);
         }
     }
 }

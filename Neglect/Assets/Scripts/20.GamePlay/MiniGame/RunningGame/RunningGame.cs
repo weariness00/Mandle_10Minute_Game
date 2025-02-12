@@ -16,7 +16,7 @@ namespace GamePlay.MiniGame.RunningGame
         public static float GameSpeed = 1f;
 
         public GameObject runningGameObjectRoot;
-        public GameObject runningGameCanvasRoot;
+        public Canvas runningGameCanvasRoot;
 
         [Header("Lobby 관련")] 
         public Canvas lobbyCanvas;
@@ -88,18 +88,24 @@ namespace GamePlay.MiniGame.RunningGame
 
     public partial class RunningGame
     {
-        public override void AppInstall()
+        public override void AppInstall(PhoneControl phone)
         {
-            base.AppInstall();
+            base.AppInstall(phone);
             runningGameObjectRoot.SetActive(false);
-            runningGameCanvasRoot.SetActive(false);
+            runningGameCanvasRoot.gameObject.SetActive(false);
         }
 
-        public override void AppPlay()
+        public override void AppPause(PhoneControl phone)
         {
-            base.AppPlay();
+            base.AppPause(phone);
+            GameStop();
+        }
+
+        public override void AppPlay(PhoneControl phone)
+        {
+            base.AppPlay(phone);
             runningGameObjectRoot.SetActive(true);
-            runningGameCanvasRoot.SetActive(true);
+            runningGameCanvasRoot.gameObject.SetActive(true);
         }
     }
 }

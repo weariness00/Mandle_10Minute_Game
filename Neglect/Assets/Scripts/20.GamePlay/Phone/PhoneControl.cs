@@ -1,50 +1,75 @@
 ﻿using DG.Tweening;
-using Manager;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 namespace GamePlay.Phone
 {
     public partial class PhoneControl : MonoBehaviour
     {
+        [Header("Phone 관련")] public string phoneName = "None";
         public Camera phoneCamera;
-        public Canvas phoneCanvas;
-        public Transform phoneTransform;
+        public Vector2Int phoneVerticalViewPortSize = new Vector2Int(600, 960);
+        public Vector2Int phoneHorizonViewPortSize => new Vector2Int(phoneVerticalViewPortSize.y, phoneVerticalViewPortSize.x);
+
+        [Header("App 관련")] 
         public ApplicationControl applicationControl;
-        public bool isInMousePosition;
-        
+
         public void Awake()
         {
+            { // 테스틑용 
+                PhoneUtil.Release();
+                PhoneUtil.currentPhone = this;
+            }
+            PhoneUtil.AddPhone(this);
+
             InteractInit();
-            { // 가로
-                PhoneViewPort phoneViewPort = new();
-                phoneViewPort.MakePhoneObjectTexture(phoneVerticalViewPortSize);
-                phoneViewPort.spriteRenderer.transform.SetParent(phoneTransform);
-                phoneViewPort.spriteRenderer.sprite = phoneSprite;
+
+            applicationControl.OnAddAppEvent.AddListener(app =>
+            {
+                var obj = (app as MonoBehaviour)?.gameObject;
+                foreach (GameObject rootGameObject in obj.scene.GetRootGameObjects())
+                {
+                    // 미니 게임 씬에 있는 모든 객체는 Phone 레이어를 가지도록 변경
+                    foreach (Transform t in rootGameObject.GetComponentsInChildren<Transform>(true))
+                    {
+                        t.gameObject.layer = LayerMask.NameToLayer("Phone");
+                    }
+                }
+
+                var phoneViewPortObj = new GameObject(app.AppName);
+                var phoneViewPort = phoneViewPortObj.AddComponent<PhoneViewPort>();
+                phoneViewPort.transform.SetParent(transform);
+                phoneViewPort.MakeTextureObject(app.VerticalResolution);
+                phoneViewPort.vertical.spriteRenderer.sprite = phoneVerticalSprite;
+                phoneViewPort.horizon.spriteRenderer.sprite = phoneHorizonSprite; // 세로는 다른 이미지 사용해야된다.
                 phoneViewPort.SetShader(phoneShader);
-                phoneViewPortArray[0] = phoneViewPort;
-            }
-            { // 세로
-                PhoneViewPort phoneViewPort = new();
-                phoneViewPort.MakePhoneObjectTexture(phoneHorizonViewPortSize);
-                phoneViewPort.spriteRenderer.transform.SetParent(phoneTransform);
-                phoneViewPort.spriteRenderer.sprite = phoneSprite;
-                phoneViewPort.SetShader(phoneShader);
-                // phoneViewPort.Transform.Rotate(0,0,-90);
-                phoneViewPort.SetActive(false);
-                phoneViewPortArray[1] = phoneViewPort;
-            }
+                phoneViewPort.gameObject.SetActive(false);
+                phoneViewPortDictionary.Add(app.AppName, phoneViewPort);
+            });
             
+            applicationControl.OnAppEvent.AddListener(app =>
+            {
+                // 임시 코드들
+                var viewPort = phoneViewPortDictionary[app.AppName];
+                viewPort.gameObject.SetActive(true);
+                viewPort.SetActive(viewType);
+                phoneCamera.targetTexture = viewPort.vertical.renderTexture;
+                
+                if (currentPhoneViewPort != null && currentPhoneViewPort != viewPort)
+                {
+                    currentPhoneViewPort.gameObject.SetActive(false);
+                }
+                currentPhoneViewPort = viewPort;
+                isUpdateInteract = true;
+            });
+            
+
             // 폰 카메라 생성 & 셋팅
             phoneCamera = Instantiate(Camera.main);
             phoneCamera.cullingMask = LayerMask.GetMask("Phone");
-            phoneCamera.targetTexture = phoneViewPortArray[0].renderTexture;
             Destroy(phoneCamera.GetComponent<AudioListener>());
         }
 
@@ -55,7 +80,7 @@ namespace GamePlay.Phone
 
         public void OnDestroy()
         {
-            foreach (PhoneViewPort phoneViewPort in phoneViewPortArray)
+            foreach (var phoneViewPort in phoneViewPortDictionary.Values)
                 phoneViewPort.Release();
         }
     }
@@ -63,143 +88,94 @@ namespace GamePlay.Phone
     // 렌더 텍스쳐
     public partial class PhoneControl
     {
+        [Header("Phone View Port 관련")]
         public Shader phoneShader;
-        public Sprite phoneSprite;
-        public Vector2Int phoneVerticalViewPortSize = new Vector2Int(600, 960);
-        public Vector2Int phoneHorizonViewPortSize => new Vector2Int(phoneVerticalViewPortSize.y, phoneVerticalViewPortSize.x);
-        public PhoneViewPort[] phoneViewPortArray = new PhoneViewPort[2];
-        private PhoneViewType viewType;
-
-        public PhoneViewPort CurrentPhoneViewPort => phoneViewPortArray[(int)viewType];
+        public Sprite phoneVerticalSprite;
+        public Sprite phoneHorizonSprite;
         
-        [Serializable]
-        public class PhoneViewPort
-        {
-            public SpriteRenderer spriteRenderer;
-            public RawImage renderTextureImage;
-            public RenderTexture renderTexture;
-
-            private static readonly int RenderTexture = Shader.PropertyToID("_Render_Texture");
-
-            public void MakePhoneObjectTexture(Vector2Int size)
-            {
-                // 폰 카메라에 사용될 Render Texture 생성
-                renderTexture = new RenderTexture(size.x, size.y, 16);
-                renderTexture.Create();
-
-                var obj = new GameObject("Render Texture Object");
-                spriteRenderer = obj.AddComponent<SpriteRenderer>();
-            }
-
-            public void SetShader(Shader shader)
-            {
-                var material = new Material(shader);
-                material.SetTexture(RenderTexture, renderTexture);
-                spriteRenderer.SetMaterials(new (){material});
-            }
-            
-            public void MakePhoneUITexture(Vector2Int size)
-            {
-                // 폰 카메라에 사용될 Render Texture 생성
-                renderTexture = new RenderTexture(size.x, size.y, 16);
-                renderTexture.Create();
-
-                renderTextureImage = UIManager.InstantiateRenderTextureImage(size.x, size.y);
-                renderTextureImage.texture = renderTexture;
-            }
-            
-            public void SetActive(bool value)
-            {
-                if(renderTextureImage) renderTextureImage.gameObject.SetActive(value);
-                if(spriteRenderer) spriteRenderer.gameObject.SetActive(value);
-            }
-            
-            public void Release()
-            {
-                if (renderTexture)
-                {
-                    renderTexture.Release();
-                    Destroy(renderTexture);
-                    renderTexture = null;
-                }
-            }
-        }
-
-        private enum PhoneViewType
-        {
-            Vertical, // 세로
-            Horizon // 가로
-        }
+        public Dictionary<string, PhoneViewPort> phoneViewPortDictionary = new();
+        public PhoneViewPort currentPhoneViewPort;
+        public PhoneViewType viewType;
 
         public void PhoneViewRotate(int value)
         {
             viewType = (PhoneViewType)value;
 
+            var sequence = DOTween.Sequence();
             switch (viewType)
             {
                 case PhoneViewType.Vertical:
-                    phoneCanvas.transform.DORotate(new Vector3(0, 0, 0), 1f).OnComplete(() =>
+                    sequence.Append(transform.DORotate(new Vector3(0, 0, 0), 1f).OnComplete(() =>
                     {
-                        phoneViewPortArray[0].SetActive(true);
-                        phoneViewPortArray[1].SetActive(false);
-
-                        phoneCamera.targetTexture = phoneViewPortArray[0].renderTexture;
-                    });
+                        currentPhoneViewPort.vertical.SetActive(true);
+                        currentPhoneViewPort.horizon.SetActive(false);
+                        phoneCamera.targetTexture = currentPhoneViewPort.vertical.renderTexture;
+                    }));
                     break;
                 case PhoneViewType.Horizon:
-                    phoneCanvas.transform.DORotate(new Vector3(0, 0, 90), 1f).OnComplete(() =>
+                    sequence.Append(transform.DORotate(new Vector3(0, 0, 90), 1f).OnComplete(() =>
                     {
-                        phoneViewPortArray[0].SetActive(false);
-                        phoneViewPortArray[1].SetActive(true);
-                        
-                        phoneCamera.targetTexture = phoneViewPortArray[1].renderTexture;
-                    });
+                        currentPhoneViewPort.vertical.SetActive(false);
+                        currentPhoneViewPort.horizon.SetActive(true);
+                        phoneCamera.targetTexture = currentPhoneViewPort.horizon.renderTexture;
+                    }));
                     break;
             }
         }
     }
 
-    
-    // 상호 작용
-    // 렌더 텍스쳐 안에 있는 것과는 상호작용이 안되서 따로 만들어준다.
     public partial class PhoneControl
     {
+        [Header("Phone View 상호작용 관련")]
         private PointerEventData pointerData;
         private List<RaycastResult> rayCastResults = new List<RaycastResult>();
         private GameObject lastHoveredObject = null; // 마지막으로 마우스를 올린 UI
         private GameObject lastPressedObject = null; // 마지막으로 클릭한 UI
         private GameObject draggingObject = null;
+        public bool isUpdateInteract = false;
+        public bool isInMousePosition = true;
 
+        private Vector2 prevMousePosition;
+        
         private void InteractInit()
         {
             pointerData = new PointerEventData(EventSystem.current);
         }
+
         public void Interact()
         {
-            var curPort = CurrentPhoneViewPort; // 임시용
+            if(isUpdateInteract == false) return;
+            var curRenderData = currentPhoneViewPort.GetData(viewType); // 임시용
             float unitToPixel = Screen.height / (Camera.main.orthographicSize * 2); // 1Unit 당 몇 픽셀인지
             Vector2 screenSize = new Vector2Int(Screen.width, Screen.height); // 현재 해상도 크기
-            Vector2 renderTextureSize = new(curPort.renderTexture.width, curPort.renderTexture.height); // 렌더 텍스쳐의 크기
-            Vector2 spriteTextureSize = (curPort.spriteRenderer.sprite.rect.size / curPort.spriteRenderer.sprite.pixelsPerUnit) * curPort.spriteRenderer.transform.lossyScale * unitToPixel; // 스프라이트의 픽셀 크기 * 오브젝트 scale
+            Vector2 renderTextureSize = new(curRenderData.renderTexture.width, curRenderData.renderTexture.height); // 렌더 텍스쳐의 크기
+            // Vector2 spriteTextureSize = curPort.renderTextureImage.rectTransform.sizeDelta * curPort.renderTextureImage.transform.lossyScale; // 스프라이트의 픽셀 크기 * 오브젝트 scale
+            Vector2 spriteTextureSize = (curRenderData.spriteRenderer.sprite.rect.size / curRenderData.spriteRenderer.sprite.pixelsPerUnit) * curRenderData.spriteRenderer.transform.lossyScale * unitToPixel; // 스프라이트의 픽셀 크기 * 오브젝트 scale
             Vector2 viewRatio = renderTextureSize / spriteTextureSize; // 렌더 텍스쳐 해상도 : 스프라이트 해상도
             Vector2 mousePosition = Mouse.current.position.ReadValue(); // 마우스의 현재 위치
-            Vector2 objPosition = curPort.spriteRenderer.transform.position * unitToPixel; // 오브젝트의 현재 위치를 viewport 위치로 전환
+            Vector2 objPosition = curRenderData.spriteRenderer.transform.position * unitToPixel; // 오브젝트의 현재 위치를 viewport 위치로 전환
+            // Vector2 objPosition = transform.position * unitToPixel; // 오브젝트의 현재 위치를 viewport 위치로 전환
             Vector2 cameraPosition = phoneCamera.transform.position * unitToPixel; // 카메라의 현재 위치를 viewport 위치로 전환
             Vector2 phoneMousePosition = (mousePosition - objPosition + cameraPosition - screenSize / 2) * viewRatio + renderTextureSize / 2;
 
             isInMousePosition = false;
-            if(phoneMousePosition.x < 0 || phoneMousePosition.x > renderTextureSize.x ||
-               phoneMousePosition.y < 0 || phoneMousePosition.y > renderTextureSize.y)
+            if (phoneMousePosition.x < 0 || phoneMousePosition.x > renderTextureSize.x ||
+                phoneMousePosition.y < 0 || phoneMousePosition.y > renderTextureSize.y)
                 return;
 
             isInMousePosition = true;
             pointerData.position = phoneMousePosition;
+            pointerData.delta = phoneMousePosition - prevMousePosition;
+            prevMousePosition = phoneMousePosition;
             rayCastResults.Clear();
             EventSystem.current.RaycastAll(pointerData, rayCastResults);
 
-            Debug.Log(phoneMousePosition);
-            
-            var phoneObject = rayCastResults.Where(r => r.gameObject.layer == LayerMask.NameToLayer("Phone")).ToArray();
+            var phoneObject = rayCastResults.Where(
+                r =>
+                {
+                    return 
+                        r.gameObject.layer == LayerMask.NameToLayer("Phone");
+                }).ToArray();
             if (phoneObject.Length <= 0)
             {
                 if (lastHoveredObject != null)
@@ -208,10 +184,12 @@ namespace GamePlay.Phone
                     ExecuteEvents.ExecuteHierarchy(lastHoveredObject, pointerData, ExecuteEvents.pointerExitHandler);
                     lastHoveredObject = null;
                 }
+
                 return;
             }
 
             var hitUI = phoneObject[0].gameObject;
+            Debug.Log($"{hitUI.name}에 상호작용중");
             // 🖱️ 마우스가 UI 위에 있는 경우 (Hover)
             // Enter 이벤트 (마우스가 새로 UI에 올라갔을 때)
             if (lastHoveredObject != hitUI)
@@ -220,16 +198,17 @@ namespace GamePlay.Phone
                     ExecuteEvents.ExecuteHierarchy(lastHoveredObject, pointerData, ExecuteEvents.pointerExitHandler);
                 ExecuteEvents.ExecuteHierarchy(hitUI, pointerData, ExecuteEvents.pointerEnterHandler);
             }
+
             lastHoveredObject = hitUI;
 
             // 🖱️ 마우스 버튼이 눌렸을 때 (Click Down)
             if (
 #if ENABLE_INPUT_SYSTEM
-                Mouse.current.leftButton.wasReleasedThisFrame
+                Mouse.current.leftButton.wasPressedThisFrame
 #else
                 Input.GetMouseButtonDown(0)
 #endif
-                )
+            )
             {
                 pointerData.pointerPress = hitUI;
                 lastPressedObject = hitUI;
@@ -256,7 +235,7 @@ namespace GamePlay.Phone
                 lastPressedObject = null;
                 pointerData.pointerPress = null;
             }
-            
+
             // 🖱️ 마우스 이동 중일 때 (Drag)
             if (
 #if ENABLE_INPUT_SYSTEM
@@ -264,23 +243,24 @@ namespace GamePlay.Phone
 #else
                 Input.GetMouseButton(0)
 #endif
-                ) // 마우스가 눌린 상태에서
+            ) // 마우스가 눌린 상태에서
             {
                 if (lastPressedObject != null && draggingObject == null)
                 {
                     draggingObject = lastPressedObject;
-                    ExecuteEvents.Execute(draggingObject, pointerData, ExecuteEvents.dragHandler); // 드래그 시작
+                    ExecuteEvents.ExecuteHierarchy(draggingObject, pointerData, ExecuteEvents.dragHandler); // 드래그 시작
                 }
                 else if (draggingObject != null)
                 {
-                    ExecuteEvents.Execute(draggingObject, pointerData, ExecuteEvents.dragHandler); // 드래그 중
+                    ExecuteEvents.ExecuteHierarchy(draggingObject, pointerData, ExecuteEvents.dragHandler); // 드래그 중
+                    ExecuteEvents.ExecuteHierarchy(draggingObject, pointerData, ExecuteEvents.pointerMoveHandler); // 움직이는 중
                 }
             }
             else
             {
                 if (draggingObject != null)
                 {
-                    ExecuteEvents.Execute(draggingObject, pointerData, ExecuteEvents.dropHandler); // 드래그 종료
+                    ExecuteEvents.ExecuteHierarchy(draggingObject, pointerData, ExecuteEvents.dropHandler); // 드래그 종료
                     draggingObject = null;
                 }
             }

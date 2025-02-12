@@ -11,12 +11,15 @@ namespace GamePlay
     public class SceneUtil : Singleton<SceneUtil>
     {
         private static readonly string PhoneScene = "Phone";
+        private static readonly string HomeScene = "Home";
         private static readonly string RunningGameScene = "Running Game";
         private static readonly string FlappingGameScene = "Flapping Game";
 
         public static void AddPhone() => SceneManager.LoadScene(PhoneScene, LoadSceneMode.Additive);
         public static void AsyncAddPhone(Action<Scene> loadedAction = null) =>Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(PhoneScene, loadedAction));
 
+        public static void AsyncAddHome(Action<Scene> loadedAction = null) =>Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(HomeScene, loadedAction));
+        
         public static Scene GetRunningGameScene() => SceneManager.GetSceneByName(RunningGameScene);
         public static bool TryGetRunningGameScene(out Scene scene)
         {

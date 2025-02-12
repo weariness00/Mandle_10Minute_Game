@@ -53,4 +53,4 @@ MonoBehaviour:
     level: 0
     prefab: {fileID: 0}
     textArray: []
-  popUp: {fileID: 0}
+  popUpPrefab: {fileID: 647263078652198701, guid: 76704a954b4f8b0488dd95892ce7f455, type: 3}
