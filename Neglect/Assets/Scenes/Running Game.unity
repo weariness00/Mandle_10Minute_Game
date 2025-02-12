@@ -2053,6 +2053,7 @@ MonoBehaviour:
     isOverMin: 0
   gameName: Running Game
   appIcon: {fileID: 0}
+  resolution: {x: 600, y: 960}
   runningGameObjectRoot: {fileID: 1900557407}
   runningGameCanvasRoot: {fileID: 1900557410}
   lobbyCanvas: {fileID: 728180536}

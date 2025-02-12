@@ -78,9 +78,11 @@ namespace GamePlay.MiniGame
         [Header("App 관련")]
         [SerializeField] private string gameName;
         [SerializeField] private Sprite appIcon;
-        
+        [SerializeField] private Vector2Int resolution;
+
         public string AppName => gameName;
         public Sprite AppIcon { get => appIcon; set => appIcon = value; }
+        public Vector2Int VerticalResolution { get => resolution; set => resolution = value; }
 
         public virtual void AppInstall()
         {

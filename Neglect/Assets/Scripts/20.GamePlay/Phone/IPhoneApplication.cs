@@ -6,6 +6,7 @@ namespace GamePlay.Phone
     {
         public string AppName { get; }
         public Sprite AppIcon { get; set; }
+        public Vector2Int VerticalResolution { get; set; }
         
         public void AppInstall(); // 앱 처음 설치시
         public void AppPlay(); // 앱 시작시
