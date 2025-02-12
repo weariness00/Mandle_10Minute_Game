@@ -16,7 +16,7 @@ namespace GamePlay.MiniGame.RunningGame
         public static float GameSpeed = 1f;
 
         public GameObject runningGameObjectRoot;
-        public GameObject runningGameCanvasRoot;
+        public Canvas runningGameCanvasRoot;
 
         [Header("Lobby 관련")] 
         public Canvas lobbyCanvas;
@@ -92,14 +92,20 @@ namespace GamePlay.MiniGame.RunningGame
         {
             base.AppInstall();
             runningGameObjectRoot.SetActive(false);
-            runningGameCanvasRoot.SetActive(false);
+            runningGameCanvasRoot.gameObject.SetActive(false);
+        }
+
+        public override void AppPause()
+        {
+            base.AppPause();
+            GameStop();
         }
 
         public override void AppPlay()
         {
             base.AppPlay();
             runningGameObjectRoot.SetActive(true);
-            runningGameCanvasRoot.SetActive(true);
+            runningGameCanvasRoot.gameObject.SetActive(true);
         }
     }
 }

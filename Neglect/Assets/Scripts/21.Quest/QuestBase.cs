@@ -33,7 +33,7 @@ namespace Quest
             subscription?.Dispose();
             state = QuestState.Failed;
 
-            if (eventData.acceptEvent.id != -1)
+            if (eventData.acceptEvent != null)
             {
                 var quest = QuestDataList.Instance.InstantiateQuest(eventData.acceptEvent.id);
                 quest.eventData = eventData.acceptEvent;
@@ -51,7 +51,7 @@ namespace Quest
             subscription?.Dispose();
             state = QuestState.Completed;
 
-            if (eventData.ignoreEvent.id != -1)
+            if (eventData.ignoreEvent != null)
             {
                 var quest = QuestDataList.Instance.InstantiateQuest(eventData.ignoreEvent.id);
                 quest.eventData = eventData.ignoreEvent;

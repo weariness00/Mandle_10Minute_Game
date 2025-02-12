@@ -19,6 +19,9 @@ namespace SeoTestTestTest
         public PhoneControl phoneControl;
         public string miniGameName;
         public bool isMiniGameAddToApp;
+
+        public int eventID;
+        public bool isQuestSpawn;
         
         public void Start()
         {
@@ -63,6 +66,13 @@ namespace SeoTestTestTest
                         }
                     });
                 }
+            }
+
+            if (isQuestSpawn)
+            {
+                var setting = QuestSettingProviderHelper.setting;
+                var e = setting.InstantiateQuest(eventID);
+                e.Play();
             }
         }
     }

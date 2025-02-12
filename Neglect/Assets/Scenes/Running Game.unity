@@ -2030,7 +2030,7 @@ MonoBehaviour:
   gameName: Running Game
   appIcon: {fileID: 0}
   runningGameObjectRoot: {fileID: 1900557407}
-  runningGameCanvasRoot: {fileID: 1482410024}
+  runningGameCanvasRoot: {fileID: 1900557410}
   lobbyCanvas: {fileID: 728180536}
   lobbyObject: {fileID: 2102759143}
   inGameCanvas: {fileID: 1493705817}

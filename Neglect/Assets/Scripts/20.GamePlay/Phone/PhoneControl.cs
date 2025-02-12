@@ -13,17 +13,26 @@ namespace GamePlay.Phone
 {
     public partial class PhoneControl : MonoBehaviour
     {
+        public string phoneName = "None";
+        
         public Camera phoneCamera;
         public Canvas phoneCanvas;
+        public Canvas phoneUICanvas;
         public Transform phoneTransform;
         public ApplicationControl applicationControl;
         public bool isInMousePosition;
         
         public void Awake()
         {
+            PhoneUtil.phoneDictionary[phoneName] = this;
+            
             InteractInit();
             { // 가로
                 PhoneViewPort phoneViewPort = new();
+                // phoneViewPort.MakePhoneUITexture(phoneVerticalViewPortSize);
+                // phoneViewPort.renderTextureImage.transform.SetParent(phoneCanvas.transform, false);
+                // phoneViewPort.renderTextureImage.texture = phoneSprite.texture;
+                
                 phoneViewPort.MakePhoneObjectTexture(phoneVerticalViewPortSize);
                 phoneViewPort.spriteRenderer.transform.SetParent(phoneTransform);
                 phoneViewPort.spriteRenderer.sprite = phoneSprite;
@@ -32,11 +41,12 @@ namespace GamePlay.Phone
             }
             { // 세로
                 PhoneViewPort phoneViewPort = new();
+                phoneViewPort.MakePhoneUITexture(phoneVerticalViewPortSize);
                 phoneViewPort.MakePhoneObjectTexture(phoneHorizonViewPortSize);
                 phoneViewPort.spriteRenderer.transform.SetParent(phoneTransform);
                 phoneViewPort.spriteRenderer.sprite = phoneSprite;
                 phoneViewPort.SetShader(phoneShader);
-                // phoneViewPort.Transform.Rotate(0,0,-90);
+                phoneViewPort.Transform.Rotate(0,0,-90);
                 phoneViewPort.SetActive(false);
                 phoneViewPortArray[1] = phoneViewPort;
             }
@@ -81,6 +91,9 @@ namespace GamePlay.Phone
 
             private static readonly int RenderTexture = Shader.PropertyToID("_Render_Texture");
 
+            public RectTransform RectTransform => renderTextureImage.rectTransform;
+            public Transform Transform => spriteRenderer.transform;
+            
             public void MakePhoneObjectTexture(Vector2Int size)
             {
                 // 폰 카메라에 사용될 Render Texture 생성
@@ -95,7 +108,8 @@ namespace GamePlay.Phone
             {
                 var material = new Material(shader);
                 material.SetTexture(RenderTexture, renderTexture);
-                spriteRenderer.SetMaterials(new (){material});
+                if(spriteRenderer) spriteRenderer.SetMaterials(new (){material});
+                if (renderTextureImage) renderTextureImage.material = material;
             }
             
             public void MakePhoneUITexture(Vector2Int size)
@@ -104,8 +118,12 @@ namespace GamePlay.Phone
                 renderTexture = new RenderTexture(size.x, size.y, 16);
                 renderTexture.Create();
 
-                renderTextureImage = UIManager.InstantiateRenderTextureImage(size.x, size.y);
+                var imageObj = new GameObject("Render Texture Image");
+                renderTextureImage = imageObj.AddComponent<RawImage>();
                 renderTextureImage.texture = renderTexture;
+
+                // renderTextureImage = UIManager.InstantiateRenderTextureImage(size.x, size.y);
+                // renderTextureImage.texture = renderTexture;
             }
             
             public void SetActive(bool value)
@@ -135,25 +153,46 @@ namespace GamePlay.Phone
         {
             viewType = (PhoneViewType)value;
 
+            var sequence = DOTween.Sequence();
             switch (viewType)
             {
                 case PhoneViewType.Vertical:
-                    phoneCanvas.transform.DORotate(new Vector3(0, 0, 0), 1f).OnComplete(() =>
+                    sequence.
+                        Append(phoneCanvas.transform.DORotate(new Vector3(0, 0, 0), 1f)).
+                        Join(phoneUICanvas.transform.DORotate(new Vector3(0, 0, -90), 1f)).
+                        Join(phoneViewPortArray[(int)PhoneViewType.Horizon].Transform.DORotate(new Vector3(0, 0, -90), 1f)).
+                        OnComplete(() =>
                     {
-                        phoneViewPortArray[0].SetActive(true);
-                        phoneViewPortArray[1].SetActive(false);
+                        foreach (PhoneViewPort phoneViewPort in phoneViewPortArray)
+                            phoneViewPort.SetActive(false);
+                        CurrentPhoneViewPort.SetActive(true);
+                        CurrentPhoneViewPort.Transform.localEulerAngles = Vector3.zero;
 
-                        phoneCamera.targetTexture = phoneViewPortArray[0].renderTexture;
+                        phoneCamera.targetTexture = CurrentPhoneViewPort.renderTexture;
+
+                        var phoneUIRect = phoneUICanvas.GetComponent<RectTransform>();
+                        phoneUIRect.sizeDelta = phoneVerticalViewPortSize;
+                        phoneUIRect.localEulerAngles = Vector3.zero;
                     });
                     break;
                 case PhoneViewType.Horizon:
-                    phoneCanvas.transform.DORotate(new Vector3(0, 0, 90), 1f).OnComplete(() =>
-                    {
-                        phoneViewPortArray[0].SetActive(false);
-                        phoneViewPortArray[1].SetActive(true);
-                        
-                        phoneCamera.targetTexture = phoneViewPortArray[1].renderTexture;
-                    });
+                    sequence.
+                        Append(phoneCanvas.transform.DORotate(new Vector3(0, 0, 90), 1f)).
+                        Join(phoneUICanvas.transform.DORotate(new Vector3(0, 0, 90), 1f)).
+                        Join(phoneViewPortArray[(int)PhoneViewType.Vertical].Transform.DORotate(new Vector3(0, 0, 90), 1f)).
+                        OnComplete(() =>
+                        {
+                            foreach (PhoneViewPort phoneViewPort in phoneViewPortArray)
+                                phoneViewPort.SetActive(false);
+                            CurrentPhoneViewPort.SetActive(true);
+                            CurrentPhoneViewPort.Transform.localEulerAngles = Vector3.zero;
+
+                            phoneCamera.targetTexture = CurrentPhoneViewPort.renderTexture;
+                            
+                            var phoneUIRect = phoneUICanvas.GetComponent<RectTransform>();
+                            phoneUIRect.sizeDelta = phoneHorizonViewPortSize;
+                            phoneUIRect.localEulerAngles = Vector3.zero;
+                        });
                     break;
             }
         }
@@ -180,10 +219,12 @@ namespace GamePlay.Phone
             float unitToPixel = Screen.height / (Camera.main.orthographicSize * 2); // 1Unit 당 몇 픽셀인지
             Vector2 screenSize = new Vector2Int(Screen.width, Screen.height); // 현재 해상도 크기
             Vector2 renderTextureSize = new(curPort.renderTexture.width, curPort.renderTexture.height); // 렌더 텍스쳐의 크기
+            // Vector2 spriteTextureSize = curPort.renderTextureImage.rectTransform.sizeDelta * curPort.renderTextureImage.transform.lossyScale; // 스프라이트의 픽셀 크기 * 오브젝트 scale
             Vector2 spriteTextureSize = (curPort.spriteRenderer.sprite.rect.size / curPort.spriteRenderer.sprite.pixelsPerUnit) * curPort.spriteRenderer.transform.lossyScale * unitToPixel; // 스프라이트의 픽셀 크기 * 오브젝트 scale
             Vector2 viewRatio = renderTextureSize / spriteTextureSize; // 렌더 텍스쳐 해상도 : 스프라이트 해상도
             Vector2 mousePosition = Mouse.current.position.ReadValue(); // 마우스의 현재 위치
             Vector2 objPosition = curPort.spriteRenderer.transform.position * unitToPixel; // 오브젝트의 현재 위치를 viewport 위치로 전환
+            // Vector2 objPosition = transform.position * unitToPixel; // 오브젝트의 현재 위치를 viewport 위치로 전환
             Vector2 cameraPosition = phoneCamera.transform.position * unitToPixel; // 카메라의 현재 위치를 viewport 위치로 전환
             Vector2 phoneMousePosition = (mousePosition - objPosition + cameraPosition - screenSize / 2) * viewRatio + renderTextureSize / 2;
 

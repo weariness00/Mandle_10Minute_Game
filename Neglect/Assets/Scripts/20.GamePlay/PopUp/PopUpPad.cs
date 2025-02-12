@@ -1,4 +1,5 @@
 ﻿using MoreMountains.Feedbacks;
+using System;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -26,8 +27,18 @@ namespace GamePlay.PopUp
         private bool isY;
         private Vector3 originPosition;
 
+
+        public void Awake()
+        {
+            rectTransform = GetComponent<RectTransform>();
+            spawnFeel = GetComponent<MMF_Player>();
+        }
+
         public void OnEnable()
         {
+            var pos = transform.position;
+            pos.y = rectTransform.sizeDelta.y;
+            
             MMFInit();
             spawnFeel.PlayFeedbacks();
         }
@@ -37,7 +48,6 @@ namespace GamePlay.PopUp
         {
             rectTransform = GetComponent<RectTransform>();
             spawnFeel = GetComponent<MMF_Player>();
-            
         }
         
         public void OnValidate()
@@ -113,10 +123,13 @@ namespace GamePlay.PopUp
             if(mmfPosition == null) mmfPosition = new(){Label = mmfPositionLabel};
             var mmfPos = spawnFeel.GetFeedbacksOfType<MMF_Position>().FirstOrDefault(p => p.Label == mmfPositionLabel);
             if(mmfPos == null) spawnFeel.AddFeedback(mmfPosition);
-            
+
+            mmfPosition.Space = MMF_Position.Spaces.Local;
+            mmfPosition.RelativePosition = false;
             mmfPosition.AnimatePositionTarget = gameObject;
-            mmfPosition.InitialPosition.y = rectTransform.sizeDelta.y;
+            mmfPosition.InitialPosition = Vector3.zero;
             mmfPosition.DestinationPosition = Vector3.zero;
+            mmfPosition.DestinationPosition.y = -rectTransform.sizeDelta.y;
             mmfPosition.AnimatePositionDuration = 1f;
         }
     }

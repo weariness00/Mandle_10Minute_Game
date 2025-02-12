@@ -11,6 +11,7 @@ TagManager:
   - Flapping Score Line
   - Flapping Player
   - Phone Canvas
+  - Phone UI Canvas
   layers:
   - Default
   - TransparentFX
