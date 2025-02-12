@@ -8,13 +8,16 @@ using UnityEngine.UI;
 
 namespace GamePlay.Event
 {
-    public class CallConversation : MonoBehaviour
+    public class ChatConversation : MonoBehaviour
     {
         // Start is called before the first frame update
 
         public string CurrentName = "npc";
         public TextMeshProUGUI ChatName;
 
+        [Header("복사할 메시지")]
+        public ChatTextBox OtherMessages;
+        public ChatTextBox MyMessages;
 
         [Header("말풍선")]
         [Tooltip("상대방 말풍선")]
@@ -46,15 +49,32 @@ namespace GamePlay.Event
         public int[] replygage;
         [Tooltip("답변 후속 질문 이벤트")]
         public string[] replyEvent;
-
-
+        
+        
         public Action ClearAction;
+
+
+        public RectTransform ChatLogBox;
+
 
         public void Awake()
         {
-
             ChatName.text = CurrentName;
             ChatStart();
+        }
+        public void Start()
+        {
+
+            for (int i = 0; i < 10; i++)
+            {
+                if( i%2 == 0)
+                    MyChatSpawn("123", i);
+                else
+                   OtherChatSpawn("2133", i);
+            }
+
+
+
         }
 
         public void SettingDate()
@@ -62,25 +82,42 @@ namespace GamePlay.Event
             //대화 내용 최신화
         }
 
-        public void ResetObject()
+        
+        public void OtherChatSpawn(string t , int s)
         {
-            OtherChat.gameObject.SetActive(false);
-            OtherText.gameObject.SetActive(false);
-            MyChat.gameObject.SetActive(false);
-            MyText.gameObject.SetActive(false);
-            for (int i = 0; i < 3; i++)
-            {
-                SelectTexts[i].gameObject.SetActive(false);
-                SelectButtons[i].gameObject.SetActive(false);
-            }
+            var pre = Instantiate(OtherMessages,Vector3.zero, OtherMessages.transform.rotation, ChatLogBox.gameObject.transform);
+            pre.SetText(t);
+            RectTransform preRect = pre.GetComponent<RectTransform>();
+            LayoutRebuilder.ForceRebuildLayoutImmediate(preRect);
+            Debug.Log(ChatLogBox.rect.y + preRect.rect.size.y / 2);
+            Vector3 vect = new Vector3(50+preRect.rect.size.x / 2, -s* preRect.rect.size.y, 0);
+            pre.transform.localPosition = vect;
+            ChatLogBox.sizeDelta += new Vector2(0, preRect.rect.size.y);
         }
+        public void MyChatSpawn(string t, int s)
+        {
+            var pre = Instantiate(MyMessages, Vector3.zero, OtherMessages.transform.rotation, ChatLogBox.gameObject.transform);
+            pre.SetText(t);
+            RectTransform preRect = pre.GetComponent<RectTransform>();
+            LayoutRebuilder.ForceRebuildLayoutImmediate(preRect);
+            Debug.Log(ChatLogBox.rect.y + preRect.rect.size.y / 2);
+            Vector3 vect = new Vector3(550-preRect.rect.size.x / 2, -s * preRect.rect.size.y, 0);
+            pre.transform.localPosition = vect;
+            
+            ChatLogBox.sizeDelta += new Vector2(0, preRect.rect.size.y);
+
+
+
+        }
+
+
+
 
         public void ChatStart()
         {
-            ResetObject();
 
             // 데이터베이스 재설정 코드 넣을 것.
-
+            /*
             Sequence UiSeq = DOTween.Sequence();
             UiSeq.AppendCallback(() =>
             {
@@ -121,6 +158,7 @@ namespace GamePlay.Event
                 }
             });
             //~ 버튼 나오는 애니메이션
+            */
         }
 
         public void ChoiceBttons(int index) //버튼 클릭시

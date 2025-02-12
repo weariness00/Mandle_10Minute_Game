@@ -1,4 +1,5 @@
 using MoreMountains.Feedbacks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -32,6 +33,11 @@ namespace GamePlay.Event
         public GameObject BankTransfer;
         public GameObject BankFinish;
 
+
+        public Action ClearAction;
+        public Action IgnoreAction;
+
+
         public void Init()
         {
             ChangeView(1);
@@ -39,6 +45,13 @@ namespace GamePlay.Event
             InputAmount.text = "";
             CheckText.text = "";
             CheckAmountText.text = "";
+        }
+
+        public void SettingData(string Name, string Account , int Amount)
+        {
+            AnswerAccount = Account;
+            AnswerAmount = Amount;
+            PassbookOwner = Name;
         }
 
         public void InputComplete() //입력 정보 확인 
@@ -91,6 +104,12 @@ namespace GamePlay.Event
             inputText = Regex.Replace(inputText, @"\u200B", "");
             int Amountdifference = AnswerAmount - int.Parse(inputText);
             Debug.Log(Amountdifference + "만큼 금액 차이 발생");
+            if (Amountdifference == 0)
+                ClearAction();
+            else
+                IgnoreAction();
+
+            
         }
         public void ChangeView(int index) // 임시 화면 전환
         {
