@@ -1,24 +1,27 @@
 using Manager;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TMPro;
+using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.Windows;
 
 namespace GamePlay.Event
 {
     public class PasswordToLine : MonoBehaviour
     {
+        public Action ClearAction;
+
         [Header("정답 패스워드")]
         public List<int> AnswerPassword;
         [Space]
-
-
         // Start is called before the first frame update
         [Tooltip("패스워드 점들")]
         public List<GameObject> PasswordPointers = new List<GameObject>(); // 패스워드 점들
@@ -33,6 +36,7 @@ namespace GamePlay.Event
         private bool IsCrack = false; // 패스워드 푸는 중인지 
         private int CurrentView = 0; //현재 화면
 
+        public TextMeshProUGUI HintText;
 
         public void Awake()
         {
@@ -44,6 +48,19 @@ namespace GamePlay.Event
             IsCrack = false;
             InputPassword.Clear();
             LineClear();
+        }
+
+        public void SettingEvent(string hint , string Password)
+        {
+            HintText.text = hint;
+            AnswerPassword.Clear();
+            string[] strNumbers = Password.Trim(new char[] { '[', ']' }).Split(',');
+            int[] numbers = Array.ConvertAll(strNumbers, int.Parse);
+           
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                AnswerPassword.Add(numbers[i] - 1); // 인덱스 번호로 제작되었으므로 -1 처리 
+            }
         }
 
         public void LineDraw()
@@ -86,7 +103,7 @@ namespace GamePlay.Event
                 IsCrack = false;
                 if (PasswordCheck())
                 {
-                    Debug.Log("패턴 완료");
+                    ClearAction();  //클리어
                 }
                 InputPassword.Clear();
                 LineClear();

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7646392639702134569}
   - component: {fileID: 1143112879469269221}
+  - component: {fileID: -1983409251761628584}
   m_Layer: 0
   m_Name: Fog2 Foreground
   m_TagString: Untagged
@@ -84,3 +85,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-1983409251761628584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6554824413266285295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveSpeed: 0
+  Renderer: {fileID: 0}
