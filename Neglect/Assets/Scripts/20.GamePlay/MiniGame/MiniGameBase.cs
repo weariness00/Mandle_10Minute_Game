@@ -46,26 +46,6 @@ namespace GamePlay.MiniGame
             gameSpeed.Value = 0;
         }
 
-        public void InitLoadedScene(Scene scene)
-        {
-            var phone = FindObjectOfType<PhoneControl>();
-            
-            foreach (GameObject rootGameObject in scene.GetRootGameObjects())
-            {
-                // 미니 게임 씬에 있는 모든 객체는 Phone 레이어를 가지도록 변경
-                foreach (Transform t in rootGameObject.GetComponentsInChildren<Transform>(true))
-                {
-                    t.gameObject.layer = LayerMask.NameToLayer("Phone");
-                }
-
-                // 카메라에 따라 마우스 클릭 위치 변경 가능
-                foreach (var canvas in rootGameObject.GetComponentsInChildren<Canvas>())
-                {
-                    canvas.worldCamera = phone.phoneCamera;
-                }
-            }
-        }
-
         public void SetGameSpeed(float value)
         {
             gameSpeed.Value = value;
@@ -84,24 +64,31 @@ namespace GamePlay.MiniGame
         public Sprite AppIcon { get => appIcon; set => appIcon = value; }
         public Vector2Int VerticalResolution { get => resolution; set => resolution = value; }
 
-        public virtual void AppInstall()
+        public virtual void AppInstall(PhoneControl phone)
         {
-            InitLoadedScene(gameObject.scene);
+            foreach (GameObject rootGameObject in gameObject.scene.GetRootGameObjects())
+            {
+                // 카메라에 따라 마우스 클릭 위치 변경 가능
+                foreach (var canvas in rootGameObject.GetComponentsInChildren<Canvas>())
+                {
+                    canvas.worldCamera = phone.phoneCamera;
+                }
+            }
         }
 
-        public virtual void AppPlay()
+        public virtual void AppPlay(PhoneControl phone)
         {
         }
 
-        public virtual void AppResume()
+        public virtual void AppResume(PhoneControl phone)
         {
         }
 
-        public virtual void AppPause()
+        public virtual void AppPause(PhoneControl phone)
         {
         }
 
-        public virtual void AppUnInstall()
+        public virtual void AppUnInstall(PhoneControl phone)
         {
         }
     }

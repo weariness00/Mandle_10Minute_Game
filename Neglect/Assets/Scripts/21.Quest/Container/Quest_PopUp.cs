@@ -16,7 +16,7 @@ namespace Quest.Container
         public override void Play()
         {
             base.Play();
-            var popUp = PhoneUtil.InstantiateUI(popUpPrefab, "Default");
+            var popUp = PhoneUtil.InstantiateUI(popUpPrefab);
             popUp.leftButton.onClick.AddListener(Complete);
             popUp.rightButton.onClick.AddListener(Ignore);
             popUp.destroyPopUpEvent.AddListener(Ignore);

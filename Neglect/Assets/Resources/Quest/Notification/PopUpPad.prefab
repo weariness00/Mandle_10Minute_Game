@@ -770,7 +770,7 @@ GameObject:
   - component: {fileID: 647263078652198701}
   - component: {fileID: 5330770311443497224}
   m_Layer: 5
-  m_Name: Spam PopUpPad
+  m_Name: PopUpPad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -956,7 +956,7 @@ MonoBehaviour:
         m_Calls: []
   DebugActive: 0
   FeedbacksList:
-  - rid: 9213173223394902022
+  - rid: 9213173251238526976
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   StopFeedbacksOnDisable: 0
@@ -964,11 +964,11 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 9213173223394902022
+    - rid: 9213173251238526976
       type: {class: MMF_Position, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
       data:
         Active: 1
-        UniqueID: 2045647476
+        UniqueID: 1830730741
         Label: Spawn Position
         ChannelMode: 0
         Channel: 0
@@ -1040,7 +1040,7 @@ MonoBehaviour:
         DebugActive: 0
         AnimatePositionTarget: {fileID: 7621084370335829414}
         Mode: 0
-        Space: 0
+        Space: 1
         RandomizeRemap: 0
         AnimatePositionDuration: 1
         AnimatePositionTween:
@@ -1218,7 +1218,7 @@ MonoBehaviour:
           Initialized: 0
         AllowAdditivePlays: 0
         RelativePosition: 0
-        DeterminePositionsOnPlay: 1
+        DeterminePositionsOnPlay: 0
         InitialPosition: {x: 0, y: 0, z: 0}
         DestinationPosition: {x: 0, y: -150, z: 0}
         InitialPositionTransform: {fileID: 0}

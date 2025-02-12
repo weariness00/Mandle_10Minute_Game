@@ -88,22 +88,22 @@ namespace GamePlay.MiniGame.RunningGame
 
     public partial class RunningGame
     {
-        public override void AppInstall()
+        public override void AppInstall(PhoneControl phone)
         {
-            base.AppInstall();
+            base.AppInstall(phone);
             runningGameObjectRoot.SetActive(false);
             runningGameCanvasRoot.gameObject.SetActive(false);
         }
 
-        public override void AppPause()
+        public override void AppPause(PhoneControl phone)
         {
-            base.AppPause();
+            base.AppPause(phone);
             GameStop();
         }
 
-        public override void AppPlay()
+        public override void AppPlay(PhoneControl phone)
         {
-            base.AppPlay();
+            base.AppPlay(phone);
             runningGameObjectRoot.SetActive(true);
             runningGameCanvasRoot.gameObject.SetActive(true);
         }

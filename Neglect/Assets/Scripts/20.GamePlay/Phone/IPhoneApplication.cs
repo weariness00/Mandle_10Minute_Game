@@ -8,10 +8,10 @@ namespace GamePlay.Phone
         public Sprite AppIcon { get; set; }
         public Vector2Int VerticalResolution { get; set; }
         
-        public void AppInstall(); // 앱 처음 설치시
-        public void AppPlay(); // 앱 시작시
-        public void AppResume(); // 앱 중단후 시작시
-        public void AppPause(); // 앱 중단시
-        public void AppUnInstall(); // 앱 삭제시
+        public void AppInstall(PhoneControl phone); // 앱 처음 설치시
+        public void AppPlay(PhoneControl phone); // 앱 시작시
+        public void AppResume(PhoneControl phone); // 앱 중단후 시작시
+        public void AppPause(PhoneControl phone); // 앱 중단시
+        public void AppUnInstall(PhoneControl phone); // 앱 삭제시
     }
 }

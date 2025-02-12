@@ -10,7 +10,6 @@ TagManager:
   - Flapping Obstacle
   - Flapping Score Line
   - Flapping Player
-  - Phone Canvas
   - Phone UI Canvas
   layers:
   - Default

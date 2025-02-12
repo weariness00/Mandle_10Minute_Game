@@ -34,6 +34,11 @@ namespace GamePlay.PopUp
             spawnFeel = GetComponent<MMF_Player>();
         }
 
+        public void Start()
+        {
+            rectTransform.anchoredPosition = Vector2.zero;
+        }
+
         public void OnEnable()
         {
             var pos = transform.position;
@@ -122,14 +127,15 @@ namespace GamePlay.PopUp
             if(spawnFeel == null) spawnFeel = GetComponent<MMF_Player>();
             if(mmfPosition == null) mmfPosition = new(){Label = mmfPositionLabel};
             var mmfPos = spawnFeel.GetFeedbacksOfType<MMF_Position>().FirstOrDefault(p => p.Label == mmfPositionLabel);
-            if(mmfPos == null) spawnFeel.AddFeedback(mmfPosition);
-
-            mmfPosition.Space = MMF_Position.Spaces.Local;
+            if (mmfPos == null) spawnFeel.AddFeedback(mmfPosition);
+            else mmfPosition = mmfPos;
+   
+            mmfPosition.Space = MMF_Position.Spaces.RectTransform;
             mmfPosition.RelativePosition = false;
             mmfPosition.AnimatePositionTarget = gameObject;
             mmfPosition.InitialPosition = Vector3.zero;
             mmfPosition.DestinationPosition = Vector3.zero;
-            mmfPosition.DestinationPosition.y = -rectTransform.sizeDelta.y;
+            mmfPosition.DestinationPosition.y = -100;
             mmfPosition.AnimatePositionDuration = 1f;
         }
     }

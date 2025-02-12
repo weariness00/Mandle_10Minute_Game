@@ -4,8 +4,30 @@ using UnityEngine;
 
 public static class PhoneUtil
 {
-    public static Dictionary<string, PhoneControl> phoneDictionary = new();
+    private static Dictionary<string, PhoneControl> phoneDictionary = new();
+    public static PhoneControl currentPhone;
+
+    public static void Release()
+    {
+        phoneDictionary.Clear();
+    }
     
+    public static void AddPhone(PhoneControl phone)
+    {
+        if(!phoneDictionary.TryAdd(phone.phoneName, phone))
+            Debug.LogWarning($"{phone.phoneName}이름의 Phone이 이미 추가되어 있습니다.");
+    }
+    
+    public static PhoneControl GetPhone(string phoneName) =>phoneDictionary.GetValueOrDefault(phoneName);
+
+    public static void SetLayer(Object obj)
+    {
+        if(obj is GameObject go)
+            SetLayer(go);
+        else if(obj is Component component)
+            SetLayer(component.gameObject);
+    }
+
     public static void SetLayer(GameObject obj)
     {
         foreach (var transform in obj.GetComponentsInChildren<Transform>())
@@ -14,18 +36,16 @@ public static class PhoneUtil
         }
     }
 
-    public static T InstantiateUI<T>(T prefab, string name) where T : Object
+    public static T InstantiateUI<T>(T component) where T : Object => InstantiateUI(component, currentPhone.phoneName);
+    public static T InstantiateUI<T>(T component, string phoneName) where T : Object
     {
-        if (phoneDictionary.TryGetValue(name, out var phone))
-        {
-            var obj = Object.Instantiate(prefab, phone.phoneUICanvas.transform);
-            return obj;
-        }
-        else
-        {
-            Debug.LogError($"{name}에 해당하는 Phone Control이 없어 UI를 생성 할 수 없습니다.");
-            return null;
-        }
+        var phone = GetPhone(phoneName);
+        var homeApp = phone.applicationControl.GetApp("Home");
+        var homeView = (HomeView)homeApp;
+        var obj = Object.Instantiate(component, homeView.uiCanvas.transform);
+        SetLayer(obj);
+        return obj;
     }
+    
 }
 
