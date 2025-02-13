@@ -59,13 +59,16 @@ namespace GamePlay.MiniGame
         [SerializeField] private string gameName;
         [SerializeField] private Sprite appIcon;
         [SerializeField] private Vector2Int resolution;
+        [SerializeField] private PhoneControl _phone;
 
         public string AppName => gameName;
         public Sprite AppIcon { get => appIcon; set => appIcon = value; }
         public Vector2Int VerticalResolution { get => resolution; set => resolution = value; }
+        public PhoneControl Phone => _phone;
 
         public virtual void AppInstall(PhoneControl phone)
         {
+            _phone = phone;
             foreach (GameObject rootGameObject in gameObject.scene.GetRootGameObjects())
             {
                 // 카메라에 따라 마우스 클릭 위치 변경 가능

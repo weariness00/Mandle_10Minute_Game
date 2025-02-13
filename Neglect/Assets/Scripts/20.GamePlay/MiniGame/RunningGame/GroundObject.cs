@@ -6,6 +6,7 @@ namespace GamePlay.MiniGame.RunningGame
 {
     public class GroundObject : MonoBehaviour
     {
+        public RunningGame runningGame;
         // Start is called before the first frame update
         public float MoveSpeed;
         public SpriteRenderer Renderer;
@@ -34,12 +35,12 @@ namespace GamePlay.MiniGame.RunningGame
             {
                 Renderer.color = new Color(240 / 255f, 240 / 255f, 240 / 255f, 1f);
             }
-            MoveSpeed = speed;
+            Setting(speed);
         }
         void Update()
         {
-            transform.position += Time.deltaTime * RunningGame.GameSpeed * MoveSpeed * Vector3.left;
-
+            if(!runningGame.isGamePlay.Value) return;
+            transform.position += Time.deltaTime * runningGame.gameSpeed.Value * MoveSpeed * Vector3.left;
         }
     }
 }

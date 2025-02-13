@@ -6,6 +6,8 @@ using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
+#if UNITY_EDITOR
+
 namespace Util
 {
     static class CSVReaderExtension
@@ -274,3 +276,5 @@ namespace Util
         }
     }
 }
+
+#endif

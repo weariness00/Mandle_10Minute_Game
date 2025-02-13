@@ -41,8 +41,8 @@ namespace GamePlay.Phone
             switch (type)
             {
                 case PhoneViewType.Vertical:
-                    vertical.GameObject.SetActive(true);
                     horizon.GameObject.SetActive(false);
+                    vertical.GameObject.SetActive(true);
                     break;
                 case PhoneViewType.Horizon:
                     vertical.GameObject.SetActive(false);
@@ -65,13 +65,11 @@ namespace GamePlay.Phone
         public class RenderTextureData
         {
             public SpriteRenderer spriteRenderer;
-            public RawImage renderTextureImage;
             public RenderTexture renderTexture;
 
             private static readonly int RenderTexture = Shader.PropertyToID("_Render_Texture");
 
             public GameObject GameObject => spriteRenderer.gameObject;
-            public RectTransform RectTransform => renderTextureImage.rectTransform;
             public Transform Transform => spriteRenderer.transform;
 
             public void MakePhoneObjectTexture(Vector2Int size)
@@ -89,26 +87,13 @@ namespace GamePlay.Phone
                 var material = new Material(shader);
                 material.SetTexture(RenderTexture, renderTexture);
                 if (spriteRenderer) spriteRenderer.SetMaterials(new() { material });
-                if (renderTextureImage) renderTextureImage.material = material;
             }
 
-            public void MakePhoneUITexture(Vector2Int size)
-            {
-                // 폰 카메라에 사용될 Render Texture 생성
-                renderTexture = new RenderTexture(size.x, size.y, 16);
-                renderTexture.Create();
-
-                var imageObj = new GameObject("Render Texture Image");
-                renderTextureImage = imageObj.AddComponent<RawImage>();
-                renderTextureImage.texture = renderTexture;
-
-                // renderTextureImage = UIManager.InstantiateRenderTextureImage(size.x, size.y);
-                // renderTextureImage.texture = renderTexture;
-            }
-
+            public Material GetMaterial() => spriteRenderer.material;
+            public void SetTexture(Texture texture) => spriteRenderer.material.SetTexture(RenderTexture, renderTexture);
+            
             public void SetActive(bool value)
             {
-                if (renderTextureImage) renderTextureImage.gameObject.SetActive(value);
                 if (spriteRenderer) spriteRenderer.gameObject.SetActive(value);
             }
 
@@ -119,6 +104,11 @@ namespace GamePlay.Phone
                     renderTexture.Release();
                     Destroy(renderTexture);
                     renderTexture = null;
+                }
+
+                if (spriteRenderer)
+                {
+                    Destroy(spriteRenderer.gameObject);
                 }
             }
         }

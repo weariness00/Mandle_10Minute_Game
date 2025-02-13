@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Util;
 
 namespace GamePlay.MiniGame.RunningGame
@@ -13,11 +14,14 @@ namespace GamePlay.MiniGame.RunningGame
     // 유니티 이벤트 함수
     public partial class RunningGame : MiniGameBase
     {
-        public static float GameSpeed = 1f;
-
         public GameObject runningGameObjectRoot;
         public Canvas runningGameCanvasRoot;
 
+        [Header("Setting 관련")] 
+        public Canvas settingCanvas;
+        public Button continueButton;
+        public Button exitButton;
+        
         [Header("Lobby 관련")] 
         public Canvas lobbyCanvas;
         public GameObject lobbyObject;
@@ -32,33 +36,51 @@ namespace GamePlay.MiniGame.RunningGame
         public override void Awake()
         {
             base.Awake();
-            
             InputManager.running.input.Enable();
-        }
 
-        public override void Start()
-        {
-            base.Start();
-
-            if (FindObjectOfType<PhoneControl>() != null)
+            settingCanvas.gameObject.SetActive(false);
+            continueButton.onClick.AddListener(() =>
             {
-                foreach (ObjectSpawner spawner in obstacleSpawnerList)
+                settingCanvas.gameObject.SetActive(false);
+                isGamePlay.Value = true;
+            });
+            
+            InputManager.running.ESC.performed += context =>
+            {
+                settingCanvas.gameObject.SetActive(!settingCanvas.gameObject.activeSelf);
+
+                if (isGamePlay.Value) GameStop();
+                else GamePlay();
+            };
+            
+            foreach (ObjectSpawner spawner in obstacleSpawnerList)
+            {
+                spawner.SpawnSuccessAction.AddListener(obj =>
                 {
-                    spawner.SpawnSuccessAction.AddListener(obj =>
-                    {
-                        obj.layer = LayerMask.NameToLayer("Phone");
-                        SceneManager.MoveGameObjectToScene(obj, SceneUtil.GetRunningGameScene());
-                    });
-                }
+                    obj.layer = LayerMask.NameToLayer("Phone");
+                    SceneManager.MoveGameObjectToScene(obj, SceneUtil.GetRunningGameScene());
+                    obj.GetComponent<ObstacleObject>().runningGame = this;
+                });
             }
+            
+            isGamePlay.Subscribe(value =>
+            {
+                if (value)
+                {
+                    foreach (ObjectSpawner spawner in obstacleSpawnerList)
+                        spawner.Play();
+                }
+                else
+                {
+                    foreach (ObjectSpawner spawner in obstacleSpawnerList)
+                        spawner.Pause();
+                }
+            });
             
             gameSpeed.Subscribe(value =>
             {
-                GameSpeed = value;
                 foreach (ObjectSpawner spawner in obstacleSpawnerList)
-                {
                     spawner.timeScale = value;
-                }
             });
         }
     }
@@ -93,12 +115,12 @@ namespace GamePlay.MiniGame.RunningGame
             base.AppInstall(phone);
             runningGameObjectRoot.SetActive(false);
             runningGameCanvasRoot.gameObject.SetActive(false);
-        }
-
-        public override void AppPause(PhoneControl phone)
-        {
-            base.AppPause(phone);
-            GameStop();
+            
+            // 나가기 누르면 앱으로 이동 ( 게임은 종료되지 않음 )
+            exitButton.onClick.AddListener(() =>
+            {
+                phone.applicationControl.OnHome();
+            });
         }
 
         public override void AppPlay(PhoneControl phone)
@@ -106,6 +128,24 @@ namespace GamePlay.MiniGame.RunningGame
             base.AppPlay(phone);
             runningGameObjectRoot.SetActive(true);
             runningGameCanvasRoot.gameObject.SetActive(true);
+        }
+
+        public override void AppResume(PhoneControl phone)
+        {
+            base.AppResume(phone);
+            runningGameObjectRoot.SetActive(true);
+            runningGameCanvasRoot.gameObject.SetActive(true);
+            InputManager.running.input.Enable();
+            GamePlay();
+        }
+
+        public override void AppPause(PhoneControl phone)
+        {
+            base.AppPause(phone);
+            runningGameObjectRoot.SetActive(false);
+            runningGameCanvasRoot.gameObject.SetActive(false);
+            InputManager.running.input.Disable();
+            GameStop();
         }
     }
 }

@@ -25,6 +25,7 @@ namespace Manager
         {
             public RunningInput input;
             public InputAction Sliding => input.Player.Sliding;
+            public InputAction ESC => input.Stop.ESC;
             
             public Vector2 MovePosition => input.Player.Move.ReadValue<Vector2>();
             public bool SlidingDown => input.Player.Sliding.ReadValue<float>() > 0f;

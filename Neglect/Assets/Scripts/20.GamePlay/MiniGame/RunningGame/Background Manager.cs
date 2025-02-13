@@ -1,19 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Util;
-using static UnityEngine.GraphicsBuffer;
 
 namespace GamePlay.MiniGame.RunningGame
 {
     public class BackgroundManager : MonoBehaviour
     {
-
+        public RunningGame runningGame;
         public bool IsPause; //퍼즈인지 
         public float LeftPosX;
-
-
 
         [Header("생성할 배경")]
         public List<GroundObject> BackgroundPrefab = new List<GroundObject>(); // 생성할 배경 프리팹
@@ -88,7 +83,7 @@ namespace GamePlay.MiniGame.RunningGame
         {
             ScreenSizeCalcul();
             IsPause = false;
-            spawn();
+            Spawn();
         }
 
         public void ScreenSizeCalcul() //임시 최대 경계선 계산
@@ -98,72 +93,68 @@ namespace GamePlay.MiniGame.RunningGame
             LeftPosX = -(xScreenHalfSize);
         }
 
-        public void spawn()
+        public void Spawn()
         {
-            Vector3 SpawnPos = BackgroundPos;
-            while (BackgroundObject.Count < BackgroundCount) // 최대 갯수를 채울만큼 반복
+            void PrefabSpawn(List<GroundObject> spawnObjectList, List<GroundObject> prefabList, List<Vector2> sizeList, Vector3 SpawnPos, Transform parent, int spawnLength, float speed)
             {
-                for (int i = 0; i < BackgroundPrefab.Count; i++) // 하나만 넣으면 한개만 반복 , 여러개 넣으면 순차적
+                while (spawnObjectList.Count < spawnLength) // 최대 갯수를 채울만큼 반복
                 {
-                    SpriteRenderer spriteRenderer = BackgroundPrefab[i].GetComponent<SpriteRenderer>();
-                    Vector2 pixelSize = spriteRenderer.bounds.size;
-                    BackgroundSize.Add(pixelSize);
-                    SpawnPos.x += pixelSize.x / 2;
-                    var obj = Instantiate(BackgroundPrefab[i],SpawnPos, Quaternion.identity, BackParent.transform);
-                    obj.Setting(BackgroundSpeed);
-                    BackgroundObject.Add(obj);
-                    SpawnPos.x += pixelSize.x / 2;
-                    
+                    foreach (var prefab in prefabList)
+                    {
+                        SpriteRenderer spriteRenderer = prefab.GetComponent<SpriteRenderer>();
+                        Vector2 pixelSize = spriteRenderer.bounds.size;
+                        sizeList.Add(pixelSize);
+                        SpawnPos.x += pixelSize.x / 2;
+                        var obj = Instantiate(prefab, SpawnPos, Quaternion.identity, parent);
+                        obj.Setting(speed);
+                        obj.runningGame = runningGame;
+                        obj.gameObject.layer = LayerMask.NameToLayer("Phone");
+                        spawnObjectList.Add(obj);
+                        SpawnPos.x += pixelSize.x / 2;
+                    }
                 }
             }
 
-            SpawnPos = MiddlegroundPos;
-            while (MiddlegroundObject.Count < MiddlegroundCount) // 최대 갯수를 채울만큼 반복
+            PrefabSpawn(BackgroundObject, BackgroundPrefab, BackgroundSize, BackgroundPos, BackParent.transform, BackgroundCount, BackgroundSpeed);
+            PrefabSpawn(MiddlegroundObject, MiddlegroundPrefab, MiddlegroundSize, MiddlegroundPos, MidParent.transform, MiddlegroundCount, BackgroundSpeed);
+
             {
-                for (int i = 0; i < MiddlegroundPrefab.Count; i++) // 하나만 넣으면 한개만 반복 , 여러개 넣으면 순차적
+                var SpawnPos = ForegroundPos;
+                while (ForegroundObject.Count < ForegroundCount) // 최대 갯수를 채울만큼 반복
                 {
-                    SpriteRenderer spriteRenderer = MiddlegroundPrefab[i].GetComponent<SpriteRenderer>();
-                    Vector2 pixelSize = spriteRenderer.bounds.size;
-                    MiddlegroundSize.Add(pixelSize);
-                    SpawnPos.x += pixelSize.x / 2;
-                    var obj = Instantiate(MiddlegroundPrefab[i], SpawnPos, Quaternion.identity, MidParent.transform);
-                    obj.Setting(BackgroundSpeed);
-                    MiddlegroundObject.Add(obj);
-                    SpawnPos.x += pixelSize.x/2;
+                    for (int i = 0; i < ForegroundPrefab.Count; i++) // 하나만 넣으면 한개만 반복 , 여러개 넣으면 순차적
+                    {
+                        SpriteRenderer spriteRenderer = ForegroundPrefab[i].GetComponent<SpriteRenderer>();
+                        Vector2 pixelSize = spriteRenderer.bounds.size;
+                        ForegroundSize.Add(pixelSize);
+                        SpawnPos.x += pixelSize.x / 2;
+                        var obj = Instantiate(ForegroundPrefab[i], SpawnPos, Quaternion.identity, ForeParent.transform);
+                        obj.runningGame = runningGame;
+                        obj.gameObject.layer = LayerMask.NameToLayer("Phone");
+                        ForeFogSetting(obj);
+                        ForegroundObject.Add(obj);
+                        SpawnPos.x += pixelSize.x / 2 + ForegroundInterval;
+                    }
                 }
             }
 
-            SpawnPos = ForegroundPos;
-            while (ForegroundObject.Count < ForegroundCount) // 최대 갯수를 채울만큼 반복
-            {
-                for (int i = 0; i < ForegroundPrefab.Count; i++) // 하나만 넣으면 한개만 반복 , 여러개 넣으면 순차적
+            { 
+                var SpawnPos = FloorPos;
+                while (FloorObject.Count < FloorCount) // 최대 갯수를 채울만큼 반복
                 {
-                    SpriteRenderer spriteRenderer = ForegroundPrefab[i].GetComponent<SpriteRenderer>();
-                    Vector2 pixelSize = spriteRenderer.bounds.size;
-                    ForegroundSize.Add(pixelSize);
-                    SpawnPos.x += pixelSize.x / 2;
-
-
-                    var obj = Instantiate(ForegroundPrefab[i], SpawnPos, Quaternion.identity, ForeParent.transform);
-                    ForeFogSetting(obj);
-                    ForegroundObject.Add(obj);
-                    SpawnPos.x += pixelSize.x / 2 + ForegroundInterval;
-                }
-            }
-
-            SpawnPos = FloorPos;
-            while (FloorObject.Count < FloorCount) // 최대 갯수를 채울만큼 반복
-            {
-                for (int i = 0; i < FloorPrefab.Count; i++) // 하나만 넣으면 한개만 반복 , 여러개 넣으면 순차적
-                {
-                    SpriteRenderer spriteRenderer = FloorPrefab[i].GetComponent<SpriteRenderer>();
-                    Vector2 pixelSize = spriteRenderer.bounds.size;
-                    FloorSize.Add(pixelSize);
-                    SpawnPos.x += pixelSize.x / 2;
-                    var obj = Instantiate(FloorPrefab[i], SpawnPos, Quaternion.identity, FloorParent.transform);
-                    obj.Setting(FloorSpeed);
-                    FloorObject.Add(obj);
-                    SpawnPos.x += pixelSize.x / 2 + FloorInterval;
+                    for (int i = 0; i < FloorPrefab.Count; i++) // 하나만 넣으면 한개만 반복 , 여러개 넣으면 순차적
+                    {
+                        SpriteRenderer spriteRenderer = FloorPrefab[i].GetComponent<SpriteRenderer>();
+                        Vector2 pixelSize = spriteRenderer.bounds.size;
+                        FloorSize.Add(pixelSize);
+                        SpawnPos.x += pixelSize.x / 2;
+                        var obj = Instantiate(FloorPrefab[i], SpawnPos, Quaternion.identity, FloorParent.transform);
+                        obj.Setting(FloorSpeed);
+                        obj.runningGame = runningGame;
+                        obj.gameObject.layer = LayerMask.NameToLayer("Phone");
+                        FloorObject.Add(obj);
+                        SpawnPos.x += pixelSize.x / 2 + FloorInterval;
+                    }
                 }
             }
         }
@@ -232,7 +223,6 @@ namespace GamePlay.MiniGame.RunningGame
             {
                 if (ForegroundObject[i].transform.position.x < LeftPosX - ForegroundSize[i].x/2)
                 {
-                    
                     ForeFogSetting(ForegroundObject[i]);
                     ForegroundObject[i].transform.position += Vector3.left * LeftPosX*3;
                 }

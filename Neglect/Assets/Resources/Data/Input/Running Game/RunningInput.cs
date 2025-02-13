@@ -103,6 +103,61 @@ public partial class @RunningInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""16e4eebb-d20f-4664-bc4b-aa7c9d7812cd"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""dc19e16f-0652-4780-8000-16efc08e159c"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""9a0e63ad-999f-4389-b905-9fa271b34005"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""d03f2d68-80ca-45f5-886f-a973ec61982c"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""e64c6523-4227-4526-b94f-2442ac6a6a61"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": """",
                     ""id"": ""fc9826a1-8fa6-42aa-9c1c-4223df97585f"",
                     ""path"": ""<Keyboard>/s"",
@@ -125,6 +180,34 @@ public partial class @RunningInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Stop"",
+            ""id"": ""b5a4ff8f-4282-43da-a490-af65c3428134"",
+            ""actions"": [
+                {
+                    ""name"": ""ESC"",
+                    ""type"": ""Button"",
+                    ""id"": ""3af58081-eb68-4692-80c6-a6b1d1ecfcdf"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""989fc285-840b-4027-8456-c5b5f88aa157"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ESC"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -133,11 +216,15 @@ public partial class @RunningInput: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Sliding = m_Player.FindAction("Sliding", throwIfNotFound: true);
+        // Stop
+        m_Stop = asset.FindActionMap("Stop", throwIfNotFound: true);
+        m_Stop_ESC = m_Stop.FindAction("ESC", throwIfNotFound: true);
     }
 
     ~@RunningInput()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, RunningInput.Player.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Stop.enabled, "This will cause a leak and performance issues, RunningInput.Stop.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -249,9 +336,59 @@ public partial class @RunningInput: IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Stop
+    private readonly InputActionMap m_Stop;
+    private List<IStopActions> m_StopActionsCallbackInterfaces = new List<IStopActions>();
+    private readonly InputAction m_Stop_ESC;
+    public struct StopActions
+    {
+        private @RunningInput m_Wrapper;
+        public StopActions(@RunningInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ESC => m_Wrapper.m_Stop_ESC;
+        public InputActionMap Get() { return m_Wrapper.m_Stop; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(StopActions set) { return set.Get(); }
+        public void AddCallbacks(IStopActions instance)
+        {
+            if (instance == null || m_Wrapper.m_StopActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_StopActionsCallbackInterfaces.Add(instance);
+            @ESC.started += instance.OnESC;
+            @ESC.performed += instance.OnESC;
+            @ESC.canceled += instance.OnESC;
+        }
+
+        private void UnregisterCallbacks(IStopActions instance)
+        {
+            @ESC.started -= instance.OnESC;
+            @ESC.performed -= instance.OnESC;
+            @ESC.canceled -= instance.OnESC;
+        }
+
+        public void RemoveCallbacks(IStopActions instance)
+        {
+            if (m_Wrapper.m_StopActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IStopActions instance)
+        {
+            foreach (var item in m_Wrapper.m_StopActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_StopActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public StopActions @Stop => new StopActions(this);
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnSliding(InputAction.CallbackContext context);
+    }
+    public interface IStopActions
+    {
+        void OnESC(InputAction.CallbackContext context);
     }
 }

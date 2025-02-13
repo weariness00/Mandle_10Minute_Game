@@ -36,7 +36,6 @@ namespace Quest
 
 #if UNITY_EDITOR
         [SerializeField] private TextAsset eventDataTableCSV;
-        [SerializeField] private TextAsset questPrefabDataTableCSV;
         [SerializeField] private TextAsset textDataTableCSV;
         
         public void AddQuest(QuestBase questPrefab) => questArray = questArray.Concat(new [] {questPrefab}).ToArray();
