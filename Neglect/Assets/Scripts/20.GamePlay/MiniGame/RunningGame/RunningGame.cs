@@ -42,15 +42,18 @@ namespace GamePlay.MiniGame.RunningGame
             continueButton.onClick.AddListener(() =>
             {
                 settingCanvas.gameObject.SetActive(false);
-                isGamePlay.Value = true;
+                if(isGameStart) isGamePlay.Value = true;
             });
             
             InputManager.running.ESC.performed += context =>
             {
                 settingCanvas.gameObject.SetActive(!settingCanvas.gameObject.activeSelf);
 
-                if (isGamePlay.Value) GameStop();
-                else GamePlay();
+                if (isGameStart)
+                {
+                    if (isGamePlay.Value) GameStop();
+                    else  GamePlay();
+                }
             };
             
             foreach (ObjectSpawner spawner in obstacleSpawnerList)
@@ -136,7 +139,7 @@ namespace GamePlay.MiniGame.RunningGame
             runningGameObjectRoot.SetActive(true);
             runningGameCanvasRoot.gameObject.SetActive(true);
             InputManager.running.input.Enable();
-            GamePlay();
+            if(isGameStart) GamePlay();
         }
 
         public override void AppPause(PhoneControl phone)

@@ -9,7 +9,8 @@ namespace GamePlay
         
         public void Awake()
         {
-            SceneUtil.AsyncAddPhone();
+            if(!SceneUtil.TryGetPhoneScene(out var scene))
+                SceneUtil.AsyncAddPhone();
         }
     }
 }

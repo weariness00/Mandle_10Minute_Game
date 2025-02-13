@@ -10,6 +10,7 @@ public partial class ApplicationControl : MonoBehaviour
 
     public UnityEvent<IPhoneApplication> OnAddAppEvent = new();
     public UnityEvent<IPhoneApplication> OnAppEvent = new();
+    public UnityEvent<IPhoneApplication> OnAppResumeEvent = new();
     public IPhoneApplication currentPlayApplication;
 
     private Dictionary<string, IPhoneApplication> applicationDictionary = new(); // 앱 이름, 앱
@@ -40,6 +41,7 @@ public partial class ApplicationControl : MonoBehaviour
         else
         {
             app.AppResume(phone);
+            OnAppResumeEvent?.Invoke(app);
         }
         currentPlayApplication = app;
     }

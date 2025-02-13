@@ -1,6 +1,8 @@
 ﻿using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -40,9 +42,7 @@ namespace GamePlay.Phone
                 }
 
                 // 폰에 app에 따른 Render Texture 할당
-                var phoneViewPortObj = new GameObject(app.AppName);
-                var phoneViewPort = phoneViewPortObj.AddComponent<PhoneViewPort>();
-                phoneViewPort.transform.SetParent(transform);
+                var phoneViewPort = Instantiate(phoneViewPortPrefab, transform);
                 phoneViewPort.MakeTextureObject(app.VerticalResolution);
                 phoneViewPort.vertical.spriteRenderer.sprite = phoneVerticalSprite;
                 phoneViewPort.horizon.spriteRenderer.sprite = phoneHorizonSprite; // 세로는 다른 이미지 사용해야된다.
@@ -53,16 +53,14 @@ namespace GamePlay.Phone
             
             applicationControl.OnAppEvent.AddListener(app =>
             {
-                // 임시 코드들
-                if (currentPhoneViewPort != null)
-                    currentPhoneViewPort.gameObject.SetActive(false);
-                
                 var viewPort = phoneViewPortDictionary[app.AppName];
-                viewPort.gameObject.SetActive(true);
-                viewPort.SetActive(viewType);
-                phoneCamera.targetTexture = viewPort.vertical.renderTexture;
-                currentPhoneViewPort = viewPort;
-                isUpdateInteract = true;
+                ChangeViewPort(viewPort);
+            });
+            
+            applicationControl.OnAppResumeEvent.AddListener(app =>
+            {
+                var viewPort = phoneViewPortDictionary[app.AppName];
+                ChangeViewPort(viewPort);
             });
             
 
@@ -93,6 +91,7 @@ namespace GamePlay.Phone
         public Sprite phoneHorizonSprite;
         
         private Dictionary<string, PhoneViewPort> phoneViewPortDictionary = new();
+        [Tooltip("생성될 Phone View Port 프리펩")]public PhoneViewPort phoneViewPortPrefab;
         public PhoneViewPort currentPhoneViewPort;
         public PhoneViewType viewType;
 
@@ -121,6 +120,22 @@ namespace GamePlay.Phone
                     }));
                     break;
             }
+        }
+
+        public void ChangeViewPort(PhoneViewPort viewPort)
+        {
+            var prevPhoneViewPort = currentPhoneViewPort;
+            Observable.Timer(TimeSpan.FromSeconds(0.3f)).Subscribe(_ =>
+            {
+                if (prevPhoneViewPort != null)
+                    prevPhoneViewPort.gameObject.SetActive(false);
+            });
+            
+            viewPort.gameObject.SetActive(true);
+            viewPort.SetActive(viewType);
+            phoneCamera.targetTexture = viewPort.vertical.renderTexture;
+            currentPhoneViewPort = viewPort;
+            isUpdateInteract = true;
         }
     }
 

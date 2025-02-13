@@ -428,6 +428,7 @@ MonoBehaviour:
   phoneShader: {fileID: -6465566751694194690, guid: aaa673228006ca64fa4e4a508837c977, type: 3}
   phoneVerticalSprite: {fileID: 21300000, guid: 5f1739d4758f4654f806a1dc1fc0b3fc, type: 3}
   phoneHorizonSprite: {fileID: 21300000, guid: 2a2eb21732001e840856f20402db1256, type: 3}
+  phoneViewPortPrefab: {fileID: 999179191110555612, guid: 6b0c996386c6f6f41927ab640602129e, type: 3}
   currentPhoneViewPort: {fileID: 0}
   viewType: 0
   isUpdateInteract: 0
@@ -469,6 +470,9 @@ MonoBehaviour:
   OnAppEvent:
     m_PersistentCalls:
       m_Calls: []
+  OnAppResumeEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &580971692
 GameObject:
   m_ObjectHideFlags: 0
@@ -498,6 +502,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2f1f0e6f014c94812de7a28488089f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isQuestStart: 0
+  questSpawnTimer:
+    _min: 0
+    _max: 60
+    _current: 0
+    _isMin: 1
+    _isMax: 0
+    isOverMax: 1
+    isOverMin: 1
 --- !u!4 &580971694
 Transform:
   m_ObjectHideFlags: 0
@@ -646,6 +659,81 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 644203847}
+  m_CullTransparentMesh: 1
+--- !u!1 &725807956
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 725807957}
+  - component: {fileID: 725807959}
+  - component: {fileID: 725807958}
+  m_Layer: 0
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &725807957
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725807956}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1956848749}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &725807958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725807956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 06894bd4e48af9247af27f2bd73c9599, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &725807959
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725807956}
   m_CullTransparentMesh: 1
 --- !u!1 &907516722
 GameObject:
@@ -1197,7 +1285,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.01041667, y: 0.01041667, z: 0.01041667}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 725807957}
   m_Father: {fileID: 553185173}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1266,7 +1355,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -1
   m_TargetDisplay: 0
 --- !u!114 &1956848753
 MonoBehaviour:
