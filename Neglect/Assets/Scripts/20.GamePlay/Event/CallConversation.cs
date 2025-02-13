@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -10,7 +11,6 @@ namespace GamePlay.Event
     public class CallConversation : MonoBehaviour
     {
         // Start is called before the first frame update
-
 
         public string CurrentName = "npc";
         public TextMeshProUGUI ChatName;
@@ -38,11 +38,17 @@ namespace GamePlay.Event
 
         [Header("데이터베이스에서 가져올 정보")]
         [Space]
+        [Tooltip("상대방 질문")]
         public string Question;
+        [Tooltip("답변 list")]
         public string[] replyString;
+        [Tooltip("답변 게이지list")]
         public int[] replygage;
+        [Tooltip("답변 후속 질문 이벤트")]
+        public string[] replyEvent;
 
 
+        public Action ClearAction;
 
         public void Awake()
         {

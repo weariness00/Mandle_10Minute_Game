@@ -104,10 +104,10 @@ namespace GamePlay.Event
                 if (PasswordCheck())
                 {
                     ClearAction();  //클리어
+                    Destroy(gameObject);
                 }
                 InputPassword.Clear();
                 LineClear();
-
             }
         }
         public void CheckSkipNumber() // 비정상적인 패스워드 입력시 수정
