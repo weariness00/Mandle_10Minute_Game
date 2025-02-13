@@ -18,7 +18,7 @@ namespace GamePlay.Event
     public class PasswordToLine : MonoBehaviour
     {
         public Action ClearAction;
-
+        public RectTransform canvasRect;
         [Header("정답 패스워드")]
         public List<int> AnswerPassword;
         [Space]
@@ -27,7 +27,7 @@ namespace GamePlay.Event
         public List<GameObject> PasswordPointers = new List<GameObject>(); // 패스워드 점들
 
         [Tooltip("패스워드 라인")]
-        public LineRenderer[] PasswordLine = new LineRenderer[10];
+        public RectTransform[] PasswordLine = new RectTransform[10];
 
         public List<int> InputPassword = new List<int>(); //현재 입력받은 패스워드
 
@@ -37,6 +37,7 @@ namespace GamePlay.Event
         private int CurrentView = 0; //현재 화면
 
         public TextMeshProUGUI HintText;
+
 
         public void Awake()
         {
@@ -67,39 +68,57 @@ namespace GamePlay.Event
         {
             for (int i = 1; i < InputPassword.Count; i++)
             {
-                PasswordLine[i].positionCount = 2;
-                PasswordLine[i].SetPosition(0, PasswordPointers[InputPassword[i - 1]].transform.position);
-                PasswordLine[i].SetPosition(1, PasswordPointers[InputPassword[i]].transform.position);
+                PasswordLine[i].gameObject.SetActive(true);
+                SetLine(PasswordLine[i], PasswordPointers[InputPassword[i - 1]].transform.localPosition, PasswordPointers[InputPassword[i]].transform.localPosition);
+                // PasswordLine[i].SetPosition(1, PasswordPointers[InputPassword[i]].transform.position);
             }
-            Vector3 curmouse = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-            curmouse.z = 0;
-            PasswordLine[InputPassword.Count].positionCount = 2;
-            PasswordLine[InputPassword.Count].SetPosition(0, PasswordPointers[InputPassword[InputPassword.Count - 1]].transform.position);
-            PasswordLine[InputPassword.Count].SetPosition(1, curmouse);
+
+            PasswordLine[InputPassword.Count].gameObject.SetActive(true);
+   
+            SetLine(PasswordLine[InputPassword.Count], PasswordPointers[InputPassword[InputPassword.Count-1]].transform.localPosition, GetMousePositionInCanvas());
 
         }
-        public void Update()
+        public Vector2 GetMousePositionInCanvas()
         {
-            if (CurrentView != 0)
-                return;
-            if (Mouse.current.leftButton.wasPressedThisFrame)
+            Vector2 mousePos = Mouse.current.position.ReadValue(); // 마우스 위치 (스크린 좌표)
+
+            Vector2 localPoint;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                canvasRect,  // 캔버스의 RectTransform
+                mousePos,     // 현재 마우스 스크린 위치
+                Camera.main,         // 카메라 (World Space Canvas라면 Camera.main)
+                out localPoint
+            );
+            return localPoint; // UI 내에서의 로컬 좌표 반환
+        }
+        public void SetLine(RectTransform lineImage, Vector3 pos1, Vector3 pos2)
+        {
+            if (lineImage == null)
             {
-                IsCrack = StartCrack();
+                Debug.LogError("Line Image가 설정되지 않았습니다!");
+                return;
             }
 
+            lineImage.anchoredPosition = (pos1 + pos2) / 2;
+            float distance = Vector3.Distance(pos1, pos2);
+            lineImage.sizeDelta = new Vector2(Mathf.Abs(distance), lineImage.rect.size.y); // width=길이, height=두께
+
+            Vector3 direction = (pos2 - pos1).normalized;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            lineImage.rotation = Quaternion.Euler(0, 0, angle);
+        }
+
+        public void Update()
+        {
             if (Mouse.current.leftButton.isPressed && IsCrack)
             {
                 LineDraw();
-                int AddPointer = DetectedPoint(Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()));
-                if (AddPointer >= 0)
-                {
-                    InputPassword.Add(AddPointer);
-                    CheckSkipNumber();
-                }
+                
             }
-
+            
             if (Mouse.current.leftButton.wasReleasedThisFrame)
             {
+
                 IsCrack = false;
                 if (PasswordCheck())
                 {
@@ -143,7 +162,7 @@ namespace GamePlay.Event
         {
             for (int i = 0; i < 10; i++)
             {
-                PasswordLine[i].positionCount = 0;
+                PasswordLine[i].gameObject.SetActive(false);
             }
         }  //라인 클리어
         public bool PasswordCheck()  //입력 비밀번호랑 정답 비밀번호랑 비교
@@ -167,42 +186,21 @@ namespace GamePlay.Event
         }
 
 
-        public bool StartCrack()
+        public void DownAddPoint(int num)
         {
-            int StartNum = DetectedPoint(Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()));
-            if (StartNum >= 0)
-            {
-                InputPassword.Add(StartNum);
-                return true;
-            }
-            return false;
-        } // 선 잇기 시작
-        public int DetectedPoint(Vector3 MousePosition) //가장 가까운 점 인덱스 반환 없으면 -1
-        {
-            MousePosition.z = 0;
-            float MinDistance = 9999999f;
-            float PreDistance = 9999999f;
-            int ClosePointerIndex = -1;
-            for (int i = 0; i < PasswordPointers.Count; i++)
-            {
-                if (InputPassword.Contains(i))//이미 입력된 숫자 제외
-                    continue;
-
-                PreDistance = Vector2.Distance(MousePosition, PasswordPointers[i].transform.position);
-                if (MinDistance > PreDistance)
-                {
-                    ClosePointerIndex = i;
-                    MinDistance = PreDistance;
-                }
-            }
-
-            if (MinDistance <= DetectedRange)
-            {
-                return ClosePointerIndex;
-            }
-
-            return -1;
+            InputPassword.Clear();
+            InputPassword.Add(num);
+            IsCrack = true;
         }
+        public void DragAddPoint(int num)
+        {
+            if (IsCrack && !InputPassword.Contains(num) && !InputPassword.Contains(num))
+            {
+                InputPassword.Add(num);
+                CheckSkipNumber();
+            }
+        }
+     
         /// 패스워드
 
 

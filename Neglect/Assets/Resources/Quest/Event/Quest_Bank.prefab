@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6745270039559795290}
-  - component: {fileID: 8444707844137525419}
+  - component: {fileID: 2421299613985424272}
   m_Layer: 0
   m_Name: Quest_Bank
   m_TagString: Untagged
@@ -26,13 +26,13 @@ Transform:
   m_GameObject: {fileID: 5429686930812608344}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.26231962, y: -1.4699315, z: 886.22705}
+  m_LocalPosition: {x: 2.399994, y: -371, z: 90}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8444707844137525419
+--- !u!114 &2421299613985424272
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a42e19cb992be104b8bc017fb05e68ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questID: 1002
+  questID: 3
   questName: 
-  type: 0
+  type: -1
   state: 0
   eventData:
     id: 0
@@ -54,7 +54,7 @@ MonoBehaviour:
     prefab: {fileID: 0}
     textArray: []
   Memo: {fileID: 4034607657072918615, guid: aea7b94da379db84ea8c707a7a2e92a6, type: 3}
-  Bank: {fileID: 9060640327001606600, guid: 6b86aebfd5062af40a142bb065f05501, type: 3}
-  SpawnPos: {x: 0, y: 0, z: 0}
+  Bank: {fileID: 8656310215991695716, guid: 6b86aebfd5062af40a142bb065f05501, type: 3}
+  SpawnPos: {x: 5, y: 0, z: 0}
   BankMemo: {fileID: 0}
   BankScreen: {fileID: 0}

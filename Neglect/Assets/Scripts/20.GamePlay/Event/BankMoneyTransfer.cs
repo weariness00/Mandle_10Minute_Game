@@ -1,3 +1,4 @@
+using DG.Tweening;
 using MoreMountains.Feedbacks;
 using System;
 using System.Collections;
@@ -102,27 +103,37 @@ namespace GamePlay.Event
             Debug.Log("송금 완료");
             string inputText = InputAmount.text.Trim();
             inputText = Regex.Replace(inputText, @"\u200B", "");
-            int Amountdifference = AnswerAmount - int.Parse(inputText);
-            Debug.Log(Amountdifference + "만큼 금액 차이 발생");
-            if (Amountdifference == 0)
-                ClearAction();
-            else
-                IgnoreAction();
+            int Amountdifference = 0;
+            if (inputText != "")
+                Amountdifference = AnswerAmount - int.Parse(inputText);
 
+
+            Debug.Log(Amountdifference + "만큼 금액 차이 발생"); //  이 금액이 후속이벤트 
+            if (Amountdifference == 0)
+            {
+
+                ClearAction();
+
+                Destroy(gameObject); //사라지는 애니메이션 일단은 삭제
+            }
+            else
+            {
+                IgnoreAction();
+                Destroy(gameObject); //사라지는 애니메이션 일단은 삭제
+            }
             
         }
         public void ChangeView(int index) // 임시 화면 전환
         {
             if (index == 1)
             {
-
-                BankTransfer.SetActive(true);
-                BankFinish.SetActive(false);
+                BankTransfer.transform.DOLocalMoveX(0,1f);
+                BankFinish.transform.DOLocalMoveX(600, 1f);
             }
             if (index == 2)
             {
-                BankTransfer.SetActive(false);
-                BankFinish.SetActive(true);
+                BankTransfer.transform.DOLocalMoveX(-600, 1f);
+                BankFinish.transform.DOLocalMoveX(0, 1f);
             }
             CurrentView = index;
         }

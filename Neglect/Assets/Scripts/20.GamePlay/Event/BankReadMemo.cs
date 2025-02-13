@@ -30,12 +30,16 @@ namespace GamePlay.Event
         }
         public void HideAnimation()
         {
-            if (!isEnd)
-            {
-                MemoSeq.Append(MemoRenderer.DOFade(0f, 1f));
-                MemoSeq.Join(transform.DOLocalMoveX(5f, 1f).SetRelative(true));
-                isEnd = true;
-            }
+            Debug.Log("adsd");
+            
+            MemoSeq.Append(MemoRenderer.DOFade(0f, 1f));
+            MemoSeq.Join(MemoText.DOFade(0f, 1f));
+            MemoSeq.Join(transform.DOLocalMoveX(5f, 1f).SetRelative(true)).OnComplete(()=>{
+                    Destroy(gameObject);
+                Destroy(MemoText.gameObject);
+
+            });
+             
         }
         public void ShowAnimation()
         {

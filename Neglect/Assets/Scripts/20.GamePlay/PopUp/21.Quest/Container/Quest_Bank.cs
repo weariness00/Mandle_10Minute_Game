@@ -45,18 +45,20 @@ namespace Quest.Container
 
         public override void Complete()
         {
+            PrefabDestroy();
             base.Complete();
         }
 
         public override void Ignore()
         {
+
+            PrefabDestroy();
             base.Ignore();
         }
 
         public void PrefabDestroy()
         {
-            Destroy(BankMemo);
-            Destroy(BankScreen);
+            BankMemo.HideAnimation();
         }
     }
 }

@@ -26,13 +26,14 @@ namespace Quest.Container
             base.Play();
             var PasswordObj = PhoneUtil.InstantiateUI(Password);
             PasswordObj.gameObject.SetActive(true);
-            PasswordObj.SettingEvent("Hint : 1 2 3 6" , "[1,2,3,4,5,6,7,8,9]");
-            Password.ClearAction += Complete;
+            PasswordObj.SettingEvent("Hint : 1 2 3 4 5 6 7 8 9" , "[1,2,3,4,5,6,7,8,9]");
+            PasswordObj.ClearAction += Complete;
         }
 
 
         public override void Complete()
         {
+            Debug.Log("성공");
             base.Complete();
         }
         public override void Ignore()
