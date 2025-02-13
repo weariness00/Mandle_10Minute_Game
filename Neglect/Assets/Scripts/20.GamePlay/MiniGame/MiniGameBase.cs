@@ -10,6 +10,7 @@ namespace GamePlay.MiniGame
     public partial class MiniGameBase : MonoBehaviour
     {
         public ReactiveProperty<bool> isGamePlay = new(true);
+        public bool isGameStart = false;
         public ReactiveProperty<float> gameSpeed = new(1f);
         [SerializeField] protected MinMaxValue<float> playTime = new(0,0, 60 * 10);
 
@@ -34,6 +35,7 @@ namespace GamePlay.MiniGame
         public virtual void GamePlay()
         {
             isGamePlay.Value = true;
+            isGameStart = true;
         }
 
         public virtual void GameStop()
@@ -44,6 +46,7 @@ namespace GamePlay.MiniGame
         public virtual void GameOver()
         {
             isGamePlay.Value = false;
+            isGameStart = false;
             gameSpeed.Value = 0;
         }
 

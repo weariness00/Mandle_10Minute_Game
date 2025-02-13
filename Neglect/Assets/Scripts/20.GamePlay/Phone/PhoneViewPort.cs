@@ -1,4 +1,5 @@
 ﻿using GamePlay.Phone;
+using MoreMountains.Feedbacks;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,16 @@ namespace GamePlay.Phone
     {
         public RenderTextureData vertical = new();
         public RenderTextureData horizon = new();
+
+        [Header("각종 효과")]
+        public MMF_Player enableMMFPlayer;
+
+        public void OnEnable()
+        {
+            enableMMFPlayer.PlayFeedbacks();
+            if(vertical.HasData()) vertical.Transform.localScale = Vector3.one;
+            if(vertical.HasData()) horizon.Transform.localScale = Vector3.one;
+        }
 
         public RenderTextureData GetData(PhoneViewType type)
         {
@@ -71,6 +82,8 @@ namespace GamePlay.Phone
 
             public GameObject GameObject => spriteRenderer.gameObject;
             public Transform Transform => spriteRenderer.transform;
+
+            public bool HasData() => spriteRenderer != null;
 
             public void MakePhoneObjectTexture(Vector2Int size)
             {

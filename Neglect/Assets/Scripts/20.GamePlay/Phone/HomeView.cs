@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UniRx;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace GamePlay.Phone
@@ -56,7 +58,10 @@ namespace GamePlay.Phone
 
         public void AppPause(PhoneControl phone)
         {
-            mainCanvas.gameObject.SetActive(false);
+            Observable.Timer(TimeSpan.FromSeconds(0.3f)).Subscribe(_ =>
+            {
+                mainCanvas.gameObject.SetActive(false);
+            });
         }
 
         public void AppUnInstall(PhoneControl phone)
