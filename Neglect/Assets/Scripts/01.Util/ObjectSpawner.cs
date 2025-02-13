@@ -70,7 +70,7 @@ namespace Util
         public void Play()
         {
             isPause = false;
-            SpawnCoroutine ??= StartCoroutine(SpawnerEnumerator());
+            if (gameObject.activeInHierarchy && SpawnCoroutine == null) SpawnCoroutine = StartCoroutine(SpawnerEnumerator());
         }
 
         public void Stop()

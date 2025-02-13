@@ -288,9 +288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2381ca0089af4c95a35e7dda822e23e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMiniGame: {fileID: 0}
-  test1: {fileID: 0}
-  test2: {fileID: 0}
+  isInitQuest: 0
 --- !u!4 &838526771
 Transform:
   m_ObjectHideFlags: 0

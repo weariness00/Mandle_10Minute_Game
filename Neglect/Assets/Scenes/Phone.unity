@@ -432,6 +432,7 @@ MonoBehaviour:
   viewType: 0
   isUpdateInteract: 0
   isInMousePosition: 0
+  phoneMousePosition: {x: 0, y: 0}
 --- !u!4 &553185173
 Transform:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ namespace GamePlay.MiniGame.RunningGame
 {
     public partial class RunningPlayer : MonoBehaviour
     {
+        public RunningGame runningGame;
         [HideInInspector] public Rigidbody2D rigidbody2D;
         [HideInInspector] public BoxCollider2D collider2D;
         
@@ -24,7 +25,6 @@ namespace GamePlay.MiniGame.RunningGame
         [Space]
         [Tooltip("슬라이딩 충돌 박스 크기")] public Vector2 slidingColliderBoxSize;
         public bool isSliding = false;
-        
         
         private Vector3 originPosition;
         private Vector3 jumpDestinationPosition;
@@ -46,11 +46,13 @@ namespace GamePlay.MiniGame.RunningGame
 
         public void Update()
         {
-            immortalTime.Current -= Time.deltaTime;
+            if(!runningGame.isGamePlay.Value) return;
+            immortalTime.Current -= Time.deltaTime * runningGame.gameSpeed.Value;
         }
 
         public void FixedUpdate()
         {
+            if(!runningGame.isGamePlay.Value) return;
             Jump();
             Sliding();
         }
@@ -86,7 +88,7 @@ namespace GamePlay.MiniGame.RunningGame
             
             if (isJumping && !jumpTime.IsMax)
             {
-                jumpTime.Current += Time.deltaTime * RunningGame.GameSpeed;
+                jumpTime.Current += Time.deltaTime * runningGame.gameSpeed.Value;
                 transform.position = Vector3.Lerp(originPosition, jumpDestinationPosition, Mathf.Sin(jumpTime.Current / jumpTime.Max * Mathf.PI));
             }
             else if (!isJumping && InputManager.running.MovePosition.y > 0f)

@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace Quest
 {
+#if UNITY_EDITOR
     public class QuestSettingProvider
     {
         [SettingsProvider]
@@ -44,6 +45,8 @@ namespace Quest
             return provider;
         }
     }
+    
+#endif
     
     [Serializable]
     public struct QuestSettingJson
