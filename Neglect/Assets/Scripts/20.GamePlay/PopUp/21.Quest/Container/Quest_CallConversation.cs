@@ -24,9 +24,9 @@ namespace Quest.Container
         public override void Play()
         {
             base.Play();
-            CallObject = UIManager.InstantiateFromPhone(CallPrefab);
+            CallObject = PhoneUtil.InstantiateUI(CallPrefab);
             CallObject.gameObject.SetActive(true);
-
+            CallObject.ClearAction += Complete;
             //CallObject.SettingDate()
         }
 

@@ -12,6 +12,9 @@ public class Quest_ChargeNow : QuestBase
 
     public ChargeNotification notification;
     public ChargerConnect charger;
+
+    public ChargeNotification ChargerPopup;
+    public ChargerConnect Charger;
     public Vector3 SpawnPos;
     public override void OnNext(object value)
     {
@@ -23,9 +26,9 @@ public class Quest_ChargeNow : QuestBase
     {
         base.Play();
 
-        var ChargerPopup = UIManager.InstantiateFromPhone(notification);
+        ChargerPopup = PhoneUtil.InstantiateUI(notification);
         ChargerPopup.gameObject.SetActive(true);
-        var Charger = Instantiate(charger , SpawnPos , transform.rotation);
+        Charger = Instantiate(charger , SpawnPos , transform.rotation);
         Charger.gameObject.SetActive(true);
 
         Charger.ClearAction += Complete;
@@ -39,13 +42,18 @@ public class Quest_ChargeNow : QuestBase
 
     public override void Complete()
     {
+        DeleteObject();
         base.Complete();
-   
     }
 
     public override void Ignore()
     {
-        base.Ignore();
-        
+        DeleteObject();
+        base.Ignore();        
+    }
+    public void DeleteObject()
+    {
+        Charger.HideAnimation();
+        ChargerPopup.HideAnimation();
     }
 }

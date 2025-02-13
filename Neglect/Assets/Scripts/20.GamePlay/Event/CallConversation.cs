@@ -54,6 +54,10 @@ namespace GamePlay.Event
         {
 
             ChatName.text = CurrentName;
+           
+        }
+        public void Start()
+        {
             ChatStart();
         }
 
@@ -163,7 +167,8 @@ namespace GamePlay.Event
                 UiSeq.AppendCallback(() => ChatStart()); // 반복
             else
             {
-                // 이벤트 종료
+                ClearAction();
+                Destroy(gameObject);
                 Debug.Log("이벤트 종료");
             }
         }

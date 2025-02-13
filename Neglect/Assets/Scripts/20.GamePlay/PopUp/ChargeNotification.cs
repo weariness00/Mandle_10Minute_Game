@@ -30,5 +30,10 @@ namespace GamePlay.PopUp
         {
             HideNotificationMMF.PlayFeedbacks();
         }
+
+        public void HideAnimation()
+        {
+            Destroy(gameObject);
+        }
     }
 }

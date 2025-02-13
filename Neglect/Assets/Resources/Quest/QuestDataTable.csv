@@ -9,3 +9,5 @@ Header,ID,Name,Level,PrefabID,TextList,AcceptEventID,IgnoreEventID
 ,1001,엄마 카톡,2,1001,,,
 ,1002,은행,3,2,,,
 ,1003,이체,2,3,,,
+,1004,충전기,2,4,,,
+,1005,채팅,2,5,,,

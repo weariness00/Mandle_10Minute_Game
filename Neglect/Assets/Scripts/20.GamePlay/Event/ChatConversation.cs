@@ -46,7 +46,7 @@ namespace GamePlay.Event
 
 
         public float NextTextPosY;
-        public RectTransform ChatTextBox;
+        public Scrollbar Scrollbar;
         public RectTransform ChatScrollBox;
 
         public void Awake()
@@ -55,10 +55,7 @@ namespace GamePlay.Event
         }
         public void Start()
         {
-
-            for (int i = 0; i < 10; i++)
-                OtherChatSpawn("asda");
-
+            CallStart();
 
         }
 
@@ -74,12 +71,14 @@ namespace GamePlay.Event
             pre.SetText(t);
             RectTransform preRect = pre.GetComponent<RectTransform>();
             LayoutRebuilder.ForceRebuildLayoutImmediate(preRect);
-            Vector3 vect = new Vector3(50+preRect.rect.size.x / 2, -NextTextPosY - preRect.rect.size.y, 0);
+            
+            Vector3 vect = new Vector3(50+preRect.rect.size.x / 2 * preRect.localScale.x, -NextTextPosY - preRect.rect.size.y * preRect.localScale.y, 0);
             pre.transform.localPosition = vect;
-            NextTextPosY += preRect.rect.size.y + 20;
-            ChatScrollBox.sizeDelta = new Vector2(0, NextTextPosY + preRect.rect.size.y/2);
+            NextTextPosY += preRect.rect.size.y * preRect.localScale.y + 20;
+            ChatScrollBox.sizeDelta = new Vector2(0, NextTextPosY + preRect.rect.size.y / 2);
 
-            //pre.gameObject.transform.DOLocalMoveY(pre.transform.localPosition.y-50f, 0.5f).From();
+            pre.gameObject.transform.DOLocalMoveY(pre.transform.localPosition.y - 50f, 0.5f).From();
+            Scrollbar.value = 0;
         }
         public void MyChatSpawn(string t)
         {
@@ -87,23 +86,31 @@ namespace GamePlay.Event
             pre.SetText(t);
             RectTransform preRect = pre.GetComponent<RectTransform>();
             LayoutRebuilder.ForceRebuildLayoutImmediate(preRect);
-            Vector3 vect = new Vector3(550-preRect.rect.size.x / 2, -NextTextPosY - preRect.rect.size.y, 0);
+            Vector3 vect = new Vector3(400-preRect.rect.size.x / 2 * preRect.localScale.x, -NextTextPosY - preRect.rect.size.y * preRect.localScale.y, 0);
             pre.transform.localPosition = vect;
-            NextTextPosY += preRect.rect.size.y + 20;
+            NextTextPosY += preRect.rect.size.y * preRect.localScale.y + 20;
             ChatScrollBox.sizeDelta = new Vector2(0, NextTextPosY + preRect.rect.size.y/2);
+
+            pre.gameObject.transform.DOLocalMoveY(pre.transform.localPosition.y - 50f, 0.5f).From();
+            Scrollbar.value = 0;
+           
+            
         }
 
-
+        public void CallStart()
+        {
+            OtherChatSpawn(Question);
+            ChatBox();
+        }
         public void ChatBox()
         {
-            Sequence UiSeq = DOTween.Sequence(); 
-            UiSeq.Append(ChatTextBox.DOLocalMoveY(100f, 2f).SetRelative(true));
-            UiSeq.Join(ChatTextBox.DOSizeDelta(new Vector2(ChatTextBox.sizeDelta.x, 500f), 2f));
-
-            
+            Sequence UiSeq = DOTween.Sequence();
+            Scrollbar.value = 0;
             for (int i = 0; i < 3; i++)
             {
                 SelectImages[i].DOFade(0f, 0f);
+
+                SelectButtons[i].interactable = true;
                 Color reset = SelectTexts[i].color;
                 reset.a = 0f;
                 SelectTexts[i].color = reset;
@@ -120,6 +127,7 @@ namespace GamePlay.Event
                     reset.a = 1f;
                     SelectTexts[index].color = reset;
                     SelectTexts[index].text = replyString[i];
+                    
                 }
             });
             //~ 버튼 나오는 애니메이션
@@ -144,7 +152,12 @@ namespace GamePlay.Event
             ChatGage = ChatGage < 0 ? 0 : ChatGage;
             UiSeq.Append(
             GageBar.DOFillAmount(ChatGage / 100f, 1f));
-            
+
+            UiSeq.AppendCallback(() =>
+            {
+                CallStart();
+            });
+
         }
     }
 }
