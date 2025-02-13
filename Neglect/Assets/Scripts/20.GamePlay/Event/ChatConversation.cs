@@ -19,15 +19,6 @@ namespace GamePlay.Event
         public ChatTextBox OtherMessages;
         public ChatTextBox MyMessages;
 
-        [Header("말풍선")]
-        [Tooltip("상대방 말풍선")]
-        public TextMeshProUGUI OtherText;
-        public Image OtherChat;
-
-        [Tooltip("내 말풍선")]
-        public TextMeshProUGUI MyText;
-        public Image MyChat;
-
         [Space]
         [Header("선택지 버튼")]
         public List<Button> SelectButtons;
@@ -54,25 +45,19 @@ namespace GamePlay.Event
         public Action ClearAction;
 
 
-        public RectTransform ChatLogBox;
-
+        public float NextTextPosY;
+        public RectTransform ChatTextBox;
+        public RectTransform ChatScrollBox;
 
         public void Awake()
         {
             ChatName.text = CurrentName;
-            ChatStart();
         }
         public void Start()
         {
 
             for (int i = 0; i < 10; i++)
-            {
-                if( i%2 == 0)
-                    MyChatSpawn("123", i);
-                else
-                   OtherChatSpawn("2133", i);
-            }
-
+                OtherChatSpawn("asda");
 
 
         }
@@ -83,66 +68,45 @@ namespace GamePlay.Event
         }
 
         
-        public void OtherChatSpawn(string t , int s)
+        public void OtherChatSpawn(string t)
         {
-            var pre = Instantiate(OtherMessages,Vector3.zero, OtherMessages.transform.rotation, ChatLogBox.gameObject.transform);
+            var pre = Instantiate(OtherMessages,Vector3.zero, OtherMessages.transform.rotation, ChatScrollBox.gameObject.transform);
             pre.SetText(t);
             RectTransform preRect = pre.GetComponent<RectTransform>();
             LayoutRebuilder.ForceRebuildLayoutImmediate(preRect);
-            Debug.Log(ChatLogBox.rect.y + preRect.rect.size.y / 2);
-            Vector3 vect = new Vector3(50+preRect.rect.size.x / 2, -s* preRect.rect.size.y, 0);
+            Vector3 vect = new Vector3(50+preRect.rect.size.x / 2, -NextTextPosY - preRect.rect.size.y, 0);
             pre.transform.localPosition = vect;
-            ChatLogBox.sizeDelta += new Vector2(0, preRect.rect.size.y);
+            NextTextPosY += preRect.rect.size.y + 20;
+            ChatScrollBox.sizeDelta = new Vector2(0, NextTextPosY + preRect.rect.size.y/2);
+
+            //pre.gameObject.transform.DOLocalMoveY(pre.transform.localPosition.y-50f, 0.5f).From();
         }
-        public void MyChatSpawn(string t, int s)
+        public void MyChatSpawn(string t)
         {
-            var pre = Instantiate(MyMessages, Vector3.zero, OtherMessages.transform.rotation, ChatLogBox.gameObject.transform);
+            var pre = Instantiate(MyMessages, Vector3.zero, OtherMessages.transform.rotation, ChatScrollBox.gameObject.transform);
             pre.SetText(t);
             RectTransform preRect = pre.GetComponent<RectTransform>();
             LayoutRebuilder.ForceRebuildLayoutImmediate(preRect);
-            Debug.Log(ChatLogBox.rect.y + preRect.rect.size.y / 2);
-            Vector3 vect = new Vector3(550-preRect.rect.size.x / 2, -s * preRect.rect.size.y, 0);
+            Vector3 vect = new Vector3(550-preRect.rect.size.x / 2, -NextTextPosY - preRect.rect.size.y, 0);
             pre.transform.localPosition = vect;
+            NextTextPosY += preRect.rect.size.y + 20;
+            ChatScrollBox.sizeDelta = new Vector2(0, NextTextPosY + preRect.rect.size.y/2);
+        }
+
+
+        public void ChatBox()
+        {
+            Sequence UiSeq = DOTween.Sequence(); 
+            UiSeq.Append(ChatTextBox.DOLocalMoveY(100f, 2f).SetRelative(true));
+            UiSeq.Join(ChatTextBox.DOSizeDelta(new Vector2(ChatTextBox.sizeDelta.x, 500f), 2f));
+
             
-            ChatLogBox.sizeDelta += new Vector2(0, preRect.rect.size.y);
-
-
-
-        }
-
-
-
-
-        public void ChatStart()
-        {
-
-            // 데이터베이스 재설정 코드 넣을 것.
-            /*
-            Sequence UiSeq = DOTween.Sequence();
-            UiSeq.AppendCallback(() =>
-            {
-                OtherChat.gameObject.SetActive(true);
-            });
-            UiSeq.Append(OtherChat.gameObject.transform.DOLocalMoveY(10f, 0.5f).From().SetRelative(true)).Join(OtherChat.DOFade(0f, 0f)).Join(OtherChat.DOFade(1f, 0.5f));
-            UiSeq.AppendCallback(() =>
-            {
-                OtherText.gameObject.SetActive(true);
-                OtherText.text = Question;
-            });
-            // ~ 상대 말풍선 애니메이션
-
-
-            UiSeq.AppendCallback(() =>
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    SelectButtons[i].interactable = true;
-                    SelectButtons[i].gameObject.SetActive(true);
-                }
-            });
             for (int i = 0; i < 3; i++)
             {
                 SelectImages[i].DOFade(0f, 0f);
+                Color reset = SelectTexts[i].color;
+                reset.a = 0f;
+                SelectTexts[i].color = reset;
                 UiSeq.Append(SelectButtons[i].gameObject.transform.DOLocalMoveY(SelectButtons[i].gameObject.transform.localPosition.y - 10f, 0.5f)
                 .From()).Join(SelectImages[i].DOFade(1f, 0.5f));
             }
@@ -150,15 +114,16 @@ namespace GamePlay.Event
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    SelectTexts[i].gameObject.SetActive(true);
+                    int index = i;
+                    SelectTexts[index].gameObject.SetActive(true);
                     Color reset = SelectTexts[i].color;
                     reset.a = 1f;
-                    SelectTexts[i].color = reset;
-                    SelectTexts[i].text = replyString[i];
+                    SelectTexts[index].color = reset;
+                    SelectTexts[index].text = replyString[i];
                 }
             });
             //~ 버튼 나오는 애니메이션
-            */
+            
         }
 
         public void ChoiceBttons(int index) //버튼 클릭시
@@ -173,37 +138,13 @@ namespace GamePlay.Event
             }
             UiSeq.Append(SelectImages[index].DOFade(0f, 0.5f)).Join(SelectTexts[index].DOFade(0f, 0.5f));
             // ~버튼 종료 애니메이션
-
-
-
-            UiSeq.AppendCallback(() =>
-            {
-                MyChat.gameObject.SetActive(true);
-            });
-            UiSeq.Append(MyChat.gameObject.transform.DOLocalMoveY(10f, 0.5f).From().SetRelative(true)).Join(MyChat.DOFade(0f, 0f)).Join(MyChat.DOFade(1f, 0.5f));
-            UiSeq.AppendCallback(() =>
-            {
-                MyText.gameObject.SetActive(true);
-                MyText.text = replyString[index];
-            });
-            // ~ 내 채팅 나오는 애니메이션
-
+            MyChatSpawn(replyString[index]);
 
             ChatGage = ChatGage + replygage[index] > 100 ? 100 : ChatGage + replygage[index];
             ChatGage = ChatGage < 0 ? 0 : ChatGage;
-
             UiSeq.Append(
             GageBar.DOFillAmount(ChatGage / 100f, 1f));
-            // 게이지 차는 애니메이션
-
-
-            if (ChatGage < 100)
-                UiSeq.AppendCallback(() => ChatStart()); // 반복
-            else
-            {
-                // 이벤트 종료
-                Debug.Log("이벤트 종료");
-            }
+            
         }
     }
 }

@@ -16,29 +16,24 @@ namespace Quest.Container
         {
         }
 
-        public void Start() // 테스트 
+        public void Start() 
         {
-            Password.SettingEvent("Hint : 1 2 3 4 5 6 7 8 9", "[1,2,3,4,5,6,7,8,9]");
-            Password.ClearAction += Complete;
 
         }
 
         public override void Play()
         {
             base.Play();
-            var PasswordObj = UIManager.InstantiateFromPhone(Password);
+            var PasswordObj = PhoneUtil.InstantiateUI(Password);
             PasswordObj.gameObject.SetActive(true);
-            //PasswordObj.SettingEvent("Hint : 1 2 3 6" , "[1,2,3,4,5,6,7,8,9]");
-
-           
+            PasswordObj.SettingEvent("Hint : 1 2 3 6" , "[1,2,3,4,5,6,7,8,9]");
+            Password.ClearAction += Complete;
         }
 
 
         public override void Complete()
         {
-            Debug.Log("잠금해제");
-           // base.Complete();
-
+            base.Complete();
         }
         public override void Ignore()
         {

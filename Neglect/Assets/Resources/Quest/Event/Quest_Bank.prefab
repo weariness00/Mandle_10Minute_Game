@@ -53,3 +53,8 @@ MonoBehaviour:
     level: 0
     prefab: {fileID: 0}
     textArray: []
+  Memo: {fileID: 4034607657072918615, guid: aea7b94da379db84ea8c707a7a2e92a6, type: 3}
+  Bank: {fileID: 9060640327001606600, guid: 6b86aebfd5062af40a142bb065f05501, type: 3}
+  SpawnPos: {x: 0, y: 0, z: 0}
+  BankMemo: {fileID: 0}
+  BankScreen: {fileID: 0}

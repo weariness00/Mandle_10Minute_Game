@@ -25,17 +25,12 @@ namespace Quest.Container
 
         public void Start()
         {
-            // 씬에서 작동되도록 임시 설정
-            Memo.TextSetting("owner", "123456", 50000);
-            Bank.SettingData("owner", "123456", 50000);
-            Bank.ClearAction += Complete; // 성공시
-            Bank.IgnoreAction += Ignore; // 실패시
             
         }
         public override void Play()
         {
             base.Play();
-            BankScreen = UIManager.InstantiateFromPhone(Bank);
+            BankScreen = PhoneUtil.InstantiateUI(Bank);
             BankScreen.gameObject.SetActive(true);
 
             BankMemo = Instantiate(Memo, SpawnPos, transform.rotation);
@@ -50,8 +45,7 @@ namespace Quest.Container
 
         public override void Complete()
         {
-            Memo.HideAnimation();
-            //base.Complete();
+            base.Complete();
         }
 
         public override void Ignore()
@@ -59,6 +53,10 @@ namespace Quest.Container
             base.Ignore();
         }
 
-
+        public void PrefabDestroy()
+        {
+            Destroy(BankMemo);
+            Destroy(BankScreen);
+        }
     }
 }
