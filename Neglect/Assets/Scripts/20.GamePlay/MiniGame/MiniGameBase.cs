@@ -1,4 +1,5 @@
 ﻿using GamePlay.Phone;
+using Quest;
 using UniRx;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -81,6 +82,11 @@ namespace GamePlay.MiniGame
 
         public virtual void AppPlay(PhoneControl phone)
         {
+            if (GameManager.Instance.isInitQuest == false)
+            {
+                GameManager.Instance.isInitQuest = true;
+                QuestManager.Instance.Init();
+            }
         }
 
         public virtual void AppResume(PhoneControl phone)

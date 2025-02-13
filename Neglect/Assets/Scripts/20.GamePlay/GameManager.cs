@@ -1,10 +1,12 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
+using Util;
 
 namespace GamePlay
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : Singleton<GameManager>
     {
+        [Tooltip("방해 이벤트를 초기화(시작)했는지")] public bool isInitQuest = false;
+        
         public void Awake()
         {
             SceneUtil.AsyncAddPhone();

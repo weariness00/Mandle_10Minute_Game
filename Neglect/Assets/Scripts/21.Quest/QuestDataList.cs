@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using Util;
+using Random = UnityEngine.Random;
 
 namespace Quest
 {
@@ -22,6 +23,15 @@ namespace Quest
             return quest;
         }
 
+        public QuestBase InstantiateRandomQuest()
+        {
+            int index = Random.Range(0, eventDataArray.Length);
+            var data = eventDataArray[index];
+            var quest = Instantiate(data.prefab);
+            quest.eventData = data;
+            return quest;
+        }
+        
         public QuestBase GetQuestID(int id)
         {
             var index = Array.BinarySearch(questArray, id);
@@ -75,6 +85,7 @@ namespace Quest
                 data.id = csv.DynamicCast<int>("ID");
                 data.level = csv.DynamicCast<QuestLevel>("Level", QuestLevel.None);
                 data.prefab = GetQuestID(csv.DynamicCast<int>("PrefabID", -1));
+                Debug.Assert(data.prefab != null, "Event Data에 프리펩이 존재하지 않습니다.");
                 var textList = csv.DynamicCast<int[]>("TextList", Array.Empty<int>());
                 data.textArray = questTextArray.Where(d => textList.FirstOrDefault(ti => ti == d.id) != 0).Select(d => d.text).ToArray();
 

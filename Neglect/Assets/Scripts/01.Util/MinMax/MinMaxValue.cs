@@ -148,7 +148,6 @@ namespace Util
         public void SetMin() => Current = Min;
         // Current의 값을 Max로 변경
         public void SetMax() => Current = Max;
-
         public void SetMax(T value)
         {
             _max = value;

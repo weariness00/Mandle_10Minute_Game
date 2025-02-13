@@ -38,6 +38,10 @@ namespace Quest
                 var quest = QuestDataList.Instance.InstantiateQuest(eventData.acceptEvent.id);
                 quest.eventData = eventData.acceptEvent;
             }
+            else
+            {
+                QuestManager.Instance.isQuestStart = true;
+            }
         }
 
         public virtual void Pause()
@@ -55,6 +59,10 @@ namespace Quest
             {
                 var quest = QuestDataList.Instance.InstantiateQuest(eventData.ignoreEvent.id);
                 quest.eventData = eventData.ignoreEvent;
+            }
+            else
+            {
+                QuestManager.Instance.isQuestStart = true;
             }
         }
     }

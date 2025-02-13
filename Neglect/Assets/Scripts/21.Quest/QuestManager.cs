@@ -8,18 +8,34 @@ namespace Quest
 {
     public class QuestManager : Singleton<QuestManager>
     {
-        private QuestDataList _questList;
-        public static QuestDataList QuestList => Instance._questList;
+        [HideInInspector] public bool isQuestStart;
+        public MinMaxValue<float> questSpawnTimer = new(0, 0, 60,true,true);
+        
         private Dictionary<QuestType, Subject<object>> questDictionary = new();
 
-        protected override void Initialize()
+        public void Update()
         {
-            base.Initialize();
-            _questList = QuestSettingProviderHelper.setting;
-            Debug.Assert(_questList != null, $"{nameof(QuestDataList)}가 존재하지 않습니다");
-            if(ReferenceEquals(_questList, null)) return;
+            if (isQuestStart)
+            {
+                questSpawnTimer.Current += Time.deltaTime;
+
+                if (questSpawnTimer.IsMax)
+                {
+                    questSpawnTimer.Current -= questSpawnTimer.Max;
+                    isQuestStart = false;
+                    var quest = QuestDataList.Instance.InstantiateRandomQuest();
+                    quest.Play();
+                }
+            }
         }
 
+        public void Init()
+        {
+            questDictionary.Clear();
+            isQuestStart = true;
+            questSpawnTimer.SetMin();
+        }
+        
         // 퀘스트를 매니저에 추가
         public IDisposable Add(QuestBase quest)
         {
