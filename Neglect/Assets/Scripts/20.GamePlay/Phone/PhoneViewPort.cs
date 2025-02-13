@@ -17,8 +17,8 @@ namespace GamePlay.Phone
         public void OnEnable()
         {
             enableMMFPlayer.PlayFeedbacks();
-            vertical.Transform.localScale = Vector3.one;
-            horizon.Transform.localScale = Vector3.one;
+            if(vertical.HasData()) vertical.Transform.localScale = Vector3.one;
+            if(vertical.HasData()) horizon.Transform.localScale = Vector3.one;
         }
 
         public RenderTextureData GetData(PhoneViewType type)
@@ -82,6 +82,8 @@ namespace GamePlay.Phone
 
             public GameObject GameObject => spriteRenderer.gameObject;
             public Transform Transform => spriteRenderer.transform;
+
+            public bool HasData() => spriteRenderer != null;
 
             public void MakePhoneObjectTexture(Vector2Int size)
             {
