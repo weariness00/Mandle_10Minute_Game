@@ -1,4 +1,5 @@
 using GamePlay.Event;
+using GamePlay.Phone;
 using Manager;
 using Quest;
 using System;
@@ -6,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+
 
 namespace Quest.Container
 {
@@ -45,20 +47,25 @@ namespace Quest.Container
 
         public override void Complete()
         {
-            PrefabDestroy();
+            PrefabFinish();
             base.Complete();
         }
 
         public override void Ignore()
         {
-
-            PrefabDestroy();
+            PrefabFinish();
             base.Ignore();
         }
-
-        public void PrefabDestroy()
+        
+        public void PrefabFinish()
         {
-            BankMemo.HideAnimation();
+            BankMemo.HideAnimation(); 
+            
+            //BankScreen.
+        }
+        public void PrefabFinishCounter() //강제로 
+        {
+
         }
     }
 }

@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 
 namespace GamePlay.PopUp
 {
-    public class ChargeNotification : MonoBehaviour, IPointerDownHandler
+    public class ChargeNotification : MonoBehaviour
     {
 
         public MMF_Player ShowNotificationMMF; //알림 show
@@ -20,7 +20,7 @@ namespace GamePlay.PopUp
             ShowNotificationMMF.PlayFeedbacks();    
         }
 
-        public void OnPointerDown(PointerEventData eventData)
+        public void ChargerIgone()
         {
             HideNotificationMMF.PlayFeedbacks();
             IgnoreAction();

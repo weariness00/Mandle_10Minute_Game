@@ -37,6 +37,7 @@ namespace GamePlay.Event
 
         public Action ClearAction;
         public Action IgnoreAction;
+        public Action HideComplete;
 
 
         public void Init()
@@ -128,14 +129,19 @@ namespace GamePlay.Event
             if (index == 1)
             {
                 BankTransfer.transform.DOLocalMoveX(0,1f);
-                BankFinish.transform.DOLocalMoveX(450, 1f);
+                BankFinish.transform.DOLocalMoveX(600, 1f);
             }
             if (index == 2)
             {
-                BankTransfer.transform.DOLocalMoveX(-450, 1f);
+                BankTransfer.transform.DOLocalMoveX(-600, 1f);
                 BankFinish.transform.DOLocalMoveX(0, 1f);
             }
             CurrentView = index;
+        }
+
+        public void HideAnimation()
+        {
+            
         }
     }
 }

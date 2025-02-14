@@ -9,6 +9,7 @@ using TMPro;
 using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.Windows;
@@ -197,10 +198,12 @@ namespace GamePlay.Event
             if (IsCrack && !InputPassword.Contains(num) && !InputPassword.Contains(num))
             {
                 InputPassword.Add(num);
+
                 CheckSkipNumber();
             }
         }
-     
+
+
         /// 패스워드
 
 
