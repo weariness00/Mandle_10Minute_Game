@@ -48,12 +48,13 @@ namespace GamePlay.Phone
             var viewPort = phone.GetAppViewPort(this);
             viewPort.horizon.Release();
             viewPort.horizon = viewPort.vertical;
-            viewPort.SetActive(PhoneViewType.Vertical);
+            phone.PhoneViewRotate(PhoneViewType.Vertical);
         }
 
         public void AppResume(PhoneControl phone)
         {
             mainCanvas.gameObject.SetActive(true);
+            phone.PhoneViewRotate(PhoneViewType.Vertical);
         }
 
         public void AppPause(PhoneControl phone)

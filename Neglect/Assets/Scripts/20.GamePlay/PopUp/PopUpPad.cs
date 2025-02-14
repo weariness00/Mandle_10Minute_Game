@@ -109,7 +109,6 @@ namespace GamePlay.PopUp
                     transform.localPosition += new Vector3(eventData.delta.x, 0, 0);
                 else if(isY)
                     transform.localPosition += new Vector3(0, eventData.delta.y, 0);
-                
             }
         }
     }

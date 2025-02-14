@@ -107,6 +107,11 @@ namespace SeoTestTestTest
             {
                 script.MakeQuest();
             }
+
+            if (GUILayout.Button("퀘스트 결과창 생성"))
+            {
+                
+            }
         }
     }
     

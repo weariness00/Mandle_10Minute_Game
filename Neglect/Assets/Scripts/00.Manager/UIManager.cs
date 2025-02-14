@@ -8,29 +8,23 @@ namespace Manager
 {
     public class UIManager : Singleton<UIManager>
     {
-        public GameObject phoneCanvas;
+        public Canvas sharedCanvas;
 
         protected override void Initialize()
         {
             base.Initialize();
-            phoneCanvas = GameObject.FindWithTag("Phone Canvas");
-        }
-
-        public static T InstantiateFromPhone<T>(T obj) where T : Object
-        {
-            return Instantiate(obj, Instance.phoneCanvas.transform, false);
-        }
-
-        public static RawImage InstantiateRenderTextureImage(int width, int height)
-        {
-            var obj = new GameObject("Render Texture Raw Image");
-            var rawImage = obj.AddComponent<RawImage>();
-
-            obj.transform.SetParent(Instance.phoneCanvas.transform, false);
-            rawImage.rectTransform.sizeDelta = new Vector2(width, height);
+            var obj = new GameObject("Shared Canvas");
+            sharedCanvas = obj.AddComponent<Canvas>();
             
-            return rawImage;
+            DontDestroyOnLoad(obj);
         }
+
+        public static T InstantiateUI<T>(T uiObject) where T : Object
+        {
+            var obj = GameObject.Instantiate(uiObject, Instance.sharedCanvas.transform);
+            return obj;
+        }
+
     }
 }
 

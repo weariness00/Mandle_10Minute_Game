@@ -22,6 +22,8 @@ public static class PhoneUtil
 
     public static void SetLayer(Object obj)
     {
+        if(currentPhone == null) return;
+        
         if(obj is GameObject go)
             SetLayer(go);
         else if(obj is Component component)
@@ -47,5 +49,14 @@ public static class PhoneUtil
         return obj;
     }
     
+    public static T InstantiateUI<T>(T component, out PhoneControl phone) where T : Object => InstantiateUI(component, currentPhone.phoneName, out phone);
+    public static T InstantiateUI<T>(T component, string phoneName, out PhoneControl phone) where T : Object
+    {
+        phone = GetPhone(phoneName);
+        var homeApp = phone.applicationControl.GetApp("Home");
+        var homeView = (HomeView)homeApp;
+        var obj = Object.Instantiate(component, homeView.uiCanvas.transform);
+        SetLayer(obj);
+        return obj;
+    }
 }
-
