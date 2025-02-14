@@ -27,7 +27,7 @@ namespace GamePlay.MiniGame.RunningGame
                     var runningGame = FindObjectOfType<RunningGame>();
                     if (runningGame != null)
                     {
-                        runningGame.GetPlayerData().score.Value += extraScore;
+                        runningGame.CurrentPlayerData.score.Value += extraScore;
                     }
                 }
                 Destroy(gameObject, 2f);

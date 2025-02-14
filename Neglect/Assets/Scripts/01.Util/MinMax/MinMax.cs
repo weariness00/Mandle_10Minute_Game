@@ -33,12 +33,21 @@ namespace Util
         }
     }
     
-    public static class MinMaxValueExtension
+    public static class MinMaxIntExtension
     {
         public static int Length(this MinMax<int> value)
         {
             return Mathf.Abs(value.Min) + Mathf.Abs(value.Max);
         }
+
+        public static int Random(this MinMax<int> value)
+        {
+            return UnityEngine.Random.Range(value.Min, value.Max);
+        }
+    }
+
+    public static class MinMaxFloatExtension
+    {
         public static int Length(this MinMax<float> value)
         {
             return (int)(Mathf.Abs(value.Min) + Mathf.Abs(value.Max));
