@@ -28,7 +28,7 @@ public partial class ApplicationControl : MonoBehaviour
     }
 
     // 어플리케이션 실행
-    public void OnApp(IPhoneApplication app)
+    public void OpenApp(IPhoneApplication app)
     {
         if (currentPlayApplication != null) currentPlayApplication.AppPause(phone);
 
@@ -49,7 +49,7 @@ public partial class ApplicationControl : MonoBehaviour
     // 홈 화면으로 이동
     public void OnHome()
     {
-        if (applicationDictionary.TryGetValue("Home", out var app)) OnApp(app);
+        if (applicationDictionary.TryGetValue("Home", out var app)) OpenApp(app);
     }
 
     // 어플리케이션이 실행된 것들 확인하는 메뉴로 이동

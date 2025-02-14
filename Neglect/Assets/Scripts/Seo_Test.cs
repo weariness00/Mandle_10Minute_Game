@@ -44,7 +44,7 @@ namespace SeoTestTestTest
                     if (app != null)
                     {
                         phoneControl.applicationControl.AddApp(app);
-                        phoneControl.applicationControl.OnApp(app);
+                        phoneControl.applicationControl.OpenApp(app);
                     }
                 }
             });

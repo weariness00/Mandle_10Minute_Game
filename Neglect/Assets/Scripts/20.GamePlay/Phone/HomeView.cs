@@ -41,7 +41,7 @@ namespace GamePlay.Phone
             {
                 var appButton = Instantiate(appButtonPrefab, appButtonParent);
                 if (app.AppIcon) appButton.image.sprite = app.AppIcon;
-                appButton.onClick.AddListener(() => phone.applicationControl.OnApp(app));
+                appButton.onClick.AddListener(() => phone.applicationControl.OpenApp(app));
                 appButton.gameObject.layer = LayerMask.NameToLayer("Phone");
             });
             
