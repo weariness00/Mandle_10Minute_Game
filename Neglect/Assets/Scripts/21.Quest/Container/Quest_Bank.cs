@@ -32,7 +32,7 @@ namespace Quest.Container
         public override void Play()
         {
             base.Play();
-            BankScreen = PhoneUtil.InstantiateUI(Bank);
+            BankScreen = PhoneUtil.InstantiateUI(Bank , out var phone);
             BankScreen.gameObject.SetActive(true);
 
             BankMemo = Instantiate(Memo, SpawnPos, transform.rotation);
@@ -43,6 +43,7 @@ namespace Quest.Container
 
             BankScreen.ClearAction += Complete; // 성공시
             BankScreen.IgnoreAction += Ignore; // 실패시
+            phone.PhoneViewRotate(0);
         }
 
         public override void Complete()

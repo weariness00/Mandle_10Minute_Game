@@ -18,7 +18,8 @@ namespace Quest.Container
         public override void Play()
         {
             base.Play();
-            chatconversation = PhoneUtil.InstantiateUI(ChatPrefab);
+            chatconversation = PhoneUtil.InstantiateUI(ChatPrefab, out var phone);
+            phone.PhoneViewRotate(0);
             chatconversation.ClearAction += Complete;
         }
 

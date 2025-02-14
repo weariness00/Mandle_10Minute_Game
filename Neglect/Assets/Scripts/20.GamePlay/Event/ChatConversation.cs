@@ -93,7 +93,7 @@ namespace GamePlay.Event
             pre.SetText(t);
             RectTransform preRect = pre.GetComponent<RectTransform>();
             LayoutRebuilder.ForceRebuildLayoutImmediate(preRect);
-            Vector3 vect = new Vector3(400-preRect.rect.size.x / 2 * preRect.localScale.x, -NextTextPosY - preRect.rect.size.y * preRect.localScale.y, 0);
+            Vector3 vect = new Vector3(550-preRect.rect.size.x / 2 * preRect.localScale.x, -NextTextPosY - preRect.rect.size.y * preRect.localScale.y, 0);
             pre.transform.localPosition = vect;
             
             NextTextPosY += preRect.rect.size.y * preRect.localScale.y + 20;

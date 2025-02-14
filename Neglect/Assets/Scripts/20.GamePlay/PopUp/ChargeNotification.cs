@@ -1,3 +1,4 @@
+using GamePlay.Phone;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using System;
@@ -14,7 +15,8 @@ namespace GamePlay.PopUp
 
         public MMF_Player ShowNotificationMMF; //알림 show
         public MMF_Player HideNotificationMMF; //알림 hide
-        public Action IgnoreAction; 
+        public Action IgnoreAction;
+        public PhoneControl phone;
         public void OnEnable()
         {
             ShowNotificationMMF.PlayFeedbacks();    

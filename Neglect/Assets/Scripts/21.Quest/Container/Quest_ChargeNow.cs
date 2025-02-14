@@ -26,11 +26,13 @@ public class Quest_ChargeNow : QuestBase
     {
         base.Play();
 
-        ChargerPopup = PhoneUtil.InstantiateUI(notification);
+        ChargerPopup = PhoneUtil.InstantiateUI(notification, out var phone);
         ChargerPopup.gameObject.SetActive(true);
         Charger = Instantiate(charger , SpawnPos , transform.rotation);
+        Charger.phone = phone;
         Charger.gameObject.SetActive(true);
 
+        phone.PhoneViewRotate(1);
         Charger.ClearAction += Complete;
         ChargerPopup.IgnoreAction += Ignore;
     }

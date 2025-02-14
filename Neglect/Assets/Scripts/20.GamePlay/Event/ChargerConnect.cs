@@ -1,7 +1,11 @@
+using DG.Tweening;
+using DG.Tweening.Core;
+using GamePlay.Phone;
 using MoreMountains.Feedbacks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -11,80 +15,68 @@ namespace GamePlay.Event
 {
     public class ChargerConnect : MonoBehaviour
     {
-        [Header("오브젝트 할당")]
-        public RectTransform Charger;          //충전기 
-   
-        public bool isClear; // 이벤트를 완수 했는가?
+        public GameObject Charger;
+        public ChargerHead head;
+        public PhoneControl phone;
+
+        public GameObject drag;
+        public bool isClear; 
         public bool isDrag;
 
         public bool inTarget;
 
         public Action ClearAction;
 
-        [Header("MMF 애니메이션")]
-        public MMF_Player ResetPostion;      // 충전기 복귀 애니메이션
-        public MMF_Player TargetPostion;     // 충전기 완료 애니메이션
+        public MMF_Player ResetPostion;     
+        public MMF_Player TargetPostion;
 
-        public RectTransform canvasRect;
+
+        Vector3 offset;
+
 
         public void Update()
         {
             if (isClear)
                 return;
 
-            if (Mouse.current.leftButton.wasReleasedThisFrame)
+            if (Mouse.current.leftButton.wasPressedThisFrame)
             {
-                if (!inTarget)
-                {
-                    isDrag = false;
-                    ResetPostion.PlayFeedbacks();
-                }
-                else
+                Vector2 mousePos = Mouse.current.position.ReadValue();
+                Vector2 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+                offset = Charger.transform.position - new Vector3(worldPos.x, worldPos.y, 0);
+                RaycastHit2D hit = Physics2D.Raycast(worldPos, Vector2.zero);
+                if(hit.collider!=null&& hit.collider.gameObject == Charger)
+                    isDrag = true;
+            }
+            if (isDrag)
+            {
+                Vector2 mousePos = Mouse.current.position.ReadValue();
+                Vector2 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+                
+                Charger.transform.position = offset + new Vector3(worldPos.x, worldPos.y, 0); ;
+            }
+
+            if (!isClear&& Mouse.current.leftButton.wasReleasedThisFrame)
+            {
+                if (head.inPort)
                 {
                     isClear = true;
                     EventClaer();
                 }
+                else
+                {
+                    isDrag = false;
+                    ResetPostion.PlayFeedbacks();
+                }
             }
-            if (isDrag)
-            {
-                Charger.anchoredPosition = GetMousePositionInCanvas();
-            }
-
-        }
-        public Vector2 GetMousePositionInCanvas()
-        {
-            Vector2 mousePos = Mouse.current.position.ReadValue(); // 마우스 위치 (스크린 좌표)
-
-            Vector2 localPoint;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                canvasRect,  // 캔버스의 RectTransform
-                mousePos,     // 현재 마우스 스크린 위치
-                Camera.main,         // 카메라 (World Space Canvas라면 Camera.main)
-                out localPoint
-            );
-            return localPoint; // UI 내에서의 로컬 좌표 반환
-        }
-
-        public void ClickCharger()
-        {
-            isDrag = true;
-        }
-
-        public void TargetEnter()
-        {
-            if(isDrag)
-                inTarget = true;
-        }
-        public void TargetExit()
-        {
-            inTarget = false ;
         }
 
 
         public void EventClaer()
         {
-            TargetPostion.PlayFeedbacks();
-
+            Debug.Log(phone.ChargingPort.transform.position);
+            Charger.transform.DOMove(phone.ChargingPort.transform.position, 0.5f);
+            Debug.Log("spss");
             ClearAction();
         }
 

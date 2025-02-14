@@ -35,13 +35,18 @@ MonoBehaviour:
     textArray: []
   - id: 1005
     level: -1
-    prefab: {fileID: 0}
+    prefab: {fileID: 2903363758632237792, guid: 04eca5ed438e8514c9b8cebefee60e75, type: 3}
+    textArray: []
+  - id: 1006
+    level: -1
+    prefab: {fileID: 6792380495647651490, guid: f3c1eec8e61df8547939c86f4313a64a, type: 3}
     textArray: []
   questArray:
   - {fileID: 64922150804996188, guid: 05982b62e9cc2a34583ed13892cd2de5, type: 3}
   - {fileID: 2421299613985424272, guid: 5731f7c4bf27ea54599fdaf7529a4899, type: 3}
   - {fileID: 6855458635590791947, guid: ce6b8270f35c7d548b5167f0c1f4d4b9, type: 3}
   - {fileID: 2903363758632237792, guid: 04eca5ed438e8514c9b8cebefee60e75, type: 3}
+  - {fileID: 6792380495647651490, guid: f3c1eec8e61df8547939c86f4313a64a, type: 3}
   - {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
   eventDataTableCSV: {fileID: 4900000, guid: ba640051d0b9978439f2967798cbe803, type: 3}
   textDataTableCSV: {fileID: 0}

@@ -1,4 +1,4 @@
-﻿using DG.Tweening;
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +16,9 @@ namespace GamePlay.Phone
         public Vector2Int phoneVerticalViewPortSize = new Vector2Int(600, 960);
         public Vector2Int phoneHorizonViewPortSize => new Vector2Int(phoneVerticalViewPortSize.y, phoneVerticalViewPortSize.x);
 
+        public GameObject ChargingPort;
         [Header("App 관련")] 
         public ApplicationControl applicationControl;
-
         public void Awake()
         {
             { // 테스틑용 
