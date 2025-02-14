@@ -108,7 +108,7 @@ namespace GamePlay.MiniGame.RunningGame
                         var obj = Instantiate(prefab, SpawnPos, Quaternion.identity, parent);
                         obj.Setting(speed);
                         obj.runningGame = runningGame;
-                        obj.gameObject.layer = LayerMask.NameToLayer("Phone");
+                        PhoneUtil.SetLayer(obj);
                         spawnObjectList.Add(obj);
                         SpawnPos.x += pixelSize.x / 2;
                     }
@@ -130,7 +130,7 @@ namespace GamePlay.MiniGame.RunningGame
                         SpawnPos.x += pixelSize.x / 2;
                         var obj = Instantiate(ForegroundPrefab[i], SpawnPos, Quaternion.identity, ForeParent.transform);
                         obj.runningGame = runningGame;
-                        obj.gameObject.layer = LayerMask.NameToLayer("Phone");
+                        PhoneUtil.SetLayer(obj);
                         ForeFogSetting(obj);
                         ForegroundObject.Add(obj);
                         SpawnPos.x += pixelSize.x / 2 + ForegroundInterval;
@@ -151,7 +151,7 @@ namespace GamePlay.MiniGame.RunningGame
                         var obj = Instantiate(FloorPrefab[i], SpawnPos, Quaternion.identity, FloorParent.transform);
                         obj.Setting(FloorSpeed);
                         obj.runningGame = runningGame;
-                        obj.gameObject.layer = LayerMask.NameToLayer("Phone");
+                        PhoneUtil.SetLayer(obj);
                         FloorObject.Add(obj);
                         SpawnPos.x += pixelSize.x / 2 + FloorInterval;
                     }

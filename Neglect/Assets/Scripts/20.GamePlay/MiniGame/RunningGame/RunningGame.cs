@@ -139,7 +139,7 @@ namespace GamePlay.MiniGame.RunningGame
             runningGameObjectRoot.SetActive(true);
             runningGameCanvasRoot.gameObject.SetActive(true);
             InputManager.running.input.Enable();
-            if(isGameStart) GamePlay();
+            if(isGameStart && !settingCanvas.gameObject.activeSelf) GamePlay();
         }
 
         public override void AppPause(PhoneControl phone)
