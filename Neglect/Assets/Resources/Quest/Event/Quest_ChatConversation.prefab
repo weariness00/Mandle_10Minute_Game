@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7838624972776278177
+--- !u!1 &176224024082607265
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,43 +8,43 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7489938983424346575}
-  - component: {fileID: 6855458635590791947}
+  - component: {fileID: 7765607404285059688}
+  - component: {fileID: 6792380495647651490}
   m_Layer: 0
-  m_Name: Quest_ChargeNow
+  m_Name: Quest_ChatConversation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7489938983424346575
+--- !u!4 &7765607404285059688
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7838624972776278177}
+  m_GameObject: {fileID: 176224024082607265}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 512.5569, y: -131.75882, z: 5117.5825}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6855458635590791947
+--- !u!114 &6792380495647651490
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7838624972776278177}
+  m_GameObject: {fileID: 176224024082607265}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e437527e9aca61448e6ff4025383053, type: 3}
+  m_Script: {fileID: 11500000, guid: 8edb462fc7c03654499b6dc721432ade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questID: 4
+  questID: 6
   questName: 
   type: -1
   state: 0
@@ -53,8 +53,4 @@ MonoBehaviour:
     level: 0
     prefab: {fileID: 0}
     textArray: []
-  notification: {fileID: 4918438592394931214, guid: 8e4f223eeda39f549a07168a0ce6c4c0, type: 3}
-  charger: {fileID: 6205727449769662004, guid: d93e752933b8bb94293419ac042c9e3f, type: 3}
-  ChargerPopup: {fileID: 0}
-  Charger: {fileID: 0}
-  SpawnPos: {x: 7, y: 0, z: 0}
+  ChatPrefab: {fileID: 714486787558811967, guid: 67772f9d0120a06469ed63d8400d746d, type: 3}
