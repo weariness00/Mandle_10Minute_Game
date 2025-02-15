@@ -16,32 +16,34 @@ namespace GamePlay.Event
         [Header("패스워드 완료 후 계좌 이체 텍스트")]
         public TextMeshProUGUI InputAmountText;
         public TextMeshProUGUI InputAccountText;
+        public int InputAmount;   //입력된 통장 번호
+        public string InputAccount;  //입력된 계좌 번호
+        public MMF_Player pre_sign;  // 계좌가 없을때 뜨는 싸인
 
-        public int InputAmount;
-        public string InputAccount;
+        public RectTransform KeyPad;
 
 
-        public MMF_Player pre_sign;
 
         [Header("마지막 확인 텍스트")]
         public TextMeshProUGUI CheckText;
         public TextMeshProUGUI CheckAmountText;
-        [Space]
+        
 
+
+        
+        [Space]
         [Header("이체 해야 할 정보")]
         public string AnswerAccount;
         public int AnswerAmount;
         public string PassbookOwner;
 
+        private bool IsKeyPad = false;
         private int CurrentView = 0; //현재 화면
 
         [Header("은행 화면 정보")]
-        public GameObject BankTransfer;
-        public GameObject BankFinish;
-
         public GameObject BankAccount;
         public GameObject BankAmount;
-        public GameObject BankClear;
+        public GameObject BankFinish;
 
 
         public Action ClearAction;
@@ -63,13 +65,24 @@ namespace GamePlay.Event
             PassbookOwner = Name;
         }
 
-        public void Account() //입력 정보 확인 
+        public void SetAccount() //입력 정보 확인 
         {
+            
+            CheckText.text = AddBar(AnswerAccount) +"\n" + PassbookOwner+"\n";
 
+            string pre1 = InputAmount.ToString();
+            CheckAmountText.text = AddCommas(pre1);
         }
-        private void CheckTextSet() // 입력 정보 확인 텍스트 수정
+        public void CheckAccount() // 입력 정보 확인 텍스트 수정
         {
-
+            if (AnswerAccount == InputAccount)
+            {
+                ChangeView(1);
+            }
+            else
+            {
+                pre_sign.PlayFeedbacks();
+            }
         }
         public static string AddCommas(string input)
         {
@@ -91,6 +104,21 @@ namespace GamePlay.Event
                 }
             }
             return result;
+        }
+        public void KeyPadMove(bool p)
+        {
+            if (CurrentView == 2)
+                return;
+            if (p == true&&!IsKeyPad)
+            {
+                IsKeyPad = true;
+                KeyPad.DOMoveY(400, 0.5f).SetRelative(true);
+            }
+            else if (p == false &&IsKeyPad)
+            {
+                KeyPad.DOMoveY(-400, 0.5f).SetRelative(true);
+                IsKeyPad = false;
+            }
         }
         public static string AddBar(string input)
         {
@@ -115,20 +143,12 @@ namespace GamePlay.Event
         }
         public void BankComplete() // 입력정보 최종 확인 후 송금
         {
-            Debug.Log("송금 완료");
-            string inputText = InputAmount.ToString().Trim();
-            inputText = Regex.Replace(inputText, @"\u200B", "");
             int Amountdifference = 0;
-            if (inputText != "")
-                Amountdifference = AnswerAmount - int.Parse(inputText);
-
-
+            Amountdifference = AnswerAmount - InputAmount;
             Debug.Log(Amountdifference + "만큼 금액 차이 발생"); //  이 금액이 후속이벤트 
             if (Amountdifference == 0)
             {
-
                 ClearAction();
-
                 Destroy(gameObject); //사라지는 애니메이션 일단은 삭제
             }
             else
@@ -140,15 +160,25 @@ namespace GamePlay.Event
         }
         public void ChangeView(int index) // 임시 화면 전환
         {
+            if (index == 0 && CurrentView==1)
+            {
+                BankAccount.transform.DOLocalMoveX(0,1f);
+                BankAmount.transform.DOLocalMoveX(600, 1f);
+                BankFinish.transform.DOLocalMoveX(1200, 1f);
+            }
             if (index == 1)
             {
-                BankTransfer.transform.DOLocalMoveX(0,1f);
+                BankAccount.transform.DOLocalMoveX(-600, 1f);
+                BankAmount.transform.DOLocalMoveX(0, 1f);
                 BankFinish.transform.DOLocalMoveX(600, 1f);
             }
-            if (index == 2)
+            if (index == 2&& CurrentView == 1)
             {
-                BankTransfer.transform.DOLocalMoveX(-600, 1f);
+                SetAccount();
+                BankAccount.transform.DOLocalMoveX(-1200, 1f);
+                BankAmount.transform.DOLocalMoveX(-600, 1f);
                 BankFinish.transform.DOLocalMoveX(0, 1f);
+                KeyPadMove(false);
             }
             CurrentView = index;
         }
@@ -182,7 +212,8 @@ namespace GamePlay.Event
                 }
                 if (num == 11)
                 {
-                    InputAccount = "";
+
+                    KeyPadMove(false);
                 }
             }
             else if (CurrentView == 1) //숫자 입력
@@ -197,7 +228,7 @@ namespace GamePlay.Event
                 }
                 if (num == 11)
                 {
-                    InputAmount = 0;
+                    KeyPadMove(false);
                 }
             }
             SetText();
