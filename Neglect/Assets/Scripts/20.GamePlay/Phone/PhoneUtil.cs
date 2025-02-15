@@ -22,8 +22,6 @@ public static class PhoneUtil
 
     public static void SetLayer(Object obj)
     {
-        if(currentPhone == null) return;
-        
         if(obj is GameObject go)
             SetLayer(go);
         else if(obj is Component component)
@@ -32,6 +30,8 @@ public static class PhoneUtil
 
     public static void SetLayer(GameObject obj)
     {
+        if(currentPhone == null) return;
+
         foreach (var transform in obj.GetComponentsInChildren<Transform>())
         {
             transform.gameObject.layer = LayerMask.NameToLayer("Phone");
