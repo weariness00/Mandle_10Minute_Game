@@ -29,11 +29,11 @@ namespace Quest
             UniqueRandom eventRandom = new(0, eventDataArray.Length);
             int index = 0;
             EventData data = eventDataArray[index];
-            while (!eventRandom.IsEmpty)
+            while (!eventRandom.IsEmptyInt)
             {
                 index = eventRandom.RandomInt();
                 data = eventDataArray[index];
-                if(data.id != -1) 
+                if(data.id != -1 && data.prefab != null) 
                     break;
             }
             var quest = Instantiate(data.prefab);
