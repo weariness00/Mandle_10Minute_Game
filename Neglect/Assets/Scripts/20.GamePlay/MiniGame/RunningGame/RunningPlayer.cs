@@ -16,11 +16,16 @@ namespace GamePlay.MiniGame.RunningGame
         public ReactiveProperty<int> life = new (3);
         public MinMaxValue<float> immortalTime = new(0, 0, 1);
         public MMF_Player hitEffect;
+        public AudioSource audioSource;
         
         [Space]
+        [Header("Jump 관련")]
         [Tooltip("점프 높이")]public float jumpForce = 1f;
         [Tooltip("점프하는데 걸리는 시간")]public MinMaxValue<float> jumpTime = new(0,0,1f, false, true);
         public bool isJumping = false;
+
+        [Space] 
+        public AudioClip randingClip;
         
         [Space]
         [Tooltip("슬라이딩 충돌 박스 크기")] public Vector2 slidingColliderBoxSize;
@@ -68,6 +73,7 @@ namespace GamePlay.MiniGame.RunningGame
                 {
                     animator.Randing();
                     isJumping = false;
+                    audioSource.PlayOneShot(randingClip);
                 }
             }
         }
