@@ -18,8 +18,10 @@ namespace Quest.Container
             base.Play();
             var popUp = PhoneUtil.InstantiateUI(popUpPrefab);
             popUp.completeButton.onClick.AddListener(Complete);
-            popUp.ignoreButton.onClick.AddListener(Ignore);
             popUp.destroyPopUpEvent.AddListener(Ignore);
+
+            if(eventData.textArray.Length >= 1) popUp.titleText.text = eventData.textArray[0];
+            if(eventData.textArray.Length >= 2) popUp.explainText.text = eventData.textArray[1];
         }
     }
 }

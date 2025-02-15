@@ -12,11 +12,6 @@ namespace SeoTestTestTest
 {
     public class Seo_Test : MonoBehaviour
     {
-        public int questId;
-
-        public FlappingGameManager flappingGameManager;
-        public TMP_Text scoreText;
-
         [Header("Phone 관련")]
         public PhoneControl phoneControl;
         public string miniGameName;
@@ -26,29 +21,6 @@ namespace SeoTestTestTest
         
         public void Start()
         {
-            
-            if (questId != -1)
-            {
-            }
-
-            if (flappingGameManager)
-            {
-                if (scoreText) flappingGameManager.score.Subscribe(value => scoreText.text = $"{value}");
-            }
-
-            SceneUtil.AsyncAddHome(scene =>
-            {
-                foreach (GameObject rootGameObject in scene.GetRootGameObjects())
-                {
-                    var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
-                    if (app != null)
-                    {
-                        phoneControl.applicationControl.AddApp(app);
-                        phoneControl.applicationControl.OpenApp(app);
-                    }
-                }
-            });
-
             if (isMiniGameAddToApp)
             {
                 if (miniGameName == "Running Game")
