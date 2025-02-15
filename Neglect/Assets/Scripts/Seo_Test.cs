@@ -34,25 +34,6 @@ namespace SeoTestTestTest
                         }
                     });
                 }
-                else
-                {
-                    SceneUtil.AsyncAddFlappingGame(scene =>
-                    {
-                        foreach (GameObject rootGameObject in scene.GetRootGameObjects())
-                        {
-                            var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
-                            if(app != null) phoneControl.applicationControl.AddApp(app);
-                        }
-                    });
-                    SceneUtil.AsyncAddRunningGame(scene =>
-                    {
-                        foreach (GameObject rootGameObject in scene.GetRootGameObjects())
-                        {
-                            var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
-                            if(app != null) phoneControl.applicationControl.AddApp(app);
-                        }
-                    });
-                }
             }
         }
 
