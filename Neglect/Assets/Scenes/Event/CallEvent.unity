@@ -644,6 +644,30 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 210.6
       objectReference: {fileID: 0}
+    - target: {fileID: 4586627753090403227, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
+      propertyPath: talkData.mainText
+      value: pre
+      objectReference: {fileID: 0}
+    - target: {fileID: 4586627753090403227, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
+      propertyPath: talkData.negativeTextArray.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4586627753090403227, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
+      propertyPath: talkData.positiveTextArray.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4586627753090403227, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
+      propertyPath: talkData.negativeTextArray.Array.data[0]
+      value: neg
+      objectReference: {fileID: 0}
+    - target: {fileID: 4586627753090403227, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
+      propertyPath: talkData.positiveTextArray.Array.data[0]
+      value: pos
+      objectReference: {fileID: 0}
+    - target: {fileID: 4586627753090403227, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
+      propertyPath: talkData.positiveTextArray.Array.data[1]
+      value: pos1
+      objectReference: {fileID: 0}
     - target: {fileID: 4627689851437416457, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
       propertyPath: m_SizeDelta.x
       value: 400
