@@ -1,4 +1,5 @@
 using DG.Tweening;
+using GamePlay.Talk;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace GamePlay.Event
         public string CurrentName = "npc";
         public TextMeshProUGUI ChatName;
 
+        [Space]
+        public TalkingData talkData;
 
         [Header("말풍선")]
         [Tooltip("상대방 말풍선")]
@@ -60,12 +63,39 @@ namespace GamePlay.Event
         {
             ChatStart();
         }
-
-        public void SettingDate()
+        public void SettingReply()
         {
-            //대화 내용 최신화
+            if (talkData == null)
+            {
+                Debug.LogError("talkData is null");
+                return; // talkData가 null이면 이 함수의 실행을 중단
+            }
+            if (talkData.negativeTextArray.Length + talkData.positiveTextArray.Length == 0)
+            {
+                return; // talkData가 null이면 이 함수의 실행을 중단
+            }
+            List<string> combinedList = new List<string>(talkData.positiveTextArray);
+            combinedList.AddRange(talkData.negativeTextArray);
+            replyString = combinedList.ToArray();
+            int count = 0;
+            
+            for (int i = 0; i < talkData.positiveTextArray.Length; i++)
+            {
+                replygage[count] = 20;
+                count++;
+            }
+            for (int i = 0; i < talkData.negativeTextArray.Length; i++)
+            {
+                replygage[count] = 0;
+                count++;
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                int index = UnityEngine.Random.Range(0, 3);
+                (replyString[i], replyString[index]) = (replyString[index], replyString[i]);
+                (replygage[i], replygage[index]) = (replygage[index], replygage[i]);
+            }
         }
-
         public void ResetObject()
         {
             OtherChat.gameObject.SetActive(false);
@@ -82,7 +112,7 @@ namespace GamePlay.Event
         public void ChatStart()
         {
             ResetObject();
-
+            SettingReply();
             // 데이터베이스 재설정 코드 넣을 것.
 
             Sequence UiSeq = DOTween.Sequence();
@@ -94,7 +124,7 @@ namespace GamePlay.Event
             UiSeq.AppendCallback(() =>
             {
                 OtherText.gameObject.SetActive(true);
-                OtherText.text = Question;
+                OtherText.text = talkData != null ? talkData.mainText : "Test";
             });
             // ~ 상대 말풍선 애니메이션
 

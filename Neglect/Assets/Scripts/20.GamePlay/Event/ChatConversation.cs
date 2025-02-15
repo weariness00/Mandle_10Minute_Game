@@ -3,9 +3,11 @@ using GamePlay.Talk;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+
 
 namespace GamePlay.Event
 {
@@ -62,11 +64,6 @@ namespace GamePlay.Event
 
         }
 
-        public void SettingDate()
-        {
-            //대화 내용 최신화
-        }
-
         
         public void OtherChatSpawn(string t)
         {
@@ -102,8 +99,6 @@ namespace GamePlay.Event
             ChatScrollBox.sizeDelta = new Vector2(0, NextTextPosY + preRect.rect.size.y/2);
             StartCoroutine(ScrollToBottom());
             UiSeq.Append(pre.gameObject.transform.DOLocalMoveY(pre.transform.localPosition.y - 50f, 0.5f).From());
-            
-
         }
         IEnumerator ScrollToBottom()
         {
@@ -113,10 +108,43 @@ namespace GamePlay.Event
 
         public void CallStart()
         {
+            SettingReply();
             OtherChatSpawn(talkData != null ? talkData.mainText : "Test");
             ChatBox();
         }
 
+        public void SettingReply()
+        {
+            if (talkData == null)
+            {
+                Debug.LogError("talkData is null");
+                return; // talkData가 null이면 이 함수의 실행을 중단
+            }
+            if (talkData.negativeTextArray.Length + talkData.positiveTextArray.Length == 0)
+            {
+                return; // talkData가 null이면 이 함수의 실행을 중단
+            }
+            List<string> combinedList = new List<string>(talkData.positiveTextArray);
+            combinedList.AddRange(talkData.negativeTextArray);
+            replyString = combinedList.ToArray();
+            int count = 0;
+            for (int i = 0; i < talkData.positiveTextArray.Length; i++)
+            {                
+                replygage[count] = 20;
+                count++;
+            }
+            for (int i = 0; i < talkData.negativeTextArray.Length; i++)
+            {
+                replygage[count] = 0;
+                count++;
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                int index = UnityEngine.Random.Range(0, 3);
+                (replyString[i], replyString[index]) = (replyString[index], replyString[i]);
+                (replygage[i], replygage[index]) = (replygage[index], replygage[i]);
+            }
+        }
 
         public void ChatBox()
         {
@@ -145,8 +173,7 @@ namespace GamePlay.Event
                     SelectTexts[index].text = replyString[i];
                 }
             });
-            //~ 버튼 나오는 애니메이션
-            
+            //~ 버튼 나오는 애니메이션    
         }
 
         public void ChoiceBttons(int index) //버튼 클릭시
