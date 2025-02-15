@@ -67,7 +67,6 @@ namespace GamePlay.MiniGame.RunningGame
                     isJumping = false;
                 }
             }
-            isJumping = false;
         }
 
         public void OnTriggerEnter2D(Collider2D other)
@@ -90,6 +89,10 @@ namespace GamePlay.MiniGame.RunningGame
             {
                 jumpTime.Current += Time.deltaTime * runningGame.gameSpeed.Value;
                 transform.position = Vector3.Lerp(originPosition, jumpDestinationPosition, Mathf.Sin(jumpTime.Current / jumpTime.Max * Mathf.PI));
+            }
+            else if (isJumping)
+            {
+                transform.position -= Time.deltaTime * runningGame.gameSpeed.Value * Vector3.up;
             }
             else if (!isJumping && InputManager.running.MovePosition.y > 0f)
             {

@@ -30,7 +30,6 @@ namespace GamePlay.MiniGame.RunningGame
         public Canvas inGameCanvas;
         public GameObject inGameObject;
         
-        public PlayerData[] playerDataArray = new PlayerData[3];
         public List<ObjectSpawner> obstacleSpawnerList;
 
         public override void Awake()
@@ -44,6 +43,12 @@ namespace GamePlay.MiniGame.RunningGame
                 settingCanvas.gameObject.SetActive(false);
                 if(isGameStart) isGamePlay.Value = true;
             });
+            
+            lobbyCanvas.gameObject.SetActive(true);
+            lobbyObject.gameObject.SetActive(true);
+            
+            inGameCanvas.gameObject.SetActive(false);
+            inGameObject.gameObject.SetActive(false);
             
             InputManager.running.ESC.performed += context =>
             {
@@ -60,7 +65,7 @@ namespace GamePlay.MiniGame.RunningGame
             {
                 spawner.SpawnSuccessAction.AddListener(obj =>
                 {
-                    obj.layer = LayerMask.NameToLayer("Phone");
+                    PhoneUtil.SetLayer(obj);
                     SceneManager.MoveGameObjectToScene(obj, SceneUtil.GetRunningGameScene());
                     obj.GetComponent<ObstacleObject>().runningGame = this;
                 });
@@ -86,20 +91,60 @@ namespace GamePlay.MiniGame.RunningGame
                     spawner.timeScale = value;
             });
         }
+
+        public override void Update()
+        {
+            base.Update();
+
+            if (isGamePlay.Value)
+            {
+                UpdatePlayerData();
+            }
+        }
     }
 
-    
+    /// <summary>
+    /// 자신과 다른 플레이어 Data 관리
+    /// </summary>
     public partial class RunningGame
     {
-        public PlayerData GetPlayerData() => playerDataArray[0];
-
+        [Header("Player 데이터 관련")]
+        public PlayerData[] playerDataArray = new PlayerData[3];
+        public PlayerData CurrentPlayerData => playerDataArray[0];
+        
         [Serializable]
         public class PlayerData
         {
             public ReactiveProperty<int> score = new(0);
             public string name;
+            [SerializeField] private MinMaxValue<float> scoreRandomIncreaseTimer = new(0, 0, 1, false, true);
+            [SerializeField] private MinMax<int> scoreRandomIncrease = new(0,0);
+
+            public void RandomIncreaseScore(float deltaTime)
+            {
+                scoreRandomIncreaseTimer.Current += deltaTime;
+                
+                if (scoreRandomIncreaseTimer.IsMax)
+                {
+                    scoreRandomIncreaseTimer.Current -= scoreRandomIncreaseTimer.Max;
+                    score.Value += scoreRandomIncrease.Random();
+                }
+            }
         }
-        
+
+        public void UpdatePlayerData()
+        {
+            for (var i = 1; i < playerDataArray.Length; i++)
+            {
+                var data = playerDataArray[i];
+                data.RandomIncreaseScore(Time.deltaTime * gameSpeed.Value);
+            }
+        }
+    }
+
+    
+    public partial class RunningGame
+    {
         public override void GamePlay()
         {
             base.GamePlay();
@@ -139,7 +184,7 @@ namespace GamePlay.MiniGame.RunningGame
             runningGameObjectRoot.SetActive(true);
             runningGameCanvasRoot.gameObject.SetActive(true);
             InputManager.running.input.Enable();
-            if(isGameStart) GamePlay();
+            if(isGameStart && !settingCanvas.gameObject.activeSelf) GamePlay();
         }
 
         public override void AppPause(PhoneControl phone)

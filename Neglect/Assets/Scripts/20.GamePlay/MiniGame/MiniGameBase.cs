@@ -89,11 +89,13 @@ namespace GamePlay.MiniGame
             {
                 GameManager.Instance.isInitQuest = true;
                 QuestManager.Instance.Init();
+                phone.PhoneViewRotate(PhoneViewType.Horizon);
             }
         }
 
         public virtual void AppResume(PhoneControl phone)
         {
+            phone.PhoneViewRotate(PhoneViewType.Horizon);
         }
 
         public virtual void AppPause(PhoneControl phone)

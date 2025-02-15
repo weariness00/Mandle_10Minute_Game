@@ -16,7 +16,9 @@ namespace GamePlay.Event
         public GameObject MemoImage;
         public SpriteRenderer MemoRenderer;
         public bool isEnd;
-        
+
+
+        public Action HideComplete;
         Sequence MemoSeq;
 
         public void Awake()
@@ -35,9 +37,9 @@ namespace GamePlay.Event
             MemoSeq.Append(MemoRenderer.DOFade(0f, 1f));
             MemoSeq.Join(MemoText.DOFade(0f, 1f));
             MemoSeq.Join(transform.DOLocalMoveX(5f, 1f).SetRelative(true)).OnComplete(()=>{
-                    Destroy(gameObject);
+                HideComplete();
+                Destroy(gameObject);
                 Destroy(MemoText.gameObject);
-
             });
              
         }

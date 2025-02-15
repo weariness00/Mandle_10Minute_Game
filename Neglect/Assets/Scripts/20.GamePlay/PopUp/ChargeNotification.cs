@@ -1,3 +1,4 @@
+using GamePlay.Phone;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using System;
@@ -9,18 +10,19 @@ using UnityEngine.EventSystems;
 
 namespace GamePlay.PopUp
 {
-    public class ChargeNotification : MonoBehaviour, IPointerDownHandler
+    public class ChargeNotification : MonoBehaviour
     {
 
         public MMF_Player ShowNotificationMMF; //알림 show
         public MMF_Player HideNotificationMMF; //알림 hide
-        public Action IgnoreAction; 
+        public Action IgnoreAction;
+        public PhoneControl phone;
         public void OnEnable()
         {
             ShowNotificationMMF.PlayFeedbacks();    
         }
 
-        public void OnPointerDown(PointerEventData eventData)
+        public void ChargerIgone()
         {
             HideNotificationMMF.PlayFeedbacks();
             IgnoreAction();

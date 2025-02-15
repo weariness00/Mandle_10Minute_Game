@@ -75,6 +75,11 @@ namespace Quest
 
     public partial class QuestBase : IComparable, IComparable<int>, IComparable<QuestBase>
     {
+        public override string ToString()
+        {
+            return $"{questName} : {nameof(state)}";
+        }
+
         public int CompareTo(object obj)
         {
             if (obj is int id)

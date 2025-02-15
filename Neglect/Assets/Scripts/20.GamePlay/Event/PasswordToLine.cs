@@ -1,3 +1,4 @@
+using GamePlay.Phone;
 using Manager;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
@@ -9,6 +10,7 @@ using TMPro;
 using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.Windows;
@@ -17,6 +19,7 @@ namespace GamePlay.Event
 {
     public class PasswordToLine : MonoBehaviour
     {
+        public PhoneControl phone;
         public Action ClearAction;
         public RectTransform canvasRect;
         [Header("정답 패스워드")]
@@ -83,10 +86,16 @@ namespace GamePlay.Event
             Vector2 mousePos = Mouse.current.position.ReadValue(); // 마우스 위치 (스크린 좌표)
 
             Vector2 localPoint;
+            // RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            //     canvasRect,  // 캔버스의 RectTransform
+            //     mousePos,     // 현재 마우스 스크린 위치
+            //     Camera.main,         // 카메라 (World Space Canvas라면 Camera.main)
+            //     out localPoint
+            // );
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 canvasRect,  // 캔버스의 RectTransform
-                mousePos,     // 현재 마우스 스크린 위치
-                Camera.main,         // 카메라 (World Space Canvas라면 Camera.main)
+                phone.phoneMousePosition,     // 현재 마우스 스크린 위치
+                phone.phoneCamera,         // 카메라 (World Space Canvas라면 Camera.main)
                 out localPoint
             );
             return localPoint; // UI 내에서의 로컬 좌표 반환
@@ -197,10 +206,12 @@ namespace GamePlay.Event
             if (IsCrack && !InputPassword.Contains(num) && !InputPassword.Contains(num))
             {
                 InputPassword.Add(num);
+
                 CheckSkipNumber();
             }
         }
-     
+
+
         /// 패스워드
 
 
