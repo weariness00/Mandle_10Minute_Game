@@ -38,11 +38,6 @@ namespace GamePlay.MiniGame.RunningGame
             InputManager.running.input.Enable();
 
             settingCanvas.gameObject.SetActive(false);
-            continueButton.onClick.AddListener(() =>
-            {
-                settingCanvas.gameObject.SetActive(false);
-                if(isGameStart) isGamePlay.Value = true;
-            });
             
             lobbyCanvas.gameObject.SetActive(true);
             lobbyObject.gameObject.SetActive(true);
@@ -70,20 +65,6 @@ namespace GamePlay.MiniGame.RunningGame
                     obj.GetComponent<ObstacleObject>().runningGame = this;
                 });
             }
-            
-            isGamePlay.Subscribe(value =>
-            {
-                if (value)
-                {
-                    foreach (ObjectSpawner spawner in obstacleSpawnerList)
-                        spawner.Play();
-                }
-                else
-                {
-                    foreach (ObjectSpawner spawner in obstacleSpawnerList)
-                        spawner.Pause();
-                }
-            });
             
             gameSpeed.Subscribe(value =>
             {
@@ -153,6 +134,16 @@ namespace GamePlay.MiniGame.RunningGame
             
             inGameCanvas.gameObject.SetActive(true);
             inGameObject.gameObject.SetActive(true);
+            
+            foreach (ObjectSpawner spawner in obstacleSpawnerList)
+                spawner.Play();
+        }
+
+        public override void GameStop()
+        {
+            base.GameStop();
+            foreach (ObjectSpawner spawner in obstacleSpawnerList)
+                spawner.Pause();
         }
     }
 
@@ -190,10 +181,10 @@ namespace GamePlay.MiniGame.RunningGame
         public override void AppPause(PhoneControl phone)
         {
             base.AppPause(phone);
+            GameStop();
             runningGameObjectRoot.SetActive(false);
             runningGameCanvasRoot.gameObject.SetActive(false);
             InputManager.running.input.Disable();
-            GameStop();
         }
     }
 }

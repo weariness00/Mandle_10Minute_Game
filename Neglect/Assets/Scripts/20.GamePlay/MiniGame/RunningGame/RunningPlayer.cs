@@ -42,6 +42,9 @@ namespace GamePlay.MiniGame.RunningGame
         {
             originColliderSize = collider2D.size;
             originCollideroffset = collider2D.offset;
+
+            isJumping = true;
+            jumpTime.SetMax();
         }
 
         public void Update()
@@ -92,7 +95,7 @@ namespace GamePlay.MiniGame.RunningGame
             }
             else if (isJumping)
             {
-                transform.position -= Time.deltaTime * runningGame.gameSpeed.Value * Vector3.up;
+                transform.position -= jumpForce / jumpTime.Max * Time.deltaTime * runningGame.gameSpeed.Value * Vector3.up;
             }
             else if (!isJumping && InputManager.running.MovePosition.y > 0f)
             {
