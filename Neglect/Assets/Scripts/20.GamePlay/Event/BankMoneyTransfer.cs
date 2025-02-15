@@ -14,8 +14,13 @@ namespace GamePlay.Event
         // Start is called before the first frame update
 
         [Header("패스워드 완료 후 계좌 이체 텍스트")]
-        public TextMeshProUGUI InputAccount;
-        public TextMeshProUGUI InputAmount;
+        public TextMeshProUGUI InputAmountText;
+        public TextMeshProUGUI InputAccountText;
+
+        public int InputAmount;
+        public string InputAccount;
+
+
         public MMF_Player pre_sign;
 
         [Header("마지막 확인 텍스트")]
@@ -28,11 +33,15 @@ namespace GamePlay.Event
         public int AnswerAmount;
         public string PassbookOwner;
 
-        private int CurrentView = 1; //현재 화면
+        private int CurrentView = 0; //현재 화면
 
         [Header("은행 화면 정보")]
         public GameObject BankTransfer;
         public GameObject BankFinish;
+
+        public GameObject BankAccount;
+        public GameObject BankAmount;
+        public GameObject BankClear;
 
 
         public Action ClearAction;
@@ -42,9 +51,7 @@ namespace GamePlay.Event
 
         public void Init()
         {
-            ChangeView(1);
-            InputAccount.text = "";
-            InputAmount.text = "";
+            ChangeView(0);
             CheckText.text = "";
             CheckAmountText.text = "";
         }
@@ -56,30 +63,16 @@ namespace GamePlay.Event
             PassbookOwner = Name;
         }
 
-        public void InputComplete() //입력 정보 확인 
+        public void Account() //입력 정보 확인 
         {
-            string inputText = InputAccount.text.Trim();
-            inputText = Regex.Replace(inputText, @"\u200B", "");
-            string answerText = AnswerAccount.Trim().Replace("\n", "").Replace("\r", "");
 
-            if (inputText == answerText)// 계좌가 올바르게 되었을 경우
-            {
-                CheckTextSet();
-                ChangeView(2);
-            }
-            else // 계좌가 올바르지 않을 경우
-            {
-                pre_sign.PlayFeedbacks(); //임시 경고 표시
-            }
         }
         private void CheckTextSet() // 입력 정보 확인 텍스트 수정
         {
-            CheckText.text = "Account\n" + AnswerAccount + "\nBank\n" + PassbookOwner + ".\n";
-            CheckAmountText.text = AddCommas(InputAmount.text) + "$";
+
         }
         public static string AddCommas(string input)
         {
-
             input = input.Trim();
             input = Regex.Replace(input, @"\u200B", "");
             int length = input.Length;
@@ -99,10 +92,31 @@ namespace GamePlay.Event
             }
             return result;
         }
+        public static string AddBar(string input)
+        {
+            input = input.Trim();
+            int length = input.Length;
+            if (length <= 4)
+                return input;
+            string result = "";
+
+            int count = 0;
+            for (int i = 0; i < length; i++)
+            {
+                result += input[i];
+                count++;
+                if ((count == length/2 -1 || count == length / 2 + 1) && i != length-1)
+                {
+                    result += "-";
+                }
+            }
+
+            return result;
+        }
         public void BankComplete() // 입력정보 최종 확인 후 송금
         {
             Debug.Log("송금 완료");
-            string inputText = InputAmount.text.Trim();
+            string inputText = InputAmount.ToString().Trim();
             inputText = Regex.Replace(inputText, @"\u200B", "");
             int Amountdifference = 0;
             if (inputText != "")
@@ -142,6 +156,52 @@ namespace GamePlay.Event
         public void HideAnimation()
         {
             
+        }
+
+        public void SetText()
+        {
+            string pre = InputAccount;
+            string pre1 = InputAmount.ToString();
+            InputAccountText.text = AddBar(pre);
+            InputAmountText.text = AddCommas(pre1);
+        }
+        public void InputClickButton(int num)
+        {
+            if (CurrentView == 0) //계좌 입력
+            {
+                if(num >=0 && num <= 9)
+                {
+                    InputAccount += num.ToString();
+                }
+                if(num == 10)
+                {
+                    if (!string.IsNullOrEmpty(InputAccount))
+                    {
+                        InputAccount = InputAccount.Remove(InputAccount.Length - 1);
+                    }
+                }
+                if (num == 11)
+                {
+                    InputAccount = "";
+                }
+            }
+            else if (CurrentView == 1) //숫자 입력
+            {
+                if (num >= 0 && num <= 9)
+                {
+                    InputAmount = InputAmount*10+ num;
+                }
+                if (num == 10)
+                {
+                    InputAmount = InputAmount / 10;
+                }
+                if (num == 11)
+                {
+                    InputAmount = 0;
+                }
+            }
+            SetText();
+
         }
     }
 }
