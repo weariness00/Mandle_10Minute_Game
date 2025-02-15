@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Talking Data
   m_EditorClassIdentifier: 
   talkingDataArray: []
-  talkDataCSV: {fileID: 0}
-  textDataCSV: {fileID: 0}
+  talkDataCSV: {fileID: 4900000, guid: f38926548fe386b4bbbfbc2af75639e5, type: 3}
+  textDataCSV: {fileID: 4900000, guid: bb038fb41dbf6f244b78c87b9862f45e, type: 3}

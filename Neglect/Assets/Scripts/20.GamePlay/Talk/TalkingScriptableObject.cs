@@ -43,7 +43,7 @@ namespace GamePlay.Talk
                 for (var i = 0; i < csv.Count; i++)
                 {
                     var data = csv[i];
-                    var talkID = data.DynamicCast<int>("EventID");
+                    var talkID = data.DynamicCast<int>("TalkingID");
                     TalkingData talk = new();
                     talk.id = talkID;
                     talkingDataArray[i] = talk;
@@ -51,7 +51,7 @@ namespace GamePlay.Talk
                 Array.Sort(talkingDataArray, (a,b) => a.id.CompareTo(b.id));
                 foreach (var data in csv)
                 {
-                    var talkID = data.DynamicCast<int>("EventID");
+                    var talkID = data.DynamicCast<int>("TalkingID");
                     var mainTextID = data.DynamicCast<int>("MainTextID");
                     var positiveTextIDArray = data.DynamicCast<int[]>("PositiveTextList");
                     var negativeTextIDArray = data.DynamicCast<int[]>("NegativeTextList");

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 50248882836180278}
   - component: {fileID: 2041171860846346100}
   m_Layer: 5
-  m_Name: Left Button
+  m_Name: Ignore Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -246,7 +246,7 @@ GameObject:
   - component: {fileID: 5237284631408929287}
   - component: {fileID: 4282157275030978981}
   m_Layer: 5
-  m_Name: Right Button
+  m_Name: Complete Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -770,7 +770,7 @@ GameObject:
   - component: {fileID: 647263078652198701}
   - component: {fileID: 5330770311443497224}
   m_Layer: 5
-  m_Name: PopUpPad
+  m_Name: PopUpPad Massage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -853,8 +853,8 @@ MonoBehaviour:
   destroyPopUpEvent:
     m_PersistentCalls:
       m_Calls: []
-  leftButton: {fileID: 2041171860846346100}
-  rightButton: {fileID: 4282157275030978981}
+  ignoreButton: {fileID: 2041171860846346100}
+  completeButton: {fileID: 4282157275030978981}
   viewIcon: {fileID: 115949632867473413}
   viewExplain: {fileID: 6791107929912396134}
 --- !u!114 &5330770311443497224
@@ -1040,7 +1040,7 @@ MonoBehaviour:
         DebugActive: 0
         AnimatePositionTarget: {fileID: 7621084370335829414}
         Mode: 0
-        Space: 1
+        Space: 2
         RandomizeRemap: 0
         AnimatePositionDuration: 1
         AnimatePositionTween:
@@ -1220,7 +1220,7 @@ MonoBehaviour:
         RelativePosition: 0
         DeterminePositionsOnPlay: 0
         InitialPosition: {x: 0, y: 0, z: 0}
-        DestinationPosition: {x: 0, y: -150, z: 0}
+        DestinationPosition: {x: 0, y: -100, z: 0}
         InitialPositionTransform: {fileID: 0}
         DestinationPositionTransform: {fileID: 0}
         AnimatePositionCurveX:

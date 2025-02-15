@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -25,8 +26,16 @@ namespace Quest
 
         public QuestBase InstantiateRandomQuest()
         {
-            int index = Random.Range(0, eventDataArray.Length);
-            var data = eventDataArray[index];
+            UniqueRandom eventRandom = new(0, eventDataArray.Length);
+            int index = 0;
+            EventData data = eventDataArray[index];
+            while (!eventRandom.IsEmpty)
+            {
+                index = eventRandom.RandomInt();
+                data = eventDataArray[index];
+                if(data.id != -1) 
+                    break;
+            }
             var quest = Instantiate(data.prefab);
             quest.eventData = data;
             return quest;
@@ -76,20 +85,30 @@ namespace Quest
         {
             var eventCSV = eventDataTableCSV.ReadHorizon();
             eventDataArray = new EventData[eventCSV.Count];
-            
             SetQuestTextData(out var questTextArray);
             for (var i = 0; i < eventCSV.Count; i++)
             {
                 var data = new EventData();
                 var csv = eventCSV[i];
-                data.id = csv.DynamicCast<int>("ID");
+                data.id = csv.DynamicCast<int>("EventID", -1);
+                eventDataArray[i] = data;
+            }
+            
+            Array.Sort(eventDataArray, (a,b) => a.id.CompareTo(b.id));
+
+            foreach (var csv in eventCSV)
+            {
+                var id = csv.DynamicCast<int>("EventID");
+                var textList = csv.DynamicCast<int[]>("TextListID", Array.Empty<int>());
+                var data = GetDataID(id);
                 data.level = csv.DynamicCast<QuestLevel>("Level", QuestLevel.None);
                 data.prefab = GetQuestID(csv.DynamicCast<int>("PrefabID", -1));
-                Debug.Assert(data.prefab != null, "Event Data에 프리펩이 존재하지 않습니다.");
-                var textList = csv.DynamicCast<int[]>("TextList", Array.Empty<int>());
                 data.textArray = questTextArray.Where(d => textList.FirstOrDefault(ti => ti == d.id) != 0).Select(d => d.text).ToArray();
 
-                eventDataArray[i] = data;
+                data.acceptEvent = GetDataID(csv.DynamicCast<int>("AcceptEventID", -1));
+                data.ignoreEvent = GetDataID(csv.DynamicCast<int>("IgnoreEventID", -1));
+                
+                Debug.Assert(data.prefab != null, "Event Data에 프리펩이 존재하지 않습니다.");
             }
 
             //후속 이벤트들 할당
