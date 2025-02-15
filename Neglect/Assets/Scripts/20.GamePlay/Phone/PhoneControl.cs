@@ -70,6 +70,22 @@ namespace GamePlay.Phone
             Destroy(phoneCamera.GetComponent<AudioListener>());
         }
 
+        public void Start()
+        {
+            SceneUtil.AsyncAddHome(scene =>
+            {
+                foreach (GameObject rootGameObject in scene.GetRootGameObjects())
+                {
+                    var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
+                    if (app != null)
+                    {
+                        applicationControl.AddApp(app);
+                        applicationControl.OpenApp(app);
+                    }
+                }
+            });
+        }
+
         public void Update()
         {
             UIInteract();
