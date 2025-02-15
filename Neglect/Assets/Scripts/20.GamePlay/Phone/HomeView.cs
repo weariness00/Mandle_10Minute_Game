@@ -64,6 +64,10 @@ namespace GamePlay.Phone
                 mainCanvas.gameObject.SetActive(false);
             });
         }
+        
+        public void AppExit(PhoneControl phone)
+        {
+        }
 
         public void AppUnInstall(PhoneControl phone)
         {

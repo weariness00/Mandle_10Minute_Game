@@ -16,6 +16,8 @@ namespace Util
         
         private List<int> _uniqueIntList;
 
+        public bool IsEmpty => _uniqueFloatList.Count == 0;
+
         public int RandomInt()
         {
             Debug.Assert(_uniqueIntList == null || _uniqueIntList.Count == 0, "UniqueRandom의 Array를 초기화 하기 위해 먼저 Initialize 메서드를 호출해주세요");

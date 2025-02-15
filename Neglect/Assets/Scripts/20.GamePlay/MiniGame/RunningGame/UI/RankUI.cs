@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
@@ -18,11 +19,14 @@ namespace GamePlay.MiniGame.RunningGame
         public void Start()
         {
             blockList = new();
-            UniqueRandom colorRandom = new(0.01f, 0.99f, 3, 2);
-            foreach (var playerData in runningGame.playerDataArray)
+            UniqueRandom colorRandom = new(0.5f, 0.99f, 9, 2);
+            for (var i = 0; i < runningGame.playerDataArray.Length; i++)
             {
+                var playerData = runningGame.playerDataArray[i];
                 var block = MakeUIBlock(playerData);
-                block.rankIcon.color = Color.Lerp(Color.black, Color.white, colorRandom.RandomFloat());
+                block.rankIcon.color = new Color(colorRandom.RandomFloat(), colorRandom.RandomFloat(), colorRandom.RandomFloat(), 1);
+                var destPos = new Vector2(0, -25 + (-block.rectTransform.sizeDelta.y * i));
+                blockPositionUpdateCoroutineList.Add(StartCoroutine(UpdateRankPositionEnumerator(block, destPos)));
             }
         }
 
@@ -54,8 +58,12 @@ namespace GamePlay.MiniGame.RunningGame
                 var block = rankList[i];
                 block.rankText.text = $"{i + 1}";
 
+                // if (!ReferenceEquals(block, blockList[i]))
                 var destPos = new Vector2(0, -25 + (-block.rectTransform.sizeDelta.y * i));
-                blockPositionUpdateCoroutineList.Add(StartCoroutine(UpdateRankPositionEnumerator(block, destPos)));
+                if (Math.Abs(block.rectTransform.anchoredPosition.y - destPos.y) > 0.1f) 
+                {
+                    blockPositionUpdateCoroutineList.Add(StartCoroutine(UpdateRankPositionEnumerator(block, destPos)));
+                }
             }
         }
 

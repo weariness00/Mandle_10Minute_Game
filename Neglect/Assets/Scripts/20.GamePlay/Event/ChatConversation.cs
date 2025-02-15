@@ -1,4 +1,5 @@
 using DG.Tweening;
+using GamePlay.Talk;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,8 +31,9 @@ namespace GamePlay.Event
         public float ChatGage;
         public Image GageBar;
 
-        [Header("데이터베이스에서 가져올 정보")]
+        [Header("데이터베이스에서 가져올 정보")] 
         [Space]
+        public TalkingData talkData;
         [Tooltip("상대방 질문")]
         public string Question;
         [Tooltip("답변 list")]
@@ -111,7 +113,7 @@ namespace GamePlay.Event
 
         public void CallStart()
         {
-            OtherChatSpawn(Question);
+            OtherChatSpawn(talkData != null ? talkData.mainText : "Test");
             ChatBox();
         }
 

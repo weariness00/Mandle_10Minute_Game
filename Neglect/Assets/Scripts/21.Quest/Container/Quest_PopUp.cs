@@ -17,8 +17,8 @@ namespace Quest.Container
         {
             base.Play();
             var popUp = PhoneUtil.InstantiateUI(popUpPrefab);
-            popUp.leftButton.onClick.AddListener(Complete);
-            popUp.rightButton.onClick.AddListener(Ignore);
+            popUp.completeButton.onClick.AddListener(Complete);
+            popUp.ignoreButton.onClick.AddListener(Ignore);
             popUp.destroyPopUpEvent.AddListener(Ignore);
         }
     }

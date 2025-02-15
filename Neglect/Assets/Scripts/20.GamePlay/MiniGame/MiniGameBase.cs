@@ -50,6 +50,13 @@ namespace GamePlay.MiniGame
             gameSpeed.Value = 0;
         }
 
+        public virtual void GameExit()
+        {
+            if(_phone)
+                _phone.applicationControl.CloseApp(this);
+        }
+        
+
         public void SetGameSpeed(float value)
         {
             gameSpeed.Value = value;
@@ -99,6 +106,10 @@ namespace GamePlay.MiniGame
         }
 
         public virtual void AppPause(PhoneControl phone)
+        {
+        }
+        
+        public virtual void AppExit(PhoneControl phone)
         {
         }
 

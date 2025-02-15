@@ -13,6 +13,7 @@ namespace GamePlay.Phone
         public void AppPlay(PhoneControl phone); // 앱 시작시
         public void AppResume(PhoneControl phone); // 앱 중단후 시작시
         public void AppPause(PhoneControl phone); // 앱 중단시
+        public void AppExit(PhoneControl phone); // 앱 종료시
         public void AppUnInstall(PhoneControl phone); // 앱 삭제시
     }
 }

@@ -46,6 +46,14 @@ public partial class ApplicationControl : MonoBehaviour
         currentPlayApplication = app;
     }
 
+    public void CloseApp(IPhoneApplication app)
+    {
+        if (currentPlayApplication == app) currentPlayApplication = null;
+
+        applicationDictionary.Remove(app.AppName);
+        app.AppExit(phone);
+    }
+
     // 홈 화면으로 이동
     public void OnHome()
     {
