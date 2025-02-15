@@ -1,11 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace GamePlay.Talk
 {
     [Serializable]
-    public class TalkingData
+    public partial class TalkingData
     {
+        public int id;
+        public string mainText;
         
+        public TalkingData positiveResultTalk;
+        public TalkingData negativeResultTalk;
+        
+        public string[] positiveTextArray;
+        public string[] negativeTextArray;
     }
 }
 
