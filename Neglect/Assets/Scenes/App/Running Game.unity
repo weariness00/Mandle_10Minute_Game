@@ -640,8 +640,8 @@ Transform:
   m_GameObject: {fileID: 204622926}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.68, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 100, z: 1}
+  m_LocalPosition: {x: -4.87, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2146466121}
@@ -716,7 +716,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 10}
   m_EdgeRadius: 0
 --- !u!1 &332199832
 GameObject:
@@ -2682,8 +2682,6 @@ MonoBehaviour:
   runningGame: {fileID: 1482410025}
   rigidbody2D: {fileID: 0}
   collider2D: {fileID: 0}
-  life:
-    value: 3
   immortalTime:
     _min: 0
     _max: 1
@@ -2694,6 +2692,16 @@ MonoBehaviour:
     isOverMin: 0
   hitEffect: {fileID: 10803314}
   audioSource: {fileID: 917835403}
+  life:
+    value: 3
+  healCounting:
+    _min: 0
+    _max: 5
+    _current: 0
+    _isMin: 1
+    _isMax: 0
+    isOverMax: 0
+    isOverMin: 0
   jumpForce: 1.7
   jumpTime:
     _min: 0
@@ -3763,6 +3771,7 @@ MonoBehaviour:
   appIcon: {fileID: 21300000, guid: 5d216461c6df6b54b9c820a75e9d9367, type: 3}
   resolution: {x: 600, y: 960}
   _phone: {fileID: 0}
+  player: {fileID: 769697471}
   runningGameObjectRoot: {fileID: 1482410024}
   runningGameCanvasRoot: {fileID: 1900557410}
   settingCanvas: {fileID: 665911811}

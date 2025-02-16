@@ -14,6 +14,9 @@ namespace GamePlay.MiniGame.RunningGame
     // 유니티 이벤트 함수
     public partial class RunningGame : MiniGameBase
     {
+        [Space]
+        [Header("Running Game")]
+        public RunningPlayer player;
         public GameObject runningGameObjectRoot;
         public Canvas runningGameCanvasRoot;
 
@@ -62,7 +65,7 @@ namespace GamePlay.MiniGame.RunningGame
                 {
                     PhoneUtil.SetLayer(obj);
                     SceneManager.MoveGameObjectToScene(obj, SceneUtil.GetRunningGameScene());
-                    obj.GetComponent<ObstacleObject>().runningGame = this;
+                    obj.GetComponent<RunningObstacle>().runningGame = this;
                 });
             }
             
