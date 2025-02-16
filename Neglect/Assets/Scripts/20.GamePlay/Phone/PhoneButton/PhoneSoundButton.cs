@@ -1,16 +1,22 @@
-﻿using Manager;
-using MoreMountains.Feedbacks;
+﻿using DG.Tweening;
+using Manager;
+using System;
 using System.Collections;
+using UniRx;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace GamePlay.Phone
 {
     public class PhoneSoundButton : PhoneSideButton
     {
-        [Tooltip("사운드 바 나타나는 연출")] public MMF_Player appearMMFPlayer;
-
-        public Sprite bgmSoundIcon;
-        public Sprite effectSoundIcon;
+        public Slider sliderPrefab;
+        
+        private Slider slider;
+        private RectTransform sliderRectTransform;
+        private Transform parent;
+        private Tween tween;
+        private IDisposable disposableDisposable;
 
         public override void Awake()
         {
@@ -26,17 +32,40 @@ namespace GamePlay.Phone
                 yield return null;
             }
 
-            var rect = SoundManager.Instance.soundCanvasRectTransform;
-            var phoneCanvas = PhoneUtil.GetPhoneCanvas(phone);
-            rect.SetParent(phoneCanvas.transform, false);
-            
-            // 기존 프리셋 유지
-            rect.anchorMin = Vector2.zero;
-            rect.anchorMax = Vector2.one;
-            rect.anchoredPosition = Vector2.zero;
-            rect.offsetMin = Vector2.zero;
-            rect.offsetMax = Vector2.zero;
-            PhoneUtil.SetLayer(rect);
+            slider = PhoneUtil.InstantiateUI(sliderPrefab);
+            slider.onValueChanged.AddListener(value =>
+            {
+                disposableDisposable?.Dispose();
+                disposableDisposable = Observable.Timer(TimeSpan.FromSeconds(3f)).Subscribe(_ => DisappearSlider());
+                SoundManager.Instance.SetVolume("Master", value);
+            });
+
+            sliderRectTransform = slider.GetComponent<RectTransform>();
+            sliderRectTransform.anchoredPosition = new Vector2(sliderRectTransform.sizeDelta.y, 0);
+            parent = slider.transform.parent;
+        }
+
+        public void AppearSlider()
+        {
+            tween?.Kill();
+            tween = sliderRectTransform.DOAnchorPos(new Vector2(-40, 0), 0.3f).SetEase(Ease.Flash);
+        }
+        public void DisappearSlider()
+        {
+            tween?.Kill();
+            tween = sliderRectTransform.DOAnchorPos(new Vector2(sliderRectTransform.sizeDelta.y, 0), 0.3f).SetEase(Ease.Flash);
+        }
+        
+        public void SoundUp()
+        {
+            AppearSlider();
+            slider.value += 10;
+        }
+
+        public void SoundDown()
+        {
+            AppearSlider();
+            slider.value -= 10;
         }
     }
 }

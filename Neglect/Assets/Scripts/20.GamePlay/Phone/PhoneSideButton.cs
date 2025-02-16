@@ -19,13 +19,10 @@ namespace GamePlay.Phone
         {
             var mousePos = Mouse.current.position.ReadValue();
             var ray = Camera.main.ScreenPointToRay(mousePos);
-
-            if (Physics.Raycast(ray, out var hit))
+            var hit = Physics2D.Raycast(ray.origin, ray.direction, float.MaxValue);
+            if (hit.transform == transform)
             {
-                if (hit.transform.gameObject == gameObject)
-                {
-                    onClickEvent?.Invoke();
-                }
+                onClickEvent?.Invoke();
             }
         }
     }
