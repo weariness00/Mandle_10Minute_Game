@@ -49,13 +49,13 @@ namespace GamePlay.Phone
             Password.ClearAction += PasswordClear;
             lotto(); // 패스워드 계좌번호 금액 랜덤 결정
 
-            Password.SettingEvent("", RandomPassword);
+            Password.SettingEvent("", "[1,2,3,6]");
             
             if(BankMemo != null)
             {
                 BankMemo = Instantiate(BankMemo , new Vector3(5.5f,0,0), Quaternion.identity);
             }
-            BankMemo.TextSetting("To Owner", RandomAccount, RandomAmount, RandomPassword);
+            BankMemo.TextSetting("To Owner", RandomAccount, RandomAmount, "1 2 3 6");
         }
 
         public void AppPause(PhoneControl phone)
