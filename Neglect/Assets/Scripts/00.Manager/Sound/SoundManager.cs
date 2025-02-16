@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Audio;
 using Util;
 
 namespace Manager
@@ -10,6 +7,9 @@ namespace Manager
     public class SoundManager : Singleton<SoundManager>
     {
         public SoundManagerSetting setting;
+        public AudioMixer mixer => setting.mixer;
+        public Canvas soundCanvas;
+        public RectTransform soundCanvasRectTransform;
 
         private static readonly string Volume = "Volume"; 
  
@@ -18,17 +18,9 @@ namespace Manager
             setting = SoundManagerSettingsProviderHelper.setting;
             Debug.Assert(setting != null, $"Sound Manager Setting 스크립터블 오브젝트가 존재하지 않습니다.");
             if(ReferenceEquals(setting, null)) return;
-            var audioUIDictionary = setting.InstantiateGroupBlock();
-            
-            foreach (var group in setting.mixer.FindMatchingGroups(string.Empty))
-            {
-                if (audioUIDictionary.TryGetValue(group.name, out var block))
-                {
-                    block.Item2.onValueChanged.AddListener(value => SetVolume(group.name, value * 100f));
-                }
-                float value = PlayerPrefs.GetFloat($"{nameof(SoundManager)}{Volume}{group.name}");
-                SetVolume(group.name, value);
-            }
+
+            setting.InstantiateGroupBlock(out soundCanvas);
+            soundCanvasRectTransform = soundCanvas.GetComponent<RectTransform>();
         }
         
         public void SetVolume(string volumeName, float value)
