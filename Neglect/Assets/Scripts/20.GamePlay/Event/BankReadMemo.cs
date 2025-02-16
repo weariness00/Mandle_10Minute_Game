@@ -32,14 +32,11 @@ namespace GamePlay.Event
         }
         public void HideAnimation()
         {
-            Debug.Log("adsd");
             
             MemoSeq.Append(MemoRenderer.DOFade(0f, 1f));
             MemoSeq.Join(MemoText.DOFade(0f, 1f));
             MemoSeq.Join(transform.DOLocalMoveX(5f, 1f).SetRelative(true)).OnComplete(()=>{
                 HideComplete();
-                Destroy(gameObject);
-                Destroy(MemoText.gameObject);
             });
              
         }
@@ -53,6 +50,14 @@ namespace GamePlay.Event
         public void TextSetting(string Name, string Account , int Amount)
         {
             MemoText.text = "";
+            MemoText.text += Name + "\n";
+            MemoText.text += "Account : " + Account + "\n";
+            MemoText.text += "Amount : " + Amount.ToString() + "\n";
+        }
+
+        public void TextSetting(string Name, string Account, int Amount, String Password)
+        {
+            MemoText.text = "Password..." +Password +"\n";
             MemoText.text += Name + "\n";
             MemoText.text += "Account : " + Account + "\n";
             MemoText.text += "Amount : " + Amount.ToString() + "\n";

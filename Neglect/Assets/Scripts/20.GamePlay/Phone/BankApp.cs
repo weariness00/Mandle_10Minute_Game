@@ -1,18 +1,94 @@
 using DG.Tweening;
+using GamePlay.Phone;
 using MoreMountains.Feedbacks;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
+using System;
 using UnityEngine.UI;
+using GamePlay.Event;
+using Unity.VisualScripting;
 
-namespace GamePlay.Event
+namespace GamePlay.Phone
 {
-    public class BankMoneyTransfer : MonoBehaviour
+    public partial class BankApp : MonoBehaviour, IPhoneApplication
     {
-        // Start is called before the first frame update
+
+        public Canvas mainCanvas;
+        public Canvas uiCanvas;
+
+        [Header("Phone 관련")]
+        [SerializeField] private string appName;
+        [SerializeField] private Sprite icon;
+        [SerializeField] private Vector2Int verticalResolution;
+        [SerializeField] private PhoneControl _phone;
+        public string AppName { get => appName; }
+        public Sprite AppIcon { get => icon; set => icon = value; }
+        public Vector2Int VerticalResolution { get => verticalResolution; set => verticalResolution = value; }
+        public PhoneControl Phone => _phone;
+
+        public bool isClearPassword; // 패스워드 통과 했는지
+        public GameObject ReadMemo;
+        public PasswordToLine Password;
+
+        public BankReadMemo BankMemo;
+
+        public void AppExit(PhoneControl phone)
+        {
+
+        }
+
+        public void AppInstall(PhoneControl phone)
+        {
+            _phone = phone;
+            mainCanvas.worldCamera = phone.phoneCamera;
+            uiCanvas.worldCamera = phone.phoneCamera;
+            Password.phone = phone;
+            Password.ClearAction += PasswordClear;
+            lotto(); // 패스워드 계좌번호 금액 랜덤 결정
+
+            Password.SettingEvent("", RandomPassword);
+            
+            if(BankMemo != null)
+            {
+                BankMemo = Instantiate(BankMemo , new Vector3(5.5f,0,0), Quaternion.identity);
+            }
+            BankMemo.TextSetting("To Owner", RandomAccount, RandomAmount, RandomPassword);
+        }
+
+        public void AppPause(PhoneControl phone)
+        {
+
+        }
+
+        public void AppPlay(PhoneControl phone)
+        {
+
+            BankMemo.gameObject.SetActive(true);
+            Password.phone = phone;
+        }
+
+        public void AppResume(PhoneControl phone)
+        {
+            BankMemo.gameObject.SetActive(false);
+        }
+
+        public void AppUnInstall(PhoneControl phone)
+        {
+
+        }
+
+
+
+    }
+    public partial class BankApp : MonoBehaviour
+    {
+
+        public int RandomAmount;
+        public string RandomAccount;
+        public string RandomPassword;
 
         [Header("패스워드 완료 후 계좌 이체 텍스트")]
         public TextMeshProUGUI InputAmountText;
@@ -20,14 +96,13 @@ namespace GamePlay.Event
         public int InputAmount;   //입력된 통장 번호
         public string InputAccount;  //입력된 계좌 번호
         public MMF_Player pre_sign;  // 계좌가 없을때 뜨는 싸인
-
         public RectTransform KeyPad;
-
 
 
         [Header("마지막 확인 텍스트")]
         public TextMeshProUGUI CheckText;
         public TextMeshProUGUI CheckAmountText;
+
 
         public List<GameObject> KeyPad_objects = new();
         public List<Image> KeyPad_Image = new();
@@ -41,7 +116,7 @@ namespace GamePlay.Event
         public string PassbookOwner;
 
         private bool IsKeyPad = false;
-        private int CurrentView = 0; //현재 화면
+        private int CurrentView = -1; //현재 화면
 
         [Header("은행 화면 정보")]
         public GameObject BankAccount;
@@ -53,7 +128,32 @@ namespace GamePlay.Event
         public Action IgnoreAction;
         public Action HideComplete;
 
-
+        public void lotto()
+        {
+            List<int> RandomNum = new List<int> { 1, 2 ,3,4,5,6,7,8,9};
+            for (int i = 0; i < 4; i++)
+            {
+                int pre = UnityEngine.Random.Range(0, RandomNum.Count);
+                RandomPassword += RandomNum[pre].ToString();
+                RandomNum.RemoveAt(pre);
+            }
+            for (int i = 0; i < 8; i++)
+            {
+                if (i == 0)
+                    RandomAccount += UnityEngine.Random.Range(1, 10).ToString();
+                else
+                    RandomAccount += UnityEngine.Random.Range(0, 10).ToString();
+            }
+            for (int i = 0; i < 6; i++)
+            {
+                if( i <= 3)
+                    RandomAmount += RandomAmount * 10 + 0;
+                else if (i == 0)
+                    RandomAmount += RandomAmount * 10 + UnityEngine.Random.Range(1, 10);
+                else
+                    RandomAmount += RandomAmount * 10 + UnityEngine.Random.Range(0, 10);
+            }
+        }
         public void Init()
         {
             ChangeView(0);
@@ -61,7 +161,7 @@ namespace GamePlay.Event
             CheckAmountText.text = "";
         }
 
-        public void SettingData(string Name, string Account , int Amount)
+        public void SettingData(string Name, string Account, int Amount)
         {
             AnswerAccount = Account;
             AnswerAmount = Amount;
@@ -70,8 +170,8 @@ namespace GamePlay.Event
 
         public void SetAccount() //입력 정보 확인 
         {
-            
-            CheckText.text = AddBar(AnswerAccount) +"\n" + PassbookOwner+"\n";
+
+            CheckText.text = AddBar(AnswerAccount) + "\n" + PassbookOwner + "\n";
 
             string pre1 = InputAmount.ToString();
             CheckAmountText.text = AddCommas(pre1);
@@ -108,20 +208,24 @@ namespace GamePlay.Event
             }
             return result;
         }
+        public void PasswordClear()
+        {
+            ChangeView(0);
+        }
         public void KeyPadMove(bool p)
         {
-            if (KeyPad_Image.Count==0)
+            if (KeyPad_Image.Count == 0)
             {
-                for(int i = 0; i < KeyPad_objects.Count; i++)
+                for (int i = 0; i < KeyPad_objects.Count; i++)
                     KeyPad_Image.Add(KeyPad_objects[i].GetComponent<Image>());
             }
             if (CurrentView == 2)
                 return;
-            if (p == true&&!IsKeyPad)
+            if (p == true && !IsKeyPad)
             {
                 IsKeyPad = true;
-                KeyPad.DOMoveY(400, 0.5f).SetRelative(true);
-                for(int i = 0; i < KeyPad_Image.Count; i++)
+                KeyPad.DOLocalMoveY(400, 0.5f).SetRelative(true);
+                for (int i = 0; i < KeyPad_Image.Count; i++)
                 {
                     KeyPad_Image[i].DOFade(0, 0f);
                     KeyPad_Image[i].DOFade(1, 0.5f);
@@ -132,9 +236,9 @@ namespace GamePlay.Event
                     KeyPad_Text[i].DOFade(1, 0.5f);
                 }
             }
-            else if (p == false &&IsKeyPad)
+            else if (p == false && IsKeyPad)
             {
-                KeyPad.DOMoveY(-400, 0.5f).SetRelative(true);
+                KeyPad.DOLocalMoveY(-400, 0.5f).SetRelative(true);
                 IsKeyPad = false;
                 for (int i = 0; i < KeyPad_Image.Count; i++)
                 {
@@ -160,7 +264,7 @@ namespace GamePlay.Event
             {
                 result += input[i];
                 count++;
-                if ((count == length/2 -1 || count == length / 2 + 1) && i != length-1)
+                if ((count == length / 2 - 1 || count == length / 2 + 1) && i != length - 1)
                 {
                     result += "-";
                 }
@@ -183,25 +287,36 @@ namespace GamePlay.Event
                 IgnoreAction();
                 Destroy(gameObject); //사라지는 애니메이션 일단은 삭제
             }
-            
+
         }
         public void ChangeView(int index) // 임시 화면 전환
         {
-            if (index == 0 && CurrentView==1)
+            if (index == -1 && CurrentView == 0)
             {
-                BankAccount.transform.DOLocalMoveX(0,1f);
+
+                Password.transform.DOLocalMoveX(0, 1f);
+                BankAccount.transform.DOLocalMoveX(600, 1f);
+                BankAmount.transform.DOLocalMoveX(1200, 1f);
+                BankFinish.transform.DOLocalMoveX(1800, 1f);
+            }
+            if (index == 0 && (CurrentView == 1 || CurrentView == -1) )
+            {
+                Password.transform.DOLocalMoveX(-600, 1f);
+                BankAccount.transform.DOLocalMoveX(0, 1f);
                 BankAmount.transform.DOLocalMoveX(600, 1f);
                 BankFinish.transform.DOLocalMoveX(1200, 1f);
             }
             if (index == 1)
             {
+                Password.transform.DOLocalMoveX(-1200, 1f);
                 BankAccount.transform.DOLocalMoveX(-600, 1f);
                 BankAmount.transform.DOLocalMoveX(0, 1f);
                 BankFinish.transform.DOLocalMoveX(600, 1f);
             }
-            if (index == 2&& CurrentView == 1)
+            if (index == 2 && CurrentView == 1)
             {
                 SetAccount();
+                Password.transform.DOLocalMoveX(-1800, 1f);
                 BankAccount.transform.DOLocalMoveX(-1200, 1f);
                 BankAmount.transform.DOLocalMoveX(-600, 1f);
                 BankFinish.transform.DOLocalMoveX(0, 1f);
@@ -212,7 +327,7 @@ namespace GamePlay.Event
 
         public void HideAnimation()
         {
-            
+
         }
 
         public void SetText()
@@ -226,11 +341,11 @@ namespace GamePlay.Event
         {
             if (CurrentView == 0) //계좌 입력
             {
-                if(num >=0 && num <= 9)
+                if (num >= 0 && num <= 9)
                 {
                     InputAccount += num.ToString();
                 }
-                if(num == 10)
+                if (num == 10)
                 {
                     if (!string.IsNullOrEmpty(InputAccount))
                     {
@@ -247,7 +362,7 @@ namespace GamePlay.Event
             {
                 if (num >= 0 && num <= 9)
                 {
-                    InputAmount = InputAmount*10+ num;
+                    InputAmount = InputAmount * 10 + num;
                 }
                 if (num == 10)
                 {
@@ -259,7 +374,6 @@ namespace GamePlay.Event
                 }
             }
             SetText();
-
         }
     }
 }

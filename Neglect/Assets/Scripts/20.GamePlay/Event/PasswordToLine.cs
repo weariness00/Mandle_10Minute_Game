@@ -132,7 +132,7 @@ namespace GamePlay.Event
                 if (PasswordCheck())
                 {
                     ClearAction();  //클리어
-                    Destroy(gameObject);
+                    //Destroy(gameObject);
                 }
                 InputPassword.Clear();
                 LineClear();
