@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GamePlay.MiniGame.RunningGame
 {
-    public class ObstacleObject : MonoBehaviour
+    public class RunningObstacle : MonoBehaviour
     {
         [HideInInspector] public RunningGame runningGame;
         
@@ -24,10 +24,12 @@ namespace GamePlay.MiniGame.RunningGame
             {
                 if (!isCollision)
                 {
-                    var runningGame = FindObjectOfType<RunningGame>();
-                    if (runningGame != null)
+                    runningGame.CurrentPlayerData.score.Value += extraScore;
+                    runningGame.player.healCounting.Current++;
+                    if (runningGame.player.healCounting.IsMax)
                     {
-                        runningGame.CurrentPlayerData.score.Value += extraScore;
+                        runningGame.player.healCounting.SetMin();
+                        runningGame.player.Healing(1);
                     }
                 }
                 Destroy(gameObject, 2f);

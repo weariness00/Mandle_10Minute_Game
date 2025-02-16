@@ -26,6 +26,7 @@ namespace Util
                     _instance = componet;
                     if(_instance is Singleton<T> s1)
                         s1.Initialize();
+                    DontDestroyOnLoad(_instance.gameObject);
                     return;
                 }
 

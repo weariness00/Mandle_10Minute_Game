@@ -42,6 +42,11 @@ public static class PhoneUtil
     public static T InstantiateUI<T>(T component, string phoneName) where T : Object
     {
         var phone = GetPhone(phoneName);
+        return InstantiateUI(component, phone);
+    }
+    
+    public static T InstantiateUI<T>(T component, PhoneControl phone) where T : Object
+    {
         var homeApp = phone.applicationControl.GetApp("Home");
         var homeView = (HomeView)homeApp;
         var obj = Object.Instantiate(component, homeView.uiCanvas.transform);
@@ -58,5 +63,12 @@ public static class PhoneUtil
         var obj = Object.Instantiate(component, homeView.uiCanvas.transform);
         SetLayer(obj);
         return obj;
+    }
+
+    public static Canvas GetPhoneCanvas(PhoneControl phone)
+    {
+        var homeApp = phone.applicationControl.GetApp("Home");
+        var homeView = (HomeView)homeApp;
+        return homeView.uiCanvas;
     }
 }

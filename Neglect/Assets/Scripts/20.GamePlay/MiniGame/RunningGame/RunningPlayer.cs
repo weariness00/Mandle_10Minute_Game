@@ -13,10 +13,14 @@ namespace GamePlay.MiniGame.RunningGame
         [HideInInspector] public Rigidbody2D rigidbody2D;
         [HideInInspector] public BoxCollider2D collider2D;
         
-        public ReactiveProperty<int> life = new (3);
         public MinMaxValue<float> immortalTime = new(0, 0, 1);
         public MMF_Player hitEffect;
         public AudioSource audioSource;
+        
+        [Space]
+        [Header("체력 관련")]
+        public ReactiveProperty<int> life = new (3);
+        public MinMaxValue<int> healCounting = new(0, 0, 5);
         
         [Space]
         [Header("Jump 관련")]
@@ -82,10 +86,11 @@ namespace GamePlay.MiniGame.RunningGame
         {
             if (immortalTime.IsMin && other.CompareTag("Running Obstacle"))
             {
-                var obstacle = other.GetComponent<ObstacleObject>();
+                var obstacle = other.GetComponent<RunningObstacle>();
                 obstacle.isCollision = true;
                 immortalTime.SetMax();
                 life.Value--;
+                healCounting.SetMin();
                 if(hitEffect) hitEffect.PlayFeedbacks();
             }
         }
@@ -133,6 +138,11 @@ namespace GamePlay.MiniGame.RunningGame
                 isSliding = false;
                 animator.EndSliding();
             }
+        }
+
+        public void Healing(int count)
+        {
+            life.Value += count;
         }
     }
 

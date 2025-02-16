@@ -9,11 +9,28 @@ namespace Manager
     {
         public void Awake()
         {
+            _game = new();
             _running = new();
             _flapping = new();
             
+            _game.Init();
             _running.Init();
             _flapping.Init();
+        }
+
+        private Game _game;
+        public static Game game => Instance._game;
+        
+        public class Game
+        {
+            public GameInput input;
+            public InputAction PhoneClick => input.Phone.Click;
+
+            public void Init()
+            {
+                input = new();
+                input.Enable();
+            }
         }
     }
     

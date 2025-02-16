@@ -66,6 +66,7 @@ namespace GamePlay.Phone
 
             // 폰 카메라 생성 & 셋팅
             phoneCamera = Instantiate(Camera.main);
+            phoneCamera.name = "Phone Camera";
             phoneCamera.cullingMask = LayerMask.GetMask("Phone");
             Destroy(phoneCamera.GetComponent<AudioListener>());
         }
@@ -212,7 +213,7 @@ namespace GamePlay.Phone
             {
                 if (!ReferenceEquals(lastHoveredObject, null))
                 {
-                    ExecuteEvents.ExecuteHierarchy(lastHoveredObject, pointerData, ExecuteEvents.pointerExitHandler);
+                    ExecuteEvents.Execute(lastHoveredObject, pointerData, ExecuteEvents.pointerExitHandler);
                     lastHoveredObject = null;
                 }
 
@@ -223,6 +224,7 @@ namespace GamePlay.Phone
                 }
                 if (!ReferenceEquals(draggingObject, null))
                 {
+                    ExecuteEvents.ExecuteHierarchy(draggingObject, pointerData, ExecuteEvents.endDragHandler); // 드래그 종료
                     ExecuteEvents.ExecuteHierarchy(draggingObject, pointerData, ExecuteEvents.dropHandler); // 드래그 종료
                     draggingObject = null;
                 }
@@ -236,36 +238,30 @@ namespace GamePlay.Phone
             rayCastResults.Clear();
             EventSystem.current.RaycastAll(pointerData, rayCastResults);
 
-            var phoneObject = rayCastResults.Where(
-                r =>
-                {
-                    return 
-                        r.gameObject.layer == LayerMask.NameToLayer("Phone");
-                }).ToArray();
+            var phoneObject = rayCastResults.Where(r => r.gameObject.layer == LayerMask.NameToLayer("Phone")).ToArray();
             if (phoneObject.Length <= 0)
             {
                 if (!ReferenceEquals(lastHoveredObject, null))
                 {
                     // Exit 이벤트 (마우스가 UI에서 벗어날 때)
-                    ExecuteEvents.ExecuteHierarchy(lastHoveredObject, pointerData, ExecuteEvents.pointerExitHandler);
+                    ExecuteEvents.Execute(lastHoveredObject, pointerData, ExecuteEvents.pointerExitHandler);
                     lastHoveredObject = null;
                 }
-
                 return;
             }
 
+            pointerData.pointerCurrentRaycast = phoneObject[0];
+            pointerData.pointerPressRaycast = phoneObject[0];
             var hitUI = phoneObject[0].gameObject;
             // 🖱️ 마우스가 UI 위에 있는 경우 (Hover)
             // Enter 이벤트 (마우스가 새로 UI에 올라갔을 때)
-            if (!ReferenceEquals(lastHoveredObject, hitUI))
+            var hoveredObj = ExecuteEvents.GetEventHandler<IPointerEnterHandler>(hitUI);
+            if (!ReferenceEquals(hoveredObj, lastHoveredObject))
             {
-                if (!ReferenceEquals(lastHoveredObject, null))
-                    ExecuteEvents.ExecuteHierarchy(lastHoveredObject, pointerData, ExecuteEvents.pointerExitHandler);
-                ExecuteEvents.ExecuteHierarchy(hitUI, pointerData, ExecuteEvents.pointerEnterHandler);
+                ExecuteEvents.Execute(lastHoveredObject, pointerData, ExecuteEvents.pointerExitHandler);
+                lastHoveredObject = ExecuteEvents.ExecuteHierarchy(hoveredObj, pointerData, ExecuteEvents.pointerEnterHandler);
             }
-
-            lastHoveredObject = hitUI;
-
+            
             // 🖱️ 마우스 버튼이 눌렸을 때 (Click Down)
             if (
 #if ENABLE_INPUT_SYSTEM
@@ -275,11 +271,19 @@ namespace GamePlay.Phone
 #endif
             )
             {
-                pointerData.pointerPress = hitUI;
-                lastPressedObject = hitUI;
+                draggingObject = ExecuteEvents.ExecuteHierarchy(hitUI, pointerData, ExecuteEvents.initializePotentialDrag);
+                pointerData.pointerPress = draggingObject;
+                
+                var downObj = ExecuteEvents.ExecuteHierarchy(hitUI, pointerData, ExecuteEvents.pointerDownHandler);
+                ExecuteEvents.Execute(downObj, pointerData, ExecuteEvents.selectHandler); // 선택 처리
+                lastPressedObject = downObj;
+                pointerData.pointerPress = downObj;
 
-                ExecuteEvents.ExecuteHierarchy(hitUI, pointerData, ExecuteEvents.pointerDownHandler);
-                ExecuteEvents.ExecuteHierarchy(hitUI, pointerData, ExecuteEvents.selectHandler); // 선택 처리
+                if (!ReferenceEquals(draggingObject, null))
+                {
+                    ExecuteEvents.Execute(draggingObject, pointerData, ExecuteEvents.beginDragHandler);
+                    ExecuteEvents.Execute(draggingObject, pointerData, ExecuteEvents.selectHandler); // 선택 처리
+                }
             }
 
             // 🖱️ 마우스 버튼을 떼었을 때 (Click Up)
@@ -289,13 +293,13 @@ namespace GamePlay.Phone
 #else
                 Input.GetMouseButtonUp(0)
 #endif
-                && !ReferenceEquals(lastPressedObject, null))
+               )
             {
-                ExecuteEvents.ExecuteHierarchy(lastPressedObject, pointerData, ExecuteEvents.pointerUpHandler);
+                var upObj = ExecuteEvents.ExecuteHierarchy(hitUI, pointerData, ExecuteEvents.pointerUpHandler);
 
                 // 클릭이 같은 오브젝트에서 발생한 경우 클릭 이벤트 실행
-                if (ReferenceEquals(hitUI, lastPressedObject))
-                    ExecuteEvents.ExecuteHierarchy(lastPressedObject, pointerData, ExecuteEvents.pointerClickHandler);
+                if (ReferenceEquals(upObj, lastPressedObject))
+                    ExecuteEvents.Execute(lastPressedObject, pointerData, ExecuteEvents.pointerClickHandler);
 
                 lastPressedObject = null;
                 pointerData.pointerPress = null;
@@ -309,25 +313,28 @@ namespace GamePlay.Phone
                 Input.GetMouseButton(0)
 #endif
             ) // 마우스가 눌린 상태에서
-            {
-                if (!ReferenceEquals(lastPressedObject, null) && ReferenceEquals(draggingObject, null))
+            { 
+                if (!ReferenceEquals(draggingObject, null))
                 {
-                    draggingObject = lastPressedObject;
-                    ExecuteEvents.ExecuteHierarchy(draggingObject, pointerData, ExecuteEvents.dragHandler); // 드래그 시작
+                    pointerData.dragging = true;
+                    ExecuteEvents.Execute(draggingObject, pointerData, ExecuteEvents.dragHandler); // 드래그 중
                 }
-                else if (!ReferenceEquals(draggingObject, null))
+                if (!ReferenceEquals(lastPressedObject, null))
                 {
-                    ExecuteEvents.ExecuteHierarchy(draggingObject, pointerData, ExecuteEvents.dragHandler); // 드래그 중
-                    ExecuteEvents.ExecuteHierarchy(draggingObject, pointerData, ExecuteEvents.pointerMoveHandler); // 움직이는 중
+                    ExecuteEvents.Execute(lastPressedObject, pointerData, ExecuteEvents.pointerMoveHandler); // 움직이는 중
                 }
             }
             else
             {
                 if (!ReferenceEquals(draggingObject, null))
                 {
-                    ExecuteEvents.ExecuteHierarchy(draggingObject, pointerData, ExecuteEvents.dropHandler); // 드래그 종료
+                    pointerData.dragging = false;
+                    ExecuteEvents.Execute(draggingObject, pointerData, ExecuteEvents.endDragHandler); // 드래그 종료
+                    ExecuteEvents.Execute(draggingObject, pointerData, ExecuteEvents.dropHandler); // 드래그 종료
                     draggingObject = null;
                 }
+
+                lastPressedObject = null;
             }
         }
     }

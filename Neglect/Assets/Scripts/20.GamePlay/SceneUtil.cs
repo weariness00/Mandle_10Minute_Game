@@ -1,4 +1,4 @@
-using GamePlay.Phone;
+﻿using GamePlay.Phone;
 using System;
 using System.Collections;
 using UniRx;
@@ -14,7 +14,7 @@ namespace GamePlay
         private static readonly string HomeScene = "Home";
         private static readonly string RunningGameScene = "Running Game";
         private static readonly string FlappingGameScene = "Flapping Game";
-        private static readonly string BankScene = "BankApp"; // 뱅크 이벤트를 위한 임시 추가
+        private static readonly string dd = "dd";
 
         public static bool TryGetPhoneScene(out Scene scene)
         {
@@ -24,8 +24,7 @@ namespace GamePlay
         public static void AsyncAddPhone(Action<Scene> loadedAction = null) =>Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(PhoneScene, loadedAction));
 
         public static void AsyncAddHome(Action<Scene> loadedAction = null) =>Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(HomeScene, loadedAction));
-        public static void AsyncAddBank(Action<Scene> loadedAction = null) => Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(BankScene, loadedAction));
-
+        
         public static Scene GetRunningGameScene() => SceneManager.GetSceneByName(RunningGameScene);
         public static bool TryGetRunningGameScene(out Scene scene)
         {
@@ -39,13 +38,6 @@ namespace GamePlay
             scene = SceneManager.GetSceneByName(FlappingGameScene);
             return scene.IsValid() && scene.isLoaded;
         }
-        public static bool TryGetBankScene(out Scene scene)// 뱅크 이벤트를 위한 임시 추가
-        {
-            scene = SceneManager.GetSceneByName(BankScene);
-            return scene.IsValid() && scene.isLoaded;
-        }
-
-
         public static void AddFlappingGame() => SceneManager.LoadScene(FlappingGameScene, LoadSceneMode.Additive);
         public static void AsyncAddFlappingGame(Action<Scene> loadedAction = null) =>Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(FlappingGameScene, loadedAction));
 

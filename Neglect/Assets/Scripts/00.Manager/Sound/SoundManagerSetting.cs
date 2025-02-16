@@ -12,16 +12,13 @@ namespace Manager
     public class SoundManagerSetting : ScriptableObject
     {
         public AudioMixer mixer;
-        public Canvas audioCanvasPrefab;
-        public GameObject groupBlockPrefab;
-
-        public string groupParentName;
+        public Canvas audioCanvasPrefab; // 오디오 캔버스
+        public SoundBlock groupBlockPrefab; // 오디오 슬라이드 프리펩
+        public string groupParentName; // 슬라이드 프리펩 부모 이름
         
-        public Dictionary<string, Tuple<TMP_Text, Slider>> InstantiateGroupBlock()
+        public List<SoundBlock> InstantiateGroupBlock(out Canvas audioCanvas)
         {
-            var audioCanvas = Instantiate(audioCanvasPrefab);
-            DontDestroyOnLoad(audioCanvas);
-            
+            audioCanvas = Instantiate(audioCanvasPrefab);
             Transform groupParent = audioCanvas.GetComponentsInChildren<Transform>().FirstOrDefault(t => t.name == groupParentName);
             if (groupParent == null)
             {
@@ -29,18 +26,16 @@ namespace Manager
                 return null;
             }
 
-            Dictionary<string, Tuple<TMP_Text, Slider>> blocks = new();
+            List<SoundBlock> blockList = new();
             foreach (var group in mixer.FindMatchingGroups(string.Empty))
             {
-                var groupObj = Instantiate(groupBlockPrefab, groupParent);
-                groupObj.name = group.name;
-                Tuple<TMP_Text, Slider> block = new(groupObj.GetComponentInChildren<TMP_Text>(), groupObj.GetComponentInChildren<Slider>());
-                block.Item1.text = group.name;
-                
-                blocks.Add(group.name, block);
+                var block = Instantiate(groupBlockPrefab, groupParent);
+                block.name = group.name;
+                block.Initialize(group);
+                blockList.Add(block);
             }
 
-            return blocks;
+            return blockList;
         }
     }
 }

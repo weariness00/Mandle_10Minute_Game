@@ -19,7 +19,7 @@ namespace Util
         public bool IsEmptyInt => _uniqueIntList.Count == 0;
         public int RandomInt()
         {
-            Debug.Assert(_uniqueIntList == null || _uniqueIntList.Count == 0, "UniqueRandom의 Array를 초기화 하기 위해 먼저 Initialize 메서드를 호출해주세요");
+            Debug.Assert(_uniqueIntList != null && _uniqueIntList.Count != 0, "UniqueRandom의 Array를 초기화 하기 위해 먼저 Initialize 메서드를 호출해주세요");
             var index = Random.Range(0, _uniqueIntList.Count);
             var value = _uniqueIntList[index];
             _uniqueIntList.RemoveAt(index);
