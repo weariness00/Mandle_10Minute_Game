@@ -13,39 +13,39 @@ MonoBehaviour:
   m_Name: Quest Data List
   m_EditorClassIdentifier: 
   eventDataArray:
-  - id: 0
+  - id: 1001
     level: -1
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
     textArray: []
-  - id: 0
+  - id: 1002
     level: -1
     prefab: {fileID: 3832750028274978365, guid: 7ce462c22b7b9e14191b4516404d584d, type: 3}
     textArray: []
-  - id: 0
+  - id: 1003
     level: -1
     prefab: {fileID: 6792380495647651490, guid: f3c1eec8e61df8547939c86f4313a64a, type: 3}
     textArray: []
-  - id: 0
+  - id: 1004
     level: -1
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
     textArray: []
-  - id: 0
+  - id: 1101
     level: -1
     prefab: {fileID: 3832750028274978365, guid: 7ce462c22b7b9e14191b4516404d584d, type: 3}
     textArray: []
-  - id: 0
+  - id: 1102
+    level: -1
+    prefab: {fileID: 6855458635590791947, guid: ce6b8270f35c7d548b5167f0c1f4d4b9, type: 3}
+    textArray: []
+  - id: 1103
     level: -1
     prefab: {fileID: 0}
     textArray: []
-  - id: 0
+  - id: 1104
     level: -1
     prefab: {fileID: 0}
     textArray: []
-  - id: 0
-    level: -1
-    prefab: {fileID: 0}
-    textArray: []
-  - id: 0
+  - id: 1105
     level: -1
     prefab: {fileID: 0}
     textArray: []

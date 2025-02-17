@@ -32,6 +32,7 @@ public class Quest_ChargeNow : QuestBase
         Charger.phone = phone;
         Charger.gameObject.SetActive(true);
 
+        ChargerPopup.SettingBetteryText("15");
         phone.PhoneViewRotate(1);
         Charger.ClearAction += Complete;
         ChargerPopup.IgnoreAction += Ignore;

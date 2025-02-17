@@ -57,4 +57,4 @@ MonoBehaviour:
   charger: {fileID: 6205727449769662004, guid: d93e752933b8bb94293419ac042c9e3f, type: 3}
   ChargerPopup: {fileID: 0}
   Charger: {fileID: 0}
-  SpawnPos: {x: 7, y: 0, z: 0}
+  SpawnPos: {x: 5, y: 0, z: 2}

@@ -173,8 +173,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 10%
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ee89d75a416f5fd4fa1f3b2033acde8d, type: 2}
+  m_sharedMaterial: {fileID: 6798511891574570026, guid: ee89d75a416f5fd4fa1f3b2033acde8d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -294,6 +294,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowNotificationMMF: {fileID: 1728029038044403563}
   HideNotificationMMF: {fileID: 6387575684958366278}
+  phone: {fileID: 0}
+  BetteryText: {fileID: 8804276197427585764}
 --- !u!1 &4305840079169648330
 GameObject:
   m_ObjectHideFlags: 0
@@ -411,7 +413,19 @@ MonoBehaviour:
         m_Calls: []
     OnComplete:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 1977563911261392865}
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     OnRestoreInitialValues:
       m_PersistentCalls:
         m_Calls: []
@@ -1067,7 +1081,7 @@ MonoBehaviour:
         DebugActive: 0
         BoundImage: {fileID: 6451943892973537030}
         Mode: 0
-        Duration: 0.5
+        Duration: 0.3
         AllowAdditivePlays: 0
         InstantAlpha: 1
         Curve:
@@ -1178,11 +1192,11 @@ MonoBehaviour:
         DebugActive: 0
         BoundImage: {fileID: 1360711423287090266}
         Mode: 0
-        Duration: 0.5
+        Duration: 1
         AllowAdditivePlays: 0
         InstantAlpha: 1
         Curve:
-          MMTweenDefinitionType: 0
+          MMTweenDefinitionType: 1
           MMTweenCurve: 4
           Curve:
             serializedVersion: 2
@@ -1197,8 +1211,26 @@ MonoBehaviour:
               inWeight: 0
               outWeight: 0
             - serializedVersion: 3
-              time: 1
-              value: 1
+              time: 0.24333331
+              value: 1.0000968
+              inSlope: -0.0069077103
+              outSlope: -0.0069077103
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0.33333334
+              outWeight: 0.33333334
+            - serializedVersion: 3
+              time: 0.71143126
+              value: 0.01003477
+              inSlope: -1.8148416
+              outSlope: -1.8148416
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0.33333334
+              outWeight: 0.33333334
+            - serializedVersion: 3
+              time: 1.0000153
+              value: 0.9981308
               inSlope: 0
               outSlope: 0
               tangentMode: 0
@@ -1289,11 +1321,11 @@ MonoBehaviour:
         DebugActive: 0
         TargetTMPText: {fileID: 8804276197427585764}
         AlphaMode: 1
-        Duration: 0.5
+        Duration: 1
         InstantAlpha: 1
         Curve:
-          MMTweenDefinitionType: 0
-          MMTweenCurve: 4
+          MMTweenDefinitionType: 1
+          MMTweenCurve: 17
           Curve:
             serializedVersion: 2
             m_Curve:
@@ -1307,8 +1339,26 @@ MonoBehaviour:
               inWeight: 0
               outWeight: 0
             - serializedVersion: 3
-              time: 1
-              value: 1
+              time: 0.24333331
+              value: 1.0000968
+              inSlope: -0.0069077103
+              outSlope: -0.0069077103
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0.33333334
+              outWeight: 0.33333334
+            - serializedVersion: 3
+              time: 0.71143126
+              value: 0.01003477
+              inSlope: -1.8148416
+              outSlope: -1.8148416
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0.33333334
+              outWeight: 0.33333334
+            - serializedVersion: 3
+              time: 1.0000153
+              value: 0.9981308
               inSlope: 0
               outSlope: 0
               tangentMode: 0
