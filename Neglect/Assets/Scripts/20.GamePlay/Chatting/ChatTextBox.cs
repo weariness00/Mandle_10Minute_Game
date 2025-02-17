@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 
-namespace GamePlay.Event
+namespace GamePlay.Chatting
 {
     public class ChatTextBox : MonoBehaviour
     {

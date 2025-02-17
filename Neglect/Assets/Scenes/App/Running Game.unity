@@ -3754,9 +3754,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3415fd5e6bff43adac080d7ac1941a39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isGameStart: 0
   isGamePlay:
     value: 1
-  isGameStart: 0
+  isGameClear:
+    value: 0
   gameSpeed:
     value: 1
   playTime:
@@ -3774,6 +3776,7 @@ MonoBehaviour:
   player: {fileID: 769697471}
   runningGameObjectRoot: {fileID: 1482410024}
   runningGameCanvasRoot: {fileID: 1900557410}
+  rankEventID: 0
   settingCanvas: {fileID: 665911811}
   continueButton: {fileID: 866496667}
   exitButton: {fileID: 46525685}
@@ -3784,7 +3787,8 @@ MonoBehaviour:
   obstacleSpawnerList:
   - {fileID: 369168967}
   playerDataArray:
-  - score:
+  - rank: 0
+    score:
       value: 0
     name: Player
     scoreRandomIncreaseTimer:
@@ -3798,7 +3802,8 @@ MonoBehaviour:
     scoreRandomIncrease:
       _min: 0
       _max: 0
-  - score:
+  - rank: 0
+    score:
       value: 0
     name: A
     scoreRandomIncreaseTimer:
@@ -3812,7 +3817,8 @@ MonoBehaviour:
     scoreRandomIncrease:
       _min: 10
       _max: 30
-  - score:
+  - rank: 0
+    score:
       value: 0
     name: B
     scoreRandomIncreaseTimer:

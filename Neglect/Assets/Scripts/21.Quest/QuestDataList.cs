@@ -102,7 +102,7 @@ namespace Quest
                 var id = csv.DynamicCast<int>("EventID");
                 var textList = csv.DynamicCast<int[]>("TextListID", Array.Empty<int>());
                 var data = GetEventID(id);
-                data.level = csv.DynamicCast<QuestLevel>("Level", QuestLevel.None);
+                data.level = (QuestLevel)csv.DynamicCast<int>("Level", -1);
                 data.prefab = GetQuestID(csv.DynamicCast<int>("PrefabID", -1));
                 data.textArray = questTextArray.Where(d => textList.FirstOrDefault(ti => ti == d.id) != 0).Select(d => d.text).ToArray();
 

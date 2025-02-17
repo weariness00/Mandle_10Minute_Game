@@ -15,5 +15,15 @@ namespace GamePlay.Talk
         public string[] positiveTextArray; // 긍정적 답변
         public string[] negativeTextArray; // 부정적 답변
     }
+    
+    public partial class TalkingData : IComparable
+    {
+        public int CompareTo(object obj)
+        {
+            if (obj is int otherID)
+                return id.CompareTo(otherID);
+            return 0;
+        }
+    }
 }
 

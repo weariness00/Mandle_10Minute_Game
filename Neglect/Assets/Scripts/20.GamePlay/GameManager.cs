@@ -3,6 +3,7 @@ using Quest.UI;
 using System;
 using UniRx;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Util;
 
 namespace GamePlay
@@ -22,25 +23,20 @@ namespace GamePlay
         {
             if (!SceneUtil.TryGetPhoneScene(out var scene))
             {
+                void AddApp(Scene s)
+                {
+                    foreach (GameObject rootGameObject in s.GetRootGameObjects())
+                    {
+                        var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
+                        if(app != null) PhoneUtil.currentPhone.applicationControl.AddApp(app);
+                    }
+                }
+                
                 SceneUtil.AsyncAddPhone(phoneScene =>
                 {
-                    SceneUtil.AsyncAddBank(bankScene =>
-                    {
-                        foreach (GameObject rootGameObject in bankScene.GetRootGameObjects())
-                        {
-                            var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
-                            if(app != null) PhoneUtil.currentPhone.applicationControl.AddApp(app);
-                        }
-                    });
-                    
-                    SceneUtil.AsyncAddRunningGame(runningScene =>
-                    {
-                        foreach (GameObject rootGameObject in runningScene.GetRootGameObjects())
-                        {
-                            var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
-                            if(app != null) PhoneUtil.currentPhone.applicationControl.AddApp(app);
-                        }
-                    });
+                    SceneUtil.AsyncAddChatting(AddApp);
+                    SceneUtil.AsyncAddBank(AddApp);
+                    SceneUtil.AsyncAddRunningGame(AddApp);
                 });
             }
 

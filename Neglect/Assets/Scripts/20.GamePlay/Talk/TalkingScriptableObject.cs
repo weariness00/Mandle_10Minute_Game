@@ -53,8 +53,8 @@ namespace GamePlay.Talk
                 {
                     var talkID = data.DynamicCast<int>("TalkingID");
                     var mainTextID = data.DynamicCast<int>("MainTextID");
-                    var positiveTextIDArray = data.DynamicCast<int[]>("PositiveTextList");
-                    var negativeTextIDArray = data.DynamicCast<int[]>("NegativeTextList");
+                    var positiveTextIDArray = data.DynamicCast<int[]>("PositiveTextList", Array.Empty<int>());
+                    var negativeTextIDArray = data.DynamicCast<int[]>("NegativeTextList", Array.Empty<int>());
                     var positiveTalkID = data.DynamicCast<int>("PositiveTalkID");
                     var negativeTalkID = data.DynamicCast<int>("NegativeTalkID");
 
@@ -66,6 +66,10 @@ namespace GamePlay.Talk
                     talk.negativeResultTalk = GetTalkData(negativeTalkID);
                 }
             }
+            
+            EditorUtility.SetDirty(this);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
         }
 #endif
     }
