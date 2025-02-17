@@ -27,7 +27,7 @@ namespace Quest
 
         public QuestBase InstantiateRandomEvent()
         {
-            UniqueRandom eventRandom = new(0, eventDataArray.Length);
+            UniqueRandom eventRandom = new(0, eventDataArray.Length - 1);
             int index = 0;
             EventData data = eventDataArray[index];
             while (!eventRandom.IsEmptyInt)
@@ -80,6 +80,10 @@ namespace Quest
         {
             Array.Sort(questArray);
             QuestSettingProviderHelper.setting.SetEventCSV();
+            
+            EditorUtility.SetDirty(this);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
         }
 
         public void SetEventCSV()

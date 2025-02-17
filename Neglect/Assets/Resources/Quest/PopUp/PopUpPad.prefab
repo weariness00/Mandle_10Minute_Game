@@ -847,7 +847,7 @@ GameObject:
   - component: {fileID: 3363051516253875865}
   - component: {fileID: 647263078652198701}
   m_Layer: 5
-  m_Name: PopUpPad Massage
+  m_Name: PopUpPad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

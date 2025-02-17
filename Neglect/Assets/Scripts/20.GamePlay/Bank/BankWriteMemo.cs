@@ -19,10 +19,4 @@ public class BankWriteMemo : MonoBehaviour
         InputAmount = (inputText == "") ? 0 : int.Parse(inputText);
         return (InputAmount ==  AnswerAmount);
     }
-    
-    void Start()
-    {
-        
-    }
-
 }

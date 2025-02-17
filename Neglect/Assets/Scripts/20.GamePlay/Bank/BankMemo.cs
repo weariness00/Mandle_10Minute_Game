@@ -1,21 +1,18 @@
-using MoreMountains.Feedbacks;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using DG.Tweening;
-using System;
-using UnityEngine.UI;
+using UnityEngine.Serialization;
 
 namespace GamePlay.Event
 {
-    public class BankReadMemo : MonoBehaviour
+    public class BankMemo : MonoBehaviour
     {
         // Start is called before the first frame update
 
         public CanvasGroup canvasGroup;
         public RectTransform memoRectTransform;
-        public TextMeshProUGUI MemoText;
+        public TMP_Text memoText;
 
         Sequence MemoSeq;
 
@@ -42,29 +39,13 @@ namespace GamePlay.Event
             MemoSeq.Append(canvasGroup.DOFade(0f, 1f).From());
             MemoSeq.Join(memoRectTransform.DOAnchorPosX(-memoRectTransform.sizeDelta.x / 2, 1f));
         }
-
-
-        public void TextSetting(string Name, string Account , int Amount)
+        
+        
+        public void TextSetting(string receiverName, string account, int transferMoney)
         {
-            MemoText.text = "";
-            MemoText.text += Name + "\n";
-            MemoText.text += "Account : " + Account + "\n";
-            MemoText.text += "Amount : " + Amount.ToString() + "\n";
-        }
-
-        public void TextSetting(string Name, string Account, int Amount, List<int> Password)
-        {
-            MemoText.text = "Password :";
-            for (int i = 0; i < Password.Count; i++)
-            {
-                MemoText.text += " ";
-                MemoText.text += Password[i].ToString() ;
-            }
-            MemoText.text += "\n";
-
-            MemoText.text += Name + "\n";
-            MemoText.text += "Account : " + Account + "\n";
-            MemoText.text += "Amount : " + Amount.ToString() + "\n";
+            memoText.text = $"{receiverName}\n" + 
+                            $"Account : {account}\n" + 
+                            $"Transfer Money : {transferMoney}";
         }
 
     }

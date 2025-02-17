@@ -34,7 +34,7 @@ namespace Util
         public void Initialize(int min, int max)
         {
             _uniqueIntList = new List<int>();
-            for (int i = min; i < max; i++)
+            for (int i = min; i <= max; i++)
             {
                 _uniqueIntList.Add(i);
             }

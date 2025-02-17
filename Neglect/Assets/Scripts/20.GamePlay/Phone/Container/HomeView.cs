@@ -1,5 +1,7 @@
 ﻿using DG.Tweening;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +20,7 @@ namespace GamePlay.Phone
         public RectTransform interfaceRectTransform;
         public Button homeButton;
         public Button backButton;
+        public List<Action> onClickBackList = new();
 
         private bool isOnInterface = true;
         private Tween tween;
@@ -81,7 +84,13 @@ namespace GamePlay.Phone
             
             backButton.onClick.AddListener(() =>
             {
-                _phone.applicationControl.CloseApp();
+                if(onClickBackList.Count == 0)
+                    _phone.applicationControl.CloseApp();
+                else
+                {
+                    onClickBackList.Last().Invoke();
+                    onClickBackList.RemoveAt(onClickBackList.Count - 1);
+                }
             });
         }
 
