@@ -19,6 +19,8 @@ namespace GamePlay.Phone
         public Button homeButton;
         public Button backButton;
 
+        private bool isOnInterface = true;
+        private Tween tween;
         private Vector2 interfaceOriginAnchorsPosition;
 
         public void Awake()
@@ -28,18 +30,22 @@ namespace GamePlay.Phone
 
         public void InterfaceOnOff()
         {
-            if (!interfaceRectTransform.gameObject.activeSelf)
+            if (!isOnInterface)
             {
                 interfaceRectTransform.gameObject.SetActive(true);
-                interfaceRectTransform.DOAnchorPosY(interfaceOriginAnchorsPosition.y, 0.7f).SetEase(Ease.Flash);
+                tween.Kill();
+                tween = interfaceRectTransform.DOAnchorPosY(interfaceOriginAnchorsPosition.y, 0.7f).SetEase(Ease.Flash);
             }
             else
             {
-                interfaceRectTransform.DOAnchorPosY(-interfaceRectTransform.sizeDelta.y, 0.7f).SetEase(Ease.Flash).OnComplete(() =>
+                tween.Kill();
+                tween = interfaceRectTransform.DOAnchorPosY(-interfaceRectTransform.sizeDelta.y, 0.7f).SetEase(Ease.Flash).OnComplete(() =>
                 {
                     interfaceRectTransform.gameObject.SetActive(false);
                 });
             }
+
+            isOnInterface = !isOnInterface;
         }
     }
 
@@ -98,6 +104,7 @@ namespace GamePlay.Phone
 
         public void AppResume(PhoneControl phone)
         {
+            tween.Kill();
             mainCanvas.gameObject.SetActive(true);
             phone.PhoneViewRotate(PhoneViewType.Vertical);
             
@@ -107,6 +114,7 @@ namespace GamePlay.Phone
 
         public void AppPause(PhoneControl phone)
         {
+            tween?.Kill();
             Observable.Timer(TimeSpan.FromSeconds(0.3f)).Subscribe(_ =>
             {
                 mainCanvas.gameObject.SetActive(false);

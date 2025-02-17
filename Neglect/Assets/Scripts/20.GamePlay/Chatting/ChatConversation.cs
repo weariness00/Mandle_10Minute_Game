@@ -39,22 +39,25 @@ namespace GamePlay.Chatting
 
         [Header("데이터베이스에서 가져올 정보")] 
         [Space]
-        public TalkingData talkData;
+        [HideInInspector] public TalkingData talkData = null;
         
-        public Action ClearAction;
+        public Action clearAction;
 
         public float NextTextPosY;
         public Scrollbar Scrollbar;
         public RectTransform ChatScrollBox;
+        private bool isInit = false;
 
         public void Awake()
         {
+            talkData = null;
             ChatName.text = CurrentName;
 
             answerBlockPool = new(
                 () =>
                 {
                     var block = Instantiate(answerBlockPrefab, answerGroupTransform);
+                    block.canvasGroup.alpha = 0;
                     block.button.onClick.AddListener(()=>ChoiceButton(block));
                     PhoneUtil.SetLayer(block);
                     return block;
@@ -110,20 +113,19 @@ namespace GamePlay.Chatting
 
         public void CallStart()
         {
-            SettingAnswer();
-            OtherChatSpawn(talkData != null ? talkData.mainText : "Test");
+            if(talkData == null) return;
+            if(isInit) return;
+            isInit = true;
+            SettingAnswer(); 
+            OtherChatSpawn(talkData.mainText);
             ChatBox();
         }
 
         public void SettingAnswer()
         {
-            if (talkData == null)
+            if (talkData == null || ReferenceEquals(talkData, null))
             {
                 Debug.LogError("talkData is null");
-                return; // talkData가 null이면 이 함수의 실행을 중단
-            }
-            if (talkData.negativeTextArray.Length + talkData.positiveTextArray.Length == 0)
-            {
                 return; // talkData가 null이면 이 함수의 실행을 중단
             }
 
@@ -160,26 +162,9 @@ namespace GamePlay.Chatting
             
             foreach (AnswerBlock answerBlock in answerList)
             {
-                answerBlock.image.DOFade(0f, 0f);
-
                 answerBlock.button.interactable = true;
-                Color reset = answerBlock.answerText.color;
-                reset.a = 0f;
-                answerBlock.answerText.color = reset;
-                UiSeq.Append(answerBlock.image.DOFade(1f, 0.5f));
-                // UiSeq.Append(answerBlock.button.gameObject.transform.DOLocalMoveY(answerBlock.button.transform.localPosition.y - 10f, 0.5f).From()).Join(answerBlock.image.DOFade(1f, 0.5f));
+                UiSeq.Append(answerBlock.rectTransform.DOLocalMoveY(answerBlock.rectTransform.localPosition.y - 30f, 0.5f).From()).Join(answerBlock.canvasGroup.DOFade(1f, 0.5f));
             }
-            UiSeq.AppendCallback(() =>
-            {
-                foreach (AnswerBlock answerBlock in answerList)
-                {
-                    answerBlock.answerText.gameObject.SetActive(true);
-                    Color reset = answerBlock.answerText.color;
-                    reset.a = 1f;
-                    answerBlock.answerText.color = reset;
-                }
-            });
-            //~ 버튼 나오는 애니메이션    
         }
 
         public void ChoiceButton(AnswerBlock block) //버튼 클릭시
@@ -191,12 +176,12 @@ namespace GamePlay.Chatting
                 answerBlock.button.interactable = false;
                 if (answerBlock == block)
                 {
-                    UiSeq.Append(answerBlock.image.DOFade(0f, 0.5f)).Join(answerBlock.answerText.DOFade(0f, 0.5f));
+                    UiSeq.Append(answerBlock.canvasGroup.DOFade(0f, 0.5f));
                     MyChatSpawn(block.answerText.text);  // ~버튼 종료 애니메이션
                 }
                 else
                 {
-                    UiSeq.Append(answerBlock.image.DOFade(0f, 0.5f)).Join(answerBlock.answerText.DOFade(0f, 0.5f));
+                    UiSeq.Append(answerBlock.canvasGroup.DOFade(0f, 0.5f));
                 }
             }
 
@@ -208,8 +193,9 @@ namespace GamePlay.Chatting
                 if (ChatGage == 100)
                 {
                     //클리어
-                    ClearAction();
-                    Destroy(gameObject);
+                    clearAction.Invoke();
+                    clearAction = null;
+                    isInit = false;
                 }
                 else
                 {

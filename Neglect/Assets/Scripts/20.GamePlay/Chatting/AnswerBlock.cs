@@ -6,6 +6,9 @@ namespace GamePlay.Chatting
 {
     public class AnswerBlock : MonoBehaviour
     {
+        public RectTransform rectTransform;
+        public CanvasGroup canvasGroup;
+        
         public Button button;
         public Image image;
         [Tooltip("답변")]public TMP_Text answerText;
