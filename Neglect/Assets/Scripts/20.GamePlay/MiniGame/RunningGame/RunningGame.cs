@@ -1,6 +1,7 @@
 ﻿using GamePlay.Phone;
 using System;
 using Manager;
+using Quest;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
@@ -19,6 +20,9 @@ namespace GamePlay.MiniGame.RunningGame
         public RunningPlayer player;
         public GameObject runningGameObjectRoot;
         public Canvas runningGameCanvasRoot;
+
+        public int rankEventID;
+        private QuestBase rankQuest;
 
         [Header("Setting 관련")] 
         public Canvas settingCanvas;
@@ -99,6 +103,7 @@ namespace GamePlay.MiniGame.RunningGame
         [Serializable]
         public class PlayerData
         {
+            public int rank;
             public ReactiveProperty<int> score = new(0);
             public string name;
             [SerializeField] private MinMaxValue<float> scoreRandomIncreaseTimer = new(0, 0, 1, false, true);
@@ -125,7 +130,6 @@ namespace GamePlay.MiniGame.RunningGame
             }
         }
     }
-
     
     public partial class RunningGame
     {
@@ -138,6 +142,8 @@ namespace GamePlay.MiniGame.RunningGame
             inGameCanvas.gameObject.SetActive(true);
             inGameObject.gameObject.SetActive(true);
             
+            if(rankQuest) rankQuest.Play();
+            
             foreach (ObjectSpawner spawner in obstacleSpawnerList)
                 spawner.Play();
         }
@@ -147,6 +153,13 @@ namespace GamePlay.MiniGame.RunningGame
             base.GameStop();
             foreach (ObjectSpawner spawner in obstacleSpawnerList)
                 spawner.Pause();
+        }
+
+        public override void GameClear()
+        {
+            base.GameClear();
+            QuestManager.Instance.OnValueChange(QuestType.GameRank, CurrentPlayerData.rank);
+
         }
     }
 
@@ -170,6 +183,15 @@ namespace GamePlay.MiniGame.RunningGame
             base.AppPlay(phone);
             runningGameObjectRoot.SetActive(true);
             runningGameCanvasRoot.gameObject.SetActive(true);
+
+            rankQuest = QuestDataList.Instance.InstantiateEvent(rankEventID);
+            
+            // 게임 클리어 할 시
+            GameManager.Instance.isGameClear.Subscribe(value =>
+            {
+                if(value)
+                    isGamePlay.Value = false;
+            });
         }
 
         public override void AppResume(PhoneControl phone)

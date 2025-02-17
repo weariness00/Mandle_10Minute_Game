@@ -3,11 +3,12 @@ using Quest.UI;
 using System;
 using UniRx;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Util;
 
 namespace GamePlay
 {
-    public class GameManager : Singleton<GameManager>
+    public partial class GameManager : Singleton<GameManager>
     {
         public ReactiveProperty<bool> isGameStart;
         public ReactiveProperty<bool> isGameClear;
@@ -22,25 +23,20 @@ namespace GamePlay
         {
             if (!SceneUtil.TryGetPhoneScene(out var scene))
             {
+                void AddApp(Scene s)
+                {
+                    foreach (GameObject rootGameObject in s.GetRootGameObjects())
+                    {
+                        var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
+                        if(app != null) PhoneUtil.currentPhone.applicationControl.AddApp(app);
+                    }
+                }
+                
                 SceneUtil.AsyncAddPhone(phoneScene =>
                 {
-                    SceneUtil.AsyncAddBank(bankScene =>
-                    {
-                        foreach (GameObject rootGameObject in bankScene.GetRootGameObjects())
-                        {
-                            var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
-                            if(app != null) PhoneUtil.currentPhone.applicationControl.AddApp(app);
-                        }
-                    });
-                    
-                    SceneUtil.AsyncAddRunningGame(runningScene =>
-                    {
-                        foreach (GameObject rootGameObject in runningScene.GetRootGameObjects())
-                        {
-                            var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
-                            if(app != null) PhoneUtil.currentPhone.applicationControl.AddApp(app);
-                        }
-                    });
+                    SceneUtil.AsyncAddChatting(AddApp);
+                    SceneUtil.AsyncAddBank(AddApp);
+                    SceneUtil.AsyncAddRunningGame(AddApp);
                 });
             }
 
@@ -65,9 +61,17 @@ namespace GamePlay
                 playTimer.Current += Time.deltaTime;
                 if (playTimer.IsMax)
                 {
-                    isGameClear.Value = true;
+                    GameClear();
                 }
             }
+        }
+    }
+
+    public partial class GameManager
+    {
+        public void GameClear()
+        {
+            isGameClear.Value = true;
         }
     }
 }

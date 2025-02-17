@@ -3,17 +3,21 @@ using GamePlay.Talk;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Pool;
 using UnityEngine.UI;
+using Util;
 
 
-namespace GamePlay.Event
+namespace GamePlay.Chatting
 {
     public class ChatConversation : MonoBehaviour
     {
         // Start is called before the first frame update
+
+        public Canvas canvas;
 
         public string CurrentName = "npc";
         public TextMeshProUGUI ChatName;
@@ -22,32 +26,22 @@ namespace GamePlay.Event
         public ChatTextBox OtherMessages;
         public ChatTextBox MyMessages;
 
-        [Space]
-        [Header("선택지 버튼")]
-        public List<Button> SelectButtons;
-        public List<Image> SelectImages;
-        public List<TextMeshProUGUI> SelectTexts;
+        [Space] [Header("선택지 버튼")] 
+        public Transform answerGroupTransform;
+        public AnswerBlock answerBlockPrefab;
+        private ObjectPool<AnswerBlock> answerBlockPool;   
+        private List<AnswerBlock> answerList = new();
 
         [Space]
         [Header("게이지")]
-        public float ChatGage;
+        public int ChatGage;
         public Image GageBar;
 
         [Header("데이터베이스에서 가져올 정보")] 
         [Space]
         public TalkingData talkData;
-        [Tooltip("상대방 질문")]
-        public string Question;
-        [Tooltip("답변 list")]
-        public string[] replyString;
-        [Tooltip("답변 게이지list")]
-        public int[] replygage;
-        [Tooltip("답변 후속 질문 이벤트")]
-        public string[] replyEvent;
-        
         
         public Action ClearAction;
-
 
         public float NextTextPosY;
         public Scrollbar Scrollbar;
@@ -56,18 +50,27 @@ namespace GamePlay.Event
         public void Awake()
         {
             ChatName.text = CurrentName;
+
+            answerBlockPool = new(
+                () =>
+                {
+                    var block = Instantiate(answerBlockPrefab, answerGroupTransform);
+                    block.button.onClick.AddListener(()=>ChoiceButton(block));
+                    PhoneUtil.SetLayer(block);
+                    return block;
+                },
+                obj => obj.gameObject.SetActive(true),
+                obj => obj.gameObject.SetActive(false),
+                obj => Destroy(obj.gameObject),
+                true,
+                3,
+                5
+            );
+
         }
-        public void Start()
-        {
-
-            CallStart();
-
-        }
-
         
         public void OtherChatSpawn(string t)
         {
-
             Sequence UiSeq = DOTween.Sequence();
             var pre = Instantiate(OtherMessages,Vector3.zero, OtherMessages.transform.rotation, ChatScrollBox.gameObject.transform);
             pre.SetText(t);
@@ -86,7 +89,6 @@ namespace GamePlay.Event
         }
         public void MyChatSpawn(string t)
         {
-
             Sequence UiSeq = DOTween.Sequence();
             var pre = Instantiate(MyMessages, Vector3.zero, OtherMessages.transform.rotation, ChatScrollBox.gameObject.transform);
             pre.SetText(t);
@@ -108,12 +110,12 @@ namespace GamePlay.Event
 
         public void CallStart()
         {
-            SettingReply();
+            SettingAnswer();
             OtherChatSpawn(talkData != null ? talkData.mainText : "Test");
             ChatBox();
         }
 
-        public void SettingReply()
+        public void SettingAnswer()
         {
             if (talkData == null)
             {
@@ -124,78 +126,82 @@ namespace GamePlay.Event
             {
                 return; // talkData가 null이면 이 함수의 실행을 중단
             }
-            List<string> combinedList = new List<string>(talkData.positiveTextArray);
-            combinedList.AddRange(talkData.negativeTextArray);
-            replyString = combinedList.ToArray();
-            int count = 0;
-            for (int i = 0; i < talkData.positiveTextArray.Length; i++)
-            {                
-                replygage[count] = 20;
-                count++;
-            }
-            for (int i = 0; i < talkData.negativeTextArray.Length; i++)
+
+            // pool 비우기
+            foreach (AnswerBlock answerBlock in answerList)
+                answerBlockPool.Release(answerBlock);
+            answerList.Clear();
+            
+            // 답변 셋팅
+            foreach (string text in talkData.positiveTextArray)
             {
-                replygage[count] = 0;
-                count++;
+                var answer = answerBlockPool.Get();
+                answer.answerText.text = text;
+                answer.gage = 20;
+                answerList.Add(answer);
             }
-            for (int i = 0; i < 3; i++)
+            foreach (string text in talkData.negativeTextArray)
             {
-                int index = UnityEngine.Random.Range(0, 3);
-                (replyString[i], replyString[index]) = (replyString[index], replyString[i]);
-                (replygage[i], replygage[index]) = (replygage[index], replygage[i]);
+                var answer = answerBlockPool.Get();
+                answer.answerText.text = text;
+                answer.gage = 0;
+                answerList.Add(answer);
             }
+            
+            // 위치 셔플
+            answerList.Shuffle();
+            for (var i = 0; i < answerList.Count; i++)
+                answerList[i].transform.SetSiblingIndex(i);
         }
 
         public void ChatBox()
         {
-
             Sequence UiSeq = DOTween.Sequence();
-            for (int i = 0; i < 3; i++)
+            
+            foreach (AnswerBlock answerBlock in answerList)
             {
-                SelectImages[i].DOFade(0f, 0f);
+                answerBlock.image.DOFade(0f, 0f);
 
-                SelectButtons[i].interactable = true;
-                Color reset = SelectTexts[i].color;
+                answerBlock.button.interactable = true;
+                Color reset = answerBlock.answerText.color;
                 reset.a = 0f;
-                SelectTexts[i].color = reset;
-                UiSeq.Append(SelectButtons[i].gameObject.transform.DOLocalMoveY(SelectButtons[i].gameObject.transform.localPosition.y - 10f, 0.5f)
-                .From()).Join(SelectImages[i].DOFade(1f, 0.5f));
+                answerBlock.answerText.color = reset;
+                UiSeq.Append(answerBlock.image.DOFade(1f, 0.5f));
+                // UiSeq.Append(answerBlock.button.gameObject.transform.DOLocalMoveY(answerBlock.button.transform.localPosition.y - 10f, 0.5f).From()).Join(answerBlock.image.DOFade(1f, 0.5f));
             }
             UiSeq.AppendCallback(() =>
             {
-                for (int i = 0; i < 3; i++)
+                foreach (AnswerBlock answerBlock in answerList)
                 {
-                    int index = i;
-                    SelectTexts[index].gameObject.SetActive(true);
-                    Color reset = SelectTexts[i].color;
+                    answerBlock.answerText.gameObject.SetActive(true);
+                    Color reset = answerBlock.answerText.color;
                     reset.a = 1f;
-                    SelectTexts[index].color = reset;
-                    SelectTexts[index].text = replyString[i];
+                    answerBlock.answerText.color = reset;
                 }
             });
             //~ 버튼 나오는 애니메이션    
         }
 
-        public void ChoiceBttons(int index) //버튼 클릭시
+        public void ChoiceButton(AnswerBlock block) //버튼 클릭시
         {
-
             Sequence UiSeq = DOTween.Sequence();
-            for (int i = 0; i < 3; i++)
+            
+            foreach (AnswerBlock answerBlock in answerList)
             {
-                SelectButtons[i].interactable = false;
-                if (i != index)
-                    UiSeq.Join(SelectImages[i].DOFade(0f, 0.5f)).Join(SelectTexts[i].DOFade(0f, 0.5f));
+                answerBlock.button.interactable = false;
+                if (answerBlock == block)
+                {
+                    UiSeq.Append(answerBlock.image.DOFade(0f, 0.5f)).Join(answerBlock.answerText.DOFade(0f, 0.5f));
+                    MyChatSpawn(block.answerText.text);  // ~버튼 종료 애니메이션
+                }
+                else
+                {
+                    UiSeq.Append(answerBlock.image.DOFade(0f, 0.5f)).Join(answerBlock.answerText.DOFade(0f, 0.5f));
+                }
             }
-            UiSeq.Append(SelectImages[index].DOFade(0f, 0.5f)).Join(SelectTexts[index].DOFade(0f, 0.5f));
-            // ~버튼 종료 애니메이션
-            MyChatSpawn(replyString[index]);
 
-            ChatGage = ChatGage + replygage[index] > 100 ? 100 : ChatGage + replygage[index];
-            ChatGage = ChatGage < 0 ? 0 : ChatGage;
+            ChatGage += block.gage;
             UiSeq.Append(GageBar.DOFillAmount(ChatGage / 100f, 1f));
-
-
-
 
             UiSeq.AppendCallback(() =>
             {
@@ -212,7 +218,32 @@ namespace GamePlay.Event
             });
 
         }
-
-
     }
+#if UNITY_EDITOR
+    [CustomEditor(typeof(ChatConversation))]
+    public class ChatConversationEditor : Editor
+    {
+        private int talkID;
+        
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+
+            var script = target as ChatConversation;
+            
+            talkID = EditorGUILayout.IntField("TalkID", talkID);
+            if (GUILayout.Button("Talk 셋팅"))
+            {
+                script.talkData = TalkingScriptableObject.Instance.GetTalkData(talkID);
+            }
+
+            if (GUILayout.Button("대화 생성"))
+            {
+                script.CallStart();
+            }
+        }
+    }
+
+#endif
+    
 }

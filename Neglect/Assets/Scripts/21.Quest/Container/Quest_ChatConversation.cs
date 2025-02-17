@@ -1,6 +1,4 @@
-using GamePlay.Event;
-using System.Collections;
-using System.Collections.Generic;
+using GamePlay.Chatting;
 using UnityEngine;
 
 namespace Quest.Container
