@@ -515,6 +515,220 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 728292600}
   m_CullTransparentMesh: 1
+--- !u!1 &868998804
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 868998805}
+  m_Layer: 5
+  m_Name: Memo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &868998805
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868998804}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 890004095}
+  - {fileID: 4121749027957911945}
+  m_Father: {fileID: 1605756265541060768}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -9, y: 0}
+  m_SizeDelta: {x: 400, y: 400}
+  m_Pivot: {x: 1, y: 0.5}
+--- !u!1 &885292893
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 885292895}
+  - component: {fileID: 885292894}
+  m_Layer: 0
+  m_Name: Bank App
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &885292894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 885292893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b8ac48aeb737f499e2fc87f2c2ef7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCanvas: {fileID: 543994821}
+  appName: BankApp
+  icon: {fileID: 21300000, guid: 7cb16ca973d66194dada09e83e1753c3, type: 3}
+  verticalResolution: {x: 600, y: 960}
+  _phone: {fileID: 0}
+  isClearPassword: 0
+  Password: {fileID: 5060415484448759935}
+  BankMemo: {fileID: 1849624126247632213}
+  RandomAmount: 0
+  RandomAccount: 
+  RandomPassword: 
+  InputAmountText: {fileID: 161332229922056398}
+  InputAccountText: {fileID: 991766322192599585}
+  InputAmount: 0
+  InputAccount: 
+  pre_sign: {fileID: 1365714312011875013}
+  KeyPad: {fileID: 2141575999117947026}
+  CheckText: {fileID: 1032318852946878081}
+  CheckAmountText: {fileID: 5554317831472475581}
+  KeyPad_objects:
+  - {fileID: 3003478966807310015}
+  - {fileID: 2614129209916912465}
+  - {fileID: 4728777906124109662}
+  - {fileID: 3804514647458579717}
+  - {fileID: 1419666860585545858}
+  - {fileID: 7746226590615143147}
+  - {fileID: 8347303247106676415}
+  - {fileID: 1782400891744600946}
+  - {fileID: 1053942730968454417}
+  - {fileID: 2016361452057642711}
+  - {fileID: 2698632428098867451}
+  - {fileID: 2656417030512149937}
+  - {fileID: 7110756786705083340}
+  - {fileID: 7576318563954536760}
+  - {fileID: 744655668364095214}
+  - {fileID: 8931676056239722252}
+  - {fileID: 8717495597937717805}
+  - {fileID: 8469206408614919364}
+  KeyPad_Image: []
+  KeyPad_Text:
+  - {fileID: 3987541822018909234}
+  - {fileID: 2473878289981622112}
+  - {fileID: 982463613177420024}
+  - {fileID: 2165846425354503552}
+  - {fileID: 3888926022018687022}
+  - {fileID: 200133700228233581}
+  - {fileID: 8258967492409850506}
+  - {fileID: 7965536669757648800}
+  - {fileID: 6105598875989711090}
+  - {fileID: 7083217973425126898}
+  - {fileID: 4021419582742050811}
+  - {fileID: 5147373576468125089}
+  AnswerAccount: 123456
+  AnswerAmount: 123456
+  PassbookOwner: Owener
+  BankAccount: {fileID: 3222042458439111583}
+  BankAmount: {fileID: 4591903200732330459}
+  BankFinish: {fileID: 7196102751990922803}
+--- !u!4 &885292895
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 885292893}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &890004094
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 890004095}
+  - component: {fileID: 890004097}
+  - component: {fileID: 890004096}
+  m_Layer: 5
+  m_Name: Background
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &890004095
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 890004094}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 868998805}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &890004096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 890004094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.9882353, g: 1, b: 0.69803923, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &890004097
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 890004094}
+  m_CullTransparentMesh: 1
 --- !u!114 &1025610307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -890,7 +1104,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2747980164463836462}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: InputClickButton
         m_Mode: 3
@@ -1146,7 +1360,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 2747980164463836462}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
           m_MethodName: KeyPadMove
           m_Mode: 6
@@ -1285,7 +1499,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2747980164463836461}
-  - component: {fileID: 2747980164463836462}
   m_Layer: 5
   m_Name: BankEvnet
   m_TagString: Untagged
@@ -1337,7 +1550,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2747980164463836462}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: InputClickButton
         m_Mode: 3
@@ -1426,7 +1639,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 2747980164463836462}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
           m_MethodName: KeyPadMove
           m_Mode: 6
@@ -2958,20 +3171,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6750418719320907240}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 9213290409619682578}
-  - {fileID: 4121749027957911945}
+  - {fileID: 868998805}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1164, y: 0}
-  m_SizeDelta: {x: 400, y: 400}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &1610770773247163518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3123,9 +3335,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51ea7210414ccde4797cb7cb0490e4f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 6750418719320907241}
+  memoRectTransform: {fileID: 868998805}
   MemoText: {fileID: 1262321008988775228}
-  MemoImage: {fileID: 2222700538162620936}
-  MemoRenderer: {fileID: 0}
+  memoImage: {fileID: 890004096}
   isEnd: 0
 --- !u!114 &1867889424384925160
 MonoBehaviour:
@@ -3271,7 +3484,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!222 &2015908136517015768
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3627,23 +3840,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &2222700538162620936
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 9213290409619682578}
-  - component: {fileID: 3141677438092281300}
-  m_Layer: 0
-  m_Name: MemoImage
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!114 &2291557469486772528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3966,7 +4162,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2747980164463836462}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: ChangeView
         m_Mode: 3
@@ -4089,7 +4285,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2747980164463836462}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: ChangeView
         m_Mode: 3
@@ -4184,7 +4380,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2747980164463836462}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: InputClickButton
         m_Mode: 3
@@ -4256,7 +4452,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2747980164463836462}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: InputClickButton
         m_Mode: 3
@@ -4480,75 +4676,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2747980164463836462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 472076493327062615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b8ac48aeb737f499e2fc87f2c2ef7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainCanvas: {fileID: 543994821}
-  uiCanvas: {fileID: 543994821}
-  appName: BankApp
-  icon: {fileID: 21300000, guid: 7cb16ca973d66194dada09e83e1753c3, type: 3}
-  verticalResolution: {x: 600, y: 960}
-  _phone: {fileID: 0}
-  isClearPassword: 0
-  ReadMemo: {fileID: 0}
-  Password: {fileID: 5060415484448759935}
-  BankMemo: {fileID: 4034607657072918615, guid: aea7b94da379db84ea8c707a7a2e92a6, type: 3}
-  InputAmountText: {fileID: 161332229922056398}
-  InputAccountText: {fileID: 991766322192599585}
-  InputAmount: 0
-  InputAccount: 
-  pre_sign: {fileID: 1365714312011875013}
-  KeyPad: {fileID: 2141575999117947026}
-  CheckText: {fileID: 1032318852946878081}
-  CheckAmountText: {fileID: 5554317831472475581}
-  KeyPad_objects:
-  - {fileID: 3003478966807310015}
-  - {fileID: 2614129209916912465}
-  - {fileID: 4728777906124109662}
-  - {fileID: 3804514647458579717}
-  - {fileID: 1419666860585545858}
-  - {fileID: 7746226590615143147}
-  - {fileID: 8347303247106676415}
-  - {fileID: 1782400891744600946}
-  - {fileID: 1053942730968454417}
-  - {fileID: 2016361452057642711}
-  - {fileID: 2698632428098867451}
-  - {fileID: 2656417030512149937}
-  - {fileID: 7110756786705083340}
-  - {fileID: 7576318563954536760}
-  - {fileID: 744655668364095214}
-  - {fileID: 8931676056239722252}
-  - {fileID: 8717495597937717805}
-  - {fileID: 8469206408614919364}
-  KeyPad_Image: []
-  KeyPad_Text:
-  - {fileID: 3987541822018909234}
-  - {fileID: 2473878289981622112}
-  - {fileID: 982463613177420024}
-  - {fileID: 2165846425354503552}
-  - {fileID: 3888926022018687022}
-  - {fileID: 200133700228233581}
-  - {fileID: 8258967492409850506}
-  - {fileID: 7965536669757648800}
-  - {fileID: 6105598875989711090}
-  - {fileID: 7083217973425126898}
-  - {fileID: 4021419582742050811}
-  - {fileID: 5147373576468125089}
-  AnswerAccount: 123456
-  AnswerAmount: 123456
-  PassbookOwner: Owener
-  BankAccount: {fileID: 3222042458439111583}
-  BankAmount: {fileID: 4591903200732330459}
-  BankFinish: {fileID: 7196102751990922803}
 --- !u!114 &2789019134919620686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4691,7 +4818,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2747980164463836462}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: InputClickButton
         m_Mode: 3
@@ -4901,58 +5028,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1087825186682419390}
   m_CullTransparentMesh: 1
---- !u!212 &3141677438092281300
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2222700538162620936}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.98687893, g: 1, b: 0.6999999, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
 --- !u!114 &3175919146972785479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5563,7 +5638,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2747980164463836462}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: InputClickButton
         m_Mode: 3
@@ -6071,7 +6146,7 @@ Canvas:
   m_GameObject: {fileID: 6750418719320907240}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 2
+  m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -6218,17 +6293,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4782928155873668691}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1605756265541060768}
+  m_Father: {fileID: 868998805}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 400, y: 400}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4156847875121342698
 CanvasRenderer:
@@ -6326,7 +6401,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2747980164463836462}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: ChangeView
         m_Mode: 3
@@ -6456,7 +6531,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2747980164463836462}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: InputClickButton
         m_Mode: 3
@@ -7871,7 +7946,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2747980164463836462}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: InputClickButton
         m_Mode: 3
@@ -7964,7 +8039,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2747980164463836462}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: InputClickButton
         m_Mode: 3
@@ -8594,7 +8669,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2747980164463836462}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: InputClickButton
         m_Mode: 3
@@ -8690,6 +8765,7 @@ GameObject:
   - component: {fileID: 1994971068633153337}
   - component: {fileID: 1730461340366164383}
   - component: {fileID: 1849624126247632213}
+  - component: {fileID: 6750418719320907241}
   m_Layer: 5
   m_Name: BankReadMemo
   m_TagString: Untagged
@@ -8697,6 +8773,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!225 &6750418719320907241
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6750418719320907240}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &6758029579783455328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8741,7 +8829,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2747980164463836462}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: KeyPadMove
         m_Mode: 6
@@ -9181,7 +9269,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2747980164463836462}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: InputClickButton
         m_Mode: 3
@@ -10981,7 +11069,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2747980164463836462}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: InputClickButton
         m_Mode: 3
@@ -11037,7 +11125,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2747980164463836462}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: BankComplete
         m_Mode: 1
@@ -11093,7 +11181,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2747980164463836462}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: CheckAccount
         m_Mode: 1
@@ -11577,21 +11665,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2016361452057642711}
   m_CullTransparentMesh: 1
---- !u!4 &9213290409619682578
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2222700538162620936}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 500, y: 500, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1605756265541060768}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -11599,3 +11672,4 @@ SceneRoots:
   - {fileID: 1261747385}
   - {fileID: 543994822}
   - {fileID: 1605756265541060768}
+  - {fileID: 885292895}

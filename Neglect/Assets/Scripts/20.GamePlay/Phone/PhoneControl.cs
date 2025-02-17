@@ -17,6 +17,7 @@ namespace GamePlay.Phone
         public Vector2Int phoneHorizonViewPortSize => new Vector2Int(phoneVerticalViewPortSize.y, phoneVerticalViewPortSize.x);
 
         public GameObject ChargingPort;
+        public PhoneSideButton interfaceGroupOnOffButton;
         [Header("App 관련")] 
         public ApplicationControl applicationControl;
         public void Awake()

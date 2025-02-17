@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +13,34 @@ namespace GamePlay.Phone
 
         [SerializeField] private Button appButtonPrefab;
         [SerializeField] private Transform appButtonParent;
+
+        [Header("Interface Button")] 
+        public RectTransform interfaceRectTransform;
+        public Button homeButton;
+        public Button backButton;
+
+        private Vector2 interfaceOriginAnchorsPosition;
+
+        public void Awake()
+        {
+            interfaceOriginAnchorsPosition = interfaceRectTransform.anchoredPosition;
+        }
+
+        public void InterfaceOnOff()
+        {
+            if (!interfaceRectTransform.gameObject.activeSelf)
+            {
+                interfaceRectTransform.gameObject.SetActive(true);
+                interfaceRectTransform.DOAnchorPosY(interfaceOriginAnchorsPosition.y, 0.7f).SetEase(Ease.Flash);
+            }
+            else
+            {
+                interfaceRectTransform.DOAnchorPosY(-interfaceRectTransform.sizeDelta.y, 0.7f).SetEase(Ease.Flash).OnComplete(() =>
+                {
+                    interfaceRectTransform.gameObject.SetActive(false);
+                });
+            }
+        }
     }
 
     public partial class HomeView : IPhoneApplication
@@ -32,6 +61,22 @@ namespace GamePlay.Phone
             _phone = phone;
             mainCanvas.worldCamera = phone.phoneCamera;
             uiCanvas.worldCamera = phone.phoneCamera;
+            
+            _phone.interfaceGroupOnOffButton.onClickEvent.AddListener(() =>
+            {
+                if(_phone.applicationControl.currentPlayApplication != this as IPhoneApplication)
+                    InterfaceOnOff();
+            });
+            
+            homeButton.onClick.AddListener(() =>
+            {
+                _phone.applicationControl.OnHome();
+            });
+            
+            backButton.onClick.AddListener(() =>
+            {
+                _phone.applicationControl.CloseApp();
+            });
         }
 
         public void AppPlay(PhoneControl phone)
@@ -55,6 +100,9 @@ namespace GamePlay.Phone
         {
             mainCanvas.gameObject.SetActive(true);
             phone.PhoneViewRotate(PhoneViewType.Vertical);
+            
+            interfaceRectTransform.gameObject.SetActive(true);
+            interfaceRectTransform.anchoredPosition = interfaceOriginAnchorsPosition;
         }
 
         public void AppPause(PhoneControl phone)
@@ -63,6 +111,9 @@ namespace GamePlay.Phone
             {
                 mainCanvas.gameObject.SetActive(false);
             });
+
+            interfaceRectTransform.gameObject.SetActive(false);
+            interfaceRectTransform.anchoredPosition = new(0,-interfaceRectTransform.sizeDelta.y);
         }
         
         public void AppExit(PhoneControl phone)

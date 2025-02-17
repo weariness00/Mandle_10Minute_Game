@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using DG.Tweening;
 using System;
+using UnityEngine.UI;
 
 namespace GamePlay.Event
 {
@@ -12,38 +13,34 @@ namespace GamePlay.Event
     {
         // Start is called before the first frame update
 
+        public CanvasGroup canvasGroup;
+        public RectTransform memoRectTransform;
         public TextMeshProUGUI MemoText;
-        public GameObject MemoImage;
-        public SpriteRenderer MemoRenderer;
-        public bool isEnd;
 
-
-        public Action HideComplete;
         Sequence MemoSeq;
 
         public void Awake()
         {
-            MemoRenderer = MemoImage.GetComponent<SpriteRenderer>();
             MemoSeq = DOTween.Sequence();
         }
         public void Start()
         {
-            ShowAnimation();
+            memoRectTransform.anchoredPosition = new(memoRectTransform.sizeDelta.x,0);
         }
+        
         public void HideAnimation()
         {
-            
-            MemoSeq.Append(MemoRenderer.DOFade(0f, 1f));
-            MemoSeq.Join(MemoText.DOFade(0f, 1f));
-            MemoSeq.Join(transform.DOLocalMoveX(5f, 1f).SetRelative(true)).OnComplete(()=>{
-                HideComplete();
+            MemoSeq.Append(canvasGroup.DOFade(0f, 1f));
+            MemoSeq.Join(memoRectTransform.DOAnchorPosX(memoRectTransform.sizeDelta.x, 1f).SetRelative(true)).OnComplete(()=>{
+                gameObject.SetActive(false);
             });
              
         }
         public void ShowAnimation()
         {
-            MemoSeq.Append(MemoRenderer.DOFade(0f, 1f).From());
-            MemoSeq.Join(transform.DOLocalMoveX(transform.localPosition.x + 5f, 1f).From());
+            gameObject.SetActive(true);
+            MemoSeq.Append(canvasGroup.DOFade(0f, 1f).From());
+            MemoSeq.Join(memoRectTransform.DOAnchorPosX(-memoRectTransform.sizeDelta.x / 2, 1f));
         }
 
 
