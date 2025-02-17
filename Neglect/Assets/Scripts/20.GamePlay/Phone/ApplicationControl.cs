@@ -23,8 +23,8 @@ public partial class ApplicationControl : MonoBehaviour
     public IPhoneApplication GetApp(string appName) => applicationDictionary.GetValueOrDefault(appName);
     public void AddApp(IPhoneApplication app)
     {
-        app.AppInstall(phone);
         OnAddAppEvent?.Invoke(app);
+        app.AppInstall(phone);
     }
 
     // 어플리케이션 실행
@@ -46,17 +46,26 @@ public partial class ApplicationControl : MonoBehaviour
         currentPlayApplication = app;
     }
 
+    public void CloseApp()
+    {
+        if(currentPlayApplication!= null && currentPlayApplication.AppName != "Home")
+            CloseApp(currentPlayApplication);
+    }
+    
     public void CloseApp(IPhoneApplication app)
     {
         if (currentPlayApplication == app) currentPlayApplication = null;
 
         applicationDictionary.Remove(app.AppName);
         app.AppExit(phone);
+
+        OnHome();
     }
 
     // 홈 화면으로 이동
     public void OnHome()
     {
+        if(currentPlayApplication is { AppName: "Home" }) return;
         if (applicationDictionary.TryGetValue("Home", out var app)) OpenApp(app);
     }
 

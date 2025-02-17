@@ -9,83 +9,12 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using GamePlay.Event;
-using Unity.VisualScripting;
+using Manager;
 
 namespace GamePlay.Phone
 {
-    public partial class BankApp : MonoBehaviour, IPhoneApplication
-    {
-
-        public Canvas mainCanvas;
-        public Canvas uiCanvas;
-
-        [Header("Phone 관련")]
-        [SerializeField] private string appName;
-        [SerializeField] private Sprite icon;
-        [SerializeField] private Vector2Int verticalResolution;
-        [SerializeField] private PhoneControl _phone;
-        public string AppName { get => appName; }
-        public Sprite AppIcon { get => icon; set => icon = value; }
-        public Vector2Int VerticalResolution { get => verticalResolution; set => verticalResolution = value; }
-        public PhoneControl Phone => _phone;
-
-        public bool isClearPassword; // 패스워드 통과 했는지
-        public GameObject ReadMemo;
-        public PasswordToLine Password;
-
-        public BankReadMemo BankMemo;
-
-        public void AppExit(PhoneControl phone)
-        {
-
-        }
-
-        public void AppInstall(PhoneControl phone)
-        {
-            _phone = phone;
-            mainCanvas.worldCamera = phone.phoneCamera;
-            uiCanvas.worldCamera = phone.phoneCamera;
-            Password.phone = phone;
-            Password.ClearAction += PasswordClear;
-            lotto(); // 패스워드 계좌번호 금액 랜덤 결정
-
-            Password.SettingEvent("", "[1,2,3,6]");
-            
-            if(BankMemo != null)
-            {
-                BankMemo = Instantiate(BankMemo , new Vector3(5.5f,0,0), Quaternion.identity);
-            }
-            BankMemo.TextSetting("To Owner", RandomAccount, RandomAmount, "1 2 3 6");
-        }
-
-        public void AppPause(PhoneControl phone)
-        {
-
-        }
-
-        public void AppPlay(PhoneControl phone)
-        {
-
-            BankMemo.gameObject.SetActive(true);
-            Password.phone = phone;
-        }
-
-        public void AppResume(PhoneControl phone)
-        {
-            BankMemo.gameObject.SetActive(false);
-        }
-
-        public void AppUnInstall(PhoneControl phone)
-        {
-
-        }
-
-
-
-    }
     public partial class BankApp : MonoBehaviour
     {
-
         public int RandomAmount;
         public string RandomAccount;
         public string RandomPassword;
@@ -98,16 +27,13 @@ namespace GamePlay.Phone
         public MMF_Player pre_sign;  // 계좌가 없을때 뜨는 싸인
         public RectTransform KeyPad;
 
-
         [Header("마지막 확인 텍스트")]
         public TextMeshProUGUI CheckText;
         public TextMeshProUGUI CheckAmountText;
 
-
         public List<GameObject> KeyPad_objects = new();
         public List<Image> KeyPad_Image = new();
         public List<TextMeshProUGUI> KeyPad_Text = new();
-
 
         [Space]
         [Header("이체 해야 할 정보")]
@@ -122,7 +48,6 @@ namespace GamePlay.Phone
         public GameObject BankAccount;
         public GameObject BankAmount;
         public GameObject BankFinish;
-
 
         public Action ClearAction;
         public Action IgnoreAction;
@@ -374,6 +299,78 @@ namespace GamePlay.Phone
                 }
             }
             SetText();
+        }
+    }
+        public partial class BankApp : IPhoneApplication
+    {
+        public Canvas mainCanvas;
+
+        [Header("Phone 관련")]
+        [SerializeField] private string appName;
+        [SerializeField] private Sprite icon;
+        [SerializeField] private Vector2Int verticalResolution;
+        [SerializeField] private PhoneControl _phone;
+        public string AppName { get => appName; }
+        public Sprite AppIcon { get => icon; set => icon = value; }
+        public Vector2Int VerticalResolution { get => verticalResolution; set => verticalResolution = value; }
+        public PhoneControl Phone => _phone;
+
+        public bool isClearPassword; // 패스워드 통과 했는지
+        public PasswordToLine Password;
+
+        public BankReadMemo BankMemo;
+        
+        public void AppInstall(PhoneControl phone)
+        {
+            _phone = phone;
+            mainCanvas.worldCamera = phone.phoneCamera;
+            Password.phone = phone;
+            Password.ClearAction += PasswordClear;
+            lotto(); // 패스워드 계좌번호 금액 랜덤 결정
+
+            Password.SettingEvent("", "[1,2,3,6]");
+            
+            if(BankMemo == null)
+            {
+                BankMemo = Instantiate(BankMemo , new Vector3(5.5f,0,0), Quaternion.identity);
+            }
+            BankMemo.TextSetting("To Owner", RandomAccount, RandomAmount, "1 2 3 6");
+
+            BankMemo.gameObject.layer = 0;
+            
+            BankMemo.gameObject.SetActive(false);
+            mainCanvas.gameObject.SetActive(false);
+        }
+
+        public void AppPause(PhoneControl phone)
+        {
+
+        }
+
+        public void AppPlay(PhoneControl phone)
+        {
+            mainCanvas.gameObject.SetActive(true);
+            Password.phone = phone;
+            
+            BankMemo.ShowAnimation();
+        }
+
+        public void AppResume(PhoneControl phone)
+        {
+            mainCanvas.gameObject.SetActive(false);
+
+            BankMemo.ShowAnimation();
+        }
+        
+        public void AppExit(PhoneControl phone)
+        {
+            mainCanvas.gameObject.SetActive(false);
+            BankMemo.HideAnimation();
+        }
+
+        public void AppUnInstall(PhoneControl phone)
+        {
+
         }
     }
 }

@@ -24,6 +24,15 @@ namespace GamePlay
             {
                 SceneUtil.AsyncAddPhone(phoneScene =>
                 {
+                    SceneUtil.AsyncAddBank(bankScene =>
+                    {
+                        foreach (GameObject rootGameObject in bankScene.GetRootGameObjects())
+                        {
+                            var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
+                            if(app != null) PhoneUtil.currentPhone.applicationControl.AddApp(app);
+                        }
+                    });
+                    
                     SceneUtil.AsyncAddRunningGame(runningScene =>
                     {
                         foreach (GameObject rootGameObject in runningScene.GetRootGameObjects())

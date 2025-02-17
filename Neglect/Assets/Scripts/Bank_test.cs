@@ -2,6 +2,7 @@ using GamePlay;
 using GamePlay.Phone;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEditor.SearchService;
 using UnityEngine;
 
@@ -12,14 +13,30 @@ public class Bank_test : MonoBehaviour
     public PhoneControl phone;
     public void Start()
     {
-        
-        SceneUtil.AsyncAddBank(scene =>
-        {
-            foreach (GameObject rootGameObject in scene.GetRootGameObjects())
-            {
-                var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
-                if (app != null) phone.applicationControl.AddApp(app);
-            }
-        });
     }
 }
+
+#if UNITY_EDITOR
+
+[CustomEditor(typeof(Bank_test))]
+public class BankTestEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+
+        var script = target as Bank_test;
+        if (GUILayout.Button("은행 씬 로드"))
+        {
+            SceneUtil.AsyncAddBank(scene =>
+            {
+                foreach (GameObject rootGameObject in scene.GetRootGameObjects())
+                {
+                    var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
+                    if (app != null) PhoneUtil.currentPhone.applicationControl.AddApp(app);
+                }
+            });
+        }
+    }
+}
+#endif
