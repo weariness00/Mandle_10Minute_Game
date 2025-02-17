@@ -52,9 +52,16 @@ namespace GamePlay.Event
             MemoText.text += "Amount : " + Amount.ToString() + "\n";
         }
 
-        public void TextSetting(string Name, string Account, int Amount, String Password)
+        public void TextSetting(string Name, string Account, int Amount, List<int> Password)
         {
-            MemoText.text = "Password..." +Password +"\n";
+            MemoText.text = "Password :";
+            for (int i = 0; i < Password.Count; i++)
+            {
+                MemoText.text += " ";
+                MemoText.text += Password[i].ToString() ;
+            }
+            MemoText.text += "\n";
+
             MemoText.text += Name + "\n";
             MemoText.text += "Account : " + Account + "\n";
             MemoText.text += "Amount : " + Amount.ToString() + "\n";

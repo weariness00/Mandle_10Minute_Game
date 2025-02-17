@@ -17,7 +17,7 @@ namespace GamePlay.Phone
     {
         public int RandomAmount;
         public string RandomAccount;
-        public string RandomPassword;
+        public List<int> RandomPassword;
 
         [Header("패스워드 완료 후 계좌 이체 텍스트")]
         public TextMeshProUGUI InputAmountText;
@@ -27,6 +27,7 @@ namespace GamePlay.Phone
         public MMF_Player pre_sign;  // 계좌가 없을때 뜨는 싸인
         public RectTransform KeyPad;
 
+        public TextMeshProUGUI OwnerText;
         [Header("마지막 확인 텍스트")]
         public TextMeshProUGUI CheckText;
         public TextMeshProUGUI CheckAmountText;
@@ -52,14 +53,32 @@ namespace GamePlay.Phone
         public Action ClearAction;
         public Action IgnoreAction;
         public Action HideComplete;
-
+        public bool IsSkip() // 비정상적인 패스워드 입력 체크
+        {
+            int BackIndex = RandomPassword.Count - 1;
+            int A = RandomPassword[BackIndex]-1;
+            int B = RandomPassword[BackIndex - 1]-1;
+            int[,] C = new int[,] { { 0, 2 }, { 3, 5 }, { 6, 8 }, { 0, 8 }, { 2, 6 }, { 0, 6 }, { 1, 7 }, { 2, 8 } };
+            for (int i = 0; i < 8; i++)
+            {
+                if (A == C[i, 0] && B == C[i, 1] || B == C[i, 0] && A == C[i, 1])
+                    return true;
+            }
+            return false;
+        }
         public void lotto()
         {
             List<int> RandomNum = new List<int> { 1, 2 ,3,4,5,6,7,8,9};
             for (int i = 0; i < 4; i++)
             {
                 int pre = UnityEngine.Random.Range(0, RandomNum.Count);
-                RandomPassword += RandomNum[pre].ToString();
+                RandomPassword.Add(RandomNum[pre]);
+                if (RandomPassword.Count>=2&&IsSkip())
+                {
+                    RandomPassword.RemoveAt(RandomPassword.Count-1);
+                    i -= 1;
+                    continue;
+                }
                 RandomNum.RemoveAt(pre);
             }
             for (int i = 0; i < 8; i++)
@@ -71,13 +90,15 @@ namespace GamePlay.Phone
             }
             for (int i = 0; i < 6; i++)
             {
-                if( i <= 3)
-                    RandomAmount += RandomAmount * 10 + 0;
+                if( i >= 3)
+                    RandomAmount = RandomAmount * 10 + 0;
                 else if (i == 0)
-                    RandomAmount += RandomAmount * 10 + UnityEngine.Random.Range(1, 10);
+                    RandomAmount = RandomAmount * 10 + UnityEngine.Random.Range(1, 10);
                 else
-                    RandomAmount += RandomAmount * 10 + UnityEngine.Random.Range(0, 10);
+                    RandomAmount = RandomAmount * 10 + UnityEngine.Random.Range(0, 10);
             }
+            AnswerAccount = RandomAccount;
+            AnswerAmount = RandomAmount;
         }
         public void Init()
         {
@@ -96,10 +117,10 @@ namespace GamePlay.Phone
         public void SetAccount() //입력 정보 확인 
         {
 
-            CheckText.text = AddBar(AnswerAccount) + "\n" + PassbookOwner + "\n";
+            CheckText.text = AddBar(AnswerAccount) + "\n" + PassbookOwner + "님에게\n";
 
             string pre1 = InputAmount.ToString();
-            CheckAmountText.text = AddCommas(pre1);
+            CheckAmountText.text = AddCommas(pre1) +"원";
         }
         public void CheckAccount() // 입력 정보 확인 텍스트 수정
         {
@@ -260,7 +281,7 @@ namespace GamePlay.Phone
             string pre = InputAccount;
             string pre1 = InputAmount.ToString();
             InputAccountText.text = AddBar(pre);
-            InputAmountText.text = AddCommas(pre1);
+            InputAmountText.text = AddCommas(pre1) +"원";
         }
         public void InputClickButton(int num)
         {
@@ -268,6 +289,9 @@ namespace GamePlay.Phone
             {
                 if (num >= 0 && num <= 9)
                 {
+
+                    if (InputAccount.Length > 9)
+                        return;
                     InputAccount += num.ToString();
                 }
                 if (num == 10)
@@ -287,6 +311,9 @@ namespace GamePlay.Phone
             {
                 if (num >= 0 && num <= 9)
                 {
+
+                    if (InputAmount >= 9999999)
+                        return;
                     InputAmount = InputAmount * 10 + num;
                 }
                 if (num == 10)
@@ -328,13 +355,15 @@ namespace GamePlay.Phone
             Password.ClearAction += PasswordClear;
             lotto(); // 패스워드 계좌번호 금액 랜덤 결정
 
-            Password.SettingEvent("", "[1,2,3,6]");
+
+            OwnerText.text = PassbookOwner +"님에게";
+            Password.SettingEvent("", RandomPassword);
             
             if(BankMemo == null)
             {
                 BankMemo = Instantiate(BankMemo , new Vector3(5.5f,0,0), Quaternion.identity);
             }
-            BankMemo.TextSetting("To Owner", RandomAccount, RandomAmount, "1 2 3 6");
+            BankMemo.TextSetting("To Owner", RandomAccount, RandomAmount, RandomPassword);
 
             BankMemo.gameObject.layer = 0;
             

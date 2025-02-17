@@ -54,16 +54,14 @@ namespace GamePlay.Event
             LineClear();
         }
 
-        public void SettingEvent(string hint , string Password)
+        public void SettingEvent(string hint , List<int> Password)
         {
             HintText.text = hint;
             AnswerPassword.Clear();
-            string[] strNumbers = Password.Trim(new char[] { '[', ']' }).Split(',');
-            int[] numbers = Array.ConvertAll(strNumbers, int.Parse);
            
-            for (int i = 0; i < numbers.Length; i++)
+            for (int i = 0; i < Password.Count; i++)
             {
-                AnswerPassword.Add(numbers[i] - 1); // 인덱스 번호로 제작되었으므로 -1 처리 
+                AnswerPassword.Add(Password[i] - 1); // 인덱스 번호로 제작되었으므로 -1 처리 
             }
         }
 
@@ -165,7 +163,6 @@ namespace GamePlay.Event
                     return true;
             }
             return false;
-
         }
         public void LineClear()
         {
