@@ -581,14 +581,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0b8ac48aeb737f499e2fc87f2c2ef7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCanvas: {fileID: 543994821}
-  appName: BankApp
-  icon: {fileID: 21300000, guid: 7cb16ca973d66194dada09e83e1753c3, type: 3}
-  verticalResolution: {x: 600, y: 960}
-  _phone: {fileID: 0}
-  isClearPassword: 0
-  Password: {fileID: 5060415484448759935}
-  BankMemo: {fileID: 1849624126247632213}
   RandomAmount: 0
   RandomAccount: 
   RandomPassword: 
@@ -598,6 +590,7 @@ MonoBehaviour:
   InputAccount: 
   pre_sign: {fileID: 1365714312011875013}
   KeyPad: {fileID: 2141575999117947026}
+  OwnerText: {fileID: 8321838331130501413}
   CheckText: {fileID: 1032318852946878081}
   CheckAmountText: {fileID: 5554317831472475581}
   KeyPad_objects:
@@ -635,10 +628,18 @@ MonoBehaviour:
   - {fileID: 5147373576468125089}
   AnswerAccount: 123456
   AnswerAmount: 123456
-  PassbookOwner: Owener
+  PassbookOwner: Owner
   BankAccount: {fileID: 3222042458439111583}
   BankAmount: {fileID: 4591903200732330459}
   BankFinish: {fileID: 7196102751990922803}
+  mainCanvas: {fileID: 543994821}
+  appName: BankApp
+  icon: {fileID: 21300000, guid: 7cb16ca973d66194dada09e83e1753c3, type: 3}
+  verticalResolution: {x: 600, y: 960}
+  _phone: {fileID: 0}
+  isClearPassword: 0
+  Password: {fileID: 5060415484448759935}
+  BankMemo: {fileID: 1849624126247632213}
 --- !u!4 &885292895
 Transform:
   m_ObjectHideFlags: 0
@@ -1104,14 +1105,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 885292894}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: InputClickButton
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 7
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1360,7 +1361,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
+        - m_Target: {fileID: 885292894}
           m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
           m_MethodName: KeyPadMove
           m_Mode: 6
@@ -1550,7 +1551,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 885292894}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: InputClickButton
         m_Mode: 3
@@ -1639,7 +1640,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
+        - m_Target: {fileID: 885292894}
           m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
           m_MethodName: KeyPadMove
           m_Mode: 6
@@ -2141,8 +2142,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Account
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ee89d75a416f5fd4fa1f3b2033acde8d, type: 2}
+  m_sharedMaterial: {fileID: 6798511891574570026, guid: ee89d75a416f5fd4fa1f3b2033acde8d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2417,8 +2418,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 12212
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8ce5bf7e653ee1744bb7d7ccbe05f9a2, type: 2}
+  m_sharedMaterial: {fileID: -4526150114630943922, guid: 8ce5bf7e653ee1744bb7d7ccbe05f9a2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2442,8 +2443,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3338,8 +3339,6 @@ MonoBehaviour:
   canvasGroup: {fileID: 6750418719320907241}
   memoRectTransform: {fileID: 868998805}
   MemoText: {fileID: 1262321008988775228}
-  memoImage: {fileID: 890004096}
-  isEnd: 0
 --- !u!114 &1867889424384925160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3860,7 +3859,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Check
+  m_text: "\uD655\uC778"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4162,7 +4161,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 885292894}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: ChangeView
         m_Mode: 3
@@ -4285,7 +4284,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 885292894}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: ChangeView
         m_Mode: 3
@@ -4380,7 +4379,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 885292894}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: InputClickButton
         m_Mode: 3
@@ -4452,7 +4451,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 885292894}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: InputClickButton
         m_Mode: 3
@@ -4818,7 +4817,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 885292894}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: InputClickButton
         m_Mode: 3
@@ -4912,8 +4911,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GamePlay.Event.BankMoneyTransfer, Assembly-CSharp
+      - m_Target: {fileID: 885292894}
+        m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: KeyPadMove
         m_Mode: 6
         m_Arguments:
@@ -5638,7 +5637,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 885292894}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: InputClickButton
         m_Mode: 3
@@ -5731,7 +5730,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3877068858898586443
 GameObject:
@@ -6217,7 +6216,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Yes
+  m_text: "\uB124"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6401,7 +6400,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 885292894}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: ChangeView
         m_Mode: 3
@@ -6531,7 +6530,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 885292894}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: InputClickButton
         m_Mode: 3
@@ -7199,7 +7198,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Check
+  m_text: "\uD655\uC778"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7590,8 +7589,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Amount
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ee89d75a416f5fd4fa1f3b2033acde8d, type: 2}
+  m_sharedMaterial: {fileID: 6798511891574570026, guid: ee89d75a416f5fd4fa1f3b2033acde8d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7946,7 +7945,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 885292894}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: InputClickButton
         m_Mode: 3
@@ -8039,7 +8038,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 885292894}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: InputClickButton
         m_Mode: 3
@@ -8502,10 +8501,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: The account number does not exist.
+  m_text: "\uB4F1\uB85D\uB41C \uACC4\uC88C\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ee89d75a416f5fd4fa1f3b2033acde8d, type: 2}
+  m_sharedMaterial: {fileID: 6798511891574570026, guid: ee89d75a416f5fd4fa1f3b2033acde8d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8669,7 +8668,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 885292894}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: InputClickButton
         m_Mode: 3
@@ -8829,7 +8828,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 885292894}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: KeyPadMove
         m_Mode: 6
@@ -8989,7 +8988,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: No
+  m_text: "\uC544\uB2C8\uC694"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -9269,7 +9268,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 885292894}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: InputClickButton
         m_Mode: 3
@@ -10126,10 +10125,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Where to send?
+  m_text: "\uC1A1\uAE08\uD560 \uACC4\uC88C\uB97C \uC785\uB825\uD558\uC138\uC694"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ee89d75a416f5fd4fa1f3b2033acde8d, type: 2}
+  m_sharedMaterial: {fileID: 6798511891574570026, guid: ee89d75a416f5fd4fa1f3b2033acde8d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10780,10 +10779,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: To Owenr
+  m_text: "\uB204\uAD6C\uC5D0\uAC8C"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ee89d75a416f5fd4fa1f3b2033acde8d, type: 2}
+  m_sharedMaterial: {fileID: 6798511891574570026, guid: ee89d75a416f5fd4fa1f3b2033acde8d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -11069,7 +11068,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 885292894}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: InputClickButton
         m_Mode: 3
@@ -11125,14 +11124,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 885292894}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: BankComplete
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -11181,7 +11180,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 885292894}
         m_TargetAssemblyTypeName: GamePlay.Phone.BankApp, Assembly-CSharp
         m_MethodName: CheckAccount
         m_Mode: 1
