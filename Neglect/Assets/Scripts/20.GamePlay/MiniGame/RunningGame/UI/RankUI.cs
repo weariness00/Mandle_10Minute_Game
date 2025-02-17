@@ -57,6 +57,7 @@ namespace GamePlay.MiniGame.RunningGame
             {
                 var block = rankList[i];
                 block.rankText.text = $"{i + 1}";
+                block.data.rank = i + 1;
 
                 // if (!ReferenceEquals(block, blockList[i]))
                 var destPos = new Vector2(0, -25 + (-block.rectTransform.sizeDelta.y * i));

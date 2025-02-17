@@ -19,7 +19,7 @@ namespace Quest
 
         public virtual void Play()
         {
-            if (state != QuestState.Completed)
+            if (state != QuestState.InProgress && state != QuestState.Completed)
             {
                 subscription?.Dispose();
                 subscription = QuestManager.Instance.Add(this);
@@ -35,7 +35,7 @@ namespace Quest
 
             if (eventData.acceptEvent != null)
             {
-                var quest = QuestDataList.Instance.InstantiateQuest(eventData.acceptEvent.id);
+                var quest = QuestDataList.Instance.InstantiateEvent(eventData.acceptEvent.id);
                 quest.eventData = eventData.acceptEvent;
             }
             else
@@ -57,7 +57,7 @@ namespace Quest
 
             if (eventData.ignoreEvent != null)
             {
-                var quest = QuestDataList.Instance.InstantiateQuest(eventData.ignoreEvent.id);
+                var quest = QuestDataList.Instance.InstantiateEvent(eventData.ignoreEvent.id);
                 quest.eventData = eventData.ignoreEvent;
             }
             else

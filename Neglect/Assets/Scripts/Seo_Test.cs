@@ -40,7 +40,7 @@ namespace SeoTestTestTest
         public void MakeQuest()
         {
             var setting = QuestSettingProviderHelper.setting;
-            var e = setting.InstantiateQuest(eventID);
+            var e = setting.InstantiateEvent(eventID);
             e.Play();
         }
     }

@@ -474,6 +474,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   setting: {fileID: 0}
+  soundCanvas: {fileID: 0}
+  soundCanvasRectTransform: {fileID: 0}
 --- !u!4 &1014785328
 Transform:
   m_ObjectHideFlags: 0

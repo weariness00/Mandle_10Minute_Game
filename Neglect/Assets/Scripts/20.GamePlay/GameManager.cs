@@ -7,7 +7,7 @@ using Util;
 
 namespace GamePlay
 {
-    public class GameManager : Singleton<GameManager>
+    public partial class GameManager : Singleton<GameManager>
     {
         public ReactiveProperty<bool> isGameStart;
         public ReactiveProperty<bool> isGameClear;
@@ -65,9 +65,17 @@ namespace GamePlay
                 playTimer.Current += Time.deltaTime;
                 if (playTimer.IsMax)
                 {
-                    isGameClear.Value = true;
+                    GameClear();
                 }
             }
+        }
+    }
+
+    public partial class GameManager
+    {
+        public void GameClear()
+        {
+            isGameClear.Value = true;
         }
     }
 }
