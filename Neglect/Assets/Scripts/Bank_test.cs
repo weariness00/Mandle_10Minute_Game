@@ -7,7 +7,8 @@ using UnityEngine;
 
 public class Bank_test : MonoBehaviour
 {
-
+    public ApplicationControl phonecontrol;
+    public IPhoneApplication app;
     // Start is called before the first frame update
     public PhoneControl phone;
     public void Start()
@@ -17,9 +18,10 @@ public class Bank_test : MonoBehaviour
         {
             foreach (GameObject rootGameObject in scene.GetRootGameObjects())
             {
-                var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
+                app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
                 if (app != null) phone.applicationControl.AddApp(app);
             }
         });
+
     }
 }

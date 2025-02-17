@@ -165,7 +165,6 @@ namespace GamePlay.Event
                     return true;
             }
             return false;
-
         }
         public void LineClear()
         {
