@@ -14,17 +14,8 @@ namespace Quest.Container
         {
             base.Play();
             chatconversation = FindObjectOfType<ChatConversation>(true);
-            chatconversation.clearAction += Complete;
-        }
-
-        public override void Complete()
-        {
-            base.Complete();
-        }
-
-        public override void Ignore()
-        {
-            base.Ignore();
+            chatconversation.completeEvent.AddListener(Complete);
+            chatconversation.ignoreEvent.AddListener(Ignore);
         }
     }
 }

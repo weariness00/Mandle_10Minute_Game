@@ -974,6 +974,6 @@ MonoBehaviour:
   destroyPopUpEvent:
     m_PersistentCalls:
       m_Calls: []
-  completeButton: {fileID: 3363051516253875865}
+  button: {fileID: 3363051516253875865}
   titleText: {fileID: 5994537972803277169}
   explainText: {fileID: 6791107929912396134}

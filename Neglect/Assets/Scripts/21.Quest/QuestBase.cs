@@ -33,10 +33,11 @@ namespace Quest
             subscription?.Dispose();
             state = QuestState.Failed;
 
-            if (eventData.acceptEvent != null)
+            if (eventData.ignoreEvent != null)
             {
-                var quest = QuestDataList.Instance.InstantiateEvent(eventData.acceptEvent.id);
-                quest.eventData = eventData.acceptEvent;
+                var quest = QuestDataList.Instance.InstantiateEvent(eventData.ignoreEvent.id);
+                quest.eventData = eventData.ignoreEvent;
+                quest.Play();
             }
             else
             {
@@ -55,10 +56,11 @@ namespace Quest
             subscription?.Dispose();
             state = QuestState.Completed;
 
-            if (eventData.ignoreEvent != null)
+            if (eventData.acceptEvent != null)
             {
-                var quest = QuestDataList.Instance.InstantiateEvent(eventData.ignoreEvent.id);
-                quest.eventData = eventData.ignoreEvent;
+                var quest = QuestDataList.Instance.InstantiateEvent(eventData.acceptEvent.id);
+                quest.eventData = eventData.acceptEvent;
+                quest.Play();
             }
             else
             {

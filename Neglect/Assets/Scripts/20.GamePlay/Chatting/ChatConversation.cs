@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Pool;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Util;
 
@@ -40,8 +42,9 @@ namespace GamePlay.Chatting
         [Header("데이터베이스에서 가져올 정보")] 
         [Space]
         [HideInInspector] public TalkingData talkData = null;
-        
-        public Action clearAction;
+        public MinMaxValue<float> ignoreTimer = new(15, 0, 15);
+        public UnityEvent completeEvent;
+        public UnityEvent ignoreEvent;
 
         public float NextTextPosY;
         public Scrollbar Scrollbar;
@@ -69,9 +72,21 @@ namespace GamePlay.Chatting
                 3,
                 5
             );
-
         }
-        
+
+        public void Update()
+        {
+            if (isInit == false) return;
+            
+            ignoreTimer.Current -= Time.deltaTime;
+            if (ignoreTimer.IsMin)
+            {
+                ignoreEvent.Invoke();
+                ignoreEvent = new();
+                isInit = false;
+            }
+        }
+
         public void OtherChatSpawn(string t)
         {
             Sequence UiSeq = DOTween.Sequence();
@@ -116,6 +131,7 @@ namespace GamePlay.Chatting
             if(talkData == null) return;
             if(isInit) return;
             isInit = true;
+            ignoreTimer.SetMax();
             SettingAnswer(); 
             OtherChatSpawn(talkData.mainText);
             ChatBox();
@@ -185,16 +201,16 @@ namespace GamePlay.Chatting
                 }
             }
 
+            ignoreTimer.Current += 3;
             ChatGage += block.gage;
             UiSeq.Append(GageBar.DOFillAmount(ChatGage / 100f, 1f));
-
             UiSeq.AppendCallback(() =>
             {
                 if (ChatGage == 100)
                 {
                     //클리어
-                    clearAction.Invoke();
-                    clearAction = null;
+                    completeEvent.Invoke();
+                    completeEvent = new();
                     isInit = false;
                 }
                 else
