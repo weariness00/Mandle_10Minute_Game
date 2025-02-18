@@ -64,7 +64,7 @@ namespace GamePlay.Event
         public TextMeshProUGUI TimeText; //타이머 텍스트
 
         public MMF_Player CloseCall;
-
+        public GameObject CallEndButton;
         public void Awake()
         {
 
@@ -252,15 +252,17 @@ namespace GamePlay.Event
             {
                 UiSeq.AppendCallback(() =>
                 {
-
-                    isComplete = true;
-                    CloseCall.PlayFeedbacks();
-                    TimeText.text += "\n통화종료";
-                    //ClearAction();
+                    CallEndButton.SetActive(true);
                 });
             }
         }
-
+        public void CallEndAnimation()
+        {
+            isComplete = true;
+            CloseCall.PlayFeedbacks();
+            TimeText.text += "\n통화종료";
+            //ClearAction();
+        }
         public void CompleteCallAnimation()
         {
 

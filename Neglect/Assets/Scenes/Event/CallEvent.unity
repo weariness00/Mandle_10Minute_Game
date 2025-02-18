@@ -497,7 +497,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -514,7 +514,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4971278386517485394}
+  - {fileID: 1582449309202923408}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -522,7 +522,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1001 &4957593609539297458
+--- !u!1001 &1081768145995670352
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -667,10 +667,10 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
---- !u!224 &4971278386517485394 stripped
+--- !u!224 &1582449309202923408 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5852731576706408226, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
-  m_PrefabInstance: {fileID: 4957593609539297458}
+  m_PrefabInstance: {fileID: 1081768145995670352}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5395244887852054000
 PrefabInstance:
