@@ -34,13 +34,13 @@ namespace GamePlay.Phone
         public void AppPlay(PhoneControl phone)
         {
             chatting.gameObject.SetActive(true);
-            chatting.CallStart();
+            chatting.Init();
         }
 
         public void AppResume(PhoneControl phone)
         {
             chatting.gameObject.SetActive(true);
-            chatting.CallStart();
+            chatting.Init();
         }
 
         public void AppPause(PhoneControl phone)

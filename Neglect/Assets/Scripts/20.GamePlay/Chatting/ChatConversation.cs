@@ -86,7 +86,17 @@ namespace GamePlay.Chatting
                 isInit = false;
             }
         }
-
+        public void Init()
+        {
+            if(talkData == null) return;
+            if(isInit) return;
+            isInit = true;
+            ignoreTimer.SetMax();
+            SettingAnswer(); 
+            OtherChatSpawn(talkData.mainText);
+            ChatBox();
+        }
+        
         public void OtherChatSpawn(string t)
         {
             Sequence UiSeq = DOTween.Sequence();
@@ -126,16 +136,6 @@ namespace GamePlay.Chatting
             Scrollbar.value = 0;
         }
 
-        public void CallStart()
-        {
-            if(talkData == null) return;
-            if(isInit) return;
-            isInit = true;
-            ignoreTimer.SetMax();
-            SettingAnswer(); 
-            OtherChatSpawn(talkData.mainText);
-            ChatBox();
-        }
 
         public void SettingAnswer()
         {
@@ -215,7 +215,11 @@ namespace GamePlay.Chatting
                 }
                 else
                 {
-                    CallStart();
+                    talkData = block.isPositive ? talkData.positiveResultTalk : talkData.negativeResultTalk;
+                    
+                    SettingAnswer(); 
+                    OtherChatSpawn(talkData.mainText);
+                    ChatBox();
                 }
             });
 
@@ -241,7 +245,7 @@ namespace GamePlay.Chatting
 
             if (GUILayout.Button("대화 생성"))
             {
-                script.CallStart();
+                script.Init();
             }
         }
     }

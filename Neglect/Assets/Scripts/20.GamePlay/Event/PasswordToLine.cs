@@ -32,14 +32,17 @@ namespace GamePlay.Event
 
         public TextMeshProUGUI HintText;
 
+        private bool isInit = false;
 
         public void Awake()
         {
-            Init();
+            inputPassword.Clear();
+            LineClear();
         }
         //패스워드
         public void Init()
         {
+            isInit = true;
             IsCrack = false;
             inputPassword.Clear();
             LineClear();
@@ -177,6 +180,8 @@ namespace GamePlay.Event
 
         public void Update()
         {
+            if(!isInit) return;
+            
             if (Mouse.current.leftButton.isPressed && IsCrack)
             {
                 LineDraw();
@@ -185,7 +190,6 @@ namespace GamePlay.Event
             
             if (Mouse.current.leftButton.wasReleasedThisFrame)
             {
-
                 IsCrack = false;
                 if (PasswordCheck())
                 {

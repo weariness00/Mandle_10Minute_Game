@@ -70,6 +70,8 @@ namespace GamePlay.Phone
         // 패스워드 초기화
         public void InitPassword()
         {
+            password.Init();
+            
             UniqueRandom intRandom = new(1, 9);
             RandomPassword.Clear();
             for (int i = 0; i < 4; i++)
@@ -207,22 +209,11 @@ namespace GamePlay.Phone
         }
         public static string AddBar(string input)
         {
-            input = input.Trim();
-            int length = input.Length;
-            if (length <= 4)
-                return input;
-            string result = "";
+            var result = input;
 
-            int count = 0;
-            for (int i = 0; i < length; i++)
-            {
-                result += input[i];
-                count++;
-                if ((count == length / 2 - 1 || count == length / 2 + 1) && i != length - 1)
-                {
-                    result += "-";
-                }
-            }
+            int i = 0;
+            if (input.Length >= 3) result = result.Insert(2 + i++, "-");
+            if (input.Length >= 7) result = result.Insert(6 + i++, "-");
 
             return result;
         }
@@ -343,11 +334,6 @@ namespace GamePlay.Phone
             });
         }
 
-        public void AppPause(PhoneControl phone)
-        {
-
-        }
-
         public void AppPlay(PhoneControl phone)
         {
             mainCanvas.gameObject.SetActive(true);
@@ -355,14 +341,20 @@ namespace GamePlay.Phone
             
             BankMemo.ShowAnimation();
         }
-
+        
         public void AppResume(PhoneControl phone)
         {
-            mainCanvas.gameObject.SetActive(false);
+            mainCanvas.gameObject.SetActive(true);
 
             BankMemo.ShowAnimation();
         }
         
+        public void AppPause(PhoneControl phone)
+        {
+            mainCanvas.gameObject.SetActive(false);
+            BankMemo.HideAnimation();
+        }
+
         public void AppExit(PhoneControl phone)
         {
             mainCanvas.gameObject.SetActive(false);
@@ -371,7 +363,7 @@ namespace GamePlay.Phone
 
         public void AppUnInstall(PhoneControl phone)
         {
-
+            mainCanvas.gameObject.SetActive(false);
         }
     }
 
