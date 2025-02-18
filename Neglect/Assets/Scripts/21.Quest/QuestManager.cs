@@ -6,12 +6,12 @@ using Util;
 
 namespace Quest
 {
-    public class QuestManager : Singleton<QuestManager>
+    public partial class QuestManager : Singleton<QuestManager>
     {
         [HideInInspector] public bool isQuestStart;
         public MinMaxValue<float> questSpawnTimer = new(0, 0, 60,true,true);
-        
-        private Dictionary<QuestType, Subject<object>> questDictionary = new();
+
+        private Dictionary<QuestType, Subject<object>> questPlayDictionary = new(); // 퀘스트가 클리어되면 여기서 제외됨
 
         public void Update()
         {
@@ -31,7 +31,8 @@ namespace Quest
 
         public void Init()
         {
-            questDictionary.Clear();
+            questAddList.Clear();
+            questPlayDictionary.Clear();
             isQuestStart = true;
             questSpawnTimer.SetMin();
         }
@@ -39,10 +40,11 @@ namespace Quest
         // 퀘스트를 매니저에 추가
         public IDisposable Add(QuestBase quest)
         {
-            if (!questDictionary.TryGetValue(quest.type, out var subject))
+            questAddList.Add(quest);
+            if (!questPlayDictionary.TryGetValue(quest.type, out var subject))
             {
                 subject = new();
-                questDictionary.Add(quest.type, subject);
+                questPlayDictionary.Add(quest.type, subject);
             }
             return subject.Subscribe(quest.OnNext);
         }
@@ -55,10 +57,16 @@ namespace Quest
         /// <param name="value">이벤트 값</param>
         public void OnValueChange(QuestType eventType, object value)
         {
-            if (questDictionary.TryGetValue(eventType, out var subject))
+            if (questPlayDictionary.TryGetValue(eventType, out var subject))
             {
                 subject.OnNext(value);
             }
         }
+    }
+
+    public partial class QuestManager
+    {
+        private List<QuestBase> questAddList = new();
+        public List<QuestBase> GetAllQuest() => questAddList;
     }
 }

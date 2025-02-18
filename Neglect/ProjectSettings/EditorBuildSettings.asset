@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/App/Chatting App.unity
     guid: 7131d5863e808a545b336d463ef51bac
+  - enabled: 1
+    path: Assets/Scenes/App/Game Result App.unity
+    guid: 710a4cdaad13f7040ad584b2ff3fe7e7
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 1733243a1b3c9964fa8c02e29867ed75, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 1e73e90dd5618a342a289a080882cc6f, type: 3}

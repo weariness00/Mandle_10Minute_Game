@@ -10,21 +10,23 @@ namespace GamePlay
 {
     public class SceneUtil : Singleton<SceneUtil>
     {
+        private static readonly string RealScene = "Real";
         private static readonly string PhoneScene = "Phone";
         private static readonly string HomeScene = "Home";
         private static readonly string RunningGameScene = "Running Game";
         private static readonly string FlappingGameScene = "Flapping Game";
         private static readonly string BankScene = "BankApp";
         private static readonly string ChattingScene = "Chatting App";
+        private static readonly string GameResultScene = "Game Result App";
 
+        public static void LoadReal(Action<Scene> loadedAction = null) =>Instance.StartCoroutine(Instance.LoadSceneEnumerator(RealScene, loadedAction));
+        
         public static bool TryGetPhoneScene(out Scene scene)
         {
             scene = SceneManager.GetSceneByName(PhoneScene);
             return scene.IsValid() && scene.isLoaded;
         }
         public static void AsyncAddPhone(Action<Scene> loadedAction = null) =>Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(PhoneScene, loadedAction));
-
-
         public static void AsyncAddHome(Action<Scene> loadedAction = null) =>Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(HomeScene, loadedAction));
         public static void AsyncAddBank(Action<Scene> loadedAction = null) => Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(BankScene, loadedAction));
         public static void AsyncAddChatting(Action<Scene> loadedAction = null) => Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(ChattingScene, loadedAction));
@@ -50,6 +52,20 @@ namespace GamePlay
         public static void AddFlappingGame() => SceneManager.LoadScene(FlappingGameScene, LoadSceneMode.Additive);
         public static void AsyncAddFlappingGame(Action<Scene> loadedAction = null) =>Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(FlappingGameScene, loadedAction));
 
+        public static void AsyncAddGameResult(Action<Scene> loadedAction = null) =>Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(GameResultScene, loadedAction));
+        
+        private IEnumerator LoadSceneEnumerator(string sceneName, Action<Scene> loadedAction)
+        {
+            AsyncOperation asyncOperator = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
+            while (!asyncOperator.isDone)
+            {
+                yield return null;
+            }
+            var scene = SceneManager.GetSceneByName(sceneName);
+            UnloadedObject(scene);
+            loadedAction?.Invoke(scene);
+        }
+        
         private IEnumerator LoadSceneAsyncEnumerator(string sceneName, Action<Scene> loadedAction)
         {
             AsyncOperation asyncOperator = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);

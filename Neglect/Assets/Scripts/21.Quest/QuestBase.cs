@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace Quest
@@ -79,7 +80,7 @@ namespace Quest
     {
         public override string ToString()
         {
-            return $"{nameof(eventData.level)} {questName} : {nameof(state)}";
+            return $"[{eventData.level.ToStringEx()}] {questName}";
         }
 
         public int CompareTo(object obj)
@@ -118,5 +119,28 @@ namespace Quest
             return questID.CompareTo(otherID);
         }
     }
+
+#if UNITY_EDITOR
+    
+    [CustomEditor(typeof(QuestBase), true)]
+    public class QuestBaseEditor : Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+
+            var script = target as QuestBase;
+            if (EditorApplication.isPlaying)
+            {
+                if (GUILayout.Button("난이도 쉬움으로 변경"))
+                {
+                    script.eventData.level = QuestLevel.Easy;
+                }
+                    
+            }
+        }
+    }
+    
+#endif
 }
 

@@ -15,23 +15,19 @@ namespace GamePlay
         public MinMaxValue<float> playTimer = new(0, 0, 60 * 10);
         
         [Tooltip("방해 이벤트를 초기화(시작)했는지")] public bool isInitQuest = false;
-
-        [Header("게임 결과 관련")] 
-        public QuestResult questResultPrefab;
         
         public void Awake()
         {
-            if (!SceneUtil.TryGetPhoneScene(out var scene))
+            if (!SceneUtil.TryGetPhoneScene(out var s))
             {
-                void AddApp(Scene s)
+                void AddApp(Scene scene)
                 {
-                    foreach (GameObject rootGameObject in s.GetRootGameObjects())
+                    foreach (GameObject rootGameObject in scene.GetRootGameObjects())
                     {
                         var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
                         if(app != null) PhoneUtil.currentPhone.applicationControl.AddApp(app);
                     }
                 }
-                
                 SceneUtil.AsyncAddPhone(phoneScene =>
                 {
                     SceneUtil.AsyncAddChatting(AddApp);
@@ -44,7 +40,20 @@ namespace GamePlay
             {
                 if (value)
                 {
-                    Instantiate(questResultPrefab);
+                    // 게임 클리어하면 결과씬 로드
+                    SceneUtil.AsyncAddGameResult(scene =>
+                    {
+                        foreach (GameObject rootGameObject in scene.GetRootGameObjects())
+                        {
+                            var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
+                            if (app != null)
+                            {
+                                var phone = PhoneUtil.currentPhone;
+                                phone.applicationControl.AddApp(app);
+                                phone.applicationControl.OpenApp(app);
+                            }
+                        }
+                    });
                 }
             });
         }
