@@ -16,8 +16,12 @@ namespace GamePlay.Phone
         public Vector2Int phoneVerticalViewPortSize = new Vector2Int(600, 960);
         public Vector2Int phoneHorizonViewPortSize => new Vector2Int(phoneVerticalViewPortSize.y, phoneVerticalViewPortSize.x);
 
+        public SpriteRenderer fadeRenderer;
         public GameObject ChargingPort;
         public PhoneSideButton interfaceGroupOnOffButton;
+
+        private Tween fadeTween; // Fade In&Out 관련 Tween
+        
         [Header("App 관련")] 
         public ApplicationControl applicationControl;
         public void Awake()
@@ -97,6 +101,22 @@ namespace GamePlay.Phone
         {
             foreach (var phoneViewPort in phoneViewPortDictionary.Values)
                 phoneViewPort.Release();
+        }
+
+        public void FadeOut(float duration, Color color)
+        {
+            fadeTween?.Kill();
+            
+            fadeRenderer.color = color;
+            fadeTween = fadeRenderer.DOFade(1f, duration);
+        }
+        
+        public void FadeIn(float duration, Color color)
+        {
+            fadeTween?.Kill();
+            
+            fadeRenderer.color = color;
+            fadeTween = fadeRenderer.DOFade(0f, duration);
         }
     }
 
