@@ -40,6 +40,7 @@ namespace GamePlay.Phone
         public void AppResume(PhoneControl phone)
         {
             chatting.gameObject.SetActive(true);
+            chatting.CallStart();
         }
 
         public void AppPause(PhoneControl phone)

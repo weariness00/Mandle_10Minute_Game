@@ -14,6 +14,7 @@ public partial class ApplicationControl : MonoBehaviour
     public IPhoneApplication currentPlayApplication;
 
     private Dictionary<string, IPhoneApplication> applicationDictionary = new(); // 앱 이름, 앱
+    private Dictionary<string, IPhoneApplication> openAppDictionary = new();
 
     public void Start()
     {
@@ -25,15 +26,23 @@ public partial class ApplicationControl : MonoBehaviour
     {
         OnAddAppEvent?.Invoke(app);
         app.AppInstall(phone);
+        applicationDictionary.TryAdd(app.AppName, app);
     }
 
     // 어플리케이션 실행
+    public void OpenApp(string appName)
+    {
+        var app = GetApp(appName);
+        if (app == null) return;
+        OpenApp(app);
+    }
     public void OpenApp(IPhoneApplication app)
     {
+        if (currentPlayApplication == app) return;
         if (currentPlayApplication != null) currentPlayApplication.AppPause(phone);
 
         // 앱을 켰을시 처음 킨거면 dict에 추가한 후 add 이벤트 실행
-        if (applicationDictionary.TryAdd(app.AppName, app))
+        if (openAppDictionary.TryAdd(app.AppName, app))
         {
             app.AppPlay(phone);
             OnAppEvent?.Invoke(app);
@@ -65,8 +74,8 @@ public partial class ApplicationControl : MonoBehaviour
     // 홈 화면으로 이동
     public void OnHome()
     {
-        if(currentPlayApplication is { AppName: "Home" }) return;
-        if (applicationDictionary.TryGetValue("Home", out var app)) OpenApp(app);
+        if (currentPlayApplication is { AppName: "Home" }) return;
+        if (openAppDictionary.TryGetValue("Home", out var app)) OpenApp(app);
     }
 
     // 어플리케이션이 실행된 것들 확인하는 메뉴로 이동

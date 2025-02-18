@@ -1,7 +1,5 @@
 using DG.Tweening;
-using GamePlay.Phone;
 using MoreMountains.Feedbacks;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TMPro;
@@ -9,12 +7,19 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using GamePlay.Event;
-using Manager;
+using UnityEditor;
+using UnityEngine.Serialization;
+using Util;
 
 namespace GamePlay.Phone
 {
     public partial class BankApp : MonoBehaviour
     {
+        public bool isClearPassword; // 패스워드 통과 했는지
+        [FormerlySerializedAs("Password")] public PasswordToLine password;
+
+        public BankMemo BankMemo;
+        
         public int RandomAmount;
         public string RandomAccount;
         public List<int> RandomPassword;
@@ -27,7 +32,6 @@ namespace GamePlay.Phone
         public MMF_Player pre_sign;  // 계좌가 없을때 뜨는 싸인
         public RectTransform KeyPad;
 
-        public TextMeshProUGUI OwnerText;
         [Header("마지막 확인 텍스트")]
         public TextMeshProUGUI CheckText;
         public TextMeshProUGUI CheckAmountText;
@@ -44,43 +48,39 @@ namespace GamePlay.Phone
 
         private bool IsKeyPad = false;
         private int CurrentView = -1; //현재 화면
-
+        
+        [Header("결과 정보")]
+        public Button resultOkButton;
+        public TMP_Text resultText;
+        
         [Header("은행 화면 정보")]
-        public GameObject BankAccount;
-        public GameObject BankAmount;
-        public GameObject BankFinish;
+        public RectTransform bankAccountRectTransform;
+        public RectTransform bankAmountRectTransform;
+        public RectTransform bankFinishRectTransform;
+        public RectTransform bankResultRectTransform;
 
-        public Action ClearAction;
-        public Action IgnoreAction;
-        public Action HideComplete;
-        public bool IsSkip() // 비정상적인 패스워드 입력 체크
+
+        public Action completeAction;
+        public Action ignoreAction;
+
+        public void Awake()
         {
-            int BackIndex = RandomPassword.Count - 1;
-            int A = RandomPassword[BackIndex]-1;
-            int B = RandomPassword[BackIndex - 1]-1;
-            int[,] C = new int[,] { { 0, 2 }, { 3, 5 }, { 6, 8 }, { 0, 8 }, { 2, 6 }, { 0, 6 }, { 1, 7 }, { 2, 8 } };
-            for (int i = 0; i < 8; i++)
-            {
-                if (A == C[i, 0] && B == C[i, 1] || B == C[i, 0] && A == C[i, 1])
-                    return true;
-            }
-            return false;
+            password.ClearAction += PasswordClear;
         }
-        public void lotto()
+
+        // 패스워드 초기화
+        public void InitPassword()
         {
-            List<int> RandomNum = new List<int> { 1, 2 ,3,4,5,6,7,8,9};
+            UniqueRandom intRandom = new(1, 9);
+            RandomPassword.Clear();
             for (int i = 0; i < 4; i++)
-            {
-                int pre = UnityEngine.Random.Range(0, RandomNum.Count);
-                RandomPassword.Add(RandomNum[pre]);
-                if (RandomPassword.Count>=2&&IsSkip())
-                {
-                    RandomPassword.RemoveAt(RandomPassword.Count-1);
-                    i -= 1;
-                    continue;
-                }
-                RandomNum.RemoveAt(pre);
-            }
+                RandomPassword.Add(intRandom.RandomInt());
+            password.SettingEvent(RandomPassword);
+        }
+        
+        // 송금할 돈 초기화
+        public void InitTransferMoney()
+        {
             for (int i = 0; i < 8; i++)
             {
                 if (i == 0)
@@ -99,14 +99,24 @@ namespace GamePlay.Phone
             }
             AnswerAccount = RandomAccount;
             AnswerAmount = RandomAmount;
-        }
-        public void Init()
-        {
-            ChangeView(0);
-            CheckText.text = "";
-            CheckAmountText.text = "";
+            
+            BankMemo.TextSetting("To Owner", RandomAccount, RandomAmount);
         }
 
+        public bool IsSkip() // 비정상적인 패스워드 입력 체크
+        {
+            int BackIndex = RandomPassword.Count - 1;
+            int A = RandomPassword[BackIndex]-1;
+            int B = RandomPassword[BackIndex - 1]-1;
+            int[,] C = new int[,] { { 0, 2 }, { 3, 5 }, { 6, 8 }, { 0, 8 }, { 2, 6 }, { 0, 6 }, { 1, 7 }, { 2, 8 } };
+            for (int i = 0; i < 8; i++)
+            {
+                if (A == C[i, 0] && B == C[i, 1] || B == C[i, 0] && A == C[i, 1])
+                    return true;
+            }
+            return false;
+        }
+        
         public void SettingData(string Name, string Account, int Amount)
         {
             AnswerAccount = Account;
@@ -116,7 +126,6 @@ namespace GamePlay.Phone
 
         public void SetAccount() //입력 정보 확인 
         {
-
             CheckText.text = AddBar(AnswerAccount) + "\n" + PassbookOwner + "님에게\n";
 
             string pre1 = InputAmount.ToString();
@@ -126,7 +135,7 @@ namespace GamePlay.Phone
         {
             if (AnswerAccount == InputAccount)
             {
-                ChangeView(1);
+                ChangeView(2);
             }
             else
             {
@@ -156,7 +165,7 @@ namespace GamePlay.Phone
         }
         public void PasswordClear()
         {
-            ChangeView(0);
+            ChangeView(1);
         }
         public void KeyPadMove(bool p)
         {
@@ -165,7 +174,7 @@ namespace GamePlay.Phone
                 for (int i = 0; i < KeyPad_objects.Count; i++)
                     KeyPad_Image.Add(KeyPad_objects[i].GetComponent<Image>());
             }
-            if (CurrentView == 2)
+            if (CurrentView == 3)
                 return;
             if (p == true && !IsKeyPad)
             {
@@ -223,57 +232,37 @@ namespace GamePlay.Phone
             int Amountdifference = 0;
             Amountdifference = AnswerAmount - InputAmount;
             Debug.Log(Amountdifference + "만큼 금액 차이 발생"); //  이 금액이 후속이벤트 
+
+            ChangeView(4);
             if (Amountdifference == 0)
             {
-                ClearAction();
-                Destroy(gameObject); //사라지는 애니메이션 일단은 삭제
+                resultText.text = $"{PassbookOwner}님에게\n{InputAmount}을 송금했습니다.";
+                completeAction?.Invoke();
             }
             else
             {
-                IgnoreAction();
-                Destroy(gameObject); //사라지는 애니메이션 일단은 삭제
+                ignoreAction?.Invoke();
             }
 
         }
         public void ChangeView(int index) // 임시 화면 전환
         {
-            if (index == -1 && CurrentView == 0)
+            void Move(int startIndex)
             {
+                password.transform.DOLocalMoveX(600 * startIndex++, 1f);
+                bankAccountRectTransform.DOLocalMoveX(600 * startIndex++, 1f);
+                bankAmountRectTransform.DOLocalMoveX(600 * startIndex++, 1f);
+                bankFinishRectTransform.DOLocalMoveX(600 * startIndex++, 1f);
+                bankResultRectTransform.DOLocalMoveX(600 * startIndex++, 1f);
+            }
 
-                Password.transform.DOLocalMoveX(0, 1f);
-                BankAccount.transform.DOLocalMoveX(600, 1f);
-                BankAmount.transform.DOLocalMoveX(1200, 1f);
-                BankFinish.transform.DOLocalMoveX(1800, 1f);
-            }
-            if (index == 0 && (CurrentView == 1 || CurrentView == -1) )
-            {
-                Password.transform.DOLocalMoveX(-600, 1f);
-                BankAccount.transform.DOLocalMoveX(0, 1f);
-                BankAmount.transform.DOLocalMoveX(600, 1f);
-                BankFinish.transform.DOLocalMoveX(1200, 1f);
-            }
-            if (index == 1)
-            {
-                Password.transform.DOLocalMoveX(-1200, 1f);
-                BankAccount.transform.DOLocalMoveX(-600, 1f);
-                BankAmount.transform.DOLocalMoveX(0, 1f);
-                BankFinish.transform.DOLocalMoveX(600, 1f);
-            }
-            if (index == 2 && CurrentView == 1)
+            Move(-index);
+            if (index == 3)
             {
                 SetAccount();
-                Password.transform.DOLocalMoveX(-1800, 1f);
-                BankAccount.transform.DOLocalMoveX(-1200, 1f);
-                BankAmount.transform.DOLocalMoveX(-600, 1f);
-                BankFinish.transform.DOLocalMoveX(0, 1f);
                 KeyPadMove(false);
             }
             CurrentView = index;
-        }
-
-        public void HideAnimation()
-        {
-
         }
 
         public void SetText()
@@ -285,11 +274,10 @@ namespace GamePlay.Phone
         }
         public void InputClickButton(int num)
         {
-            if (CurrentView == 0) //계좌 입력
+            if (CurrentView == 1) //계좌 입력
             {
                 if (num >= 0 && num <= 9)
                 {
-
                     if (InputAccount.Length > 9)
                         return;
                     InputAccount += num.ToString();
@@ -303,11 +291,10 @@ namespace GamePlay.Phone
                 }
                 if (num == 11)
                 {
-
                     KeyPadMove(false);
                 }
             }
-            else if (CurrentView == 1) //숫자 입력
+            else if (CurrentView == 2) //숫자 입력
             {
                 if (num >= 0 && num <= 9)
                 {
@@ -328,7 +315,7 @@ namespace GamePlay.Phone
             SetText();
         }
     }
-        public partial class BankApp : IPhoneApplication
+    public partial class BankApp : IPhoneApplication
     {
         public Canvas mainCanvas;
 
@@ -341,34 +328,20 @@ namespace GamePlay.Phone
         public Sprite AppIcon { get => icon; set => icon = value; }
         public Vector2Int VerticalResolution { get => verticalResolution; set => verticalResolution = value; }
         public PhoneControl Phone => _phone;
-
-        public bool isClearPassword; // 패스워드 통과 했는지
-        public PasswordToLine Password;
-
-        public BankReadMemo BankMemo;
-        
         public void AppInstall(PhoneControl phone)
         {
             _phone = phone;
             mainCanvas.worldCamera = phone.phoneCamera;
-            Password.phone = phone;
-            Password.ClearAction += PasswordClear;
-            lotto(); // 패스워드 계좌번호 금액 랜덤 결정
-
-
-            OwnerText.text = PassbookOwner +"님에게";
-            Password.SettingEvent("", RandomPassword);
+            password.phone = phone;
             
-            if(BankMemo == null)
-            {
-                BankMemo = Instantiate(BankMemo , new Vector3(5.5f,0,0), Quaternion.identity);
-            }
-            BankMemo.TextSetting("To Owner", RandomAccount, RandomAmount, RandomPassword);
-
             BankMemo.gameObject.layer = 0;
-            
             BankMemo.gameObject.SetActive(false);
             mainCanvas.gameObject.SetActive(false);
+            
+            resultOkButton.onClick.AddListener(() =>
+            {
+                _phone.applicationControl.OnHome();
+            });
         }
 
         public void AppPause(PhoneControl phone)
@@ -379,7 +352,7 @@ namespace GamePlay.Phone
         public void AppPlay(PhoneControl phone)
         {
             mainCanvas.gameObject.SetActive(true);
-            Password.phone = phone;
+            password.phone = phone;
             
             BankMemo.ShowAnimation();
         }
@@ -402,4 +375,29 @@ namespace GamePlay.Phone
 
         }
     }
+
+#if UNITY_EDITOR
+    [CustomEditor(typeof(BankApp))]
+    public class BankAppEditor : Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+
+            var script = target as BankApp;
+            
+            if(!EditorApplication.isPlaying) return;
+            if (GUILayout.Button("패스워드 초기화"))
+            {
+                script.InitPassword();
+            }
+
+            if (GUILayout.Button("송금 초기화"))
+            {
+                script.InitTransferMoney();
+                script.BankMemo.ShowAnimation();
+            }
+        }
+    }
+#endif
 }

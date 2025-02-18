@@ -1,11 +1,8 @@
 ﻿using GamePlay.PopUp;
-using Manager;
-using System;
-using UnityEngine.Serialization;
 
 namespace Quest.Container
 {
-    public class Quest_PopUp : QuestBase
+    public class Quest_ChattingPopUp : QuestBase
     {
         public PopUpPad popUpPrefab;
 
@@ -17,11 +14,19 @@ namespace Quest.Container
         {
             base.Play();
             var popUp = PhoneUtil.InstantiateUI(popUpPrefab);
-            popUp.completeButton.onClick.AddListener(Complete);
+            popUp.button.onClick.AddListener(Complete);
             popUp.destroyPopUpEvent.AddListener(Ignore);
 
             if(eventData.textArray.Length >= 1) popUp.titleText.text = eventData.textArray[0];
             if(eventData.textArray.Length >= 2) popUp.explainText.text = eventData.textArray[1];
+        }
+
+        public override void Complete()
+        {
+            base.Complete();
+
+            var phone = PhoneUtil.currentPhone;
+            phone.applicationControl.OpenApp("Chatting");
         }
     }
 }

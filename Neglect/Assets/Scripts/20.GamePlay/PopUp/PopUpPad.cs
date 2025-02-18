@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace GamePlay.PopUp
@@ -15,7 +16,7 @@ namespace GamePlay.PopUp
         [Tooltip("팝업이 제거될때 동작 하는 이벤트")] public UnityEvent destroyPopUpEvent;
 
         [Header("UI Object")] 
-        public Button completeButton;
+        public Button button;
         public TMP_Text titleText;
         public TMP_Text explainText;
 
@@ -33,6 +34,8 @@ namespace GamePlay.PopUp
         public void Start()
         {
             rectTransform.anchoredPosition = Vector2.zero;
+            
+            button.onClick.AddListener(() => Destroy(gameObject));
         }
 
         public void OnEnable()

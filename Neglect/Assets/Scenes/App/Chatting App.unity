@@ -507,7 +507,7 @@ MonoBehaviour:
   OtherMessages: {fileID: 7209999105792282856, guid: 174cfc792fc3eeb40acf516bffa1b80e, type: 3}
   MyMessages: {fileID: 6138435353992378510, guid: 20b8b681c2a97fe4c991c3c3801a03d0, type: 3}
   answerGroupTransform: {fileID: 5128492189096956107}
-  answerBlockPrefab: {fileID: 1628233307623576441, guid: 5d8ac822793c68c48a7c2f5d076c4b80, type: 3}
+  answerBlockPrefab: {fileID: 6326898798381916204, guid: 37298cdbcc4984b47ae473fd87014dd3, type: 3}
   ChatGage: 0
   GageBar: {fileID: 2642295413597058045}
   talkData:
@@ -987,7 +987,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8211205160784953239}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.875
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1818,7 +1818,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000011444092}
+  m_AnchoredPosition: {x: 0, y: 0.0000076293945}
   m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &9084035802636192334

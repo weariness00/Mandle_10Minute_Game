@@ -1,5 +1,7 @@
 ﻿using DG.Tweening;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,7 +20,10 @@ namespace GamePlay.Phone
         public RectTransform interfaceRectTransform;
         public Button homeButton;
         public Button backButton;
+        public List<Action> onClickBackList = new();
 
+        private bool isOnInterface = true;
+        private Tween tween;
         private Vector2 interfaceOriginAnchorsPosition;
 
         public void Awake()
@@ -28,18 +33,22 @@ namespace GamePlay.Phone
 
         public void InterfaceOnOff()
         {
-            if (!interfaceRectTransform.gameObject.activeSelf)
+            if (!isOnInterface)
             {
                 interfaceRectTransform.gameObject.SetActive(true);
-                interfaceRectTransform.DOAnchorPosY(interfaceOriginAnchorsPosition.y, 0.7f).SetEase(Ease.Flash);
+                tween.Kill();
+                tween = interfaceRectTransform.DOAnchorPosY(interfaceOriginAnchorsPosition.y, 0.7f).SetEase(Ease.Flash);
             }
             else
             {
-                interfaceRectTransform.DOAnchorPosY(-interfaceRectTransform.sizeDelta.y, 0.7f).SetEase(Ease.Flash).OnComplete(() =>
+                tween.Kill();
+                tween = interfaceRectTransform.DOAnchorPosY(-interfaceRectTransform.sizeDelta.y, 0.7f).SetEase(Ease.Flash).OnComplete(() =>
                 {
                     interfaceRectTransform.gameObject.SetActive(false);
                 });
             }
+
+            isOnInterface = !isOnInterface;
         }
     }
 
@@ -75,7 +84,13 @@ namespace GamePlay.Phone
             
             backButton.onClick.AddListener(() =>
             {
-                _phone.applicationControl.CloseApp();
+                if(onClickBackList.Count == 0)
+                    _phone.applicationControl.CloseApp();
+                else
+                {
+                    onClickBackList.Last().Invoke();
+                    onClickBackList.RemoveAt(onClickBackList.Count - 1);
+                }
             });
         }
 
@@ -98,6 +113,7 @@ namespace GamePlay.Phone
 
         public void AppResume(PhoneControl phone)
         {
+            tween.Kill();
             mainCanvas.gameObject.SetActive(true);
             phone.PhoneViewRotate(PhoneViewType.Vertical);
             
@@ -107,6 +123,7 @@ namespace GamePlay.Phone
 
         public void AppPause(PhoneControl phone)
         {
+            tween?.Kill();
             Observable.Timer(TimeSpan.FromSeconds(0.3f)).Subscribe(_ =>
             {
                 mainCanvas.gameObject.SetActive(false);
