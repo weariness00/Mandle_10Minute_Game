@@ -1,4 +1,5 @@
 using GamePlay.Chatting;
+using GamePlay.Talk;
 using UnityEngine;
 
 namespace Quest.Container
@@ -14,6 +15,7 @@ namespace Quest.Container
         {
             base.Play();
             chatconversation = FindObjectOfType<ChatConversation>(true);
+            chatconversation.talkData = TalkingScriptableObject.Instance.GetTalkData(eventData.extraDataIDArray[0]);
             chatconversation.completeEvent.AddListener(Complete);
             chatconversation.ignoreEvent.AddListener(Ignore);
         }

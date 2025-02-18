@@ -100,7 +100,7 @@ namespace Quest
             }
             
             Array.Sort(eventDataArray, (a,b) => a.id.CompareTo(b.id));
-
+            
             foreach (var csv in eventCSV)
             {
                 var id = csv.DynamicCast<int>("EventID");
@@ -108,20 +108,15 @@ namespace Quest
                 var data = GetEventID(id);
                 data.level = (QuestLevel)csv.DynamicCast<int>("Level", -1);
                 data.prefab = GetQuestID(csv.DynamicCast<int>("PrefabID", -1));
-                data.textArray = questTextArray.Where(d => textList.FirstOrDefault(ti => ti == d.id) != 0).Select(d => d.text).ToArray();
 
                 data.acceptEvent = GetEventID(csv.DynamicCast<int>("AcceptEventID", -1));
                 data.ignoreEvent = GetEventID(csv.DynamicCast<int>("IgnoreEventID", -1));
                 
+                data.textArray = questTextArray.Where(d => textList.FirstOrDefault(ti => ti == d.id) != 0).Select(d => d.text).ToArray();
+    
+                data.extraDataIDArray = csv.DynamicCast("ExtraDataID", Array.Empty<int>());
+                
                 Debug.Assert(data.prefab != null, "Event Data에 프리펩이 존재하지 않습니다.");
-            }
-
-            //후속 이벤트들 할당
-            for (var i = 0; i < eventCSV.Count; i++)
-            {
-                var csv = eventCSV[i];
-                eventDataArray[i].acceptEvent = GetEventID(csv.DynamicCast<int>("AcceptEventID", -1));
-                eventDataArray[i].ignoreEvent = GetEventID(csv.DynamicCast<int>("IgnoreEventID", -1));
             }
         }
 

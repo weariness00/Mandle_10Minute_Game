@@ -13,6 +13,7 @@ namespace Quest
         public EventData acceptEvent;
         public EventData ignoreEvent;
         public string[] textArray;
+        public int[] extraDataIDArray;
     }
 
     public partial class EventData : IComparable
