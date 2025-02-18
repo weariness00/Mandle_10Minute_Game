@@ -59,7 +59,7 @@ MonoBehaviour:
     textArray: []
   - id: 1106
     level: -1
-    prefab: {fileID: 0}
+    prefab: {fileID: 6855458635590791947, guid: ce6b8270f35c7d548b5167f0c1f4d4b9, type: 3}
     textArray: []
   questArray:
   - {fileID: 7104001957306441222, guid: 28b853421a1930741bddba56a7064227, type: 3}
