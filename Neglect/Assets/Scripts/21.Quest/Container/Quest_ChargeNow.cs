@@ -32,7 +32,7 @@ public class Quest_ChargeNow : QuestBase
         Charger.phone = phone;
         Charger.gameObject.SetActive(true);
 
-        ChargerPopup.SettingBetteryText("15");
+        ChargerPopup.SettingBetteryText(15);
         phone.PhoneViewRotate(1);
         Charger.ClearAction += Complete;
         ChargerPopup.IgnoreAction += Ignore;
@@ -45,7 +45,7 @@ public class Quest_ChargeNow : QuestBase
 
     public override void Complete()
     {
-        DeleteObject();
+        ChargingStart();
         base.Complete();
     }
 
@@ -58,5 +58,10 @@ public class Quest_ChargeNow : QuestBase
     {
         Charger.HideAnimation();
         ChargerPopup.HideAnimation();
+    }
+    public void ChargingStart()
+    {
+        ChargerPopup.ChargingStart();
+        Charger.HideAnimation();
     }
 }

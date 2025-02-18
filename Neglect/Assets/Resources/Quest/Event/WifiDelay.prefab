@@ -513,7 +513,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3174777167523410683
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1051,9 +1051,9 @@ MonoBehaviour:
         AnimateRotationTarget: {fileID: 410782732640152434}
         Mode: 0
         RotationSpace: 1
-        AnimateRotationDuration: 3
+        AnimateRotationDuration: 2
         RemapCurveZero: 0
-        RemapCurveOne: -720
+        RemapCurveOne: -540
         AnimateX: 0
         AnimateRotationTweenX:
           MMTweenDefinitionType: 1
@@ -1627,7 +1627,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &255857132739795281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1659,6 +1659,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ReConnectPopup: {fileID: 3691900039189727428}
   Roading: {fileID: 6562726017555977111}
+  RoadingMMF: {fileID: 8840468427473840325}
+  ShowButtonMMF: {fileID: 8967782606292844888}
+  HideObjectMMF: {fileID: 6267512682047166755}
+  chance: 3
 --- !u!1 &8543562111464325598
 GameObject:
   m_ObjectHideFlags: 0
@@ -1890,7 +1894,7 @@ MonoBehaviour:
         DebugActive: 0
         Mode: 0
         AnimateScaleTarget: {fileID: 3174777167523410683}
-        AnimateScaleDuration: 0.5
+        AnimateScaleDuration: 0.3
         RemapCurveZero: 1
         RemapCurveOne: 0.5
         Offset: 0

@@ -291,7 +291,7 @@ MonoBehaviour:
   phoneControl: {fileID: 0}
   miniGameName: x
   isMiniGameAddToApp: 0
-  eventID: 1106
+  eventID: 1107
 --- !u!4 &607314949
 Transform:
   m_ObjectHideFlags: 0

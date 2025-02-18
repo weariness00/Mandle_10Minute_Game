@@ -53,4 +53,5 @@ MonoBehaviour:
     level: 0
     prefab: {fileID: 0}
     textArray: []
+    extraDataIDArray: 
   WifiDelayPrefab: {fileID: 5276671521350451718, guid: 76b7afe17ac51f0489a156ee56c6ef40, type: 3}
