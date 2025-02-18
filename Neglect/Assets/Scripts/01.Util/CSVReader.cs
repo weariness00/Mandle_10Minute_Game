@@ -17,6 +17,29 @@ namespace Util
         {
             if (objectValue is T value)
                 return value;
+            if (typeof(T).IsArray)
+            {
+                var type = typeof(T).GetElementType();
+                var array = Array.CreateInstance(typeof(T).GetElementType(), 1);
+                if (objectValue.GetType() == typeof(T).GetElementType())
+                    array.SetValue(objectValue, 0);
+                else
+                    array = Array.CreateInstance(type, 0);
+                if (array is T value2)
+                    return value2;
+            }
+
+            // T가 List일 때
+            if (typeof(T).IsGenericType && typeof(T).GetGenericTypeDefinition() == typeof(List<>))
+            {
+                var list = (System.Collections.IList)Activator.CreateInstance(typeof(T));
+                if (objectValue.GetType() == typeof(T).GetElementType())
+                {
+                    list.Add(objectValue); // 단일 값을 리스트에 추가
+                }
+
+                return (T)list; // List<T>를 T로 변환
+            }
             return defaultValue;
         }
         public static T DynamicCast<T>(this Dictionary<string, object> dictionary, string key) => dictionary.DynamicCast<T>(key, default);
@@ -26,6 +49,29 @@ namespace Util
             {
                 if (objectValue is T value)
                     return value;
+                if (typeof(T).IsArray)
+                {
+                    var type = typeof(T).GetElementType();
+                    var array = Array.CreateInstance(typeof(T).GetElementType(), 1);
+                    if (objectValue.GetType() == typeof(T).GetElementType())
+                        array.SetValue(objectValue, 0);
+                    else
+                        array = Array.CreateInstance(type, 0);
+                    if (array is T value2)
+                        return value2;
+                }
+
+                // T가 List일 때
+                if (typeof(T).IsGenericType && typeof(T).GetGenericTypeDefinition() == typeof(List<>))
+                {
+                    var list = (System.Collections.IList)Activator.CreateInstance(typeof(T));
+                    if (objectValue.GetType() == typeof(T).GetElementType())
+                    {
+                        list.Add(objectValue); // 단일 값을 리스트에 추가
+                    }
+
+                    return (T)list; // List<T>를 T로 변환
+                }
             }
             return defaultValue;
         }

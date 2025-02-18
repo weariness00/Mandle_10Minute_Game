@@ -19,6 +19,8 @@ namespace Quest.Container
 
             if(eventData.textArray.Length >= 1) popUp.titleText.text = eventData.textArray[0];
             if(eventData.textArray.Length >= 2) popUp.explainText.text = eventData.textArray[1];
+            
+            PhoneUtil.currentPhone.PhoneVibration();
         }
 
         public override void Complete()

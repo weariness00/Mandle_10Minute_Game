@@ -64,7 +64,7 @@ namespace GamePlay.Phone
 
         public void Awake()
         {
-            password.ClearAction += PasswordClear;
+            password.completeAction += PasswordClear;
         }
 
         // 패스워드 초기화
