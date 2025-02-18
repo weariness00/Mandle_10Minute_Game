@@ -211,6 +211,14 @@ namespace GamePlay.MiniGame.RunningGame
             runningGameCanvasRoot.gameObject.SetActive(false);
             InputManager.running.input.Disable();
         }
+
+        public override void AppExit(PhoneControl phone)
+        {
+            base.AppExit(phone);
+            runningGameObjectRoot.SetActive(false);
+            runningGameCanvasRoot.gameObject.SetActive(false);
+            InputManager.running.input.Disable();
+        }
     }
 }
 

@@ -59,7 +59,6 @@ namespace GamePlay.Phone
         public RectTransform bankFinishRectTransform;
         public RectTransform bankResultRectTransform;
 
-
         public Action completeAction;
         public Action ignoreAction;
 
