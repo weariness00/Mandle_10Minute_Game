@@ -36,6 +36,9 @@ namespace GamePlay.Event
         public List<Image> SelectImages;
         public List<TextMeshProUGUI> SelectTexts;
 
+
+        public RectTransform OtherTextBoxRect;
+        public RectTransform MyTextBoxRect;
         [Space]
         [Header("게이지")]
         public float ChatGage;
