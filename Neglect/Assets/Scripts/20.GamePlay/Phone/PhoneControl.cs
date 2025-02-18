@@ -102,7 +102,11 @@ namespace GamePlay.Phone
             foreach (var phoneViewPort in phoneViewPortDictionary.Values)
                 phoneViewPort.Release();
         }
-
+    }
+    
+    // 기타 효과
+    public partial class PhoneControl
+    {
         public void FadeOut(float duration, Color color)
         {
             fadeTween?.Kill();
@@ -118,7 +122,14 @@ namespace GamePlay.Phone
             fadeRenderer.color = color;
             fadeTween = fadeRenderer.DOFade(0f, duration);
         }
+        
+        // 핸드폰 진동
+        public void PhoneVibration(float duration = 0.1f)
+        {
+            transform.DOShakePosition(duration, 0.1f, 50, 90f);
+        }
     }
+        
 
     // 렌더 텍스쳐
     public partial class PhoneControl

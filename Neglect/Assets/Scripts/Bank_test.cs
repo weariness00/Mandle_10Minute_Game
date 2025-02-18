@@ -1,9 +1,6 @@
 using GamePlay;
 using GamePlay.Phone;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.SearchService;
 using UnityEngine;
 
 public class Bank_test : MonoBehaviour

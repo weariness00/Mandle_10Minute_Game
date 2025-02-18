@@ -11,7 +11,7 @@ namespace GamePlay.Event
     public class PasswordToLine : MonoBehaviour
     {
         public PhoneControl phone;
-        public Action ClearAction;
+        public Action completeAction;
         public RectTransform canvasRect;
         [Header("정답 패스워드")]
         public List<int> answerPassword;
@@ -26,7 +26,6 @@ namespace GamePlay.Event
         public List<int> inputPassword = new List<int>(); //현재 입력받은 패스워드
 
         [Tooltip("드래그 탐지 범위")]
-        public double DetectedRange = 0.3f; // 점과 마우스사이 탐지 범위
         private bool IsCrack = false; // 패스워드 푸는 중인지 
         private int CurrentView = 0; //현재 화면
 
@@ -193,8 +192,12 @@ namespace GamePlay.Event
                 IsCrack = false;
                 if (PasswordCheck())
                 {
-                    ClearAction?.Invoke();  //클리어
+                    completeAction?.Invoke();  //클리어
                     //Destroy(gameObject);
+                }
+                else
+                {
+                    if(phone) phone.PhoneVibration();
                 }
                 inputPassword.Clear();
                 LineClear();

@@ -45,6 +45,9 @@ TagManager:
   - 
   - Unloaded Scene
   m_SortingLayers:
+  - name: Background
+    uniqueID: 3144442867
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
