@@ -23,7 +23,7 @@ namespace Quest
                 {
                     questSpawnTimer.Current -= questSpawnTimer.Max;
                     isQuestStart = false;
-                    var quest = QuestDataList.Instance.InstantiateRandomQuest();
+                    var quest = QuestDataList.Instance.InstantiateRandomEvent();
                     quest.Play();
                 }
             }

@@ -16,11 +16,10 @@ namespace Util
         
         private List<int> _uniqueIntList;
 
-        public bool IsEmpty => _uniqueFloatList.Count == 0;
-
+        public bool IsEmptyInt => _uniqueIntList.Count == 0;
         public int RandomInt()
         {
-            Debug.Assert(_uniqueIntList == null || _uniqueIntList.Count == 0, "UniqueRandom의 Array를 초기화 하기 위해 먼저 Initialize 메서드를 호출해주세요");
+            Debug.Assert(_uniqueIntList != null && _uniqueIntList.Count != 0, "UniqueRandom의 Array를 초기화 하기 위해 먼저 Initialize 메서드를 호출해주세요");
             var index = Random.Range(0, _uniqueIntList.Count);
             var value = _uniqueIntList[index];
             _uniqueIntList.RemoveAt(index);
@@ -35,7 +34,7 @@ namespace Util
         public void Initialize(int min, int max)
         {
             _uniqueIntList = new List<int>();
-            for (int i = 0; i < max; i++)
+            for (int i = min; i <= max; i++)
             {
                 _uniqueIntList.Add(i);
             }
@@ -49,6 +48,8 @@ namespace Util
             Initialize(min, max, length, precision);
         }
         
+        public bool IsEmpty => _uniqueFloatList.Count == 0;
+
         private List<float> _uniqueFloatList;
 
         public float RandomFloat()

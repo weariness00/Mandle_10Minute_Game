@@ -19,7 +19,7 @@ namespace Quest
 
         public virtual void Play()
         {
-            if (state != QuestState.Completed)
+            if (state != QuestState.InProgress && state != QuestState.Completed)
             {
                 subscription?.Dispose();
                 subscription = QuestManager.Instance.Add(this);
@@ -33,10 +33,11 @@ namespace Quest
             subscription?.Dispose();
             state = QuestState.Failed;
 
-            if (eventData.acceptEvent != null)
+            if (eventData.ignoreEvent != null)
             {
-                var quest = QuestDataList.Instance.InstantiateQuest(eventData.acceptEvent.id);
-                quest.eventData = eventData.acceptEvent;
+                var quest = QuestDataList.Instance.InstantiateEvent(eventData.ignoreEvent.id);
+                quest.eventData = eventData.ignoreEvent;
+                quest.Play();
             }
             else
             {
@@ -55,10 +56,11 @@ namespace Quest
             subscription?.Dispose();
             state = QuestState.Completed;
 
-            if (eventData.ignoreEvent != null)
+            if (eventData.acceptEvent != null)
             {
-                var quest = QuestDataList.Instance.InstantiateQuest(eventData.ignoreEvent.id);
-                quest.eventData = eventData.ignoreEvent;
+                var quest = QuestDataList.Instance.InstantiateEvent(eventData.acceptEvent.id);
+                quest.eventData = eventData.acceptEvent;
+                quest.Play();
             }
             else
             {
@@ -77,7 +79,7 @@ namespace Quest
     {
         public override string ToString()
         {
-            return $"{questName} : {nameof(state)}";
+            return $"{nameof(eventData.level)} {questName} : {nameof(state)}";
         }
 
         public int CompareTo(object obj)

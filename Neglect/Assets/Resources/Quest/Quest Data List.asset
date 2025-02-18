@@ -13,49 +13,62 @@ MonoBehaviour:
   m_Name: Quest Data List
   m_EditorClassIdentifier: 
   eventDataArray:
-  - id: 0
+  - id: -1
+    level: 0
+    prefab: {fileID: 0}
+    textArray: []
+  - id: 1001
     level: -1
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
     textArray: []
-  - id: 0
+  - id: 1002
     level: -1
-    prefab: {fileID: 3832750028274978365, guid: 7ce462c22b7b9e14191b4516404d584d, type: 3}
+    prefab: {fileID: -3771452767832773912, guid: 7ce462c22b7b9e14191b4516404d584d, type: 3}
     textArray: []
-  - id: 0
+  - id: 1003
     level: -1
     prefab: {fileID: 6792380495647651490, guid: f3c1eec8e61df8547939c86f4313a64a, type: 3}
     textArray: []
-  - id: 0
+  - id: 1004
     level: -1
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
     textArray: []
-  - id: 0
+  - id: 1005
     level: -1
-    prefab: {fileID: 3832750028274978365, guid: 7ce462c22b7b9e14191b4516404d584d, type: 3}
+    prefab: {fileID: -3771452767832773912, guid: 7ce462c22b7b9e14191b4516404d584d, type: 3}
     textArray: []
-  - id: 0
+  - id: 1101
     level: -1
-    prefab: {fileID: 0}
+    prefab: {fileID: -3771452767832773912, guid: 7ce462c22b7b9e14191b4516404d584d, type: 3}
     textArray: []
-  - id: 0
+  - id: 1102
     level: -1
-    prefab: {fileID: 0}
+    prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
     textArray: []
-  - id: 0
+  - id: 1103
     level: -1
-    prefab: {fileID: 0}
+    prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
     textArray: []
-  - id: 0
+  - id: 1104
     level: -1
-    prefab: {fileID: 0}
+    prefab: {fileID: 6792380495647651490, guid: f3c1eec8e61df8547939c86f4313a64a, type: 3}
+    textArray: []
+  - id: 1105
+    level: -1
+    prefab: {fileID: 2903363758632237792, guid: 04eca5ed438e8514c9b8cebefee60e75, type: 3}
+    textArray: []
+  - id: 1106
+    level: -1
+    prefab: {fileID: 2421299613985424272, guid: 5731f7c4bf27ea54599fdaf7529a4899, type: 3}
     textArray: []
   questArray:
+  - {fileID: 7104001957306441222, guid: 28b853421a1930741bddba56a7064227, type: 3}
   - {fileID: 64922150804996188, guid: 05982b62e9cc2a34583ed13892cd2de5, type: 3}
-  - {fileID: 2421299613985424272, guid: 5731f7c4bf27ea54599fdaf7529a4899, type: 3}
   - {fileID: 6855458635590791947, guid: ce6b8270f35c7d548b5167f0c1f4d4b9, type: 3}
-  - {fileID: 3832750028274978365, guid: 7ce462c22b7b9e14191b4516404d584d, type: 3}
+  - {fileID: -3771452767832773912, guid: 7ce462c22b7b9e14191b4516404d584d, type: 3}
   - {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
   - {fileID: 2903363758632237792, guid: 04eca5ed438e8514c9b8cebefee60e75, type: 3}
   - {fileID: 6792380495647651490, guid: f3c1eec8e61df8547939c86f4313a64a, type: 3}
+  - {fileID: 2421299613985424272, guid: 5731f7c4bf27ea54599fdaf7529a4899, type: 3}
   eventDataTableCSV: {fileID: 4900000, guid: ccba278716066d44e96921060fd11af3, type: 3}
-  textDataTableCSV: {fileID: 4900000, guid: bb038fb41dbf6f244b78c87b9862f45e, type: 3}
+  textDataTableCSV: {fileID: 4900000, guid: 99da7b52953aa8648911dc3b551dee40, type: 3}

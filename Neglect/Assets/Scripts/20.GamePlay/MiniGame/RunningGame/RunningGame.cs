@@ -1,6 +1,7 @@
 ﻿using GamePlay.Phone;
 using System;
 using Manager;
+using Quest;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
@@ -14,8 +15,14 @@ namespace GamePlay.MiniGame.RunningGame
     // 유니티 이벤트 함수
     public partial class RunningGame : MiniGameBase
     {
+        [Space]
+        [Header("Running Game")]
+        public RunningPlayer player;
         public GameObject runningGameObjectRoot;
         public Canvas runningGameCanvasRoot;
+
+        public int rankEventID;
+        private QuestBase rankQuest;
 
         [Header("Setting 관련")] 
         public Canvas settingCanvas;
@@ -38,11 +45,6 @@ namespace GamePlay.MiniGame.RunningGame
             InputManager.running.input.Enable();
 
             settingCanvas.gameObject.SetActive(false);
-            continueButton.onClick.AddListener(() =>
-            {
-                settingCanvas.gameObject.SetActive(false);
-                if(isGameStart) isGamePlay.Value = true;
-            });
             
             lobbyCanvas.gameObject.SetActive(true);
             lobbyObject.gameObject.SetActive(true);
@@ -67,23 +69,9 @@ namespace GamePlay.MiniGame.RunningGame
                 {
                     PhoneUtil.SetLayer(obj);
                     SceneManager.MoveGameObjectToScene(obj, SceneUtil.GetRunningGameScene());
-                    obj.GetComponent<ObstacleObject>().runningGame = this;
+                    obj.GetComponent<RunningObstacle>().runningGame = this;
                 });
             }
-            
-            isGamePlay.Subscribe(value =>
-            {
-                if (value)
-                {
-                    foreach (ObjectSpawner spawner in obstacleSpawnerList)
-                        spawner.Play();
-                }
-                else
-                {
-                    foreach (ObjectSpawner spawner in obstacleSpawnerList)
-                        spawner.Pause();
-                }
-            });
             
             gameSpeed.Subscribe(value =>
             {
@@ -115,6 +103,7 @@ namespace GamePlay.MiniGame.RunningGame
         [Serializable]
         public class PlayerData
         {
+            public int rank;
             public ReactiveProperty<int> score = new(0);
             public string name;
             [SerializeField] private MinMaxValue<float> scoreRandomIncreaseTimer = new(0, 0, 1, false, true);
@@ -141,7 +130,6 @@ namespace GamePlay.MiniGame.RunningGame
             }
         }
     }
-
     
     public partial class RunningGame
     {
@@ -153,6 +141,25 @@ namespace GamePlay.MiniGame.RunningGame
             
             inGameCanvas.gameObject.SetActive(true);
             inGameObject.gameObject.SetActive(true);
+            
+            if(rankQuest) rankQuest.Play();
+            
+            foreach (ObjectSpawner spawner in obstacleSpawnerList)
+                spawner.Play();
+        }
+
+        public override void GameStop()
+        {
+            base.GameStop();
+            foreach (ObjectSpawner spawner in obstacleSpawnerList)
+                spawner.Pause();
+        }
+
+        public override void GameClear()
+        {
+            base.GameClear();
+            QuestManager.Instance.OnValueChange(QuestType.GameRank, CurrentPlayerData.rank);
+
         }
     }
 
@@ -176,6 +183,15 @@ namespace GamePlay.MiniGame.RunningGame
             base.AppPlay(phone);
             runningGameObjectRoot.SetActive(true);
             runningGameCanvasRoot.gameObject.SetActive(true);
+
+            rankQuest = QuestDataList.Instance.InstantiateEvent(rankEventID);
+            
+            // 게임 클리어 할 시
+            GameManager.Instance.isGameClear.Subscribe(value =>
+            {
+                if(value)
+                    isGamePlay.Value = false;
+            });
         }
 
         public override void AppResume(PhoneControl phone)
@@ -190,10 +206,10 @@ namespace GamePlay.MiniGame.RunningGame
         public override void AppPause(PhoneControl phone)
         {
             base.AppPause(phone);
+            GameStop();
             runningGameObjectRoot.SetActive(false);
             runningGameCanvasRoot.gameObject.SetActive(false);
             InputManager.running.input.Disable();
-            GameStop();
         }
     }
 }

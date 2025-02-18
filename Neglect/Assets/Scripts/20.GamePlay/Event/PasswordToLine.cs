@@ -1,19 +1,10 @@
 using GamePlay.Phone;
-using Manager;
-using MoreMountains.Feedbacks;
-using MoreMountains.Tools;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using TMPro;
-using Unity.Burst.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
-using UnityEngine.Windows;
+using UnityEngine.Serialization;
 
 namespace GamePlay.Event
 {
@@ -23,7 +14,7 @@ namespace GamePlay.Event
         public Action ClearAction;
         public RectTransform canvasRect;
         [Header("정답 패스워드")]
-        public List<int> AnswerPassword;
+        public List<int> answerPassword;
         [Space]
         // Start is called before the first frame update
         [Tooltip("패스워드 점들")]
@@ -32,7 +23,7 @@ namespace GamePlay.Event
         [Tooltip("패스워드 라인")]
         public RectTransform[] PasswordLine = new RectTransform[10];
 
-        public List<int> InputPassword = new List<int>(); //현재 입력받은 패스워드
+        public List<int> inputPassword = new List<int>(); //현재 입력받은 패스워드
 
         [Tooltip("드래그 탐지 범위")]
         public double DetectedRange = 0.3f; // 점과 마우스사이 탐지 범위
@@ -50,52 +41,119 @@ namespace GamePlay.Event
         public void Init()
         {
             IsCrack = false;
-            InputPassword.Clear();
+            inputPassword.Clear();
             LineClear();
         }
 
-        public void SettingEvent(string hint , string Password)
+        public void SettingEvent(List<int> password)
         {
-            HintText.text = hint;
-            AnswerPassword.Clear();
-            string[] strNumbers = Password.Trim(new char[] { '[', ']' }).Split(',');
-            int[] numbers = Array.ConvertAll(strNumbers, int.Parse);
-           
-            for (int i = 0; i < numbers.Length; i++)
+            var realPassword = new List<int>(password);
+
+            // 패스워드의 중간값을 찾아 넣어준다.
+            void InsertPasswordBetween(int lastIndex, int value)
             {
-                AnswerPassword.Add(numbers[i] - 1); // 인덱스 번호로 제작되었으므로 -1 처리 
+                // 1 -> 3 이면 1 -> 2 -> 3 이렇게 되게 해준다.
+                bool isHas = false;
+                for (int i = 0; i < lastIndex - 1; i++)
+                {
+                    if (password[i] == value)
+                    {
+                        isHas = true;
+                        break;
+                    }
+                }
+
+                // 1 -> 2 -> 3 -> 2 -> 4 라고 되어 있으면 1 -> 2 -> 3 -> 4 으로 바꾸어준다.
+                for (int i = lastIndex + 1; i < password.Count; i++)
+                {
+                    if (password[i] == value)
+                    {
+                        password.RemoveAt(i);
+                        realPassword.Remove(value); // 본래 패스워드에서 지워주기
+                        break;
+                    }
+                }
+                if(!isHas)
+                    password.Insert(lastIndex + 1, value);
             }
+            
+            // 모든 중간값 경우의 수
+            for (var i = 0; i < password.Count - 1; i++)
+            {
+                var first = password[i];
+                var second = password[i + 1];
+
+                if (first == 1)
+                {
+                    if (second == 3) InsertPasswordBetween(i, 2);
+                    if (second == 7) InsertPasswordBetween(i, 4);
+                    if (second == 9) InsertPasswordBetween(i, 5);
+                }
+                else if (first == 3)
+                {
+                    if (second == 1) InsertPasswordBetween(i, 2);
+                    if (second == 7) InsertPasswordBetween(i, 6);
+                    if (second == 9) InsertPasswordBetween(i, 5);
+                }
+                else if (first == 7)
+                {
+                    if (second == 1) InsertPasswordBetween(i, 4);
+                    if (second == 3) InsertPasswordBetween(i, 5);
+                    if (second == 9) InsertPasswordBetween(i, 8);
+                }
+                else if (first == 9)
+                {
+                    if (second == 1) InsertPasswordBetween(i, 5);
+                    if (second == 3) InsertPasswordBetween(i, 6);
+                    if (second == 7) InsertPasswordBetween(i, 8);
+                }
+                else if (first == 2)
+                {
+                    if (second == 8) InsertPasswordBetween(i, 5);
+                }
+                else if (first == 4)
+                {
+                    if (second == 6) InsertPasswordBetween(i, 5);
+                }
+                else if (first == 6)
+                {
+                    if (second == 4) InsertPasswordBetween(i, 5);
+                }
+                else if (first == 8)
+                {
+                    if (second == 2) InsertPasswordBetween(i, 5);
+                }
+            }
+            
+            answerPassword.Clear();
+            foreach (var index in password)
+                answerPassword.Add(index - 1); // 인덱스 번호로 제작되었으므로 -1 처리 
+
+            HintText.text = "힌트 : ";
+            HintText.text += string.Join(" ", realPassword);
         }
 
         public void LineDraw()
         {
-            for (int i = 1; i < InputPassword.Count; i++)
+            for (int i = 1; i < inputPassword.Count; i++)
             {
                 PasswordLine[i].gameObject.SetActive(true);
-                SetLine(PasswordLine[i], PasswordPointers[InputPassword[i - 1]].transform.localPosition, PasswordPointers[InputPassword[i]].transform.localPosition);
+                SetLine(PasswordLine[i], PasswordPointers[inputPassword[i - 1]].transform.localPosition, PasswordPointers[inputPassword[i]].transform.localPosition);
                 // PasswordLine[i].SetPosition(1, PasswordPointers[InputPassword[i]].transform.position);
             }
 
-            PasswordLine[InputPassword.Count].gameObject.SetActive(true);
+            PasswordLine[inputPassword.Count].gameObject.SetActive(true);
    
-            SetLine(PasswordLine[InputPassword.Count], PasswordPointers[InputPassword[InputPassword.Count-1]].transform.localPosition, GetMousePositionInCanvas());
+            SetLine(PasswordLine[inputPassword.Count], PasswordPointers[inputPassword[inputPassword.Count-1]].transform.localPosition, GetMousePositionInCanvas());
 
         }
         public Vector2 GetMousePositionInCanvas()
         {
-            Vector2 mousePos = Mouse.current.position.ReadValue(); // 마우스 위치 (스크린 좌표)
-
             Vector2 localPoint;
-            // RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            //     canvasRect,  // 캔버스의 RectTransform
-            //     mousePos,     // 현재 마우스 스크린 위치
-            //     Camera.main,         // 카메라 (World Space Canvas라면 Camera.main)
-            //     out localPoint
-            // );
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 canvasRect,  // 캔버스의 RectTransform
-                phone.phoneMousePosition,     // 현재 마우스 스크린 위치
-                phone.phoneCamera,         // 카메라 (World Space Canvas라면 Camera.main)
+                phone ? phone.phoneMousePosition : Mouse.current.position.ReadValue(),     // 현재 마우스 스크린 위치
+                phone ? phone.phoneCamera : Camera.main,         // 카메라 (World Space Canvas라면 Camera.main)
                 out localPoint
             );
             return localPoint; // UI 내에서의 로컬 좌표 반환
@@ -131,33 +189,33 @@ namespace GamePlay.Event
                 IsCrack = false;
                 if (PasswordCheck())
                 {
-                    ClearAction();  //클리어
-                    Destroy(gameObject);
+                    ClearAction?.Invoke();  //클리어
+                    //Destroy(gameObject);
                 }
-                InputPassword.Clear();
+                inputPassword.Clear();
                 LineClear();
             }
         }
         public void CheckSkipNumber() // 비정상적인 패스워드 입력시 수정
         {
-            int BackIndex = InputPassword.Count - 1;
+            int BackIndex = inputPassword.Count - 1;
             if (IsSkip())
             {
-                int storeIndex = InputPassword[BackIndex];
-                int MiddleNumber = (InputPassword[BackIndex] + InputPassword[BackIndex - 1]) / 2;
-                if (!InputPassword.Contains(MiddleNumber))
+                int storeIndex = inputPassword[BackIndex];
+                int MiddleNumber = (inputPassword[BackIndex] + inputPassword[BackIndex - 1]) / 2;
+                if (!inputPassword.Contains(MiddleNumber))
                 {
-                    InputPassword[BackIndex] = (InputPassword[BackIndex] + InputPassword[BackIndex - 1]) / 2;
-                    InputPassword.Add(storeIndex);
+                    inputPassword[BackIndex] = (inputPassword[BackIndex] + inputPassword[BackIndex - 1]) / 2;
+                    inputPassword.Add(storeIndex);
                 }
 
             }
         }
         public bool IsSkip() // 비정상적인 패스워드 입력 체크
         {
-            int BackIndex = InputPassword.Count - 1;
-            int A = InputPassword[BackIndex];
-            int B = InputPassword[BackIndex - 1];
+            int BackIndex = inputPassword.Count - 1;
+            int A = inputPassword[BackIndex];
+            int B = inputPassword[BackIndex - 1];
             int[,] C = new int[,] { { 0, 2 }, { 3, 5 }, { 6, 8 }, { 0, 8 }, { 2, 6 }, { 0, 6 }, { 1, 7 }, { 2, 8 } };
             for (int i = 0; i < 8; i++)
             {
@@ -165,7 +223,6 @@ namespace GamePlay.Event
                     return true;
             }
             return false;
-
         }
         public void LineClear()
         {
@@ -177,14 +234,14 @@ namespace GamePlay.Event
         public bool PasswordCheck()  //입력 비밀번호랑 정답 비밀번호랑 비교
         {
             bool flag = true;
-            if (AnswerPassword.Count != InputPassword.Count)
+            if (answerPassword.Count != inputPassword.Count)
             {
                 return false;
             }
 
-            for (int i = 0; i < InputPassword.Count; i++)
+            for (int i = 0; i < inputPassword.Count; i++)
             {
-                if (InputPassword[i] != AnswerPassword[i])
+                if (inputPassword[i] != answerPassword[i])
                 {
                     flag = false;
                     break;
@@ -197,15 +254,15 @@ namespace GamePlay.Event
 
         public void DownAddPoint(int num)
         {
-            InputPassword.Clear();
-            InputPassword.Add(num);
+            inputPassword.Clear();
+            inputPassword.Add(num);
             IsCrack = true;
         }
         public void DragAddPoint(int num)
         {
-            if (IsCrack && !InputPassword.Contains(num) && !InputPassword.Contains(num))
+            if (IsCrack && !inputPassword.Contains(num) && !inputPassword.Contains(num))
             {
-                InputPassword.Add(num);
+                inputPassword.Add(num);
 
                 CheckSkipNumber();
             }

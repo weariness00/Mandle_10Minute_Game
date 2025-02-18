@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,10 +11,9 @@ namespace Util
     public class ObjectSpawner : MonoBehaviour
     {
         public bool isStartSpawn = false; // 이 컴포넌트가 생성되자마자 스폰하게 할 것인지
+        private bool isPlay = false;
         [Tooltip("Count와 상관없이 계속 스폰 할 건지")] public bool isLoop = false;
         [Tooltip("생성 잠시 중단")] public bool isPause;
-        [Tooltip("스폰이 시작되면 첫 딜레이 없이 바로 스폰할 것인지")] public bool isSpawnImmediate = false;
-        [Tooltip("딜레이가 있다면 몇초로 할 것인지")]public float startSpawnDelay = 1f;
         [Tooltip("스폰 간격에 곱샘해준다.")] public float timeScale = 1f;
         
         // 해당 random은 아래의 리스트의 원소상에서의 랜덤임
@@ -59,23 +59,25 @@ namespace Util
 
         public void OnEnable()
         {
-            Play();
+            if(isPlay && gameObject.activeInHierarchy && SpawnCoroutine == null) SpawnCoroutine = StartCoroutine(SpawnerEnumerator());
         }
 
         public void OnDisable()
         {
-            Stop();
+            SpawnCoroutine = null;
         }
 
         public void Play()
         {
             isPause = false;
+            isPlay = true;
             if (gameObject.activeInHierarchy && SpawnCoroutine == null) SpawnCoroutine = StartCoroutine(SpawnerEnumerator());
         }
 
         public void Stop()
         {
             StopCoroutine(SpawnCoroutine);
+            isPlay = false;
             SpawnCoroutine = null;
         }
 
@@ -86,10 +88,7 @@ namespace Util
 
         private IEnumerator SpawnerEnumerator()
         {
-            if (!isSpawnImmediate)
-                yield return new WaitForSeconds(startSpawnDelay);
-            
-            while (!spawnCount.IsMax || isLoop)
+            while (isPlay && (!spawnCount.IsMax || isLoop))
             {
                 if (isPause == false)
                 {

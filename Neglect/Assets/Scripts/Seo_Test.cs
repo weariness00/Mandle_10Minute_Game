@@ -12,11 +12,6 @@ namespace SeoTestTestTest
 {
     public class Seo_Test : MonoBehaviour
     {
-        public int questId;
-
-        public FlappingGameManager flappingGameManager;
-        public TMP_Text scoreText;
-
         [Header("Phone 관련")]
         public PhoneControl phoneControl;
         public string miniGameName;
@@ -26,52 +21,10 @@ namespace SeoTestTestTest
         
         public void Start()
         {
-            
-            if (questId != -1)
-            {
-            }
-
-            if (flappingGameManager)
-            {
-                if (scoreText) flappingGameManager.score.Subscribe(value => scoreText.text = $"{value}");
-            }
-
-            SceneUtil.AsyncAddHome(scene =>
-            {
-                foreach (GameObject rootGameObject in scene.GetRootGameObjects())
-                {
-                    var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
-                    if (app != null)
-                    {
-                        phoneControl.applicationControl.AddApp(app);
-                        phoneControl.applicationControl.OpenApp(app);
-                    }
-                }
-            });
-
             if (isMiniGameAddToApp)
             {
                 if (miniGameName == "Running Game")
                 {
-                    SceneUtil.AsyncAddRunningGame(scene =>
-                    {
-                        foreach (GameObject rootGameObject in scene.GetRootGameObjects())
-                        {
-                            var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
-                            if(app != null) phoneControl.applicationControl.AddApp(app);
-                        }
-                    });
-                }
-                else
-                {
-                    SceneUtil.AsyncAddFlappingGame(scene =>
-                    {
-                        foreach (GameObject rootGameObject in scene.GetRootGameObjects())
-                        {
-                            var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
-                            if(app != null) phoneControl.applicationControl.AddApp(app);
-                        }
-                    });
                     SceneUtil.AsyncAddRunningGame(scene =>
                     {
                         foreach (GameObject rootGameObject in scene.GetRootGameObjects())
@@ -87,7 +40,7 @@ namespace SeoTestTestTest
         public void MakeQuest()
         {
             var setting = QuestSettingProviderHelper.setting;
-            var e = setting.InstantiateQuest(eventID);
+            var e = setting.InstantiateEvent(eventID);
             e.Play();
         }
     }

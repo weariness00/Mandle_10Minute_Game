@@ -1,0 +1,34 @@
+{
+    "name": "GameInput",
+    "maps": [
+        {
+            "name": "Phone",
+            "id": "cbc4be42-e44e-4775-916b-a122ecb1675d",
+            "actions": [
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "52cda5f5-c13f-49d0-a99b-0174a877b8fa",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "dbd013a7-d43e-495a-a6cb-72a3b4e48765",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

@@ -4,6 +4,7 @@ using MoreMountains.Tools;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -17,9 +18,16 @@ namespace GamePlay.PopUp
         public MMF_Player HideNotificationMMF; //알림 hide
         public Action IgnoreAction;
         public PhoneControl phone;
+
+        public TextMeshProUGUI BetteryText;
         public void OnEnable()
         {
             ShowNotificationMMF.PlayFeedbacks();    
+        }
+
+        public void SettingBetteryText(string bettery)
+        {
+            BetteryText.text = bettery +"%";
         }
 
         public void ChargerIgone()
@@ -28,12 +36,13 @@ namespace GamePlay.PopUp
             IgnoreAction();
         }
 
-        public void ChargerConnectToPhone() //휴대폰이 연결 되었을때
+        public void HideAnimation()
         {
+            
             HideNotificationMMF.PlayFeedbacks();
         }
 
-        public void HideAnimation()
+        public void SelfDestory()
         {
             Destroy(gameObject);
         }

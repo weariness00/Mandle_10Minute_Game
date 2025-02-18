@@ -12,6 +12,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 578d3898f43d4e858f6454233e6ec4bd, type: 3}
   m_Name: Talking Data
   m_EditorClassIdentifier: 
-  talkingDataArray: []
+  talkingDataArray:
+  - id: 4001
+    mainText: "\uB0B4\uC77C \uC6B0\uB9AC \uBA87\uC2DC\uC5D0 \uB9CC\uB098\uAE30\uB85C
+      \uD588\uC9C0?"
+    positiveTextArray:
+    - "12\uC2DC\uC5D0 \uB9CC\uB098\uAE30\uB85C \uD588\uC5B4"
+    - "12\uC2DC\uCBE4\uC73C\uB85C \uAE30\uC5B5\uD558\uACE0 \uC788\uC5B4"
+    negativeTextArray: []
+  - id: 4002
+    mainText: "\uADF8\uB7EC\uBA74 \uB0B4\uC77C \uB9CC\uB098\uC11C \uBB50 \uBA39\uC744\uAEBC\uC57C?"
+    positiveTextArray:
+    - "\uAE00\uC384..\uB0B4\uC77C \uB9CC\uB098\uC11C \uC815\uD558\uC790"
+    - "\uB098 \uC9C0\uAE08 \uBC14\uBE60\uC11C \uC870\uAE08\uC788\uB2E4\uAC00 \uB2E4\uC2DC
+      \uC5F0\uB77D\uD560\uAED8"
+    negativeTextArray: []
+  - id: 4003
+    mainText: "\uC751? \uB0B4\uC77C \uC544\uB2C8\uC600\uB098? \uB0B4\uC77C\uB85C
+      \uAE30\uC5B5\uD558\uACE0 \uC788\uB294\uB370"
+    positiveTextArray:
+    - "\uC544 \uB9DE\uB2E4..\uAE4C\uBA39\uACE0 \uC788\uC5C8\uB2E4."
+    - "\uB9DE\uB124..\uC704\uC5D0 \uB0B4\uC6A9\uBCF4\uB2C8 \uB0B4\uC77C\uC774\uC5C8\uB124"
+    negativeTextArray: []
+  - id: 4004
+    mainText: "\uADF8\uB7EC\uBA74 \uC911\uC2DD\uD55C\uC2DD\uC591\uC2DD\uC911\uC5D0
+      \uD558\uB098 \uACE8\uB77C\uBD10 \uADF8\uAC78\uB85C \uCC3E\uC544\uBCF4\uAC8C"
+    positiveTextArray:
+    - "\uB09C \uC911\uC2DD\uC774 \uC88B\uC544"
+    - "\uB09C \uC591\uC2DD\uC774 \uC88B\uC544"
+    - "\uB09C \uD55C\uC2DD\uC774 \uC88B\uC544"
+    negativeTextArray: []
+  - id: 4005
+    mainText: 
+    positiveTextArray: []
+    negativeTextArray: []
+  - id: 4006
+    mainText: 
+    positiveTextArray: []
+    negativeTextArray: []
+  - id: 4007
+    mainText: 
+    positiveTextArray: []
+    negativeTextArray: []
   talkDataCSV: {fileID: 4900000, guid: f38926548fe386b4bbbfbc2af75639e5, type: 3}
-  textDataCSV: {fileID: 4900000, guid: bb038fb41dbf6f244b78c87b9862f45e, type: 3}
+  textDataCSV: {fileID: 4900000, guid: 99da7b52953aa8648911dc3b551dee40, type: 3}

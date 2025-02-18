@@ -1,4 +1,4 @@
-﻿using GamePlay.Phone;
+using GamePlay.Phone;
 using System;
 using System.Collections;
 using UniRx;
@@ -14,6 +14,8 @@ namespace GamePlay
         private static readonly string HomeScene = "Home";
         private static readonly string RunningGameScene = "Running Game";
         private static readonly string FlappingGameScene = "Flapping Game";
+        private static readonly string BankScene = "BankApp";
+        private static readonly string ChattingScene = "Chatting App";
 
         public static bool TryGetPhoneScene(out Scene scene)
         {
@@ -22,7 +24,10 @@ namespace GamePlay
         }
         public static void AsyncAddPhone(Action<Scene> loadedAction = null) =>Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(PhoneScene, loadedAction));
 
+
         public static void AsyncAddHome(Action<Scene> loadedAction = null) =>Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(HomeScene, loadedAction));
+        public static void AsyncAddBank(Action<Scene> loadedAction = null) => Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(BankScene, loadedAction));
+        public static void AsyncAddChatting(Action<Scene> loadedAction = null) => Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(ChattingScene, loadedAction));
         
         public static Scene GetRunningGameScene() => SceneManager.GetSceneByName(RunningGameScene);
         public static bool TryGetRunningGameScene(out Scene scene)
@@ -33,6 +38,11 @@ namespace GamePlay
         public static void AsyncAddRunningGame(Action<Scene> loadedAction = null) =>Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(RunningGameScene, loadedAction));
 
         public static bool TryGetFlappingScene(out Scene scene)
+        {
+            scene = SceneManager.GetSceneByName(FlappingGameScene);
+            return scene.IsValid() && scene.isLoaded;
+        }
+        public static bool TryGetBankScene(out Scene scene)
         {
             scene = SceneManager.GetSceneByName(FlappingGameScene);
             return scene.IsValid() && scene.isLoaded;

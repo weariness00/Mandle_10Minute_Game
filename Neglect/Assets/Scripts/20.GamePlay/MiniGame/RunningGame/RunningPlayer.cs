@@ -13,14 +13,23 @@ namespace GamePlay.MiniGame.RunningGame
         [HideInInspector] public Rigidbody2D rigidbody2D;
         [HideInInspector] public BoxCollider2D collider2D;
         
-        public ReactiveProperty<int> life = new (3);
         public MinMaxValue<float> immortalTime = new(0, 0, 1);
         public MMF_Player hitEffect;
+        public AudioSource audioSource;
         
         [Space]
+        [Header("체력 관련")]
+        public ReactiveProperty<int> life = new (3);
+        public MinMaxValue<int> healCounting = new(0, 0, 5);
+        
+        [Space]
+        [Header("Jump 관련")]
         [Tooltip("점프 높이")]public float jumpForce = 1f;
         [Tooltip("점프하는데 걸리는 시간")]public MinMaxValue<float> jumpTime = new(0,0,1f, false, true);
         public bool isJumping = false;
+
+        [Space] 
+        public AudioClip randingClip;
         
         [Space]
         [Tooltip("슬라이딩 충돌 박스 크기")] public Vector2 slidingColliderBoxSize;
@@ -42,6 +51,9 @@ namespace GamePlay.MiniGame.RunningGame
         {
             originColliderSize = collider2D.size;
             originCollideroffset = collider2D.offset;
+
+            isJumping = true;
+            jumpTime.SetMax();
         }
 
         public void Update()
@@ -65,6 +77,7 @@ namespace GamePlay.MiniGame.RunningGame
                 {
                     animator.Randing();
                     isJumping = false;
+                    audioSource.PlayOneShot(randingClip);
                 }
             }
         }
@@ -73,10 +86,11 @@ namespace GamePlay.MiniGame.RunningGame
         {
             if (immortalTime.IsMin && other.CompareTag("Running Obstacle"))
             {
-                var obstacle = other.GetComponent<ObstacleObject>();
+                var obstacle = other.GetComponent<RunningObstacle>();
                 obstacle.isCollision = true;
                 immortalTime.SetMax();
                 life.Value--;
+                healCounting.SetMin();
                 if(hitEffect) hitEffect.PlayFeedbacks();
             }
         }
@@ -92,7 +106,7 @@ namespace GamePlay.MiniGame.RunningGame
             }
             else if (isJumping)
             {
-                transform.position -= Time.deltaTime * runningGame.gameSpeed.Value * Vector3.up;
+                transform.position -= jumpForce / jumpTime.Max * Time.deltaTime * runningGame.gameSpeed.Value * Vector3.up;
             }
             else if (!isJumping && InputManager.running.MovePosition.y > 0f)
             {
@@ -124,6 +138,11 @@ namespace GamePlay.MiniGame.RunningGame
                 isSliding = false;
                 animator.EndSliding();
             }
+        }
+
+        public void Healing(int count)
+        {
+            life.Value += count;
         }
     }
 

@@ -1,5 +1,4 @@
 ﻿using MoreMountains.Feedbacks;
-using System;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -10,7 +9,6 @@ using UnityEngine.UI;
 
 namespace GamePlay.PopUp
 {
-    [RequireComponent(typeof(MMF_Player))]
     public partial class PopUpPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerMoveHandler
     {
         public bool isClick;
@@ -18,26 +16,26 @@ namespace GamePlay.PopUp
         [Tooltip("팝업이 제거될때 동작 하는 이벤트")] public UnityEvent destroyPopUpEvent;
 
         [Header("UI Object")] 
-        public Button ignoreButton;
-        public Button completeButton;
-        public Image viewIcon;
-        public TMP_Text viewExplain;
+        public Button button;
+        public TMP_Text titleText;
+        public TMP_Text explainText;
 
         private RectTransform rectTransform;
         private bool isX;
         private bool isY;
         private Vector3 originPosition;
-
-
+        
         public void Awake()
         {
             rectTransform = GetComponent<RectTransform>();
-            spawnFeel = GetComponent<MMF_Player>();
+            spawnFeel = GetComponentInChildren<MMF_Player>();
         }
 
         public void Start()
         {
             rectTransform.anchoredPosition = Vector2.zero;
+            
+            button.onClick.AddListener(() => Destroy(gameObject));
         }
 
         public void OnEnable()
@@ -53,7 +51,9 @@ namespace GamePlay.PopUp
         public void Reset()
         {
             rectTransform = GetComponent<RectTransform>();
-            spawnFeel = GetComponent<MMF_Player>();
+            spawnFeel = GetComponentInChildren<MMF_Player>();
+            
+            Debug.Assert(spawnFeel != null, $"{nameof(MMF_Player)} 컴포넌트가 존재하지 않습니다.");
         }
         
         public void OnValidate()
@@ -124,7 +124,7 @@ namespace GamePlay.PopUp
         private void MMFInit()
         {
             if(rectTransform == null) rectTransform = GetComponent<RectTransform>();
-            if(spawnFeel == null) spawnFeel = GetComponent<MMF_Player>();
+            if(spawnFeel == null) spawnFeel = GetComponentInChildren<MMF_Player>();
             if(mmfPosition == null) mmfPosition = new(){Label = mmfPositionLabel};
             var mmfPos = spawnFeel.GetFeedbacksOfType<MMF_Position>().FirstOrDefault(p => p.Label == mmfPositionLabel);
             if (mmfPos == null) spawnFeel.AddFeedback(mmfPosition);
@@ -135,7 +135,7 @@ namespace GamePlay.PopUp
             mmfPosition.AnimatePositionTarget = gameObject;
             mmfPosition.InitialPosition = Vector3.zero;
             mmfPosition.DestinationPosition = Vector3.zero;
-            mmfPosition.DestinationPosition.y = -100;
+            mmfPosition.DestinationPosition.y = -rectTransform.sizeDelta.y;
             mmfPosition.AnimatePositionDuration = 1f;
         }
     }

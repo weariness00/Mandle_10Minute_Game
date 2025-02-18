@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Sound Manager Setting
   m_EditorClassIdentifier: 
   mixer: {fileID: 24100000, guid: 5e495dbe377bc944db5acb4e48371758, type: 2}
-  audioCanvasPrefab: {fileID: 4534640340717875209, guid: 2cabedb831e2d3e4fb98bfc7a6342317, type: 3}
-  groupBlockPrefab: {fileID: 2245163622122601867, guid: b230ddc759af47747ab069194053cbea, type: 3}
-  groupParentName: Group Grid
+  audioCanvasPrefab: {fileID: 7713334682955486246, guid: 1a9dd321ac8b08a4891b70c06901bb55, type: 3}
+  groupBlockPrefab: {fileID: 1283430657921842911, guid: 2e7f448c30e9b374090ef8c6dc27d1d4, type: 3}
+  groupParentName: Sound Setting

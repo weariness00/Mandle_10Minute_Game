@@ -73,16 +73,20 @@ namespace GamePlay.Event
 
 
         public void EventClaer()
-        {
-            Debug.Log(phone.ChargingPort.transform.position);
-            Charger.transform.DOMove(phone.ChargingPort.transform.position, 0.5f);
-            Debug.Log("spss");
-            ClearAction();
+        { 
+            Charger.transform.DOMove(phone.ChargingPort.transform.position, 0.5f).OnComplete(()=> {
+                ClearAction();
+            });
         }
 
         public void HideAnimation()
         {
-            Destroy(gameObject);
+            SpriteRenderer ChargerRender = Charger.GetComponent<SpriteRenderer>();
+            SpriteRenderer ChargerLineRender = head.GetComponent<SpriteRenderer>();
+            ChargerLineRender.DOFade(0f, 0.5f);
+            ChargerRender.DOFade(0f, 0.5f).OnComplete(() => {
+                Destroy(gameObject);
+            });
         }
 
     }

@@ -9,10 +9,11 @@ namespace GamePlay.MiniGame
 {
     public partial class MiniGameBase : MonoBehaviour
     {
-        public ReactiveProperty<bool> isGamePlay = new(true);
         public bool isGameStart = false;
+        public ReactiveProperty<bool> isGamePlay = new(true);
+        public ReactiveProperty<bool> isGameClear = new(false);
         public ReactiveProperty<float> gameSpeed = new(1f);
-        [SerializeField] protected MinMaxValue<float> playTime = new(0,0, 60 * 10);
+        [SerializeField] protected MinMaxValue<float> playTime = new(0, 0, 60 * 10);
 
         public virtual void Awake()
         {
@@ -21,14 +22,19 @@ namespace GamePlay.MiniGame
 
         public virtual void Start()
         {
-            
+
         }
 
         public virtual void Update()
         {
-            if (isGamePlay.Value)
+            if (isGamePlay.Value && !isGameClear.Value)
             {
                 playTime.Current += Time.deltaTime;
+                if (playTime.IsMax)
+                {
+                    isGameClear.Value = true;
+                    GameClear();
+                }
             }
         }
 
@@ -49,6 +55,17 @@ namespace GamePlay.MiniGame
             isGameStart = false;
             gameSpeed.Value = 0;
         }
+
+        public virtual void GameClear()
+        {
+        }
+
+        public virtual void GameExit()
+        {
+            if(_phone)
+                _phone.applicationControl.CloseApp(this);
+        }
+        
 
         public void SetGameSpeed(float value)
         {
@@ -99,6 +116,10 @@ namespace GamePlay.MiniGame
         }
 
         public virtual void AppPause(PhoneControl phone)
+        {
+        }
+        
+        public virtual void AppExit(PhoneControl phone)
         {
         }
 

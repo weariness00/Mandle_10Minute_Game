@@ -16,24 +16,25 @@ namespace Quest
         [SerializeField] [Tooltip("퀘스트 데이터 테이블")] private EventData[] eventDataArray;
         [SerializeField] [Tooltip("퀘스트 로직이 담긴 프리펩")] private QuestBase[] questArray;
 
-        public QuestBase InstantiateQuest(int id)
+        public QuestBase InstantiateEvent(int id)
         {
-            var data = GetDataID(id);
+            var data = GetEventID(id);
+            if (data == null) return null;
             var quest = Instantiate(data.prefab);
             quest.eventData = data;
             return quest;
         }
 
-        public QuestBase InstantiateRandomQuest()
+        public QuestBase InstantiateRandomEvent()
         {
-            UniqueRandom eventRandom = new(0, eventDataArray.Length);
+            UniqueRandom eventRandom = new(0, eventDataArray.Length - 1);
             int index = 0;
             EventData data = eventDataArray[index];
-            while (!eventRandom.IsEmpty)
+            while (!eventRandom.IsEmptyInt)
             {
                 index = eventRandom.RandomInt();
                 data = eventDataArray[index];
-                if(data.id != -1) 
+                if(data.id != -1 && data.prefab != null) 
                     break;
             }
             var quest = Instantiate(data.prefab);
@@ -47,7 +48,7 @@ namespace Quest
             return index >= 0 ? questArray[index] : null;
         }
 
-        public EventData GetDataID(int id)
+        public EventData GetEventID(int id)
         {
             var index = Array.BinarySearch(eventDataArray, id);
             return index >= 0 ? eventDataArray[index] : null;
@@ -79,6 +80,10 @@ namespace Quest
         {
             Array.Sort(questArray);
             QuestSettingProviderHelper.setting.SetEventCSV();
+            
+            EditorUtility.SetDirty(this);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
         }
 
         public void SetEventCSV()
@@ -100,13 +105,13 @@ namespace Quest
             {
                 var id = csv.DynamicCast<int>("EventID");
                 var textList = csv.DynamicCast<int[]>("TextListID", Array.Empty<int>());
-                var data = GetDataID(id);
-                data.level = csv.DynamicCast<QuestLevel>("Level", QuestLevel.None);
+                var data = GetEventID(id);
+                data.level = (QuestLevel)csv.DynamicCast<int>("Level", -1);
                 data.prefab = GetQuestID(csv.DynamicCast<int>("PrefabID", -1));
                 data.textArray = questTextArray.Where(d => textList.FirstOrDefault(ti => ti == d.id) != 0).Select(d => d.text).ToArray();
 
-                data.acceptEvent = GetDataID(csv.DynamicCast<int>("AcceptEventID", -1));
-                data.ignoreEvent = GetDataID(csv.DynamicCast<int>("IgnoreEventID", -1));
+                data.acceptEvent = GetEventID(csv.DynamicCast<int>("AcceptEventID", -1));
+                data.ignoreEvent = GetEventID(csv.DynamicCast<int>("IgnoreEventID", -1));
                 
                 Debug.Assert(data.prefab != null, "Event Data에 프리펩이 존재하지 않습니다.");
             }
@@ -115,8 +120,8 @@ namespace Quest
             for (var i = 0; i < eventCSV.Count; i++)
             {
                 var csv = eventCSV[i];
-                eventDataArray[i].acceptEvent = GetDataID(csv.DynamicCast<int>("AcceptEventID", -1));
-                eventDataArray[i].ignoreEvent = GetDataID(csv.DynamicCast<int>("IgnoreEventID", -1));
+                eventDataArray[i].acceptEvent = GetEventID(csv.DynamicCast<int>("AcceptEventID", -1));
+                eventDataArray[i].ignoreEvent = GetEventID(csv.DynamicCast<int>("IgnoreEventID", -1));
             }
         }
 
