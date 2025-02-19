@@ -170,17 +170,21 @@ namespace GamePlay.MiniGame.RunningGame
 
         public void GroundMove()
         {
-            if (BackgroundObject.transform.position.x < LeftPosX + BackgroundSize.x / 4)
+            if (BackgroundObject.transform.position.x + BackgroundSize.x/2 < -LeftPosX)
             {
                 Vector3 pre = BackgroundObject.transform.position;
-                pre.x += BackgroundSize.x / 4 + BackgroundInterval;
+                float offset1 = BackgroundSize.x / 2 + LeftPosX * 2; //이미지 사이클의 시작부터 움직인 거리
+                float offset2 = (BackgroundObject.transform.position.x + BackgroundSize.x / 2 + LeftPosX); // 조건문으로 인한 거리 차이
+                pre.x = LeftPosX + BackgroundSize.x/2 - offset1 + offset2; 
                 BackgroundObject.transform.position = pre;
             }
 
-            if (FloorObject.transform.position.x < LeftPosX + FloorSize.x/ 4)
+            if (FloorObject.transform.position.x + FloorSize.x/2 < -LeftPosX) //화면 끝에 도달했을때
             {
                 Vector3 pre = FloorObject.transform.position;
-                pre.x += FloorSize.x / 4;
+                float offset1 = FloorSize.x * 3 / 4 + LeftPosX * 2; // 이미지 사이클의 시작부터 움직인 거리 
+                float offset2 = (FloorObject.transform.position.x + FloorSize.x / 2 + LeftPosX); // 조건문으로 인한 거리 차이
+                pre.x = LeftPosX+ FloorSize.x/2 - offset1 + offset2; // 오차  계산
                 FloorObject.transform.position = pre;
             }
 
