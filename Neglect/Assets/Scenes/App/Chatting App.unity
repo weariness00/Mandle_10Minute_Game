@@ -504,8 +504,10 @@ MonoBehaviour:
   canvas: {fileID: 8003116136321939646}
   CurrentName: npc
   ChatName: {fileID: 9017951177761152216}
-  OtherMessages: {fileID: 7209999105792282856, guid: 174cfc792fc3eeb40acf516bffa1b80e, type: 3}
-  MyMessages: {fileID: 6138435353992378510, guid: 20b8b681c2a97fe4c991c3c3801a03d0, type: 3}
+  backButton: {fileID: 4573005860775011340}
+  messageBoxPrefab: {fileID: 6138435353992378510, guid: 20b8b681c2a97fe4c991c3c3801a03d0, type: 3}
+  otherMessageSprite: {fileID: 21300000, guid: 7846c7f6b0da52543a3c8fc09f2ede7c, type: 3}
+  myMessageSprite: {fileID: 21300000, guid: 02a2083fb43904c46a5544aaa9d67307, type: 3}
   answerGroupTransform: {fileID: 5128492189096956107}
   answerBlockPrefab: {fileID: 6326898798381916204, guid: 37298cdbcc4984b47ae473fd87014dd3, type: 3}
   ChatGage: 0
@@ -515,6 +517,20 @@ MonoBehaviour:
     mainText: 
     positiveTextArray: []
     negativeTextArray: []
+  ignoreTimer:
+    _min: 0
+    _max: 15
+    _current: 15
+    _isMin: 0
+    _isMax: 1
+    isOverMax: 0
+    isOverMin: 0
+  completeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  ignoreEvent:
+    m_PersistentCalls:
+      m_Calls: []
   NextTextPosY: 0
   Scrollbar: {fileID: 4169084648532600100}
   ChatScrollBox: {fileID: 9040395771576125232}
@@ -987,7 +1003,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8211205160784953239}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.875
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1070,8 +1086,9 @@ GameObject:
   - component: {fileID: 1082980648379839207}
   - component: {fileID: 4573005860775011339}
   - component: {fileID: 1420403361794786149}
+  - component: {fileID: 4573005860775011340}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Back Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1115,6 +1132,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4401716292702571907}
   m_CullTransparentMesh: 1
+--- !u!114 &4573005860775011340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4401716292702571907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1420403361794786149}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!222 &4574187329764865746
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1818,7 +1879,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0000076293945}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &9084035802636192334

@@ -1,12 +1,14 @@
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace GamePlay.Chatting
 {
     public class ChatTextBox : MonoBehaviour
     {
         // Start is called before the first frame update
+        public Image image;
         public TextMeshProUGUI Text;
         public void SetText(string text)
         {

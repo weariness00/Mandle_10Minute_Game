@@ -19,7 +19,8 @@ namespace GamePlay.MiniGame.RunningGame
         
         [Space]
         [Header("체력 관련")]
-        public ReactiveProperty<int> life = new (3);
+        public ReactiveProperty<int> life = new (5);
+        public int lifeMax = 5;
         public MinMaxValue<int> healCounting = new(0, 0, 5);
         
         [Space]
@@ -142,7 +143,10 @@ namespace GamePlay.MiniGame.RunningGame
 
         public void Healing(int count)
         {
-            life.Value += count;
+            var value = life.Value + count;
+            if (value > lifeMax) value = lifeMax;
+            else if (value < 0) value = 0;
+            life.Value = value;
         }
     }
 

@@ -65,6 +65,8 @@ namespace GamePlay.Phone
         public void Awake()
         {
             password.completeAction += PasswordClear;
+            password.Init();
+
         }
 
         // 패스워드 초기화
@@ -76,7 +78,7 @@ namespace GamePlay.Phone
             RandomPassword.Clear();
             for (int i = 0; i < 4; i++)
                 RandomPassword.Add(intRandom.RandomInt());
-            password.SettingEvent(RandomPassword);
+            password.SetPassword(RandomPassword);
         }
         
         // 송금할 돈 초기화

@@ -9,7 +9,7 @@ namespace Quest
     public partial class QuestManager : Singleton<QuestManager>
     {
         [HideInInspector] public bool isQuestStart;
-        public MinMaxValue<float> questSpawnTimer = new(0, 0, 60,true,true);
+        public MinMaxValue<float> questSpawnTimer = new(0, 0, 30,true,true);
 
         private Dictionary<QuestType, Subject<object>> questPlayDictionary = new(); // 퀘스트가 클리어되면 여기서 제외됨
 

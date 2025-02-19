@@ -6,7 +6,7 @@ namespace GamePlay.Phone
     public partial class ChattingApp : MonoBehaviour
     {
         [Header("채팅 관련")] 
-        [SerializeField] private ChatConversation chatting;
+        [SerializeField] private Conversation chatting;
     }
 
     public partial class ChattingApp : IPhoneApplication
