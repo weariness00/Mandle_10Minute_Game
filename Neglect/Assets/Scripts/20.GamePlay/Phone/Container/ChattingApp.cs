@@ -6,7 +6,7 @@ namespace GamePlay.Phone
     public partial class ChattingApp : MonoBehaviour
     {
         [Header("채팅 관련")] 
-        [SerializeField] private ChatConversation chatting;
+        [SerializeField] private Conversation chatting;
     }
 
     public partial class ChattingApp : IPhoneApplication
@@ -27,6 +27,7 @@ namespace GamePlay.Phone
             _phone = phone;
 
             chatting.canvas.worldCamera = _phone.phoneCamera;
+            chatting.backButton.onClick.AddListener(() => phone.applicationControl.CloseApp(this));
             
             chatting.gameObject.SetActive(false);
         }

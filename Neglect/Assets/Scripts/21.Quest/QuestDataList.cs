@@ -13,6 +13,8 @@ namespace Quest
         
         [SerializeField] [Tooltip("퀘스트 데이터 테이블")] private EventData[] eventDataArray;
         [SerializeField] [Tooltip("퀘스트 로직이 담긴 프리펩")] private QuestBase[] questArray;
+        
+        public MinMaxValue<float> questSpawnTimer = new(0, 0, 30,true,true);
 
         public QuestBase InstantiateEvent(int id)
         {

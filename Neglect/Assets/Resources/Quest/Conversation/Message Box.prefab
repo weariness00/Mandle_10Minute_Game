@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5473345924079541262}
   - component: {fileID: 6138435353992378510}
   m_Layer: 5
-  m_Name: MyTextBox
+  m_Name: Message Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,7 +70,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 02a2083fb43904c46a5544aaa9d67307, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -131,6 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a932d9bc0b310c14ea796f5ca022b341, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 3530416874639488728}
   Text: {fileID: 8934350661026459360}
 --- !u!1 &2136344179249060256
 GameObject:

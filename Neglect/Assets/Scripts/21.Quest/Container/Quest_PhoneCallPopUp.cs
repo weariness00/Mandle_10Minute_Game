@@ -21,14 +21,6 @@ namespace Quest.Container
             if(eventData.textArray.Length >= 1) popUp.titleText.text = eventData.textArray[0];
             if(eventData.textArray.Length >= 2) popUp.explainText.text = eventData.textArray[1];
         }
-
-        public override void Complete()
-        {
-            base.Complete();
-
-            var phone = PhoneUtil.currentPhone;
-            phone.applicationControl.OpenApp("Phone Call");
-        }
     }
 }
 

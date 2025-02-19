@@ -9,9 +9,15 @@ namespace Quest
     public partial class QuestManager : Singleton<QuestManager>
     {
         [HideInInspector] public bool isQuestStart;
-        public MinMaxValue<float> questSpawnTimer = new(0, 0, 60,true,true);
 
         private Dictionary<QuestType, Subject<object>> questPlayDictionary = new(); // 퀘스트가 클리어되면 여기서 제외됨
+
+        private MinMaxValue<float> questSpawnTimer;
+
+        public void Awake()
+        {
+            questSpawnTimer = QuestDataList.Instance.questSpawnTimer;
+        }
 
         public void Update()
         {
@@ -22,7 +28,6 @@ namespace Quest
                 if (questSpawnTimer.IsMax)
                 {
                     questSpawnTimer.Current -= questSpawnTimer.Max;
-                    isQuestStart = false;
                     var quest = QuestDataList.Instance.InstantiateRandomEvent();
                     quest.Play();
                 }

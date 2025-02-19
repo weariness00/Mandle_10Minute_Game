@@ -1,7 +1,9 @@
 using GamePlay.Phone;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -47,7 +49,7 @@ namespace GamePlay.Event
             LineClear();
         }
 
-        public void SettingEvent(List<int> password)
+        public void SetPassword(List<int> password)
         {
             var realPassword = new List<int>(password);
 
@@ -56,7 +58,7 @@ namespace GamePlay.Event
             {
                 // 1 -> 3 이면 1 -> 2 -> 3 이렇게 되게 해준다.
                 bool isHas = false;
-                for (int i = 0; i < lastIndex - 1; i++)
+                for (int i = 0; i < lastIndex; i++)
                 {
                     if (password[i] == value)
                     {
@@ -184,10 +186,9 @@ namespace GamePlay.Event
             if (Mouse.current.leftButton.isPressed && IsCrack)
             {
                 LineDraw();
-                
             }
             
-            if (Mouse.current.leftButton.wasReleasedThisFrame)
+            if (Mouse.current.leftButton.wasReleasedThisFrame && inputPassword.Count > 0)
             {
                 IsCrack = false;
                 if (PasswordCheck())
@@ -240,22 +241,17 @@ namespace GamePlay.Event
         }  //라인 클리어
         public bool PasswordCheck()  //입력 비밀번호랑 정답 비밀번호랑 비교
         {
-            bool flag = true;
-            if (answerPassword.Count != inputPassword.Count)
-            {
+            if (answerPassword.Count == 0 || answerPassword.Count != inputPassword.Count)
                 return false;
-            }
 
             for (int i = 0; i < inputPassword.Count; i++)
             {
                 if (inputPassword[i] != answerPassword[i])
                 {
-                    flag = false;
-                    break;
+                    return false;
                 }
             }
-
-            return flag;
+            return true;
         }
 
 
@@ -280,4 +276,29 @@ namespace GamePlay.Event
 
 
     }
+
+#if UNITY_EDITOR
+
+    [CustomEditor(typeof(PasswordToLine))]
+    public class PasswordToLineEditor : Editor
+    {
+        private string passwordSTR;
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+
+            var script = target as PasswordToLine;
+
+            if (EditorApplication.isPlaying)
+            {
+                passwordSTR = EditorGUILayout.TextField("패스워드 리스트", passwordSTR);
+                if (GUILayout.Button("패스워드 입력 ex) 1 2 3 4"))
+                {
+                    var password = passwordSTR.Split(' ').Select(int.Parse).ToList();
+                    script.SetPassword(password);
+                }
+            }
+        }
+    }
+#endif
 }

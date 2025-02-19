@@ -970,7 +970,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isClick: 0
-  destroyMoveDistance: {x: 300, y: 100}
+  destroyMoveDistance: {x: 300, y: 50}
   destroyPopUpEvent:
     m_PersistentCalls:
       m_Calls: []

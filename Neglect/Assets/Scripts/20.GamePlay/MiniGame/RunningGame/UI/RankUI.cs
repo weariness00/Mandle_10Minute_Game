@@ -19,12 +19,10 @@ namespace GamePlay.MiniGame.RunningGame
         public void Start()
         {
             blockList = new();
-            UniqueRandom colorRandom = new(0.5f, 0.99f, 9, 2);
             for (var i = 0; i < runningGame.playerDataArray.Length; i++)
             {
                 var playerData = runningGame.playerDataArray[i];
                 var block = MakeUIBlock(playerData);
-                block.rankIcon.color = new Color(colorRandom.RandomFloat(), colorRandom.RandomFloat(), colorRandom.RandomFloat(), 1);
                 var destPos = new Vector2(0, -25 + (-block.rectTransform.sizeDelta.y * i));
                 blockPositionUpdateCoroutineList.Add(StartCoroutine(UpdateRankPositionEnumerator(block, destPos)));
             }

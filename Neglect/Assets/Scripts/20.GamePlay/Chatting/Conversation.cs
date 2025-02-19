@@ -8,14 +8,13 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Pool;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Util;
 
 
 namespace GamePlay.Chatting
 {
-    public class ChatConversation : MonoBehaviour
+    public class Conversation : MonoBehaviour
     {
         // Start is called before the first frame update
 
@@ -24,9 +23,13 @@ namespace GamePlay.Chatting
         public string CurrentName = "npc";
         public TextMeshProUGUI ChatName;
 
+        [Header("Interface 버튼")] 
+        public Button backButton;
+
         [Header("복사할 메시지")]
-        public ChatTextBox OtherMessages;
-        public ChatTextBox MyMessages;
+        public ChatTextBox messageBoxPrefab;
+        public Sprite otherMessageSprite;
+        public Sprite myMessageSprite;
 
         [Space] [Header("선택지 버튼")] 
         public Transform answerGroupTransform;
@@ -72,6 +75,8 @@ namespace GamePlay.Chatting
                 3,
                 5
             );
+            
+            backButton.gameObject.SetActive(false);
         }
 
         public void Update()
@@ -81,8 +86,7 @@ namespace GamePlay.Chatting
             ignoreTimer.Current -= Time.deltaTime;
             if (ignoreTimer.IsMin)
             {
-                ignoreEvent.Invoke();
-                ignoreEvent = new();
+                ignoreEvent?.Invoke();
                 isInit = false;
             }
         }
@@ -91,6 +95,8 @@ namespace GamePlay.Chatting
             if(talkData == null) return;
             if(isInit) return;
             isInit = true;
+            ignoreEvent = new();
+            completeEvent = new();
             ignoreTimer.SetMax();
             SettingAnswer(); 
             OtherChatSpawn(talkData.mainText);
@@ -100,7 +106,8 @@ namespace GamePlay.Chatting
         public void OtherChatSpawn(string t)
         {
             Sequence UiSeq = DOTween.Sequence();
-            var pre = Instantiate(OtherMessages,Vector3.zero, OtherMessages.transform.rotation, ChatScrollBox.gameObject.transform);
+            var pre = Instantiate(messageBoxPrefab,Vector3.zero, messageBoxPrefab.transform.rotation, ChatScrollBox.gameObject.transform);
+            pre.image.sprite = otherMessageSprite;
             pre.SetText(t);
             RectTransform preRect = pre.GetComponent<RectTransform>();
             LayoutRebuilder.ForceRebuildLayoutImmediate(preRect);
@@ -113,12 +120,12 @@ namespace GamePlay.Chatting
             StartCoroutine(ScrollToBottom());
 
             UiSeq.Append(pre.gameObject.transform.DOLocalMoveY(pre.transform.localPosition.y - 50f, 0.5f).From());
-            
         }
         public void MyChatSpawn(string t)
         {
             Sequence UiSeq = DOTween.Sequence();
-            var pre = Instantiate(MyMessages, Vector3.zero, OtherMessages.transform.rotation, ChatScrollBox.gameObject.transform);
+            var pre = Instantiate(messageBoxPrefab, Vector3.zero, messageBoxPrefab.transform.rotation, ChatScrollBox.gameObject.transform);
+            pre.image.sprite = myMessageSprite;
             pre.SetText(t);
             RectTransform preRect = pre.GetComponent<RectTransform>();
             LayoutRebuilder.ForceRebuildLayoutImmediate(preRect);
@@ -155,14 +162,14 @@ namespace GamePlay.Chatting
             {
                 var answer = answerBlockPool.Get();
                 answer.answerText.text = text;
-                answer.gage = 20;
+                answer.gage = talkData.positiveScore;
                 answerList.Add(answer);
             }
             foreach (string text in talkData.negativeTextArray)
             {
                 var answer = answerBlockPool.Get();
                 answer.answerText.text = text;
-                answer.gage = 0;
+                answer.gage = talkData.negativeScore;
                 answerList.Add(answer);
             }
             
@@ -206,27 +213,24 @@ namespace GamePlay.Chatting
             UiSeq.Append(GageBar.DOFillAmount(ChatGage / 100f, 1f));
             UiSeq.AppendCallback(() =>
             {
-                if (ChatGage == 100)
+                talkData = TalkingScriptableObject.Instance.GetTalkData(block.isPositive ? talkData.positiveResultTalkID : talkData.negativeResultTalkID);
+                SettingAnswer(); 
+                OtherChatSpawn(talkData.mainText);
+                ChatBox();
+                if (GageBar.fillAmount >= 1 || (talkData.positiveResultTalkID == -1 && talkData.negativeResultTalkID == -1))
                 {
                     //클리어
                     completeEvent.Invoke();
-                    completeEvent = new();
                     isInit = false;
-                }
-                else
-                {
-                    talkData = block.isPositive ? talkData.positiveResultTalk : talkData.negativeResultTalk;
                     
-                    SettingAnswer(); 
-                    OtherChatSpawn(talkData.mainText);
-                    ChatBox();
+                    backButton.gameObject.SetActive(true);
                 }
             });
 
         }
     }
 #if UNITY_EDITOR
-    [CustomEditor(typeof(ChatConversation))]
+    [CustomEditor(typeof(Conversation))]
     public class ChatConversationEditor : Editor
     {
         private int talkID;
@@ -235,17 +239,20 @@ namespace GamePlay.Chatting
         {
             base.OnInspectorGUI();
 
-            var script = target as ChatConversation;
-            
-            talkID = EditorGUILayout.IntField("TalkID", talkID);
-            if (GUILayout.Button("Talk 셋팅"))
-            {
-                script.talkData = TalkingScriptableObject.Instance.GetTalkData(talkID);
-            }
+            var script = target as Conversation;
 
-            if (GUILayout.Button("대화 생성"))
+            if (EditorApplication.isPlaying)
             {
-                script.Init();
+                talkID = EditorGUILayout.IntField("TalkID", talkID);
+                if (GUILayout.Button("Talk 셋팅"))
+                {
+                    script.talkData = TalkingScriptableObject.Instance.GetTalkData(talkID);
+                }
+
+                if (GUILayout.Button("대화 생성"))
+                {
+                    script.Init();
+                }
             }
         }
     }
