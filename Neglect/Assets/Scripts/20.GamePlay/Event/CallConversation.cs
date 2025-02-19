@@ -67,9 +67,7 @@ namespace GamePlay.Event
         public GameObject CallEndButton;
         public void Awake()
         {
-
             ChatName.text = CurrentName;
-           
         }
         public void Start()
         {
