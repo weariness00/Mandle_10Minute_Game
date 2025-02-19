@@ -70,10 +70,15 @@ namespace GamePlay.Phone
             
 
             // 폰 카메라 생성 & 셋팅
-            phoneCamera = Instantiate(Camera.main);
-            phoneCamera.name = "Phone Camera";
-            phoneCamera.cullingMask = LayerMask.GetMask("Phone");
-            Destroy(phoneCamera.GetComponent<AudioListener>());
+            if (phoneCamera == null)
+            {
+                phoneCamera = Instantiate(Camera.main);
+                phoneCamera.name = "Phone Camera";
+                phoneCamera.cullingMask = LayerMask.GetMask("Phone");
+                var uac = phoneCamera.GetComponent<UnityEngine.Rendering.Universal.UniversalAdditionalCameraData>();
+                uac.renderPostProcessing = false;
+                Destroy(phoneCamera.GetComponent<AudioListener>());
+            }
         }
 
         public void Start()

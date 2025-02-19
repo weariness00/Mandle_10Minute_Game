@@ -78,6 +78,7 @@ MonoBehaviour:
   - {fileID: 2903363758632237792, guid: 04eca5ed438e8514c9b8cebefee60e75, type: 3}
   - {fileID: 6792380495647651490, guid: f3c1eec8e61df8547939c86f4313a64a, type: 3}
   - {fileID: 2421299613985424272, guid: 5731f7c4bf27ea54599fdaf7529a4899, type: 3}
+  - {fileID: 3942944286640142204, guid: 93adcad729c91f345a96dfcb87c53907, type: 3}
   questSpawnTimer:
     _min: 0
     _max: 30
