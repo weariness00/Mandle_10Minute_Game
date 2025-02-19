@@ -27,6 +27,7 @@ namespace GamePlay.Phone
             _phone = phone;
 
             chatting.canvas.worldCamera = _phone.phoneCamera;
+            chatting.backButton.onClick.AddListener(() => phone.applicationControl.CloseApp(this));
             
             chatting.gameObject.SetActive(false);
         }

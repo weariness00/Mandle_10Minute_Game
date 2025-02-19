@@ -2684,7 +2684,7 @@ MonoBehaviour:
     _isMax: 0
     isOverMax: 0
     isOverMin: 0
-  jumpForce: 1.7
+  jumpForce: 2
   jumpTime:
     _min: 0
     _max: 0.7
@@ -3783,8 +3783,10 @@ MonoBehaviour:
       isOverMax: 1
       isOverMin: 0
     scoreRandomIncrease:
-      _min: 0
-      _max: 0
+      _min: 1
+      _max: 5
+    mainColor:
+      value: {r: 1, g: 1, b: 1, a: 1}
   - rank: 0
     score:
       value: 0
@@ -3798,8 +3800,10 @@ MonoBehaviour:
       isOverMax: 1
       isOverMin: 0
     scoreRandomIncrease:
-      _min: 10
-      _max: 30
+      _min: 1
+      _max: 20
+    mainColor:
+      value: {r: 0.7264151, g: 0.5036935, b: 0.5036935, a: 0.8235294}
   - rank: 0
     score:
       value: 0
@@ -3813,8 +3817,10 @@ MonoBehaviour:
       isOverMax: 1
       isOverMin: 0
     scoreRandomIncrease:
-      _min: 10
-      _max: 30
+      _min: 1
+      _max: 20
+    mainColor:
+      value: {r: 0.7254902, g: 0.5019608, b: 0.5019608, a: 0.8235294}
 --- !u!4 &1482410026
 Transform:
   m_ObjectHideFlags: 0
@@ -4993,6 +4999,9 @@ MonoBehaviour:
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
   m_ScrollDeltaPerTick: 6
+  excludeLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &2104558763
 MonoBehaviour:
   m_ObjectHideFlags: 0

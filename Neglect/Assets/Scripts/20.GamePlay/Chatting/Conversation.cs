@@ -8,7 +8,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Pool;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Util;
 
@@ -76,6 +75,8 @@ namespace GamePlay.Chatting
                 3,
                 5
             );
+            
+            backButton.gameObject.SetActive(false);
         }
 
         public void Update()
@@ -85,8 +86,7 @@ namespace GamePlay.Chatting
             ignoreTimer.Current -= Time.deltaTime;
             if (ignoreTimer.IsMin)
             {
-                ignoreEvent.Invoke();
-                ignoreEvent = new();
+                ignoreEvent?.Invoke();
                 isInit = false;
             }
         }
@@ -95,6 +95,8 @@ namespace GamePlay.Chatting
             if(talkData == null) return;
             if(isInit) return;
             isInit = true;
+            ignoreEvent = new();
+            completeEvent = new();
             ignoreTimer.SetMax();
             SettingAnswer(); 
             OtherChatSpawn(talkData.mainText);
@@ -160,14 +162,14 @@ namespace GamePlay.Chatting
             {
                 var answer = answerBlockPool.Get();
                 answer.answerText.text = text;
-                answer.gage = 20;
+                answer.gage = talkData.positiveScore;
                 answerList.Add(answer);
             }
             foreach (string text in talkData.negativeTextArray)
             {
                 var answer = answerBlockPool.Get();
                 answer.answerText.text = text;
-                answer.gage = 0;
+                answer.gage = talkData.negativeScore;
                 answerList.Add(answer);
             }
             
@@ -211,20 +213,17 @@ namespace GamePlay.Chatting
             UiSeq.Append(GageBar.DOFillAmount(ChatGage / 100f, 1f));
             UiSeq.AppendCallback(() =>
             {
-                if (ChatGage == 100)
+                talkData = TalkingScriptableObject.Instance.GetTalkData(block.isPositive ? talkData.positiveResultTalkID : talkData.negativeResultTalkID);
+                SettingAnswer(); 
+                OtherChatSpawn(talkData.mainText);
+                ChatBox();
+                if (GageBar.fillAmount >= 1 || (talkData.positiveResultTalkID == -1 && talkData.negativeResultTalkID == -1))
                 {
                     //클리어
                     completeEvent.Invoke();
-                    completeEvent = new();
                     isInit = false;
-                }
-                else
-                {
-                    talkData = block.isPositive ? talkData.positiveResultTalk : talkData.negativeResultTalk;
                     
-                    SettingAnswer(); 
-                    OtherChatSpawn(talkData.mainText);
-                    ChatBox();
+                    backButton.gameObject.SetActive(true);
                 }
             });
 
