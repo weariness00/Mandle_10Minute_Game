@@ -16,6 +16,7 @@ namespace GamePlay.Event
     public class ChargerConnect : MonoBehaviour
     {
         public GameObject Charger;
+        public GameObject chargerLine;
         public ChargerHead head;
         public PhoneControl phone;
 
@@ -75,16 +76,18 @@ namespace GamePlay.Event
         public void EventClaer()
         { 
             Charger.transform.DOMove(phone.ChargingPort.transform.position, 0.5f).OnComplete(()=> {
-                ClearAction();
+                if(ClearAction!=null)
+                    ClearAction();
             });
         }
 
         public void HideAnimation()
         {
+            Sequence seq = DOTween.Sequence();
             SpriteRenderer ChargerRender = Charger.GetComponent<SpriteRenderer>();
-            SpriteRenderer ChargerLineRender = head.GetComponent<SpriteRenderer>();
-            ChargerLineRender.DOFade(0f, 0.5f);
-            ChargerRender.DOFade(0f, 0.5f).OnComplete(() => {
+            SpriteRenderer ChargerLineRender = chargerLine.GetComponent<SpriteRenderer>();
+            seq.Append(ChargerLineRender.DOFade(0f, 0.5f));
+            seq.Join(ChargerRender.DOFade(0f, 0.5f)).OnComplete(() => {
                 Destroy(gameObject);
             });
         }
