@@ -267,6 +267,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1514620101}
     m_Modifications:
+    - target: {fileID: 1307306917320529271, guid: c8ea92523b6907640811a58a862b6667, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 190
+      objectReference: {fileID: 0}
+    - target: {fileID: 1307306917320529271, guid: c8ea92523b6907640811a58a862b6667, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -310
+      objectReference: {fileID: 0}
     - target: {fileID: 3063535834271154672, guid: c8ea92523b6907640811a58a862b6667, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -366,6 +374,14 @@ PrefabInstance:
     - target: {fileID: 4910172457050235848, guid: c8ea92523b6907640811a58a862b6667, type: 3}
       propertyPath: m_Name
       value: Calling Screen
+      objectReference: {fileID: 0}
+    - target: {fileID: 6047709235587034197, guid: c8ea92523b6907640811a58a862b6667, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -190
+      objectReference: {fileID: 0}
+    - target: {fileID: 6047709235587034197, guid: c8ea92523b6907640811a58a862b6667, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -310
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
