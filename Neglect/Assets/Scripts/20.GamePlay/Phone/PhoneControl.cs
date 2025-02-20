@@ -16,8 +16,12 @@ namespace GamePlay.Phone
         public Vector2Int phoneVerticalViewPortSize = new Vector2Int(600, 960);
         public Vector2Int phoneHorizonViewPortSize => new Vector2Int(phoneVerticalViewPortSize.y, phoneVerticalViewPortSize.x);
 
+        public SpriteRenderer fadeRenderer;
         public GameObject ChargingPort;
         public PhoneSideButton interfaceGroupOnOffButton;
+
+        private Tween fadeTween; // Fade In&Out 관련 Tween
+        
         [Header("App 관련")] 
         public ApplicationControl applicationControl;
         public void Awake()
@@ -49,6 +53,7 @@ namespace GamePlay.Phone
                 phoneViewPort.horizon.spriteRenderer.sprite = phoneHorizonSprite; // 세로는 다른 이미지 사용해야된다.
                 phoneViewPort.SetShader(phoneShader);
                 phoneViewPort.gameObject.SetActive(false);
+                phoneViewPort.name = app.AppName;
                 phoneViewPortDictionary.Add(app.AppName, phoneViewPort);
             });
             
@@ -66,10 +71,15 @@ namespace GamePlay.Phone
             
 
             // 폰 카메라 생성 & 셋팅
-            phoneCamera = Instantiate(Camera.main);
-            phoneCamera.name = "Phone Camera";
-            phoneCamera.cullingMask = LayerMask.GetMask("Phone");
-            Destroy(phoneCamera.GetComponent<AudioListener>());
+            if (phoneCamera == null)
+            {
+                phoneCamera = Instantiate(Camera.main);
+                phoneCamera.name = "Phone Camera";
+                phoneCamera.cullingMask = LayerMask.GetMask("Phone");
+                var uac = phoneCamera.GetComponent<UnityEngine.Rendering.Universal.UniversalAdditionalCameraData>();
+                uac.renderPostProcessing = false;
+                Destroy(phoneCamera.GetComponent<AudioListener>());
+            }
         }
 
         public void Start()
@@ -99,6 +109,33 @@ namespace GamePlay.Phone
                 phoneViewPort.Release();
         }
     }
+    
+    // 기타 효과
+    public partial class PhoneControl
+    {
+        public void FadeOut(float duration, Color color)
+        {
+            fadeTween?.Kill();
+            
+            fadeRenderer.color = color;
+            fadeTween = fadeRenderer.DOFade(1f, duration);
+        }
+        
+        public void FadeIn(float duration, Color color)
+        {
+            fadeTween?.Kill();
+            
+            fadeRenderer.color = color;
+            fadeTween = fadeRenderer.DOFade(0f, duration);
+        }
+        
+        // 핸드폰 진동
+        public void PhoneVibration(float duration = 0.1f)
+        {
+            transform.DOShakePosition(duration, 0.1f, 50, 90f);
+        }
+    }
+        
 
     // 렌더 텍스쳐
     public partial class PhoneControl
@@ -163,7 +200,7 @@ namespace GamePlay.Phone
             viewPort.transform.position = pos;
             viewPort.gameObject.SetActive(true);
             viewPort.SetActive(viewType);
-            phoneCamera.targetTexture = viewPort.vertical.renderTexture;
+            phoneCamera.targetTexture = viewPort.GetData(viewType).renderTexture;
             currentPhoneViewPort = viewPort;
             isUpdateInteract = true;
         }
@@ -297,6 +334,7 @@ namespace GamePlay.Phone
                )
             {
                 var upObj = ExecuteEvents.ExecuteHierarchy(hitUI, pointerData, ExecuteEvents.pointerUpHandler);
+                ExecuteEvents.Execute(lastPressedObject, pointerData, ExecuteEvents.pointerUpHandler);
 
                 // 클릭이 같은 오브젝트에서 발생한 경우 클릭 이벤트 실행
                 if (ReferenceEquals(upObj, lastPressedObject))

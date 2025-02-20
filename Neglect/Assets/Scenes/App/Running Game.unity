@@ -872,7 +872,7 @@ Transform:
   m_GameObject: {fileID: 369168965}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.5, y: -4, z: 0}
+  m_LocalPosition: {x: 8.5, y: -2.94, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1051,7 +1051,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1482410025}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.MiniGame.RunningGame.RunningGame, Assembly-CSharp
         m_MethodName: GamePlay
         m_Mode: 1
@@ -1196,7 +1196,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1482410025}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.MiniGame.MiniGameBase, Assembly-CSharp
         m_MethodName: SetGameSpeed
         m_Mode: 4
@@ -1426,9 +1426,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1482410025}
-        m_TargetAssemblyTypeName: GamePlay.MiniGame.RunningGame.RunningGame, Assembly-CSharp
-        m_MethodName: GamePlay
+      - m_Target: {fileID: 1940000619}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1438,9 +1438,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1940000619}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
+      - m_Target: {fileID: 1407920007}
+        m_TargetAssemblyTypeName: GamePlay.MiniGame.RunningGame.RunningGame, Assembly-CSharp
+        m_MethodName: GamePlay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1526,7 +1526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90fda83a1e2c8b64993250be0683bdcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   IsPause: 0
   LeftPosX: 0
   BackgroundPrefab: {fileID: -6910750901725559448, guid: 9252647228b680743962d556a1430928, type: 3}
@@ -1552,19 +1552,7 @@ MonoBehaviour:
   FloorObject: {fileID: 8433863090479271705}
   ForegroundRender: []
   BackgroundSize: {x: 0, y: 0}
-  ForegroundSize:
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
+  ForegroundSize: []
   FloorSize: {x: 0, y: 0}
   BackgroundSpeed:
     _min: 0
@@ -1590,6 +1578,7 @@ MonoBehaviour:
     _isMax: 1
     isOverMax: 0
     isOverMin: 0
+  backForegroundCount: 3
   CloseFogSpeed:
     _min: 3
     _max: 5
@@ -1634,14 +1623,6 @@ MonoBehaviour:
     _min: 0
     _max: 0
     _current: 0
-    _isMin: 1
-    _isMax: 1
-    isOverMax: 0
-    isOverMin: 0
-  ForegroundCount:
-    _min: 0
-    _max: 13
-    _current: 9
     _isMin: 1
     _isMax: 1
     isOverMax: 0
@@ -1778,7 +1759,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1482410025}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.MiniGame.MiniGameBase, Assembly-CSharp
         m_MethodName: SetGameSpeed
         m_Mode: 4
@@ -1975,18 +1956,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1482410025}
-        m_TargetAssemblyTypeName: GamePlay.MiniGame.MiniGameBase, Assembly-CSharp
-        m_MethodName: GameExit
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1940000619}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
@@ -2679,7 +2648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e8ae5e4d7fc408d9f733c0292166d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   rigidbody2D: {fileID: 0}
   collider2D: {fileID: 0}
   immortalTime:
@@ -2694,6 +2663,7 @@ MonoBehaviour:
   audioSource: {fileID: 917835403}
   life:
     value: 3
+  lifeMax: 5
   healCounting:
     _min: 0
     _max: 5
@@ -2702,7 +2672,7 @@ MonoBehaviour:
     _isMax: 0
     isOverMax: 0
     isOverMin: 0
-  jumpForce: 1.7
+  jumpForce: 2
   jumpTime:
     _min: 0
     _max: 0.7
@@ -2751,8 +2721,8 @@ Transform:
   m_GameObject: {fileID: 769697470}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.87, y: -3.06, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -4.87, y: -0.54, z: 0}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1718808429}
@@ -2953,7 +2923,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1482410025}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.MiniGame.RunningGame.RunningGame, Assembly-CSharp
         m_MethodName: GamePlay
         m_Mode: 1
@@ -3325,7 +3295,7 @@ Transform:
   m_GameObject: {fileID: 1001212946}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -14, y: 0, z: 0}
+  m_LocalPosition: {x: 10.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3365,16 +3335,16 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0, y: 2.99, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7.05, y: 0.75}
-    newSize: {x: 7.05, y: 0.75}
+    oldSize: {x: 7.05, y: 5}
+    newSize: {x: 7.05, y: 5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 7.05, y: 0.75}
+  m_Size: {x: 7.05, y: 5}
   m_EdgeRadius: 0
 --- !u!212 &1001212949
 SpriteRenderer:
@@ -3417,12 +3387,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c25533ca5bedbad46add0dcd13aaa29e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8a2a3f0534631d64b951739cf4211051, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 7.05, y: 0.75}
+  m_Size: {x: 7.05, y: 5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -3598,6 +3568,136 @@ Transform:
   - {fileID: 2104558761}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1407920006
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1407920008}
+  - component: {fileID: 1407920007}
+  m_Layer: 0
+  m_Name: Running Game Control
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1407920007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407920006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3415fd5e6bff43adac080d7ac1941a39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGameStart: 0
+  isGamePlay:
+    value: 1
+  isGameClear:
+    value: 0
+  gameSpeed:
+    value: 1
+  playTime:
+    _min: 0
+    _max: 600
+    _current: 0
+    _isMin: 1
+    _isMax: 0
+    isOverMax: 0
+    isOverMin: 0
+  bgmAudioSource: {fileID: 1988841661}
+  gameName: Running Game
+  appIcon: {fileID: 21300000, guid: 5d216461c6df6b54b9c820a75e9d9367, type: 3}
+  resolution: {x: 600, y: 960}
+  _phone: {fileID: 0}
+  player: {fileID: 769697471}
+  runningGameObjectRoot: {fileID: 1482410024}
+  runningGameCanvasRoot: {fileID: 1900557410}
+  rankEventID: 0
+  settingCanvas: {fileID: 665911811}
+  continueButton: {fileID: 866496667}
+  exitButton: {fileID: 46525685}
+  lobbyCanvas: {fileID: 728180536}
+  lobbyObject: {fileID: 2102759143}
+  lobbyExitButton: {fileID: 576327820}
+  inGameCanvas: {fileID: 1493705817}
+  inGameObject: {fileID: 2146466120}
+  obstacleSpawnerList:
+  - {fileID: 369168967}
+  playerDataArray:
+  - rank: 0
+    score:
+      value: 0
+    name: Player
+    scoreRandomIncreaseTimer:
+      _min: 0
+      _max: 1
+      _current: 0
+      _isMin: 1
+      _isMax: 0
+      isOverMax: 1
+      isOverMin: 0
+    scoreRandomIncrease:
+      _min: 1
+      _max: 5
+    mainColor:
+      value: {r: 1, g: 1, b: 1, a: 1}
+  - rank: 0
+    score:
+      value: 0
+    name: A
+    scoreRandomIncreaseTimer:
+      _min: 0
+      _max: 1
+      _current: 0
+      _isMin: 1
+      _isMax: 0
+      isOverMax: 1
+      isOverMin: 0
+    scoreRandomIncrease:
+      _min: 1
+      _max: 20
+    mainColor:
+      value: {r: 0.7264151, g: 0.5036935, b: 0.5036935, a: 0.8235294}
+  - rank: 0
+    score:
+      value: 0
+    name: B
+    scoreRandomIncreaseTimer:
+      _min: 0
+      _max: 1
+      _current: 0
+      _isMin: 1
+      _isMax: 0
+      isOverMax: 1
+      isOverMin: 0
+    scoreRandomIncrease:
+      _min: 1
+      _max: 20
+    mainColor:
+      value: {r: 0.7254902, g: 0.5019608, b: 0.5019608, a: 0.8235294}
+--- !u!4 &1407920008
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407920006}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 500}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1408324334
 GameObject:
   m_ObjectHideFlags: 0
@@ -3722,7 +3822,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36806c44655f473798babd07c8953f3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   dataBlockPrefab: {fileID: 4086518713116714748, guid: 39cb101b0d4b67346b70262ddc81a767, type: 3}
   blockList: []
 --- !u!1 &1482410024
@@ -3734,104 +3834,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1482410026}
-  - component: {fileID: 1482410025}
   m_Layer: 0
-  m_Name: Running Game Control
+  m_Name: Running Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1482410025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1482410024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3415fd5e6bff43adac080d7ac1941a39, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isGameStart: 0
-  isGamePlay:
-    value: 1
-  isGameClear:
-    value: 0
-  gameSpeed:
-    value: 1
-  playTime:
-    _min: 0
-    _max: 600
-    _current: 0
-    _isMin: 1
-    _isMax: 0
-    isOverMax: 0
-    isOverMin: 0
-  gameName: Running Game
-  appIcon: {fileID: 21300000, guid: 5d216461c6df6b54b9c820a75e9d9367, type: 3}
-  resolution: {x: 600, y: 960}
-  _phone: {fileID: 0}
-  player: {fileID: 769697471}
-  runningGameObjectRoot: {fileID: 1482410024}
-  runningGameCanvasRoot: {fileID: 1900557410}
-  rankEventID: 0
-  settingCanvas: {fileID: 665911811}
-  continueButton: {fileID: 866496667}
-  exitButton: {fileID: 46525685}
-  lobbyCanvas: {fileID: 728180536}
-  lobbyObject: {fileID: 2102759143}
-  inGameCanvas: {fileID: 1493705817}
-  inGameObject: {fileID: 2146466120}
-  obstacleSpawnerList:
-  - {fileID: 369168967}
-  playerDataArray:
-  - rank: 0
-    score:
-      value: 0
-    name: Player
-    scoreRandomIncreaseTimer:
-      _min: 0
-      _max: 1
-      _current: 0
-      _isMin: 1
-      _isMax: 0
-      isOverMax: 1
-      isOverMin: 0
-    scoreRandomIncrease:
-      _min: 0
-      _max: 0
-  - rank: 0
-    score:
-      value: 0
-    name: A
-    scoreRandomIncreaseTimer:
-      _min: 0
-      _max: 1
-      _current: 0
-      _isMin: 1
-      _isMax: 0
-      isOverMax: 1
-      isOverMin: 0
-    scoreRandomIncrease:
-      _min: 10
-      _max: 30
-  - rank: 0
-    score:
-      value: 0
-    name: B
-    scoreRandomIncreaseTimer:
-      _min: 0
-      _max: 1
-      _current: 0
-      _isMin: 1
-      _isMax: 0
-      isOverMax: 1
-      isOverMin: 0
-    scoreRandomIncrease:
-      _min: 10
-      _max: 30
 --- !u!4 &1482410026
 Transform:
   m_ObjectHideFlags: 0
@@ -4324,6 +4333,7 @@ Transform:
   m_Children:
   - {fileID: 332199833}
   - {fileID: 1940000618}
+  - {fileID: 1988841660}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1728156903
@@ -4553,7 +4563,7 @@ Transform:
   m_GameObject: {fileID: 1938707716}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.5684807, y: 0, z: 4}
+  m_LocalPosition: {x: 0, y: 0, z: 4}
   m_LocalScale: {x: 2.5, y: 2.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4571,8 +4581,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 0}
   MoveSpeed: 5
+  groundType: 0
 --- !u!212 &1938707719
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4672,6 +4683,134 @@ AudioSource:
   m_Volume: 1
   m_Pitch: 0.45
   Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!1 &1988841659
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1988841660}
+  - component: {fileID: 1988841661}
+  m_Layer: 5
+  m_Name: BGM
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1988841660
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988841659}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1723294524}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1988841661
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988841659}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 7652731844232186672, guid: 5e495dbe377bc944db5acb4e48371758, type: 2}
+  m_audioClip: {fileID: 8300000, guid: 6cdc9a01d287b7e45a4d1eefb10e6b6b, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -4880,6 +5019,9 @@ MonoBehaviour:
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
   m_ScrollDeltaPerTick: 6
+  excludeLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &2104558763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4982,16 +5124,16 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0, y: 2.99, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7.05, y: 0.75}
-    newSize: {x: 7.05, y: 0.75}
+    oldSize: {x: 7.05, y: 5}
+    newSize: {x: 7.05, y: 5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 7.05, y: 0.75}
+  m_Size: {x: 7.05, y: 5}
   m_EdgeRadius: 0
 --- !u!4 &388955597309214519
 Transform:
@@ -5002,8 +5144,8 @@ Transform:
   m_GameObject: {fileID: 3859517307136180977}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.389999, y: -4.8, z: 2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 25.03, y: -4.2, z: 2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 541177624}
@@ -5146,16 +5288,16 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0, y: 2.99, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7.05, y: 0.75}
-    newSize: {x: 7.05, y: 0.75}
+    oldSize: {x: 7.05, y: 5}
+    newSize: {x: 7.05, y: 5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 7.05, y: 0.75}
+  m_Size: {x: 7.05, y: 5}
   m_EdgeRadius: 0
 --- !u!114 &792962643619924550
 MonoBehaviour:
@@ -5169,8 +5311,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   MoveSpeed: 0
+  groundType: 0
 --- !u!1 &904407814659243706
 GameObject:
   m_ObjectHideFlags: 0
@@ -5201,8 +5344,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   MoveSpeed: 0
+  groundType: 0
 --- !u!4 &1090714001841761062
 Transform:
   m_ObjectHideFlags: 0
@@ -5212,8 +5356,8 @@ Transform:
   m_GameObject: {fileID: 904407814659243706}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 26.74, y: -4.8, z: 2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 42.75, y: -4.2, z: 2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 541177624}
@@ -5230,8 +5374,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   MoveSpeed: 0
+  groundType: 0
 --- !u!212 &1266936720348692922
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5293,8 +5438,8 @@ Transform:
   m_GameObject: {fileID: 2640148945043311773}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.1600003, y: -4.8, z: 2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 12.21, y: -4.2, z: 2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 541177624}
@@ -5340,12 +5485,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c25533ca5bedbad46add0dcd13aaa29e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8a2a3f0534631d64b951739cf4211051, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 7.05, y: 0.75}
+  m_Size: {x: 7.05, y: 5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -5363,8 +5508,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   MoveSpeed: 0
+  groundType: 0
 --- !u!1 &2045469012536601274
 GameObject:
   m_ObjectHideFlags: 0
@@ -5392,8 +5538,8 @@ Transform:
   m_GameObject: {fileID: 2591722848271133769}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.39, y: -4.8, z: 2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 29.1, y: -4.2, z: 2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 541177624}
@@ -5495,7 +5641,7 @@ Transform:
   m_GameObject: {fileID: 5687893634726012189}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5617,8 +5763,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   MoveSpeed: 0
+  groundType: 0
 --- !u!114 &3602135016619407574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5631,8 +5778,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   MoveSpeed: 0
+  groundType: 0
 --- !u!212 &3751134231515446639
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5789,16 +5937,16 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0, y: 2.99, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7.05, y: 0.75}
-    newSize: {x: 7.05, y: 0.75}
+    oldSize: {x: 7.05, y: 5}
+    newSize: {x: 7.05, y: 5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 7.05, y: 0.75}
+  m_Size: {x: 7.05, y: 5}
   m_EdgeRadius: 0
 --- !u!114 &4233009003646544706
 MonoBehaviour:
@@ -5812,8 +5960,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   MoveSpeed: 0
+  groundType: 0
 --- !u!212 &4360433957479032733
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5855,12 +6004,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c25533ca5bedbad46add0dcd13aaa29e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8a2a3f0534631d64b951739cf4211051, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 7.05, y: 0.75}
+  m_Size: {x: 7.05, y: 5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -5878,8 +6027,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   MoveSpeed: 0
+  groundType: 0
 --- !u!1 &4953780594165367728
 GameObject:
   m_ObjectHideFlags: 0
@@ -5907,8 +6057,8 @@ Transform:
   m_GameObject: {fileID: 7819525347738616832}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7, y: -4.8, z: 2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -7, y: -4.2, z: 2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 541177624}
@@ -5922,8 +6072,8 @@ Transform:
   m_GameObject: {fileID: 7831439952749687717}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20.17, y: -4.8, z: 2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 32.13, y: -4.2, z: 2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 541177624}
@@ -5940,8 +6090,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   MoveSpeed: 0
+  groundType: 0
 --- !u!1 &5278592423579988147
 GameObject:
   m_ObjectHideFlags: 0
@@ -5969,8 +6120,8 @@ Transform:
   m_GameObject: {fileID: 5278592423579988147}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.19000006, y: -4.8, z: 2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 2.44, y: -4.2, z: 2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 541177624}
@@ -6002,7 +6153,7 @@ Transform:
   m_GameObject: {fileID: 2045469012536601274}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7, y: 0, z: 0}
+  m_LocalPosition: {x: -3.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6017,8 +6168,8 @@ Transform:
   m_GameObject: {fileID: 7488691029207146545}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.1100001, y: -4.8, z: 2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 6.95, y: -4.2, z: 2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 541177624}
@@ -6050,8 +6201,8 @@ Transform:
   m_GameObject: {fileID: 7070358572649414895}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 23.419998, y: -4.8, z: 2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 37.18, y: -4.2, z: 2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 541177624}
@@ -6068,8 +6219,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   MoveSpeed: 0
+  groundType: 0
 --- !u!212 &6825277051171398037
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6201,8 +6353,8 @@ Transform:
   m_GameObject: {fileID: 5489747723113449764}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.619999, y: -4.8, z: 2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 20.27, y: -4.2, z: 2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 541177624}
@@ -6219,8 +6371,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   MoveSpeed: 0
+  groundType: 0
 --- !u!1 &7488691029207146545
 GameObject:
   m_ObjectHideFlags: 0
@@ -6280,12 +6433,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c25533ca5bedbad46add0dcd13aaa29e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8a2a3f0534631d64b951739cf4211051, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 7.05, y: 0.75}
+  m_Size: {x: 7.05, y: 5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -6300,7 +6453,7 @@ Transform:
   m_GameObject: {fileID: 35237759855372413}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7, y: 0, z: 0}
+  m_LocalPosition: {x: -10.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6351,8 +6504,8 @@ Transform:
   m_GameObject: {fileID: 8433863090479271704}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.83, y: -4.5, z: 0}
-  m_LocalScale: {x: 1.3, y: 1.3, z: 1}
+  m_LocalPosition: {x: 0, y: -5.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2861145742861524348}
@@ -6474,8 +6627,8 @@ Transform:
   m_GameObject: {fileID: 4953780594165367728}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.3599997, y: -4.8, z: 2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -2.13, y: -4.2, z: 2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 541177624}
@@ -6509,8 +6662,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 0}
   MoveSpeed: 0
+  groundType: 0
 --- !u!4 &8790924270503833293
 Transform:
   m_ObjectHideFlags: 0
@@ -6520,8 +6674,8 @@ Transform:
   m_GameObject: {fileID: 8813623131969616721}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.049999, y: -4.8, z: 2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 16.7, y: -4.2, z: 2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 541177624}
@@ -6538,8 +6692,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   MoveSpeed: 0
+  groundType: 0
 --- !u!1 &8813623131969616721
 GameObject:
   m_ObjectHideFlags: 0
@@ -6566,3 +6721,4 @@ SceneRoots:
   - {fileID: 1900557411}
   - {fileID: 1482410026}
   - {fileID: 1723294524}
+  - {fileID: 1407920008}

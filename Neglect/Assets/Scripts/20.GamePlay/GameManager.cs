@@ -15,6 +15,8 @@ namespace GamePlay
         public MinMaxValue<float> playTimer = new(0, 0, 60 * 10);
         
         [Tooltip("방해 이벤트를 초기화(시작)했는지")] public bool isInitQuest = false;
+
+        public PostProcessingUtility realVolumeControl;
         
         public void Awake()
         {

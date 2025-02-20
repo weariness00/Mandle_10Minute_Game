@@ -32,7 +32,7 @@ public static class PhoneUtil
     {
         if(currentPhone == null) return;
 
-        foreach (var transform in obj.GetComponentsInChildren<Transform>())
+        foreach (var transform in obj.GetComponentsInChildren<Transform>(true))
         {
             transform.gameObject.layer = LayerMask.NameToLayer("Phone");
         }

@@ -33,16 +33,14 @@ namespace Quest
         {
             subscription?.Dispose();
             state = QuestState.Failed;
+            
+            QuestManager.Instance.Remove(this);
 
             if (eventData.ignoreEvent != null)
             {
                 var quest = QuestDataList.Instance.InstantiateEvent(eventData.ignoreEvent.id);
                 quest.eventData = eventData.ignoreEvent;
                 quest.Play();
-            }
-            else
-            {
-                QuestManager.Instance.isQuestStart = true;
             }
         }
 
@@ -56,16 +54,12 @@ namespace Quest
         {
             subscription?.Dispose();
             state = QuestState.Completed;
-
+            QuestManager.Instance.Remove(this);
             if (eventData.acceptEvent != null)
             {
                 var quest = QuestDataList.Instance.InstantiateEvent(eventData.acceptEvent.id);
                 quest.eventData = eventData.acceptEvent;
                 quest.Play();
-            }
-            else
-            {
-                QuestManager.Instance.isQuestStart = true;
             }
         }
     }

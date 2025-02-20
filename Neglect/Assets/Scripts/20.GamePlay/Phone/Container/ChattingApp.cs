@@ -6,7 +6,7 @@ namespace GamePlay.Phone
     public partial class ChattingApp : MonoBehaviour
     {
         [Header("채팅 관련")] 
-        [SerializeField] private ChatConversation chatting;
+        [SerializeField] private Conversation chatting;
     }
 
     public partial class ChattingApp : IPhoneApplication
@@ -16,7 +16,8 @@ namespace GamePlay.Phone
         [SerializeField] private Sprite icon;
         [SerializeField] private Vector2Int verticalResolution;
         [SerializeField] private PhoneControl _phone;
-        
+        public AppState AppState { get; set; }
+
         public string AppName => appName;
         public Sprite AppIcon { get => icon; set => icon =value; }
         public Vector2Int VerticalResolution { get => verticalResolution; set => verticalResolution = value; }
@@ -27,6 +28,7 @@ namespace GamePlay.Phone
             _phone = phone;
 
             chatting.canvas.worldCamera = _phone.phoneCamera;
+            chatting.backButton.onClick.AddListener(() => phone.applicationControl.CloseApp(this));
             
             chatting.gameObject.SetActive(false);
         }
@@ -34,13 +36,13 @@ namespace GamePlay.Phone
         public void AppPlay(PhoneControl phone)
         {
             chatting.gameObject.SetActive(true);
-            chatting.CallStart();
+            chatting.Init();
         }
 
         public void AppResume(PhoneControl phone)
         {
             chatting.gameObject.SetActive(true);
-            chatting.CallStart();
+            chatting.Init();
         }
 
         public void AppPause(PhoneControl phone)

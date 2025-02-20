@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using Util;
-using Random = UnityEngine.Random;
 
 namespace Quest
 {
@@ -15,6 +13,8 @@ namespace Quest
         
         [SerializeField] [Tooltip("퀘스트 데이터 테이블")] private EventData[] eventDataArray;
         [SerializeField] [Tooltip("퀘스트 로직이 담긴 프리펩")] private QuestBase[] questArray;
+        
+        public MinMaxValue<float> questSpawnTimer = new(0, 0, 30,true,true);
 
         public QuestBase InstantiateEvent(int id)
         {
@@ -41,6 +41,8 @@ namespace Quest
             quest.eventData = data;
             return quest;
         }
+
+        public EventData[] GetAllEvent() => eventDataArray;
         
         public QuestBase GetQuestID(int id)
         {
@@ -100,28 +102,35 @@ namespace Quest
             }
             
             Array.Sort(eventDataArray, (a,b) => a.id.CompareTo(b.id));
-
+            
             foreach (var csv in eventCSV)
             {
-                var id = csv.DynamicCast<int>("EventID");
+                var id = csv.DynamicCast<int>("EventID", -1);
+                if(id == -1) continue;
                 var textList = csv.DynamicCast<int[]>("TextListID", Array.Empty<int>());
                 var data = GetEventID(id);
-                data.level = (QuestLevel)csv.DynamicCast<int>("Level", -1);
+                data.level = LevelToInt(csv.DynamicCast("Level", ""));
                 data.prefab = GetQuestID(csv.DynamicCast<int>("PrefabID", -1));
-                data.textArray = questTextArray.Where(d => textList.FirstOrDefault(ti => ti == d.id) != 0).Select(d => d.text).ToArray();
 
                 data.acceptEvent = GetEventID(csv.DynamicCast<int>("AcceptEventID", -1));
                 data.ignoreEvent = GetEventID(csv.DynamicCast<int>("IgnoreEventID", -1));
                 
+                data.textArray = questTextArray.Where(d => textList.FirstOrDefault(ti => ti == d.id) != 0).Select(d => d.text).ToArray();
+    
+                data.extraDataIDArray = csv.DynamicCast("ExtraDataID", Array.Empty<int>());
+                
                 Debug.Assert(data.prefab != null, "Event Data에 프리펩이 존재하지 않습니다.");
             }
 
-            //후속 이벤트들 할당
-            for (var i = 0; i < eventCSV.Count; i++)
+            QuestLevel LevelToInt(string level)
             {
-                var csv = eventCSV[i];
-                eventDataArray[i].acceptEvent = GetEventID(csv.DynamicCast<int>("AcceptEventID", -1));
-                eventDataArray[i].ignoreEvent = GetEventID(csv.DynamicCast<int>("IgnoreEventID", -1));
+                if (level == "쉬움")
+                    return QuestLevel.Easy;
+                if (level == "중간")
+                    return QuestLevel.Normal;
+                if (level == "어려움")
+                    return QuestLevel.Hard;
+                return QuestLevel.None;
             }
         }
 

@@ -16,18 +16,30 @@ namespace GamePlay.PopUp
 
         public MMF_Player ShowNotificationMMF; //알림 show
         public MMF_Player HideNotificationMMF; //알림 hide
+        public MMF_Player ChargingStartMMF;
         public Action IgnoreAction;
         public PhoneControl phone;
 
         public TextMeshProUGUI BetteryText;
+        public TextMeshProUGUI ChargingText;
+        public int energy;
         public void OnEnable()
         {
             ShowNotificationMMF.PlayFeedbacks();    
         }
 
-        public void SettingBetteryText(string bettery)
+        public void SettingBetteryText(int bettery)
         {
-            BetteryText.text = bettery +"%";
+            energy = bettery;
+            BetteryText.text = bettery.ToString() +"%";
+            ChargingText.text = "배터리가 부족합니다.\n충전해주세요.";
+        }
+
+        public void ChargingStart() //충전기가 complete 작동 -> chartgingStart - > hideanimation -> destory
+        {
+            BetteryText.gameObject.SetActive(false);
+            ChargingText.text = "충전중" + energy +"%\n";
+            ChargingStartMMF.PlayFeedbacks();
         }
 
         public void ChargerIgone()

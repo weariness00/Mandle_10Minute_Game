@@ -51,19 +51,23 @@ namespace GamePlay.Talk
                 Array.Sort(talkingDataArray, (a,b) => a.id.CompareTo(b.id));
                 foreach (var data in csv)
                 {
-                    var talkID = data.DynamicCast<int>("TalkingID");
-                    var mainTextID = data.DynamicCast<int>("MainTextID");
-                    var positiveTextIDArray = data.DynamicCast<int[]>("PositiveTextList", Array.Empty<int>());
-                    var negativeTextIDArray = data.DynamicCast<int[]>("NegativeTextList", Array.Empty<int>());
-                    var positiveTalkID = data.DynamicCast<int>("PositiveTalkID");
-                    var negativeTalkID = data.DynamicCast<int>("NegativeTalkID");
+                    var talkID = data.DynamicCast("TalkingID", -1);
+                    var mainTextID = data.DynamicCast("MainTextID", -1);
+                    var positiveTextIDArray = data.DynamicCast("PositiveTextList", Array.Empty<int>());
+                    var negativeTextIDArray = data.DynamicCast("NegativeTextList", Array.Empty<int>());
+                    var positiveTalkID = data.DynamicCast("PositiveTalkID", -1);
+                    var negativeTalkID = data.DynamicCast("NegativeTalkID", -1);
+                    var positiveScore = data.DynamicCast("PositiveValue", 0);
+                    var negativeScore = data.DynamicCast("NegativeValue", 0);
 
                     var talk = GetTalkData(talkID);
                     talk.mainText = textDataDictionary[mainTextID];
                     talk.positiveTextArray = positiveTextIDArray.Select(id => textDataDictionary[id]).ToArray();
                     talk.negativeTextArray = negativeTextIDArray.Select(id => textDataDictionary[id]).ToArray();
-                    talk.positiveResultTalk = GetTalkData(positiveTalkID);
-                    talk.negativeResultTalk = GetTalkData(negativeTalkID);
+                    talk.positiveResultTalkID = positiveTalkID;
+                    talk.negativeResultTalkID = negativeTalkID;
+                    talk.positiveScore = positiveScore;
+                    talk.negativeScore = negativeScore;
                 }
             }
             
@@ -74,6 +78,7 @@ namespace GamePlay.Talk
 #endif
     }
 
+#if UNITY_EDITOR
     [CustomEditor(typeof(TalkingScriptableObject))]
     public class TalkingScriptableObjectEditor : Editor
     {
@@ -88,4 +93,5 @@ namespace GamePlay.Talk
             }
         }
     }
+#endif
 }

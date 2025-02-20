@@ -420,6 +420,9 @@ MonoBehaviour:
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
   m_ScrollDeltaPerTick: 6
+  excludeLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1514620097
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,7 +500,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -514,7 +517,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4971278386517485394}
+  - {fileID: 1582449309202923408}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -522,7 +525,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1001 &4957593609539297458
+--- !u!1001 &1081768145995670352
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -538,6 +541,18 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 56852657265157224, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 1726489675155309029, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4323214860250367351, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -237
+      objectReference: {fileID: 0}
     - target: {fileID: 4441662835322059515, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -545,6 +560,14 @@ PrefabInstance:
     - target: {fileID: 4441662835322059515, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4441662835322059515, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 160
+      objectReference: {fileID: 0}
+    - target: {fileID: 4928818977703317395, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5334976221854886427, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
       propertyPath: m_AnchorMax.y
@@ -667,10 +690,10 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
---- !u!224 &4971278386517485394 stripped
+--- !u!224 &1582449309202923408 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5852731576706408226, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
-  m_PrefabInstance: {fileID: 4957593609539297458}
+  m_PrefabInstance: {fileID: 1081768145995670352}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5395244887852054000
 PrefabInstance:

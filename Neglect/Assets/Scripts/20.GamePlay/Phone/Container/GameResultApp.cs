@@ -18,7 +18,8 @@ namespace GamePlay.Phone.Container
         [SerializeField] private Sprite icon;
         [SerializeField] private Vector2Int verticalResolution;
         [SerializeField] private PhoneControl _phone;
-        
+        public AppState AppState { get; set; }
+
         public string AppName => appName;
         public Sprite AppIcon { get => icon; set => icon =value; }
         public Vector2Int VerticalResolution { get => verticalResolution; set => verticalResolution = value; }
@@ -35,6 +36,7 @@ namespace GamePlay.Phone.Container
         public void AppPlay(PhoneControl phone)
         {
             questResult.Init();
+            _phone.PhoneViewRotate(PhoneViewType.Vertical);
         }
 
         public void AppResume(PhoneControl phone)

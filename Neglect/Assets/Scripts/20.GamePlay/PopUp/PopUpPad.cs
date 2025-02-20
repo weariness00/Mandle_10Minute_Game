@@ -1,4 +1,5 @@
 ﻿using MoreMountains.Feedbacks;
+using System;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -6,6 +7,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Util;
 
 namespace GamePlay.PopUp
 {
@@ -14,6 +16,8 @@ namespace GamePlay.PopUp
         public bool isClick;
         [Tooltip("얼마만큼 움직여야 팝업이 제거되는지")] public Vector2 destroyMoveDistance = new(300,100);
         [Tooltip("팝업이 제거될때 동작 하는 이벤트")] public UnityEvent destroyPopUpEvent;
+
+        public MinMaxValue<float> destroyTimer = new(0,0,15);
 
         [Header("UI Object")] 
         public Button button;
@@ -36,6 +40,13 @@ namespace GamePlay.PopUp
             rectTransform.anchoredPosition = Vector2.zero;
             
             button.onClick.AddListener(() => Destroy(gameObject));
+        }
+
+        public void Update()
+        {
+            destroyTimer.Current += Time.deltaTime;
+            if(destroyTimer.IsMax)
+                Destroy(gameObject);
         }
 
         public void OnEnable()

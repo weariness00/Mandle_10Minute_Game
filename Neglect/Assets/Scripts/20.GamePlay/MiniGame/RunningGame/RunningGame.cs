@@ -32,6 +32,7 @@ namespace GamePlay.MiniGame.RunningGame
         [Header("Lobby 관련")] 
         public Canvas lobbyCanvas;
         public GameObject lobbyObject;
+        public Button lobbyExitButton;
         
         [Header("In Game 관련")]
         public Canvas inGameCanvas;
@@ -109,6 +110,8 @@ namespace GamePlay.MiniGame.RunningGame
             [SerializeField] private MinMaxValue<float> scoreRandomIncreaseTimer = new(0, 0, 1, false, true);
             [SerializeField] private MinMax<int> scoreRandomIncrease = new(0,0);
 
+            public ReactiveProperty<Color> mainColor = new (Color.white);
+
             public void RandomIncreaseScore(float deltaTime)
             {
                 scoreRandomIncreaseTimer.Current += deltaTime;
@@ -123,7 +126,7 @@ namespace GamePlay.MiniGame.RunningGame
 
         public void UpdatePlayerData()
         {
-            for (var i = 1; i < playerDataArray.Length; i++)
+            for (var i = 0; i < playerDataArray.Length; i++)
             {
                 var data = playerDataArray[i];
                 data.RandomIncreaseScore(Time.deltaTime * gameSpeed.Value);
@@ -172,10 +175,8 @@ namespace GamePlay.MiniGame.RunningGame
             runningGameCanvasRoot.gameObject.SetActive(false);
             
             // 나가기 누르면 앱으로 이동 ( 게임은 종료되지 않음 )
-            exitButton.onClick.AddListener(() =>
-            {
-                phone.applicationControl.OnHome();
-            });
+            exitButton.onClick.AddListener(phone.applicationControl.OnHome);
+            lobbyExitButton.onClick.AddListener(phone.applicationControl.OnHome);
         }
 
         public override void AppPlay(PhoneControl phone)

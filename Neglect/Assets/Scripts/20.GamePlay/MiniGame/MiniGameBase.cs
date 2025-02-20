@@ -9,12 +9,15 @@ namespace GamePlay.MiniGame
 {
     public partial class MiniGameBase : MonoBehaviour
     {
+        [Header("공통 사항")]
         public bool isGameStart = false;
         public ReactiveProperty<bool> isGamePlay = new(true);
         public ReactiveProperty<bool> isGameClear = new(false);
         public ReactiveProperty<float> gameSpeed = new(1f);
         [SerializeField] protected MinMaxValue<float> playTime = new(0, 0, 60 * 10);
 
+        [Space] 
+        public AudioSource bgmAudioSource;
         public virtual void Awake()
         {
             playTime.SetMin();
@@ -42,11 +45,14 @@ namespace GamePlay.MiniGame
         {
             isGamePlay.Value = true;
             isGameStart = true;
+            
+            bgmAudioSource.Play();
         }
 
         public virtual void GameStop()
         {
             isGamePlay.Value = false;
+            bgmAudioSource.Pause();
         }
 
         public virtual void GameOver()
@@ -86,6 +92,7 @@ namespace GamePlay.MiniGame
         public Sprite AppIcon { get => appIcon; set => appIcon = value; }
         public Vector2Int VerticalResolution { get => resolution; set => resolution = value; }
         public PhoneControl Phone => _phone;
+        public AppState AppState { get; set; }
 
         public virtual void AppInstall(PhoneControl phone)
         {
@@ -98,10 +105,16 @@ namespace GamePlay.MiniGame
                     canvas.worldCamera = phone.phoneCamera;
                 }
             }
+
+            var home = _phone.applicationControl.GetHomeApp();
+            home.GetAppButton(this).highlightObject.SetActive(true);
         }
 
         public virtual void AppPlay(PhoneControl phone)
         {
+            var home = _phone.applicationControl.GetHomeApp();
+            home.GetAppButton(this).highlightObject.SetActive(false);
+
             if (GameManager.Instance.isInitQuest == false)
             {
                 GameManager.Instance.isInitQuest = true;

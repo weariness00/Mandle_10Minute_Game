@@ -1,7 +1,9 @@
 using GamePlay.Phone;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -11,7 +13,7 @@ namespace GamePlay.Event
     public class PasswordToLine : MonoBehaviour
     {
         public PhoneControl phone;
-        public Action ClearAction;
+        public Action completeAction;
         public RectTransform canvasRect;
         [Header("정답 패스워드")]
         public List<int> answerPassword;
@@ -26,26 +28,28 @@ namespace GamePlay.Event
         public List<int> inputPassword = new List<int>(); //현재 입력받은 패스워드
 
         [Tooltip("드래그 탐지 범위")]
-        public double DetectedRange = 0.3f; // 점과 마우스사이 탐지 범위
         private bool IsCrack = false; // 패스워드 푸는 중인지 
         private int CurrentView = 0; //현재 화면
 
         public TextMeshProUGUI HintText;
 
+        private bool isInit = false;
 
         public void Awake()
         {
-            Init();
+            inputPassword.Clear();
+            LineClear();
         }
         //패스워드
         public void Init()
         {
+            isInit = true;
             IsCrack = false;
             inputPassword.Clear();
             LineClear();
         }
 
-        public void SettingEvent(List<int> password)
+        public void SetPassword(List<int> password)
         {
             var realPassword = new List<int>(password);
 
@@ -54,7 +58,7 @@ namespace GamePlay.Event
             {
                 // 1 -> 3 이면 1 -> 2 -> 3 이렇게 되게 해준다.
                 bool isHas = false;
-                for (int i = 0; i < lastIndex - 1; i++)
+                for (int i = 0; i < lastIndex; i++)
                 {
                     if (password[i] == value)
                     {
@@ -177,20 +181,24 @@ namespace GamePlay.Event
 
         public void Update()
         {
+            if(!isInit) return;
+            
             if (Mouse.current.leftButton.isPressed && IsCrack)
             {
                 LineDraw();
-                
             }
             
-            if (Mouse.current.leftButton.wasReleasedThisFrame)
+            if (Mouse.current.leftButton.wasReleasedThisFrame && inputPassword.Count > 0)
             {
-
                 IsCrack = false;
                 if (PasswordCheck())
                 {
-                    ClearAction?.Invoke();  //클리어
+                    completeAction?.Invoke();  //클리어
                     //Destroy(gameObject);
+                }
+                else
+                {
+                    if(phone) phone.PhoneVibration();
                 }
                 inputPassword.Clear();
                 LineClear();
@@ -233,22 +241,17 @@ namespace GamePlay.Event
         }  //라인 클리어
         public bool PasswordCheck()  //입력 비밀번호랑 정답 비밀번호랑 비교
         {
-            bool flag = true;
-            if (answerPassword.Count != inputPassword.Count)
-            {
+            if (answerPassword.Count == 0 || answerPassword.Count != inputPassword.Count)
                 return false;
-            }
 
             for (int i = 0; i < inputPassword.Count; i++)
             {
                 if (inputPassword[i] != answerPassword[i])
                 {
-                    flag = false;
-                    break;
+                    return false;
                 }
             }
-
-            return flag;
+            return true;
         }
 
 
@@ -273,4 +276,29 @@ namespace GamePlay.Event
 
 
     }
+
+#if UNITY_EDITOR
+
+    [CustomEditor(typeof(PasswordToLine))]
+    public class PasswordToLineEditor : Editor
+    {
+        private string passwordSTR;
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+
+            var script = target as PasswordToLine;
+
+            if (EditorApplication.isPlaying)
+            {
+                passwordSTR = EditorGUILayout.TextField("패스워드 리스트", passwordSTR);
+                if (GUILayout.Button("패스워드 입력 ex) 1 2 3 4"))
+                {
+                    var password = passwordSTR.Split(' ').Select(int.Parse).ToList();
+                    script.SetPassword(password);
+                }
+            }
+        }
+    }
+#endif
 }

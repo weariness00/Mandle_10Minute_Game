@@ -4,6 +4,9 @@ namespace Util
 {
     public static class MathExtension
     {
+        public static float GetNearValue(this float value, float min, float max) => Mathf.Abs(value - min) < Mathf.Abs(value - max) ? min : max;
+        public static float GetFarValue(this float value, float min, float max) => Mathf.Abs(value - min) > Mathf.Abs(value - max) ? min : max;
+        
         public static bool CompareVector3(Vector3 a, Vector3 b, float tolerance = 0.001f)
         {
             return
