@@ -10,6 +10,7 @@ using GamePlay.Event;
 using UnityEditor;
 using UnityEngine.Serialization;
 using Util;
+using GamePlay.Container;
 
 namespace GamePlay.Phone
 {
@@ -70,7 +71,8 @@ namespace GamePlay.Phone
         {
             password.completeAction += PasswordClear;
             password.Init();
-
+            
+            TradeHistoryInit();//거래 내역 초기화
         }
 
         // 패스워드 초기화
@@ -181,7 +183,7 @@ namespace GamePlay.Phone
                 for (int i = 0; i < KeyPad_objects.Count; i++)
                     KeyPad_Image.Add(KeyPad_objects[i].GetComponent<Image>());
             }
-            if (CurrentView == 3)
+            if (CurrentView != 2 && CurrentView != 3)
                 return;
             if (p == true && !IsKeyPad)
             {
@@ -233,6 +235,7 @@ namespace GamePlay.Phone
             if (Amountdifference == 0)
             {
                 resultText.text = $"{PassbookOwner}님에게\n{InputAmount}을 송금했습니다.";
+                HistoryUpload(2, InputAmount); 
                 completeAction?.Invoke();
             }
             else
@@ -279,6 +282,8 @@ namespace GamePlay.Phone
                 SetAccount();
                 KeyPadMove(false);
             }
+            if(index == 1)
+                KeyPadMove(false);
             CurrentView = index;
         }
 
@@ -330,6 +335,28 @@ namespace GamePlay.Phone
                 }
             }
             SetText();
+        }
+    }
+    public partial class BankApp //새로 추가한 거래내역 확인 
+    {
+        public TradeHistoryBox[] HistroyBoxs = new TradeHistoryBox[2]; // 입금하기 전 거래 내역 = 최근 거래내역이 없습니다. 
+        public TextMeshProUGUI depositText; //입급한 금액
+        public TextMeshProUGUI withdrawalText;
+
+       
+        public void TradeHistoryInit() //거래 내역 초기화
+        {
+            HistroyBoxs[0].BoxDataSetting(0, 123); //123 더미데이터
+            HistroyBoxs[1].BoxDataSetting(-1, 123); //123 더미데이터
+        }
+
+        //HistoryUpload(2 , 100000); 입금 100000표시   
+        public void HistoryUpload(int type , int amount)
+        {
+            HistroyBoxs[1].BoxDataCopy(HistroyBoxs[0]); // 아래로 보내기
+
+            HistroyBoxs[0].BoxDataSetting(type, amount);
+            // -1=빈박스/  0= 거래내역이 없습니다. / 1= 출금 / 2= 입금
         }
     }
     public partial class BankApp : IPhoneApplication
