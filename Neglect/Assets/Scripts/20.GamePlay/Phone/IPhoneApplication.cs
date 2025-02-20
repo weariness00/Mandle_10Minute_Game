@@ -9,7 +9,8 @@ namespace GamePlay.Phone
         public Vector2Int VerticalResolution { get; set; }
         public PhoneControl Phone { get; }
         public AppState AppState { get; set; }
-        
+
+        public void SetActiveBackground(bool value);
         public void AppInstall(PhoneControl phone); // 앱 처음 설치시
         public void AppPlay(PhoneControl phone); // 앱 시작시
         public void AppResume(PhoneControl phone); // 앱 중단후 시작시

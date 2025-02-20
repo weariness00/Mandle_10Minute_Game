@@ -25,6 +25,8 @@ namespace Quest.Container
             app = phone.applicationControl.currentPlayApplication;
             phone.applicationControl.PauseApp(app);
             phone.PhoneViewRotate(0);
+            app.SetActiveBackground(true);
+            
             calls.name.text = eventData.textArray.Length == 0 ? "mom" : eventData.textArray[0];
             calls.ClearAction += Complete;
             calls.IgnoreAction += Ignore;

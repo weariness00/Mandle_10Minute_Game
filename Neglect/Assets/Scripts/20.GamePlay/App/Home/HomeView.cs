@@ -100,6 +100,12 @@ namespace GamePlay.Phone
         public Vector2Int VerticalResolution { get => verticalResolution; set => verticalResolution = value; }
         public PhoneControl Phone => _phone;
 
+        public void SetActiveBackground(bool value)
+        {
+            mainCanvas.gameObject.SetActive(value);
+            interfaceRectTransform.gameObject.SetActive(value);
+        }
+        
         public void AppInstall(PhoneControl phone)
         {
             _phone = phone;

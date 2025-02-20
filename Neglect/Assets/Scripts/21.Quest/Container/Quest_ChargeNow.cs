@@ -40,6 +40,7 @@ public class Quest_ChargeNow : QuestBase
 
         app = phone.applicationControl.currentPlayApplication;
         phone.applicationControl.PauseApp(app);
+        app.SetActiveBackground(true);
    
         ChargerPopup.SettingBetteryText(15);
         Charger.ClearAction += Complete;

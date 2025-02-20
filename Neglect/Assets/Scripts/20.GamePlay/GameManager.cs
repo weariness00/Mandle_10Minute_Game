@@ -60,11 +60,6 @@ namespace GamePlay
             });
         }
 
-        public void Start()
-        {
-            isGameStart.Value = true;
-        }
-
         public void Update()
         {
             if (isGameStart.Value && !isGameClear.Value)

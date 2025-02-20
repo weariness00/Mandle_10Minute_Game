@@ -13,6 +13,11 @@ namespace Util
         {
             Initialize(min, max);
         }
+
+        public UniqueRandom(List<int> list)
+        {
+            _uniqueIntList = list;
+        }
         
         private List<int> _uniqueIntList;
 

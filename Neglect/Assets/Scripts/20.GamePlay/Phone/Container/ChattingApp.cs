@@ -23,6 +23,11 @@ namespace GamePlay.Phone
         public Vector2Int VerticalResolution { get => verticalResolution; set => verticalResolution = value; }
         public PhoneControl Phone => _phone;
 
+        public void SetActiveBackground(bool value)
+        {
+            chatting.gameObject.SetActive(value);
+        }
+
         public void AppInstall(PhoneControl phone)
         {
             _phone = phone;
@@ -30,29 +35,29 @@ namespace GamePlay.Phone
             chatting.canvas.worldCamera = _phone.phoneCamera;
             chatting.backButton.onClick.AddListener(() => phone.applicationControl.CloseApp(this));
             
-            chatting.gameObject.SetActive(false);
+            SetActiveBackground(false);
         }
 
         public void AppPlay(PhoneControl phone)
         {
-            chatting.gameObject.SetActive(true);
+            SetActiveBackground(true);
             chatting.Init();
         }
 
         public void AppResume(PhoneControl phone)
         {
-            chatting.gameObject.SetActive(true);
+            SetActiveBackground(true);
             chatting.Init();
         }
 
         public void AppPause(PhoneControl phone)
         {
-            chatting.gameObject.SetActive(false);
+            SetActiveBackground(false);
         }
 
         public void AppExit(PhoneControl phone)
         {
-            chatting.gameObject.SetActive(false);
+            SetActiveBackground(false);
         }
 
         public void AppUnInstall(PhoneControl phone)
