@@ -420,6 +420,9 @@ MonoBehaviour:
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
   m_ScrollDeltaPerTick: 6
+  excludeLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1514620097
 GameObject:
   m_ObjectHideFlags: 0
@@ -538,6 +541,18 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 56852657265157224, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 1726489675155309029, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4323214860250367351, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -237
+      objectReference: {fileID: 0}
     - target: {fileID: 4441662835322059515, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -545,6 +560,14 @@ PrefabInstance:
     - target: {fileID: 4441662835322059515, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4441662835322059515, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 160
+      objectReference: {fileID: 0}
+    - target: {fileID: 4928818977703317395, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5334976221854886427, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
       propertyPath: m_AnchorMax.y

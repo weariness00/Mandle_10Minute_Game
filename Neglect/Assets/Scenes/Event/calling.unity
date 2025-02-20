@@ -420,6 +420,9 @@ MonoBehaviour:
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
   m_ScrollDeltaPerTick: 6
+  excludeLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1514620097
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,6 +678,22 @@ PrefabInstance:
     - target: {fileID: 3063535834271154672, guid: 66d91e194745c5342b3d34331c7a9ea8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4287088939109275234, guid: 66d91e194745c5342b3d34331c7a9ea8, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4287088939109275234, guid: 66d91e194745c5342b3d34331c7a9ea8, type: 3}
+      propertyPath: m_Color.b
+      value: 0.2509804
+      objectReference: {fileID: 0}
+    - target: {fileID: 4287088939109275234, guid: 66d91e194745c5342b3d34331c7a9ea8, type: 3}
+      propertyPath: m_Color.g
+      value: 0.2509804
+      objectReference: {fileID: 0}
+    - target: {fileID: 4287088939109275234, guid: 66d91e194745c5342b3d34331c7a9ea8, type: 3}
+      propertyPath: m_Color.r
+      value: 0.2509804
       objectReference: {fileID: 0}
     - target: {fileID: 4775085661877759141, guid: 66d91e194745c5342b3d34331c7a9ea8, type: 3}
       propertyPath: m_PresetInfoIsWorld
