@@ -169,11 +169,17 @@ namespace GamePlay.MiniGame.RunningGame
 
     public partial class RunningGame
     {
+        public override void SetActiveBackground(bool value)
+        {
+            base.SetActiveBackground(value);
+            runningGameObjectRoot.SetActive(value);
+            runningGameCanvasRoot.gameObject.SetActive(value);
+        }
+
         public override void AppInstall(PhoneControl phone)
         {
             base.AppInstall(phone);
-            runningGameObjectRoot.SetActive(false);
-            runningGameCanvasRoot.gameObject.SetActive(false);
+            SetActiveBackground(false);
             
             // 나가기 누르면 앱으로 이동 ( 게임은 종료되지 않음 )
             exitButton.onClick.AddListener(phone.applicationControl.OnHome);
@@ -183,8 +189,7 @@ namespace GamePlay.MiniGame.RunningGame
         public override void AppPlay(PhoneControl phone)
         {
             base.AppPlay(phone);
-            runningGameObjectRoot.SetActive(true);
-            runningGameCanvasRoot.gameObject.SetActive(true);
+            SetActiveBackground(true);
 
             rankQuest = QuestDataList.Instance.InstantiateEvent(rankEventID);
             
@@ -199,8 +204,8 @@ namespace GamePlay.MiniGame.RunningGame
         public override void AppResume(PhoneControl phone)
         {
             base.AppResume(phone);
-            runningGameObjectRoot.SetActive(true);
-            runningGameCanvasRoot.gameObject.SetActive(true);
+            SetActiveBackground(true);
+
             InputManager.running.input.Enable();
             if(isGameStart && !settingCanvas.gameObject.activeSelf) GamePlay();
         }
@@ -209,16 +214,16 @@ namespace GamePlay.MiniGame.RunningGame
         {
             base.AppPause(phone);
             GameStop();
-            runningGameObjectRoot.SetActive(false);
-            runningGameCanvasRoot.gameObject.SetActive(false);
+            SetActiveBackground(false);
+
             InputManager.running.input.Disable();
         }
 
         public override void AppExit(PhoneControl phone)
         {
             base.AppExit(phone);
-            runningGameObjectRoot.SetActive(false);
-            runningGameCanvasRoot.gameObject.SetActive(false);
+            SetActiveBackground(false);
+
             InputManager.running.input.Disable();
         }
     }

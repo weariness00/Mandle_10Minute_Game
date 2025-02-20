@@ -390,6 +390,12 @@ namespace GamePlay.Phone
         public PhoneControl Phone => _phone;
         public AppState AppState { get; set; }
 
+        public void SetActiveBackground(bool value)
+        {
+            mainCanvas.gameObject.SetActive(value);
+            BankMemo.gameObject.SetActive(value);
+        }
+
         public void AppInstall(PhoneControl phone)
         {
             _phone = phone;

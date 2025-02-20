@@ -25,6 +25,11 @@ namespace GamePlay.Phone.Container
         public Vector2Int VerticalResolution { get => verticalResolution; set => verticalResolution = value; }
         public PhoneControl Phone => _phone;
 
+        public void SetActiveBackground(bool value)
+        {
+            
+        }
+        
         public void AppInstall(PhoneControl phone)
         {
             _phone = phone;
