@@ -30,8 +30,10 @@ namespace Quest.Container
             app = phone.applicationControl.currentPlayApplication;
             phone.applicationControl.PauseApp(app);
 
-            phone.FadeIn(3, Color.black);
-            phone.PhoneViewRotate(0);
+            phone.FadeOut(0.1f, Color.black);
+            phone.PhoneViewRotate(0, ()=> phone.FadeIn(1f, Color.black));
+            
+            
             PhoneUtil.currentPhone.PhoneVibration();
         }
 

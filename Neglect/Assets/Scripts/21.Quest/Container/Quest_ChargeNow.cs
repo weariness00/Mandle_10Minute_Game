@@ -30,9 +30,10 @@ public class Quest_ChargeNow : QuestBase
     {
         base.Play();
 
-        ChargerPopup = PhoneUtil.InstantiateUI(notification, out var phone);
+        ChargerPopup = PhoneUtil.InstantiateUI(notification, out var phone_);
         ChargerPopup.gameObject.SetActive(true);
         Charger = Instantiate(charger , SpawnPos , transform.rotation);
+        phone = phone_;
         Charger.phone = phone;
         Charger.gameObject.SetActive(true);
         phone.PhoneViewRotate(1);
