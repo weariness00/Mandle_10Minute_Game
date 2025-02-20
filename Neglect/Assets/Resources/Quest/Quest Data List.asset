@@ -111,6 +111,13 @@ MonoBehaviour:
     ignoreEventID: -1
     textArray: []
     extraDataIDArray: 
+  - id: 10000
+    level: 1
+    prefab: {fileID: 3942944286640142204, guid: 93adcad729c91f345a96dfcb87c53907, type: 3}
+    acceptEventID: -1
+    ignoreEventID: -1
+    textArray: []
+    extraDataIDArray: 
   mainEventDataArray:
   - id: 1001
     level: 0
@@ -143,6 +150,13 @@ MonoBehaviour:
   - id: 1005
     level: 0
     prefab: {fileID: 7104001957306441222, guid: 28b853421a1930741bddba56a7064227, type: 3}
+    acceptEventID: -1
+    ignoreEventID: -1
+    textArray: []
+    extraDataIDArray: 
+  - id: 10000
+    level: 1
+    prefab: {fileID: 3942944286640142204, guid: 93adcad729c91f345a96dfcb87c53907, type: 3}
     acceptEventID: -1
     ignoreEventID: -1
     textArray: []
