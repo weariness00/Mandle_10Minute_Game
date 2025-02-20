@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -11,7 +12,8 @@ namespace Quest
     {
         public static QuestDataList Instance => QuestSettingProviderHelper.setting;
         
-        [SerializeField] [Tooltip("퀘스트 데이터 테이블")] private EventData[] eventDataArray;
+        [SerializeField] [Tooltip("모든 이벤트")] private EventData[] eventDataArray;
+        [SerializeField] [Tooltip("메인 이벤트")] private EventData[] mainEventDataArray;
         [SerializeField] [Tooltip("퀘스트 로직이 담긴 프리펩")] private QuestBase[] questArray;
         
         public MinMaxValue<float> questSpawnTimer = new(0, 0, 30,true,true);
@@ -19,6 +21,15 @@ namespace Quest
         public QuestBase InstantiateEvent(int id)
         {
             var data = GetEventID(id);
+            if (data == null) return null;
+            var quest = Instantiate(data.prefab);
+            quest.eventData = data;
+            return quest;
+        }
+        
+        public QuestBase InstantiateMainEvent(int id)
+        {
+            var data = GetMainEventID(id);
             if (data == null) return null;
             var quest = Instantiate(data.prefab);
             quest.eventData = data;
@@ -43,6 +54,7 @@ namespace Quest
         }
 
         public EventData[] GetAllEvent() => eventDataArray;
+        public EventData[] GetAllMainEvent() => mainEventDataArray;
         
         public QuestBase GetQuestID(int id)
         {
@@ -54,6 +66,12 @@ namespace Quest
         {
             var index = Array.BinarySearch(eventDataArray, id);
             return index >= 0 ? eventDataArray[index] : null;
+        }
+
+        public EventData GetMainEventID(int id)
+        {
+            var index = Array.BinarySearch(mainEventDataArray, id);
+            return index >= 0 ? mainEventDataArray[index] : null;
         }
 
 #if UNITY_EDITOR
@@ -91,17 +109,28 @@ namespace Quest
         public void SetEventCSV()
         {
             var eventCSV = eventDataTableCSV.ReadHorizon();
-            eventDataArray = new EventData[eventCSV.Count];
             SetQuestTextData(out var questTextArray);
+
+            List<EventData> eventList = new List<EventData>();
+            List<EventData> mainEventList = new List<EventData>();
             for (var i = 0; i < eventCSV.Count; i++)
             {
-                var data = new EventData();
                 var csv = eventCSV[i];
-                data.id = csv.DynamicCast<int>("EventID", -1);
-                eventDataArray[i] = data;
+                var data = new EventData();
+                var id = csv.DynamicCast<int>("EventID", -1);
+                var isMainEvent = csv.DynamicCast<int>("IsMainEvent", 0) == 1;
+
+                data.id = id;
+                if(isMainEvent) mainEventList.Add(data);
+                
+                eventList.Add(data);
             }
+
+            eventDataArray = eventList.ToArray();
+            mainEventDataArray = mainEventList.ToArray();
             
             Array.Sort(eventDataArray, (a,b) => a.id.CompareTo(b.id));
+            Array.Sort(mainEventDataArray, (a,b) => a.id.CompareTo(b.id));
             
             foreach (var csv in eventCSV)
             {
