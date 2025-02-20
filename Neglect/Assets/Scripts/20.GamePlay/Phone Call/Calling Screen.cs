@@ -15,12 +15,14 @@ namespace GamePlay.Event
 
         public void CallAcception()
         {
-            ClearAction();
+            if(ClearAction != null)
+                ClearAction();
             Destroy(gameObject);
         }
         public void CallRejection()
         {
-            IgnoreAction();
+            if (IgnoreAction !=null)
+                IgnoreAction();
             Destroy(gameObject);
         }
     }
