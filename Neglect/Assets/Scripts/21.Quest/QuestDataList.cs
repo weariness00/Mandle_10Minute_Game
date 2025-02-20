@@ -120,6 +120,8 @@ namespace Quest
                 var id = csv.DynamicCast<int>("EventID", -1);
                 var isMainEvent = csv.DynamicCast<int>("IsMainEvent", 0) == 1;
 
+                if(id == -1) continue;
+                
                 data.id = id;
                 if(isMainEvent) mainEventList.Add(data);
                 
