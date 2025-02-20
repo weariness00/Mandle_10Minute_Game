@@ -156,7 +156,7 @@ namespace GamePlay.Phone
         public PhoneViewPort GetAppViewPort(IPhoneApplication app) => phoneViewPortDictionary.GetValueOrDefault(app.AppName);
 
         public void PhoneViewRotate(PhoneViewType value) => PhoneViewRotate((int)value);
-        public void PhoneViewRotate(int value)
+        public void PhoneViewRotate(int value, Action isRotated = null)
         {
             viewType = (PhoneViewType)value;
 
@@ -169,6 +169,7 @@ namespace GamePlay.Phone
                         currentPhoneViewPort.horizon.SetActive(false);
                         currentPhoneViewPort.vertical.SetActive(true);
                         phoneCamera.targetTexture = currentPhoneViewPort.vertical.renderTexture;
+                        isRotated?.Invoke();
                     }));
                     break;
                 case PhoneViewType.Horizon:
@@ -177,6 +178,7 @@ namespace GamePlay.Phone
                         currentPhoneViewPort.vertical.SetActive(false);
                         currentPhoneViewPort.horizon.SetActive(true);
                         phoneCamera.targetTexture = currentPhoneViewPort.horizon.renderTexture;
+                        isRotated?.Invoke();
                     }));
                     break;
             }
