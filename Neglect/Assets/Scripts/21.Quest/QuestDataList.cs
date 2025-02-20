@@ -41,6 +41,8 @@ namespace Quest
             quest.eventData = data;
             return quest;
         }
+
+        public EventData[] GetAllEvent() => eventDataArray;
         
         public QuestBase GetQuestID(int id)
         {

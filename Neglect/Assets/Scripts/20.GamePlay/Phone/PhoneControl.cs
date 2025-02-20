@@ -53,6 +53,7 @@ namespace GamePlay.Phone
                 phoneViewPort.horizon.spriteRenderer.sprite = phoneHorizonSprite; // 세로는 다른 이미지 사용해야된다.
                 phoneViewPort.SetShader(phoneShader);
                 phoneViewPort.gameObject.SetActive(false);
+                phoneViewPort.name = app.AppName;
                 phoneViewPortDictionary.Add(app.AppName, phoneViewPort);
             });
             
@@ -199,7 +200,7 @@ namespace GamePlay.Phone
             viewPort.transform.position = pos;
             viewPort.gameObject.SetActive(true);
             viewPort.SetActive(viewType);
-            phoneCamera.targetTexture = viewPort.vertical.renderTexture;
+            phoneCamera.targetTexture = viewPort.GetData(viewType).renderTexture;
             currentPhoneViewPort = viewPort;
             isUpdateInteract = true;
         }
@@ -333,6 +334,7 @@ namespace GamePlay.Phone
                )
             {
                 var upObj = ExecuteEvents.ExecuteHierarchy(hitUI, pointerData, ExecuteEvents.pointerUpHandler);
+                ExecuteEvents.Execute(lastPressedObject, pointerData, ExecuteEvents.pointerUpHandler);
 
                 // 클릭이 같은 오브젝트에서 발생한 경우 클릭 이벤트 실행
                 if (ReferenceEquals(upObj, lastPressedObject))

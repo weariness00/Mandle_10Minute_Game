@@ -95,6 +95,13 @@ namespace GamePlay.Phone
             if (openAppDictionary.TryGetValue("Home", out var app)) OpenApp(app);
         }
 
+        public HomeView GetHomeApp()
+        {
+            if (openAppDictionary.TryGetValue("Home", out var app))
+                return app as HomeView;
+            return null;
+        }
+
         // 어플리케이션이 실행된 것들 확인하는 메뉴로 이동
         public void OnAppListMenu()
         {

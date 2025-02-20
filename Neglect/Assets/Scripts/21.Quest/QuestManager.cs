@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 using Util;
+using Random = UnityEngine.Random;
 
 namespace Quest
 {
@@ -10,10 +11,8 @@ namespace Quest
     {
         [HideInInspector] public bool isQuestStart;
 
-        private Dictionary<QuestType, Subject<object>> questPlayDictionary = new(); // 퀘스트가 클리어되면 여기서 제외됨
-
         private MinMaxValue<float> questSpawnTimer;
-
+        
         public void Awake()
         {
             questSpawnTimer = QuestDataList.Instance.questSpawnTimer;
@@ -25,33 +24,54 @@ namespace Quest
             {
                 questSpawnTimer.Current += Time.deltaTime;
 
-                if (questSpawnTimer.IsMax)
+                if (questSpawnTimer.IsMax && playQuestList.Count == 0)
                 {
                     questSpawnTimer.Current -= questSpawnTimer.Max;
-                    var quest = QuestDataList.Instance.InstantiateRandomEvent();
+                    var quest = InstantiateRandomEvent();
                     quest.Play();
                 }
             }
         }
+        
+    }
 
+    // 퀘스트 관리 관련
+    public partial class QuestManager
+    {
+        private Dictionary<QuestType, Subject<object>> questPlayDictionary = new(); // 퀘스트가 클리어되면 여기서 제외됨
+        private List<QuestBase> questAddList = new(); // 추가된 퀘스트들
+        private List<QuestBase> playQuestList = new(); // 플레이 중인 퀘스트들
+        
+        private List<EventData> eventList = new(); // 소환 가능한 이벤트 목록
+        public List<QuestBase> GetAllQuest() => questAddList;
+        
         public void Init()
         {
             questAddList.Clear();
             questPlayDictionary.Clear();
             isQuestStart = true;
             questSpawnTimer.SetMin();
+            eventList = new(QuestDataList.Instance.GetAllEvent());
         }
         
         // 퀘스트를 매니저에 추가
         public IDisposable Add(QuestBase quest)
         {
+            eventList.Remove(quest.eventData);
             questAddList.Add(quest);
             if (!questPlayDictionary.TryGetValue(quest.type, out var subject))
             {
                 subject = new();
                 questPlayDictionary.Add(quest.type, subject);
             }
+            
+            playQuestList.Add(quest);
             return subject.Subscribe(quest.OnNext);
+        }
+
+        public void Remove(QuestBase quest)
+        {
+            playQuestList.Remove(quest);
         }
         
         /// <summary>
@@ -67,11 +87,14 @@ namespace Quest
                 subject.OnNext(value);
             }
         }
-    }
 
-    public partial class QuestManager
-    {
-        private List<QuestBase> questAddList = new();
-        public List<QuestBase> GetAllQuest() => questAddList;
+        public QuestBase InstantiateRandomEvent()
+        {
+            int index = Random.Range(0, eventList.Count);
+            var e = eventList[index];
+            var quest = QuestDataList.Instance.InstantiateEvent(e.id);
+            quest.eventData = e;
+            return quest;
+        }
     }
 }

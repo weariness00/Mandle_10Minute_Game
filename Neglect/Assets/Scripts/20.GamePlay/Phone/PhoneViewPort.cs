@@ -35,9 +35,14 @@ namespace GamePlay.Phone
         {
             vertical.MakePhoneObjectTexture(verticalSize);
             horizon.MakePhoneObjectTexture(new Vector2Int(verticalSize.y, verticalSize.x));
+
+            vertical.GameObject.name = "Vertical";
+            vertical.renderTexture.name ="Vertical";
+            horizon.GameObject.name = "Horizon";
+            horizon.renderTexture.name = "Horizon";
             
-            vertical.Transform.SetParent(transform);
-            horizon.Transform.SetParent(transform);
+            vertical.Transform.SetParent(transform, false);
+            horizon.Transform.SetParent(transform, false);
             horizon.Transform.localEulerAngles = new Vector3(0, 0, -90);
         }
 

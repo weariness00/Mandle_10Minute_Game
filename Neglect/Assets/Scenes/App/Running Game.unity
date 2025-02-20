@@ -3626,7 +3626,7 @@ MonoBehaviour:
   exitButton: {fileID: 46525685}
   lobbyCanvas: {fileID: 728180536}
   lobbyObject: {fileID: 2102759143}
-  lobbyExitButton: {fileID: 0}
+  lobbyExitButton: {fileID: 576327820}
   inGameCanvas: {fileID: 1493705817}
   inGameObject: {fileID: 2146466120}
   obstacleSpawnerList:

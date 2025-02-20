@@ -105,10 +105,16 @@ namespace GamePlay.MiniGame
                     canvas.worldCamera = phone.phoneCamera;
                 }
             }
+
+            var home = _phone.applicationControl.GetHomeApp();
+            home.GetAppButton(this).highlightObject.SetActive(true);
         }
 
         public virtual void AppPlay(PhoneControl phone)
         {
+            var home = _phone.applicationControl.GetHomeApp();
+            home.GetAppButton(this).highlightObject.SetActive(false);
+
             if (GameManager.Instance.isInitQuest == false)
             {
                 GameManager.Instance.isInitQuest = true;

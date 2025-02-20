@@ -33,6 +33,8 @@ namespace Quest
         {
             subscription?.Dispose();
             state = QuestState.Failed;
+            
+            QuestManager.Instance.Remove(this);
 
             if (eventData.ignoreEvent != null)
             {
@@ -52,7 +54,7 @@ namespace Quest
         {
             subscription?.Dispose();
             state = QuestState.Completed;
-
+            QuestManager.Instance.Remove(this);
             if (eventData.acceptEvent != null)
             {
                 var quest = QuestDataList.Instance.InstantiateEvent(eventData.acceptEvent.id);

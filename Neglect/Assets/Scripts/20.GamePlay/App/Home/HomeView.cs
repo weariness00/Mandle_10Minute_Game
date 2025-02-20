@@ -1,10 +1,12 @@
 ﻿using DG.Tweening;
+using GamePlay.App;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
+using Util;
 
 namespace GamePlay.Phone
 {
@@ -13,9 +15,16 @@ namespace GamePlay.Phone
         public Canvas mainCanvas;
         public Canvas uiCanvas;
 
-        [SerializeField] private Button appButtonPrefab;
+        [Header("App Button 관련")]
+        [SerializeField] private AppButton appButtonPrefab;
         [SerializeField] private Transform appButtonParent;
+        [SerializeField] private Material highlightMaterial;
+        [SerializeField] private MinMaxValue<float> shineTimer = new (0,0,1, false, true);
 
+        private Dictionary<string, AppButton> appButtonDictionary = new();
+        
+        private static readonly int ShineLocation = Shader.PropertyToID("_ShineLocation");
+        
         [Header("Interface Button")] 
         public RectTransform interfaceRectTransform;
         public Button homeButton;
@@ -30,10 +39,16 @@ namespace GamePlay.Phone
         {
             interfaceOriginAnchorsPosition = interfaceRectTransform.anchoredPosition;
 
+            shineTimer.isOverMax = true;
             for (int i = 0; i < appButtonParent.childCount; i++)
             {
                 Destroy(appButtonParent.GetChild(i).gameObject);
             }
+        }
+
+        public void Update()
+        {
+            UpdateHighlight();
         }
 
         public void InterfaceOnOff()
@@ -54,6 +69,20 @@ namespace GamePlay.Phone
             }
 
             isOnInterface = !isOnInterface;
+        }
+        
+        public void UpdateHighlight()
+        {
+            shineTimer.Current += Time.deltaTime;
+            float value = Mathf.Sin((shineTimer.Current % shineTimer.Max) * Mathf.PI); // 0~1~0
+            highlightMaterial.SetFloat(ShineLocation, value);
+        }
+
+        public AppButton GetAppButton(IPhoneApplication app)
+        {
+            if (app == null) return null;
+            appButtonDictionary.TryGetValue(app.AppName, out var appButton);
+            return appButton;
         }
     }
 
@@ -106,9 +135,11 @@ namespace GamePlay.Phone
             phone.applicationControl.OnAddAppEvent.AddListener(app =>
             {
                 var appButton = Instantiate(appButtonPrefab, appButtonParent);
-                if (app.AppIcon) appButton.image.sprite = app.AppIcon;
-                appButton.onClick.AddListener(() => phone.applicationControl.OpenApp(app));
+                if (app.AppIcon) appButton.button.image.sprite = app.AppIcon;
+                appButton.button.onClick.AddListener(() => phone.applicationControl.OpenApp(app));
                 appButton.gameObject.layer = LayerMask.NameToLayer("Phone");
+
+                appButtonDictionary.TryAdd(app.AppName, appButton);
             });
             
             var viewPort = phone.GetAppViewPort(this);
