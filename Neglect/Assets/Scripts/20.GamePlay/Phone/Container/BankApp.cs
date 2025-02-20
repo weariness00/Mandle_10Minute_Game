@@ -11,6 +11,7 @@ using UnityEditor;
 using UnityEngine.Serialization;
 using Util;
 using GamePlay.Container;
+using Quest;
 
 namespace GamePlay.Phone
 {
@@ -20,6 +21,8 @@ namespace GamePlay.Phone
         [FormerlySerializedAs("Password")] public PasswordToLine password;
 
         public BankMemo BankMemo;
+
+        [HideInInspector] public EventData eventData;
 
         public int RandomAmount;
         public string RandomAccount;
@@ -240,9 +243,23 @@ namespace GamePlay.Phone
             }
             else
             {
-                ignoreAction?.Invoke();
+                if (Amountdifference > 0)
+                {
+                    if (eventData.extraDataIDArray.Length > 0)
+                    {
+                        var quest = QuestDataList.Instance.InstantiateEvent(eventData.extraDataIDArray[0]);
+                        if(quest) quest.Play();
+                    }
+                }
+                else
+                {
+                    if(eventData.extraDataIDArray.Length > 1)
+                    {
+                        var quest = QuestDataList.Instance.InstantiateEvent(eventData.extraDataIDArray[1]);
+                        if(quest) quest.Play();
+                    }
+                }
             }
-
         }
       
         public void ChangeMenuToTransTransaction(bool isMenu) //하드 코딩
@@ -342,7 +359,6 @@ namespace GamePlay.Phone
         public TradeHistoryBox[] HistroyBoxs = new TradeHistoryBox[2]; // 입금하기 전 거래 내역 = 최근 거래내역이 없습니다. 
         public TextMeshProUGUI depositText; //입급한 금액
         public TextMeshProUGUI withdrawalText;
-
        
         public void TradeHistoryInit() //거래 내역 초기화
         {

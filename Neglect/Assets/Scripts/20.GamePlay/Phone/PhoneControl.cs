@@ -112,6 +112,9 @@ namespace GamePlay.Phone
     // 기타 효과
     public partial class PhoneControl
     {
+        [Header("기타 효과 관련")] 
+        public AudioSource VibrationAudio;
+        
         public void FadeOut(float duration, Color color)
         {
             fadeTween?.Kill();
@@ -131,7 +134,8 @@ namespace GamePlay.Phone
         // 핸드폰 진동
         public void PhoneVibration(float duration = 0.1f)
         {
-            transform.DOShakePosition(duration, 0.1f, 50, 90f);
+            transform.DOShakePosition(duration, 0.3f, 50, 90f);
+            VibrationAudio.Play();
         }
     }
         
@@ -152,7 +156,7 @@ namespace GamePlay.Phone
         public PhoneViewPort GetAppViewPort(IPhoneApplication app) => phoneViewPortDictionary.GetValueOrDefault(app.AppName);
 
         public void PhoneViewRotate(PhoneViewType value) => PhoneViewRotate((int)value);
-        public void PhoneViewRotate(int value)
+        public void PhoneViewRotate(int value, Action isRotated = null)
         {
             viewType = (PhoneViewType)value;
 
@@ -165,6 +169,7 @@ namespace GamePlay.Phone
                         currentPhoneViewPort.horizon.SetActive(false);
                         currentPhoneViewPort.vertical.SetActive(true);
                         phoneCamera.targetTexture = currentPhoneViewPort.vertical.renderTexture;
+                        isRotated?.Invoke();
                     }));
                     break;
                 case PhoneViewType.Horizon:
@@ -173,6 +178,7 @@ namespace GamePlay.Phone
                         currentPhoneViewPort.vertical.SetActive(false);
                         currentPhoneViewPort.horizon.SetActive(true);
                         phoneCamera.targetTexture = currentPhoneViewPort.horizon.renderTexture;
+                        isRotated?.Invoke();
                     }));
                     break;
             }
