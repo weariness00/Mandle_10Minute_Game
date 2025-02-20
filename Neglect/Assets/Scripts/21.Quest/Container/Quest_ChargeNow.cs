@@ -37,6 +37,7 @@ public class Quest_ChargeNow : QuestBase
         Charger.gameObject.SetActive(true);
         app = phone.applicationControl.currentPlayApplication;
         phone.applicationControl.PauseApp(app);
+        app.SetActiveBackground(true);
    
         ChargerPopup.SettingBetteryText(15);
         phone.PhoneViewRotate(1);
