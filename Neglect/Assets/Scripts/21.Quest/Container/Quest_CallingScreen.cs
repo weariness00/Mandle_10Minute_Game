@@ -3,15 +3,17 @@ using GamePlay.Phone;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Quest.Container
 {
     public class Quest_CallingScreen : QuestBase
     {
-        public CallingScreen calling;
+        public CallingScreen phoneCallScreenPrefab;
 
         private PhoneControl phone;
         private IPhoneApplication app;
+        
         public override void OnNext(object value)
         {
 
@@ -19,11 +21,11 @@ namespace Quest.Container
         public override void Play()
         {
             base.Play();
-            var calls = PhoneUtil.InstantiateUI(calling, out phone);
+            var calls = PhoneUtil.InstantiateUI(phoneCallScreenPrefab, out phone);
             app = phone.applicationControl.currentPlayApplication;
             phone.applicationControl.PauseApp(app);
             phone.PhoneViewRotate(0);
-            calls.name.text = "mom";
+            calls.name.text = eventData.textArray.Length == 0 ? "mom" : eventData.textArray[0];
             calls.ClearAction += Complete;
             calls.IgnoreAction += Ignore;
         }
