@@ -112,6 +112,9 @@ namespace GamePlay.Phone
     // 기타 효과
     public partial class PhoneControl
     {
+        [Header("기타 효과 관련")] 
+        public AudioSource VibrationAudio;
+        
         public void FadeOut(float duration, Color color)
         {
             fadeTween?.Kill();
@@ -131,7 +134,8 @@ namespace GamePlay.Phone
         // 핸드폰 진동
         public void PhoneVibration(float duration = 0.1f)
         {
-            transform.DOShakePosition(duration, 0.1f, 50, 90f);
+            transform.DOShakePosition(duration, 0.3f, 50, 90f);
+            VibrationAudio.Play();
         }
     }
         
