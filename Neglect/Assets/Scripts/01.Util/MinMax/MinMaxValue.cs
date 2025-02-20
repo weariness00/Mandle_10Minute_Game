@@ -170,6 +170,12 @@ namespace Util
             return 0f;
         }
 
+        /// <summary>
+        /// min, max 인자 값으로 현재 Current값을 정규화
+        /// </summary>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <returns></returns>
         public float NormalizeToRange(float min = 0f, float max = 1f)
         {
             if (this is MinMaxValue<int> intValue)

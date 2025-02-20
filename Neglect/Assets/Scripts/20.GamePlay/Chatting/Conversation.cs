@@ -78,18 +78,7 @@ namespace GamePlay.Chatting
             
             backButton.gameObject.SetActive(false);
         }
-
-        public void Update()
-        {
-            if (isInit == false) return;
-            
-            ignoreTimer.Current -= Time.deltaTime;
-            if (ignoreTimer.IsMin)
-            {
-                ignoreEvent?.Invoke();
-                isInit = false;
-            }
-        }
+        
         public void Init()
         {
             if(talkData == null) return;

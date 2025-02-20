@@ -81,7 +81,7 @@ MonoBehaviour:
   questSpawnTimer:
     _min: 0
     _max: 30
-    _current: 0
+    _current: 18.09091
     _isMin: 1
     _isMax: 0
     isOverMax: 1
