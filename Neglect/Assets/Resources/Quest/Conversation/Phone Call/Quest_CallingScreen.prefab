@@ -52,6 +52,8 @@ MonoBehaviour:
     id: 0
     level: 0
     prefab: {fileID: 0}
+    acceptEventID: 0
+    ignoreEventID: 0
     textArray: []
     extraDataIDArray: 
-  phoneCallScreenPrefab: {fileID: 2876244699900314828, guid: 66d91e194745c5342b3d34331c7a9ea8, type: 3}
+  phoneCallScreenPrefab: {fileID: 2876244699900314828, guid: c8ea92523b6907640811a58a862b6667, type: 3}
