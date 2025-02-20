@@ -42,7 +42,7 @@ namespace Quest
         private List<QuestBase> questAddList = new(); // 추가된 퀘스트들
         private List<QuestBase> playQuestList = new(); // 플레이 중인 퀘스트들
         
-        private List<EventData> eventList; // 소환 가능한 이벤트 목록
+        private List<EventData> eventList = new(); // 소환 가능한 이벤트 목록
         public List<QuestBase> GetAllQuest() => questAddList;
         
         public void Init()

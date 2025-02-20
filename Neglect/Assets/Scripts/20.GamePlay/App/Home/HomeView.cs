@@ -39,6 +39,7 @@ namespace GamePlay.Phone
         {
             interfaceOriginAnchorsPosition = interfaceRectTransform.anchoredPosition;
 
+            shineTimer.isOverMax = true;
             for (int i = 0; i < appButtonParent.childCount; i++)
             {
                 Destroy(appButtonParent.GetChild(i).gameObject);

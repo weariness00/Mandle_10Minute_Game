@@ -1,4 +1,5 @@
-﻿using GamePlay.PopUp;
+﻿using GamePlay.Phone;
+using GamePlay.PopUp;
 
 namespace Quest.Container
 {
@@ -29,6 +30,7 @@ namespace Quest.Container
 
             var phone = PhoneUtil.currentPhone;
             phone.applicationControl.OpenApp("Chatting");
+            phone.PhoneViewRotate(PhoneViewType.Vertical);
         }
     }
 }

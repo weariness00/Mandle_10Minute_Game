@@ -36,6 +36,7 @@ namespace GamePlay.Phone.Container
         public void AppPlay(PhoneControl phone)
         {
             questResult.Init();
+            _phone.PhoneViewRotate(PhoneViewType.Vertical);
         }
 
         public void AppResume(PhoneControl phone)

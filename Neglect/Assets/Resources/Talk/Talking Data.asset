@@ -16,51 +16,63 @@ MonoBehaviour:
   - id: 4001
     mainText: "\uB0B4\uC77C \uC6B0\uB9AC \uBA87\uC2DC\uC5D0 \uB9CC\uB098\uAE30\uB85C
       \uD588\uC9C0?"
+    positiveResultTalkID: -1
+    negativeResultTalkID: -1
     positiveTextArray:
     - "12\uC2DC\uC5D0 \uB9CC\uB098\uAE30\uB85C \uD588\uC5B4"
     - "12\uC2DC\uCBE4\uC73C\uB85C \uAE30\uC5B5\uD558\uACE0 \uC788\uC5B4"
     negativeTextArray:
     - "\uC6B0\uB9AC \uB9CC\uB098\uB294\uAC70 \uB0B4\uC77C\uC774\uC57C?"
-    positiveScore: 50
+    positiveScore: 0
     negativeScore: 0
   - id: 4002
     mainText: "\uADF8\uB7EC\uBA74 \uB0B4\uC77C \uB9CC\uB098\uC11C \uBB50 \uBA39\uC744\uAEBC\uC57C?"
+    positiveResultTalkID: -1
+    negativeResultTalkID: -1
     positiveTextArray:
     - "\uAE00\uC384..\uB0B4\uC77C \uB9CC\uB098\uC11C \uC815\uD558\uC790"
     - "\uB098 \uC9C0\uAE08 \uBC14\uBE60\uC11C \uC870\uAE08\uC788\uB2E4\uAC00 \uB2E4\uC2DC
       \uC5F0\uB77D\uD560\uAED8"
     negativeTextArray:
     - "\uB108\uAC00 \uC815\uD574\uC11C \uC54C\uB824\uC918"
-    positiveScore: 50
+    positiveScore: 0
     negativeScore: 30
   - id: 4003
     mainText: "\uC751? \uB0B4\uC77C \uC544\uB2C8\uC600\uB098? \uB0B4\uC77C\uB85C
       \uAE30\uC5B5\uD558\uACE0 \uC788\uB294\uB370"
+    positiveResultTalkID: -1
+    negativeResultTalkID: -1
     positiveTextArray:
     - "\uC544 \uB9DE\uB2E4..\uAE4C\uBA39\uACE0 \uC788\uC5C8\uB2E4."
     - "\uB9DE\uB124..\uC704\uC5D0 \uB0B4\uC6A9\uBCF4\uB2C8 \uB0B4\uC77C\uC774\uC5C8\uB124"
     negativeTextArray: []
-    positiveScore: 50
+    positiveScore: 0
     negativeScore: 0
   - id: 4004
     mainText: "\uADF8\uB7EC\uBA74 \uC911\uC2DD\uD55C\uC2DD\uC591\uC2DD\uC911\uC5D0
       \uD558\uB098 \uACE8\uB77C\uBD10 \uADF8\uAC78\uB85C \uCC3E\uC544\uBCF4\uAC8C"
+    positiveResultTalkID: -1
+    negativeResultTalkID: -1
     positiveTextArray:
     - "\uB09C \uC911\uC2DD\uC774 \uC88B\uC544"
     - "\uB09C \uC591\uC2DD\uC774 \uC88B\uC544"
     - "\uB09C \uD55C\uC2DD\uC774 \uC88B\uC544"
     negativeTextArray: []
-    positiveScore: 20
+    positiveScore: 0
     negativeScore: 0
   - id: 4005
     mainText: "\uADF8\uB798 \uADF8\uB7FC \uC870\uAE08 \uC788\uB2E4\uAC00 \uB2E4\uC2DC
       \uC5F0\uB77D\uD560\uAC8C"
+    positiveResultTalkID: -1
+    negativeResultTalkID: -1
     positiveTextArray: []
     negativeTextArray: []
     positiveScore: 0
     negativeScore: 0
   - id: 4006
     mainText: "\uADF8\uB798 \uADF8\uB7FC \uB0B4\uC77C \uBCF4\uC790"
+    positiveResultTalkID: -1
+    negativeResultTalkID: -1
     positiveTextArray: []
     negativeTextArray: []
     positiveScore: 0
@@ -68,6 +80,8 @@ MonoBehaviour:
   - id: 4007
     mainText: "\uADF8\uB7EC\uBA74 \uC870\uAE08 \uC788\uB2E4\uAC00 \uCC3E\uC544\uC11C
       \uBCF4\uB0B4 \uB193\uC744\uAC8C"
+    positiveResultTalkID: -1
+    negativeResultTalkID: -1
     positiveTextArray: []
     negativeTextArray: []
     positiveScore: 0
