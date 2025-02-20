@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Charger: {fileID: 3542250384400366601}
+  chargerLine: {fileID: 5500720423321412822}
   head: {fileID: 5979653709019323652}
   phone: {fileID: 0}
   drag: {fileID: 0}
