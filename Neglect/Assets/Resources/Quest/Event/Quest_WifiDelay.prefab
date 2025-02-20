@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed7e8acaa5f0e74cab90655f469fdea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questID: 0
+  questID: 2008
   questName: 
   type: -1
   state: 0
@@ -52,6 +52,8 @@ MonoBehaviour:
     id: 0
     level: 0
     prefab: {fileID: 0}
+    acceptEventID: 0
+    ignoreEventID: 0
     textArray: []
     extraDataIDArray: 
   WifiDelayPrefab: {fileID: 5276671521350451718, guid: 76b7afe17ac51f0489a156ee56c6ef40, type: 3}

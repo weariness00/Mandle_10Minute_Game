@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e437527e9aca61448e6ff4025383053, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questID: 4
+  questID: 2007
   questName: 
   type: -1
   state: 0
@@ -52,7 +52,10 @@ MonoBehaviour:
     id: 0
     level: 0
     prefab: {fileID: 0}
+    acceptEventID: 0
+    ignoreEventID: 0
     textArray: []
+    extraDataIDArray: 
   notification: {fileID: 4918438592394931214, guid: 8e4f223eeda39f549a07168a0ce6c4c0, type: 3}
   charger: {fileID: 6205727449769662004, guid: d93e752933b8bb94293419ac042c9e3f, type: 3}
   ChargerPopup: {fileID: 0}
