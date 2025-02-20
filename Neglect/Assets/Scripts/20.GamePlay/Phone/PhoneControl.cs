@@ -68,7 +68,6 @@ namespace GamePlay.Phone
                 var viewPort = phoneViewPortDictionary[app.AppName];
                 ChangeViewPort(viewPort);
             });
-            
 
             // 폰 카메라 생성 & 셋팅
             if (phoneCamera == null)
@@ -182,18 +181,21 @@ namespace GamePlay.Phone
         public void ChangeViewPort(PhoneViewPort viewPort)
         {
             var prevPhoneViewPort = currentPhoneViewPort;
-            if (prevPhoneViewPort != null)
-            {
-                var currentPos = currentPhoneViewPort.transform.position;
-                currentPos.z = 10;
-                currentPhoneViewPort.transform.position = currentPos;
-            }
-            // 각종 연출 효과를 위해 0.3초 뒤에 이전 ViewPort를 비활성화
-            Observable.Timer(TimeSpan.FromSeconds(0.3f)).Subscribe(_ =>
+            if (prevPhoneViewPort != viewPort)
             {
                 if (prevPhoneViewPort != null)
-                    prevPhoneViewPort.gameObject.SetActive(false);
-            });
+                {
+                    var currentPos = currentPhoneViewPort.transform.position;
+                    currentPos.z = 10;
+                    currentPhoneViewPort.transform.position = currentPos;
+                }
+                // 각종 연출 효과를 위해 0.3초 뒤에 이전 ViewPort를 비활성화
+                Observable.Timer(TimeSpan.FromSeconds(0.3f)).Subscribe(_ =>
+                {
+                    if (prevPhoneViewPort != null)
+                        prevPhoneViewPort.gameObject.SetActive(false);
+                });
+            }
 
             var pos = viewPort.transform.position;
             pos.z = 0;

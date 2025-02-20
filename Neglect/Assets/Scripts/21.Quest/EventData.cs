@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using UnityEngine.Serialization;
 
 namespace Quest
 {
@@ -10,8 +8,8 @@ namespace Quest
         public int id;
         public QuestLevel level;
         public QuestBase prefab;
-        public EventData acceptEvent;
-        public EventData ignoreEvent;
+        public int acceptEventID;
+        public int ignoreEventID;
         public string[] textArray;
         public int[] extraDataIDArray;
     }

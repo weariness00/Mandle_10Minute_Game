@@ -319,7 +319,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8211205160167105849}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.875
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1518,7 +1518,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &5883430967004105228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1548,39 +1548,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 773c4f226e6e26c4f9756120d7a5ff5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
   CurrentName: npc
   ChatName: {fileID: 9017951179093132918}
-  OtherMessages: {fileID: 7209999105792282856, guid: 174cfc792fc3eeb40acf516bffa1b80e, type: 3}
-  MyMessages: {fileID: 6138435353992378510, guid: 20b8b681c2a97fe4c991c3c3801a03d0, type: 3}
-  SelectButtons:
-  - {fileID: 8449940849130463387}
-  - {fileID: 6591221301184323884}
-  - {fileID: 1206995840690595995}
-  SelectImages:
-  - {fileID: 7192560639955814231}
-  - {fileID: 6702489149099419871}
-  - {fileID: 8344196216075316461}
-  SelectTexts:
-  - {fileID: 9057252124780848780}
-  - {fileID: 3377421036439313529}
-  - {fileID: 7446167340417101712}
+  backButton: {fileID: 0}
+  messageBoxPrefab: {fileID: 0}
+  otherMessageSprite: {fileID: 0}
+  myMessageSprite: {fileID: 0}
+  answerGroupTransform: {fileID: 0}
+  answerBlockPrefab: {fileID: 0}
   ChatGage: 0
   GageBar: {fileID: 2642295412017670483}
   talkData:
     id: 0
     mainText: ww
+    positiveResultTalkID: 0
+    negativeResultTalkID: 0
     positiveTextArray:
     - pos
     - pos1
     negativeTextArray:
     - neg1
-  Question: question
-  replyString:
-  - 20
-  - 30
-  - -20
-  replygage: 140000001e000000ecffffff
-  replyEvent: []
+    positiveScore: 0
+    negativeScore: 0
+  ignoreTimer:
+    _min: 0
+    _max: 15
+    _current: 15
+    _isMin: 0
+    _isMax: 1
+    isOverMax: 0
+    isOverMin: 0
+  completeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  ignoreEvent:
+    m_PersistentCalls:
+      m_Calls: []
   NextTextPosY: 0
   Scrollbar: {fileID: 4169084649797877642}
   ChatScrollBox: {fileID: 9040395770981817758}

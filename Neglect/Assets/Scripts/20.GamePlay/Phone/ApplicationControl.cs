@@ -39,7 +39,7 @@ namespace GamePlay.Phone
         public void OpenApp(IPhoneApplication app)
         {
             if (currentPlayApplication == app && app.AppState == AppState.Open) return;
-            if (currentPlayApplication != null)
+            if (currentPlayApplication != null && currentPlayApplication.AppState == AppState.Open)
             {
                 currentPlayApplication.AppPause(phone);
                 currentPlayApplication.AppState = AppState.Pause;

@@ -71,6 +71,7 @@ namespace GamePlay.MiniGame.RunningGame
                     PhoneUtil.SetLayer(obj);
                     SceneManager.MoveGameObjectToScene(obj, SceneUtil.GetRunningGameScene());
                     obj.GetComponent<RunningObstacle>().runningGame = this;
+                    obj.transform.SetParent(inGameObject.transform);
                 });
             }
             

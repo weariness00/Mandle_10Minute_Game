@@ -45,6 +45,7 @@ namespace GamePlay.Chatting
         [Header("데이터베이스에서 가져올 정보")] 
         [Space]
         [HideInInspector] public TalkingData talkData = null;
+        private TalkingData prevTalkData;
         public MinMaxValue<float> ignoreTimer = new(15, 0, 15);
         public UnityEvent completeEvent;
         public UnityEvent ignoreEvent;
@@ -76,16 +77,17 @@ namespace GamePlay.Chatting
                 5
             );
             
-            backButton.gameObject.SetActive(false);
         }
         
         public void Init()
         {
-            if(talkData == null) return;
+            if(talkData == null || prevTalkData == talkData) return;
             if (isInit)
             {
                 ignoreEvent?.Invoke();
             }
+            backButton.gameObject.SetActive(false);
+            prevTalkData = talkData;
             isInit = true;
             ignoreEvent = new();
             completeEvent = new();
@@ -169,6 +171,9 @@ namespace GamePlay.Chatting
             answerList.Shuffle();
             for (var i = 0; i < answerList.Count; i++)
                 answerList[i].transform.SetSiblingIndex(i);
+            
+            if(answerList.Count == 0)
+                backButton.gameObject.SetActive(true);
         }
 
         public void ChatBox()
@@ -205,7 +210,7 @@ namespace GamePlay.Chatting
             UiSeq.Append(GageBar.DOFillAmount(ChatGage / 100f, 1f));
             UiSeq.AppendCallback(() =>
             {
-                talkData = TalkingScriptableObject.Instance.GetTalkData(block.isPositive ? talkData.positiveResultTalkID : talkData.negativeResultTalkID);
+                prevTalkData = talkData = TalkingScriptableObject.Instance.GetTalkData(block.isPositive ? talkData.positiveResultTalkID : talkData.negativeResultTalkID);
                 SettingAnswer(); 
                 OtherChatSpawn(talkData.mainText);
                 ChatBox();
@@ -214,7 +219,6 @@ namespace GamePlay.Chatting
                     //클리어
                     completeEvent.Invoke();
                     isInit = false;
-                    
                     backButton.gameObject.SetActive(true);
                 }
             });

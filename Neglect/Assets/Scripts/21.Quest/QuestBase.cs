@@ -36,10 +36,11 @@ namespace Quest
             
             QuestManager.Instance.Remove(this);
 
-            if (eventData.ignoreEvent != null)
+            if (eventData.ignoreEventID != -1)
             {
-                var quest = QuestDataList.Instance.InstantiateEvent(eventData.ignoreEvent.id);
-                quest.eventData = eventData.ignoreEvent;
+                var ignoreEvent = QuestDataList.Instance.GetEventID(eventData.ignoreEventID);
+                var quest = QuestDataList.Instance.InstantiateEvent(eventData.ignoreEventID);
+                quest.eventData = ignoreEvent;
                 quest.Play();
             }
         }
@@ -55,10 +56,11 @@ namespace Quest
             subscription?.Dispose();
             state = QuestState.Completed;
             QuestManager.Instance.Remove(this);
-            if (eventData.acceptEvent != null)
+            if (eventData.acceptEventID != -1)
             {
-                var quest = QuestDataList.Instance.InstantiateEvent(eventData.acceptEvent.id);
-                quest.eventData = eventData.acceptEvent;
+                var acceptEvent = QuestDataList.Instance.GetEventID(eventData.acceptEventID);
+                var quest = QuestDataList.Instance.InstantiateEvent(eventData.acceptEventID);
+                quest.eventData = acceptEvent;
                 quest.Play();
             }
         }

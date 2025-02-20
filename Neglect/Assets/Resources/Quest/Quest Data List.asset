@@ -16,58 +16,87 @@ MonoBehaviour:
   - id: 1001
     level: 0
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
+    acceptEventID: 1107
+    ignoreEventID: -1
     textArray: []
     extraDataIDArray: 
   - id: 1002
     level: 1
     prefab: {fileID: 7104001957306441222, guid: 28b853421a1930741bddba56a7064227, type: 3}
+    acceptEventID: 1105
+    ignoreEventID: 1101
     textArray: []
     extraDataIDArray: 
   - id: 1003
     level: 1
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
+    acceptEventID: 1104
+    ignoreEventID: 1101
     textArray: []
     extraDataIDArray: 
   - id: 1004
     level: 2
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
+    acceptEventID: -1
+    ignoreEventID: -1
     textArray: []
     extraDataIDArray: 
   - id: 1005
     level: 0
     prefab: {fileID: 7104001957306441222, guid: 28b853421a1930741bddba56a7064227, type: 3}
+    acceptEventID: -1
+    ignoreEventID: -1
     textArray: []
     extraDataIDArray: 
   - id: 1101
     level: 1
     prefab: {fileID: 7104001957306441222, guid: 28b853421a1930741bddba56a7064227, type: 3}
+    acceptEventID: -1
+    ignoreEventID: -1
     textArray: []
     extraDataIDArray: 
   - id: 1102
     level: 0
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
+    acceptEventID: -1
+    ignoreEventID: -1
     textArray: []
     extraDataIDArray: 
   - id: 1103
     level: 0
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
+    acceptEventID: -1
+    ignoreEventID: -1
     textArray: []
     extraDataIDArray: 
   - id: 1104
     level: 1
     prefab: {fileID: 6792380495647651490, guid: f3c1eec8e61df8547939c86f4313a64a, type: 3}
+    acceptEventID: -1
+    ignoreEventID: -1
     textArray: []
     extraDataIDArray: a10f0000
   - id: 1105
     level: 1
     prefab: {fileID: 2903363758632237792, guid: 04eca5ed438e8514c9b8cebefee60e75, type: 3}
+    acceptEventID: -1
+    ignoreEventID: -1
     textArray: []
     extraDataIDArray: 
   - id: 1106
     level: 2
     prefab: {fileID: 2421299613985424272, guid: 5731f7c4bf27ea54599fdaf7529a4899, type: 3}
+    acceptEventID: -1
+    ignoreEventID: -1
     textArray: []
     extraDataIDArray: 
+  - id: 1107
+    level: 0
+    prefab: {fileID: 6792380495647651490, guid: f3c1eec8e61df8547939c86f4313a64a, type: 3}
+    acceptEventID: -1
+    ignoreEventID: -1
+    textArray: []
+    extraDataIDArray: a60f0000
   questArray:
   - {fileID: 3937081454122872287, guid: 3b86fa2080bed814a942540a7b81269d, type: 3}
   - {fileID: 6727539367213804272, guid: adf2e60dcd3cff24397ce8e62ec709d5, type: 3}
@@ -82,9 +111,9 @@ MonoBehaviour:
   questSpawnTimer:
     _min: 0
     _max: 30
-    _current: 30
+    _current: 6.498599
     _isMin: 0
-    _isMax: 1
+    _isMax: 0
     isOverMax: 1
     isOverMin: 1
   eventDataTableCSV: {fileID: 4900000, guid: ccba278716066d44e96921060fd11af3, type: 3}
