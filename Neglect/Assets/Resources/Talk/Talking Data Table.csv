@@ -11,3 +11,4 @@ Header,TalkingID,Name,MainTextID,PositiveTextList,PostiveTalkID,NegativeTextList
 ,4005,친구대화종료1,3120,,,,,,
 ,4006,친구대화종료2,3121,,,,,,
 ,4007,친구대화종료3,3122,,,,,,
+,4008,광고 메시지,3101,,,,,,

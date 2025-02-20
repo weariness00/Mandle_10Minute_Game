@@ -81,11 +81,8 @@ namespace GamePlay.Chatting
         
         public void Init()
         {
-            if(talkData == null || prevTalkData == talkData) return;
-            if (isInit)
-            {
-                ignoreEvent?.Invoke();
-            }
+            if (talkData == null || prevTalkData == talkData) return;
+            if (isInit) return;
             backButton.gameObject.SetActive(false);
             prevTalkData = talkData;
             isInit = true;
