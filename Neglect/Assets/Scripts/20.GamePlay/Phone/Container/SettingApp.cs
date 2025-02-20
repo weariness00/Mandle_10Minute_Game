@@ -19,6 +19,7 @@ namespace GamePlay.Phone
         public Sprite AppIcon { get => icon; set => icon =value; }
         public Vector2Int VerticalResolution { get => verticalResolution; set => verticalResolution = value; }
         public PhoneControl Phone => _phone;
+        public AppState AppState { get; set; }
         public void AppInstall(PhoneControl phone)
         {
             _phone = phone;

@@ -10,7 +10,6 @@ namespace Quest.Container
 {
     public class Quest_Password : QuestBase
     {
-
         public PasswordToLine Password;
         public override void OnNext(object value)
         {
@@ -31,7 +30,6 @@ namespace Quest.Container
             PasswordObj.phone = phone;
             phone.PhoneViewRotate(0);
         }
-
 
         public override void Complete()
         {

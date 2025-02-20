@@ -16,7 +16,8 @@ namespace GamePlay.Phone
         [SerializeField] private Sprite icon;
         [SerializeField] private Vector2Int verticalResolution;
         [SerializeField] private PhoneControl _phone;
-        
+        public AppState AppState { get; set; }
+
         public string AppName => appName;
         public Sprite AppIcon { get => icon; set => icon =value; }
         public Vector2Int VerticalResolution { get => verticalResolution; set => verticalResolution = value; }

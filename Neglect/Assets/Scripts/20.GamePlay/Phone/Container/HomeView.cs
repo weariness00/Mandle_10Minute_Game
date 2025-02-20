@@ -29,6 +29,11 @@ namespace GamePlay.Phone
         public void Awake()
         {
             interfaceOriginAnchorsPosition = interfaceRectTransform.anchoredPosition;
+
+            for (int i = 0; i < appButtonParent.childCount; i++)
+            {
+                Destroy(appButtonParent.GetChild(i).gameObject);
+            }
         }
 
         public void InterfaceOnOff()
@@ -59,7 +64,8 @@ namespace GamePlay.Phone
         [SerializeField] private Sprite icon;
         [SerializeField] private Vector2Int verticalResolution;
         [SerializeField] private PhoneControl _phone;
-        
+        public AppState AppState { get; set; }
+
         public string AppName { get => appName; }
         public Sprite AppIcon { get => icon; set => icon =value; }
         public Vector2Int VerticalResolution { get => verticalResolution; set => verticalResolution = value; }

@@ -16,6 +16,7 @@ namespace Quest.Container
             base.Play();
             chatconversation = FindObjectOfType<Conversation>(true);
             chatconversation.talkData = TalkingScriptableObject.Instance.GetTalkData(eventData.extraDataIDArray.Length == 0 ? -1 : eventData.extraDataIDArray[0]);
+            chatconversation.Init();
             chatconversation.completeEvent.AddListener(Complete);
             chatconversation.ignoreEvent.AddListener(Ignore);
         }

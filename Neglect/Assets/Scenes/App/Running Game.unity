@@ -1051,7 +1051,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1482410025}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.MiniGame.RunningGame.RunningGame, Assembly-CSharp
         m_MethodName: GamePlay
         m_Mode: 1
@@ -1196,7 +1196,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1482410025}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.MiniGame.MiniGameBase, Assembly-CSharp
         m_MethodName: SetGameSpeed
         m_Mode: 4
@@ -1426,9 +1426,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1482410025}
-        m_TargetAssemblyTypeName: GamePlay.MiniGame.RunningGame.RunningGame, Assembly-CSharp
-        m_MethodName: GamePlay
+      - m_Target: {fileID: 1940000619}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1438,9 +1438,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1940000619}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
+      - m_Target: {fileID: 1407920007}
+        m_TargetAssemblyTypeName: GamePlay.MiniGame.RunningGame.RunningGame, Assembly-CSharp
+        m_MethodName: GamePlay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1526,7 +1526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90fda83a1e2c8b64993250be0683bdcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   IsPause: 0
   LeftPosX: 0
   BackgroundPrefab: {fileID: -6910750901725559448, guid: 9252647228b680743962d556a1430928, type: 3}
@@ -1759,7 +1759,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1482410025}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.MiniGame.MiniGameBase, Assembly-CSharp
         m_MethodName: SetGameSpeed
         m_Mode: 4
@@ -1956,18 +1956,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1482410025}
-        m_TargetAssemblyTypeName: GamePlay.MiniGame.MiniGameBase, Assembly-CSharp
-        m_MethodName: GameExit
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1940000619}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
@@ -2660,7 +2648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e8ae5e4d7fc408d9f733c0292166d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   rigidbody2D: {fileID: 0}
   collider2D: {fileID: 0}
   immortalTime:
@@ -2935,7 +2923,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1482410025}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlay.MiniGame.RunningGame.RunningGame, Assembly-CSharp
         m_MethodName: GamePlay
         m_Mode: 1
@@ -3580,6 +3568,136 @@ Transform:
   - {fileID: 2104558761}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1407920006
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1407920008}
+  - component: {fileID: 1407920007}
+  m_Layer: 0
+  m_Name: Running Game Control
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1407920007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407920006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3415fd5e6bff43adac080d7ac1941a39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGameStart: 0
+  isGamePlay:
+    value: 1
+  isGameClear:
+    value: 0
+  gameSpeed:
+    value: 1
+  playTime:
+    _min: 0
+    _max: 600
+    _current: 0
+    _isMin: 1
+    _isMax: 0
+    isOverMax: 0
+    isOverMin: 0
+  bgmAudioSource: {fileID: 1988841661}
+  gameName: Running Game
+  appIcon: {fileID: 21300000, guid: 5d216461c6df6b54b9c820a75e9d9367, type: 3}
+  resolution: {x: 600, y: 960}
+  _phone: {fileID: 0}
+  player: {fileID: 769697471}
+  runningGameObjectRoot: {fileID: 1482410024}
+  runningGameCanvasRoot: {fileID: 1900557410}
+  rankEventID: 0
+  settingCanvas: {fileID: 665911811}
+  continueButton: {fileID: 866496667}
+  exitButton: {fileID: 46525685}
+  lobbyCanvas: {fileID: 728180536}
+  lobbyObject: {fileID: 2102759143}
+  lobbyExitButton: {fileID: 0}
+  inGameCanvas: {fileID: 1493705817}
+  inGameObject: {fileID: 2146466120}
+  obstacleSpawnerList:
+  - {fileID: 369168967}
+  playerDataArray:
+  - rank: 0
+    score:
+      value: 0
+    name: Player
+    scoreRandomIncreaseTimer:
+      _min: 0
+      _max: 1
+      _current: 0
+      _isMin: 1
+      _isMax: 0
+      isOverMax: 1
+      isOverMin: 0
+    scoreRandomIncrease:
+      _min: 1
+      _max: 5
+    mainColor:
+      value: {r: 1, g: 1, b: 1, a: 1}
+  - rank: 0
+    score:
+      value: 0
+    name: A
+    scoreRandomIncreaseTimer:
+      _min: 0
+      _max: 1
+      _current: 0
+      _isMin: 1
+      _isMax: 0
+      isOverMax: 1
+      isOverMin: 0
+    scoreRandomIncrease:
+      _min: 1
+      _max: 20
+    mainColor:
+      value: {r: 0.7264151, g: 0.5036935, b: 0.5036935, a: 0.8235294}
+  - rank: 0
+    score:
+      value: 0
+    name: B
+    scoreRandomIncreaseTimer:
+      _min: 0
+      _max: 1
+      _current: 0
+      _isMin: 1
+      _isMax: 0
+      isOverMax: 1
+      isOverMin: 0
+    scoreRandomIncrease:
+      _min: 1
+      _max: 20
+    mainColor:
+      value: {r: 0.7254902, g: 0.5019608, b: 0.5019608, a: 0.8235294}
+--- !u!4 &1407920008
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407920006}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 500}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1408324334
 GameObject:
   m_ObjectHideFlags: 0
@@ -3704,7 +3822,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36806c44655f473798babd07c8953f3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   dataBlockPrefab: {fileID: 4086518713116714748, guid: 39cb101b0d4b67346b70262ddc81a767, type: 3}
   blockList: []
 --- !u!1 &1482410024
@@ -3716,111 +3834,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1482410026}
-  - component: {fileID: 1482410025}
   m_Layer: 0
-  m_Name: Running Game Control
+  m_Name: Running Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1482410025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1482410024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3415fd5e6bff43adac080d7ac1941a39, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isGameStart: 0
-  isGamePlay:
-    value: 1
-  isGameClear:
-    value: 0
-  gameSpeed:
-    value: 1
-  playTime:
-    _min: 0
-    _max: 600
-    _current: 0
-    _isMin: 1
-    _isMax: 0
-    isOverMax: 0
-    isOverMin: 0
-  bgmAudioSource: {fileID: 1988841661}
-  gameName: Running Game
-  appIcon: {fileID: 21300000, guid: 5d216461c6df6b54b9c820a75e9d9367, type: 3}
-  resolution: {x: 600, y: 960}
-  _phone: {fileID: 0}
-  player: {fileID: 769697471}
-  runningGameObjectRoot: {fileID: 1482410024}
-  runningGameCanvasRoot: {fileID: 1900557410}
-  rankEventID: 0
-  settingCanvas: {fileID: 665911811}
-  continueButton: {fileID: 866496667}
-  exitButton: {fileID: 46525685}
-  lobbyCanvas: {fileID: 728180536}
-  lobbyObject: {fileID: 2102759143}
-  inGameCanvas: {fileID: 1493705817}
-  inGameObject: {fileID: 2146466120}
-  obstacleSpawnerList:
-  - {fileID: 369168967}
-  playerDataArray:
-  - rank: 0
-    score:
-      value: 0
-    name: Player
-    scoreRandomIncreaseTimer:
-      _min: 0
-      _max: 1
-      _current: 0
-      _isMin: 1
-      _isMax: 0
-      isOverMax: 1
-      isOverMin: 0
-    scoreRandomIncrease:
-      _min: 1
-      _max: 5
-    mainColor:
-      value: {r: 1, g: 1, b: 1, a: 1}
-  - rank: 0
-    score:
-      value: 0
-    name: A
-    scoreRandomIncreaseTimer:
-      _min: 0
-      _max: 1
-      _current: 0
-      _isMin: 1
-      _isMax: 0
-      isOverMax: 1
-      isOverMin: 0
-    scoreRandomIncrease:
-      _min: 1
-      _max: 20
-    mainColor:
-      value: {r: 0.7264151, g: 0.5036935, b: 0.5036935, a: 0.8235294}
-  - rank: 0
-    score:
-      value: 0
-    name: B
-    scoreRandomIncreaseTimer:
-      _min: 0
-      _max: 1
-      _current: 0
-      _isMin: 1
-      _isMax: 0
-      isOverMax: 1
-      isOverMin: 0
-    scoreRandomIncrease:
-      _min: 1
-      _max: 20
-    mainColor:
-      value: {r: 0.7254902, g: 0.5019608, b: 0.5019608, a: 0.8235294}
 --- !u!4 &1482410026
 Transform:
   m_ObjectHideFlags: 0
@@ -4561,7 +4581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 0}
   MoveSpeed: 5
   groundType: 0
 --- !u!212 &1938707719
@@ -5291,7 +5311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   MoveSpeed: 0
   groundType: 0
 --- !u!1 &904407814659243706
@@ -5324,7 +5344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   MoveSpeed: 0
   groundType: 0
 --- !u!4 &1090714001841761062
@@ -5354,7 +5374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   MoveSpeed: 0
   groundType: 0
 --- !u!212 &1266936720348692922
@@ -5488,7 +5508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   MoveSpeed: 0
   groundType: 0
 --- !u!1 &2045469012536601274
@@ -5743,7 +5763,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   MoveSpeed: 0
   groundType: 0
 --- !u!114 &3602135016619407574
@@ -5758,7 +5778,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   MoveSpeed: 0
   groundType: 0
 --- !u!212 &3751134231515446639
@@ -5940,7 +5960,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   MoveSpeed: 0
   groundType: 0
 --- !u!212 &4360433957479032733
@@ -6007,7 +6027,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   MoveSpeed: 0
   groundType: 0
 --- !u!1 &4953780594165367728
@@ -6070,7 +6090,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   MoveSpeed: 0
   groundType: 0
 --- !u!1 &5278592423579988147
@@ -6199,7 +6219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   MoveSpeed: 0
   groundType: 0
 --- !u!212 &6825277051171398037
@@ -6351,7 +6371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   MoveSpeed: 0
   groundType: 0
 --- !u!1 &7488691029207146545
@@ -6642,7 +6662,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 0}
   MoveSpeed: 0
   groundType: 0
 --- !u!4 &8790924270503833293
@@ -6672,7 +6692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7e41db730107648b0e9933174e9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningGame: {fileID: 1482410025}
+  runningGame: {fileID: 1407920007}
   MoveSpeed: 0
   groundType: 0
 --- !u!1 &8813623131969616721
@@ -6701,3 +6721,4 @@ SceneRoots:
   - {fileID: 1900557411}
   - {fileID: 1482410026}
   - {fileID: 1723294524}
+  - {fileID: 1407920008}

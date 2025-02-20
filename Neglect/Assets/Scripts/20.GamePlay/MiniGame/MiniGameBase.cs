@@ -92,6 +92,7 @@ namespace GamePlay.MiniGame
         public Sprite AppIcon { get => appIcon; set => appIcon = value; }
         public Vector2Int VerticalResolution { get => resolution; set => resolution = value; }
         public PhoneControl Phone => _phone;
+        public AppState AppState { get; set; }
 
         public virtual void AppInstall(PhoneControl phone)
         {

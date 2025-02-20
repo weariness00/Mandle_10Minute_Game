@@ -1,4 +1,5 @@
 using GamePlay.Event;
+using GamePlay.Phone;
 using GamePlay.PopUp;
 using Manager;
 using Quest;
@@ -16,12 +17,15 @@ public class Quest_ChargeNow : QuestBase
     public ChargeNotification ChargerPopup;
     public ChargerConnect Charger;
     public Vector3 SpawnPos;
+    
+    private PhoneControl phone;
+    private IPhoneApplication app;
+    
     public override void OnNext(object value)
     {
 
     }
-
-  
+    
     public override void Play()
     {
         base.Play();
@@ -31,6 +35,9 @@ public class Quest_ChargeNow : QuestBase
         Charger = Instantiate(charger , SpawnPos , transform.rotation);
         Charger.phone = phone;
         Charger.gameObject.SetActive(true);
+        app = phone.applicationControl.currentPlayApplication;
+        phone.applicationControl.PauseApp(app);
+        phone.PhoneViewRotate(0);
 
         ChargerPopup.SettingBetteryText(15);
         phone.PhoneViewRotate(1);
@@ -45,14 +52,17 @@ public class Quest_ChargeNow : QuestBase
 
     public override void Complete()
     {
-        ChargingStart();
         base.Complete();
+        ChargingStart();
+        phone.applicationControl.OpenApp(app);
+
     }
 
     public override void Ignore()
     {
+        base.Ignore();
         DeleteObject();
-        base.Ignore();        
+        phone.applicationControl.OpenApp(app);
     }
     public void DeleteObject()
     {

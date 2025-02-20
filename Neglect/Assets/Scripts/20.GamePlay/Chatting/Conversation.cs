@@ -93,7 +93,10 @@ namespace GamePlay.Chatting
         public void Init()
         {
             if(talkData == null) return;
-            if(isInit) return;
+            if (isInit)
+            {
+                ignoreEvent?.Invoke();
+            }
             isInit = true;
             ignoreEvent = new();
             completeEvent = new();

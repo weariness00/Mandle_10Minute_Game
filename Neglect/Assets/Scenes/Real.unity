@@ -349,7 +349,7 @@ MonoBehaviour:
     isOverMax: 0
     isOverMin: 0
   isInitQuest: 0
-  realVolumeControl: {fileID: 0}
+  realVolumeControl: {fileID: 988145022}
 --- !u!4 &838526771
 Transform:
   m_ObjectHideFlags: 0
@@ -600,7 +600,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 511304966}
   - {fileID: 862089537}
-  - {fileID: 838526771}
   - {fileID: 941211128}
-  - {fileID: 607314949}
   - {fileID: 988145021}
+  - {fileID: 838526771}
+  - {fileID: 607314949}
