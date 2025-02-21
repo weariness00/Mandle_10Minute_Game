@@ -57,4 +57,3 @@ MonoBehaviour:
     textArray: []
     extraDataIDArray: 
   CallPrefab: {fileID: 4586627753090403227, guid: 1d5ea28f701293f479506dfbddd47d90, type: 3}
-  CallObject: {fileID: 0}
