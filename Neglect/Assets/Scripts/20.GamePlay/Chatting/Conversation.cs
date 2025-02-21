@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UniRx;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,7 +17,12 @@ namespace GamePlay.Chatting
 {
     public partial class Conversation
     {
-        private ChatTextBox otherChat;
+        public ScrollRect chatLogScrollRect;
+        
+        private ChatTextBox otherChatBox;
+        private ChatTextBox answerChatBox;
+
+        private bool isChatLogContentSizeUpdate = false;
         public void Awake()
         {
             talkData = null;
@@ -38,7 +44,15 @@ namespace GamePlay.Chatting
                 3,
                 5
             );
-            
+        }
+        
+        void Update()
+        {
+            if (isChatLogContentSizeUpdate)
+            {
+                LayoutRebuilder.ForceRebuildLayoutImmediate(chatLogScrollRect.content);
+                chatLogScrollRect.verticalNormalizedPosition = 0f;
+            }
         }
 
         public void Init()
@@ -49,6 +63,10 @@ namespace GamePlay.Chatting
             ignoreTimer.SetMax();
             ignoreEvent = new();
             completeEvent = new();
+            
+            // 이전 로그 지워주기
+            for (int i = 0; i < chatLogScrollRect.content.childCount; i++)
+                Destroy(chatLogScrollRect.content.GetChild(i).gameObject);
         }
         
         public void SettingAnswer()
@@ -64,6 +82,7 @@ namespace GamePlay.Chatting
                 var answer = answerBlockPool.Get();
                 answer.answerText.text = text;
                 answer.gage = talkData.positiveScore;
+                answer.isPositive = true;
                 answerList.Add(answer);
             }
             foreach (string text in talkData.negativeTextArray)
@@ -71,6 +90,7 @@ namespace GamePlay.Chatting
                 var answer = answerBlockPool.Get();
                 answer.answerText.text = text;
                 answer.gage = talkData.negativeScore;
+                answer.isPositive = false;
                 answerList.Add(answer);
             }
             
@@ -83,9 +103,10 @@ namespace GamePlay.Chatting
         public void SetTalkData(TalkingData data)
         {
             if (data == null || prevTalkData == data) return;
+            
             talkData = data;
             SettingAnswer();
-            otherChat = SpawnOtherChat(talkData.mainText);
+            otherChatBox = SpawnOtherChat(talkData.mainText);
         }
 
         public void StartConversation()
@@ -93,17 +114,20 @@ namespace GamePlay.Chatting
             if (!isInit || !gameObject.activeSelf) return;
             if (talkData == null || prevTalkData == talkData) return;
             
-            ShowOtherChat();
+            // 새로운 대화 시작
+            ShowOtherChatBox();
             ShowMyAnswerList();
             ConversationClear();
         }
-
         
         public ChatTextBox SpawnOtherChat(string text)
         {
             var otherChat = Instantiate(messageBoxPrefab,Vector3.zero, messageBoxPrefab.transform.rotation, ChatScrollBox.gameObject.transform);
             otherChat.image.sprite = otherMessageSprite;
             otherChat.SetText(text);
+            otherChat.boxTransform.pivot = Vector2.up;
+            otherChat.boxTransform.anchorMin = Vector2.up;
+            otherChat.boxTransform.anchorMax = Vector2.up;
 
             return otherChat;
         }
@@ -112,6 +136,9 @@ namespace GamePlay.Chatting
         {
             var answerChat = Instantiate(messageBoxPrefab,Vector3.zero, messageBoxPrefab.transform.rotation, ChatScrollBox.gameObject.transform);
             answerChat.image.sprite = myMessageSprite;
+            answerChat.boxTransform.pivot = Vector2.one;
+            answerChat.boxTransform.anchorMin = Vector2.one;
+            answerChat.boxTransform.anchorMax = Vector2.one;
             answerChat.SetText(text);
             
             return answerChat;
@@ -124,28 +151,27 @@ namespace GamePlay.Chatting
             foreach (AnswerBlock answerBlock in answerList)
             {
                 answerBlock.button.interactable = true;
-                UiSeq.Append(answerBlock.rectTransform.DOLocalMoveY(answerBlock.rectTransform.localPosition.y - 30f, 0.5f).From()).Join(answerBlock.canvasGroup.DOFade(1f, 0.5f));
+                UiSeq.Append(answerBlock.rectTransform.DOLocalMoveY(answerBlock.rectTransform.localPosition.y - 30f, 0.35f).From()).Join(answerBlock.canvasGroup.DOFade(1f, 0.35f));
             }
+
+            UiSeq.AppendCallback(() => isChatLogContentSizeUpdate = false);
         }
 
-        public void ShowOtherChat()
+        public void ShowOtherChatBox()
         {
-            if(otherChat == null) return;
+            if(otherChatBox == null) return;
             
-            Sequence UiSeq = DOTween.Sequence();
-            RectTransform preRect = otherChat.GetComponent<RectTransform>();
-            LayoutRebuilder.ForceRebuildLayoutImmediate(preRect);
-            
-            Vector3 vect = new Vector3(50+preRect.rect.size.x / 2 * preRect.localScale.x, -NextTextPosY - preRect.rect.size.y * preRect.localScale.y, 0);
-            otherChat.transform.localPosition = vect;
-            NextTextPosY += preRect.rect.size.y * preRect.localScale.y + 20;
-            
-            ChatScrollBox.sizeDelta = new Vector2(0, NextTextPosY + preRect.rect.size.y / 2);
-            StartCoroutine(ScrollToBottom());
-
-            UiSeq.Append(otherChat.gameObject.transform.DOLocalMoveY(otherChat.transform.localPosition.y - 50f, 0.5f).From());
+            otherChatBox.boxTransform.DOLocalMoveY(otherChatBox.boxTransform.localPosition.y - 50f, 0.5f).From();
+            isChatLogContentSizeUpdate = true;
         }
-
+        
+        public void ShowAnswerChatBox()
+        {
+            if(answerChatBox == null) return;
+            
+            answerChatBox.boxTransform.DOLocalMoveY(answerChatBox.boxTransform.localPosition.y - 50f, 0.5f).From();
+            isChatLogContentSizeUpdate = true;
+        }
     }
     
     public partial class Conversation : MonoBehaviour
@@ -184,13 +210,11 @@ namespace GamePlay.Chatting
         public UnityEvent completeEvent;
         public UnityEvent ignoreEvent;
 
-        public float NextTextPosY;
-        public Scrollbar Scrollbar;
         public RectTransform ChatScrollBox;
         private bool isInit = false;
         public void ConversationClear()
         {
-            if (GageBar.fillAmount >= 1 || talkData == null || (talkData.negativeResultTalkID == -1 && talkData.positiveResultTalkID == -1))
+            if (GageBar.fillAmount >= 1 || talkData == null || answerList.Count == 0)
             {
                 //클리어
                 completeEvent?.Invoke();
@@ -201,31 +225,10 @@ namespace GamePlay.Chatting
                 completeEvent = new();
             }
         }
-        
-        public void MyChatSpawn(string t)
-        {
-            Sequence UiSeq = DOTween.Sequence();
-            var pre = Instantiate(messageBoxPrefab, Vector3.zero, messageBoxPrefab.transform.rotation, ChatScrollBox.gameObject.transform);
-            pre.image.sprite = myMessageSprite;
-            pre.SetText(t);
-            RectTransform preRect = pre.GetComponent<RectTransform>();
-            LayoutRebuilder.ForceRebuildLayoutImmediate(preRect);
-            Vector3 vect = new Vector3(550-preRect.rect.size.x / 2 * preRect.localScale.x, -NextTextPosY - preRect.rect.size.y * preRect.localScale.y, 0);
-            pre.transform.localPosition = vect;
-            
-            NextTextPosY += preRect.rect.size.y * preRect.localScale.y + 20;
-            ChatScrollBox.sizeDelta = new Vector2(0, NextTextPosY + preRect.rect.size.y/2);
-            StartCoroutine(ScrollToBottom());
-            UiSeq.Append(pre.gameObject.transform.DOLocalMoveY(pre.transform.localPosition.y - 50f, 0.5f).From());
-        }
-        IEnumerator ScrollToBottom()
-        {
-            yield return new WaitForEndOfFrame(); // UI 업데이트가 완료된 후 실행
-            Scrollbar.value = 0;
-        }
 
         public void ChoiceButton(AnswerBlock block) //버튼 클릭시
         {
+            
             Sequence UiSeq = DOTween.Sequence();
             
             foreach (AnswerBlock answerBlock in answerList)
@@ -233,12 +236,13 @@ namespace GamePlay.Chatting
                 answerBlock.button.interactable = false;
                 if (answerBlock == block)
                 {
-                    UiSeq.Append(answerBlock.canvasGroup.DOFade(0f, 0.5f));
-                    MyChatSpawn(block.answerText.text);  // ~버튼 종료 애니메이션
+                    UiSeq.Append(answerBlock.canvasGroup.DOFade(0f, 0.2f));
+                    answerChatBox = SpawnAnswerChat(block.answerText.text);
+                    ShowAnswerChatBox();
                 }
                 else
                 {
-                    UiSeq.Append(answerBlock.canvasGroup.DOFade(0f, 0.5f));
+                    UiSeq.Append(answerBlock.canvasGroup.DOFade(0f, 0.2f));
                 }
             }
 
@@ -253,7 +257,7 @@ namespace GamePlay.Chatting
                 if (talkData != null)
                 {
                     SettingAnswer(); 
-                    otherChat = SpawnOtherChat(talkData.mainText);
+                    otherChatBox = SpawnOtherChat(talkData.mainText);
                     ShowMyAnswerList();
                 }
                 ConversationClear();
@@ -280,6 +284,7 @@ namespace GamePlay.Chatting
                 {
                     script.Init();
                     script.SetTalkData(TalkingScriptableObject.Instance.GetTalkData(talkID));
+                    script.StartConversation();
                 }
             }
         }
