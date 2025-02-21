@@ -351,6 +351,7 @@ MonoBehaviour:
   isInitQuest: 0
   realVolumeControl: {fileID: 988145022}
   batteryEventID: 0
+  introPopUpID: 9001
 --- !u!4 &838526771
 Transform:
   m_ObjectHideFlags: 0

@@ -1,4 +1,6 @@
 ﻿using GamePlay.Phone;
+using Quest;
+using System.Collections;
 using UniRx;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -18,6 +20,7 @@ namespace GamePlay
 
         [Header("사전에 사용할 이벤트 ID")] 
         public int batteryEventID;
+        public int introPopUpID;
         
         public void Awake()
         {
@@ -33,6 +36,8 @@ namespace GamePlay
                 }
                 SceneUtil.AsyncAddPhone(phoneScene =>
                 {
+                    StartCoroutine(loadedHomeAppEnumerator());
+                    
                     SceneUtil.AsyncAddChatting(AddApp);
                     SceneUtil.AsyncAddBank(AddApp);
                     SceneUtil.AsyncAddRunningGame(AddApp);
@@ -71,6 +76,19 @@ namespace GamePlay
                     GameClear();
                 }
             }
+        }
+
+        public IEnumerator loadedHomeAppEnumerator()
+        {
+            while (ReferenceEquals(PhoneUtil.currentPhone, null) || ReferenceEquals(PhoneUtil.currentPhone.applicationControl.GetHomeApp(), null))
+                yield return null;
+
+            var home = PhoneUtil.currentPhone.applicationControl.GetHomeApp();
+            home.firstStartWindow.clickEntry.callback.AddListener(data =>
+            {
+                var quest = QuestDataList.Instance.InstantiateEvent(introPopUpID);
+                quest.Play();
+            });
         }
     }
 

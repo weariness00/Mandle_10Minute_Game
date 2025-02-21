@@ -30,7 +30,7 @@ MonoBehaviour:
     ignoreEventID: 1101
     textArray:
     - "\uC5C4\uB9C8"
-    extraDataIDArray: 
+    extraDataIDArray: b90f0000
   - id: 1003
     level: 1
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
@@ -81,10 +81,11 @@ MonoBehaviour:
   - id: 1101
     level: 1
     prefab: {fileID: 7104001957306441222, guid: 28b853421a1930741bddba56a7064227, type: 3}
-    acceptEventID: -1
-    ignoreEventID: -1
-    textArray: []
-    extraDataIDArray: 
+    acceptEventID: 1105
+    ignoreEventID: 1101
+    textArray:
+    - "\uC5C4\uB9C8"
+    extraDataIDArray: b90f0000
   - id: 1102
     level: 0
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
@@ -117,7 +118,8 @@ MonoBehaviour:
     prefab: {fileID: 2903363758632237792, guid: 04eca5ed438e8514c9b8cebefee60e75, type: 3}
     acceptEventID: -1
     ignoreEventID: -1
-    textArray: []
+    textArray:
+    - "\uC5C4\uB9C8"
     extraDataIDArray: 
   - id: 1106
     level: 2
@@ -181,6 +183,22 @@ MonoBehaviour:
     ignoreEventID: -1
     textArray: []
     extraDataIDArray: 
+  - id: 9001
+    level: 0
+    prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
+    acceptEventID: 9100
+    ignoreEventID: -1
+    textArray:
+    - "\uC9D0\uB4E4\uC774 \uC628\uB2E4\uB294 \uCE5C\uAD6C"
+    extraDataIDArray: 
+  - id: 9100
+    level: 0
+    prefab: {fileID: 2903363758632237792, guid: 04eca5ed438e8514c9b8cebefee60e75, type: 3}
+    acceptEventID: -1
+    ignoreEventID: -1
+    textArray:
+    - "\uC9D0\uB4E4\uC774 \uC628\uB2E4\uB294 \uCE5C\uAD6C"
+    extraDataIDArray: 74270000
   mainEventDataArray:
   - id: 1001
     level: 0
@@ -199,7 +217,7 @@ MonoBehaviour:
     ignoreEventID: 1101
     textArray:
     - "\uC5C4\uB9C8"
-    extraDataIDArray: 
+    extraDataIDArray: b90f0000
   - id: 1003
     level: 1
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
