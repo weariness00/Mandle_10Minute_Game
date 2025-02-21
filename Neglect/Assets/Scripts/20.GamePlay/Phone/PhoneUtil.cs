@@ -58,9 +58,10 @@ public static class PhoneUtil
     public static T InstantiateUI<T>(T component, string phoneName, out PhoneControl phone) where T : Object
     {
         phone = GetPhone(phoneName);
-        var homeApp = phone.applicationControl.GetApp("Home");
-        var homeView = (HomeView)homeApp;
-        var obj = Object.Instantiate(component, homeView.uiCanvas.transform);
+        var homeApp = phone.applicationControl.GetHomeApp();
+        Debug.Assert(homeApp != null, $"Phone에 Home App이 존재하지 않아 {component.name}을 생성할 수 없습니다.");
+        
+        var obj = Object.Instantiate(component, homeApp.uiCanvas.transform);
         SetLayer(obj);
         return obj;
     }
