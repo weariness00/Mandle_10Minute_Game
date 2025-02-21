@@ -3,7 +3,7 @@
 //,대화의 ID,해당 대화 ,Npc가 말하는,우호적인 답변들의,답변을 받은 후,부적정인 답변들의,답변을 받은 후,유저가 선택한,유저가 선택한
 //,예시),그룹의 이름을,Text의ID,리스트를 나타낸다.,다음 대화 이벤트ID,리스트를 나타낸다.,다음 대화 이벤트ID,답변에 따른 진행도,답변에 따른
 //,4xxx,표시한다.,,,,,,상승 수치,진행도 상승수치
-Header,TalkingID,Name,MainTextID,PositiveTextList,PostiveTalkID,NegativeTextList,NegativeTalkId,PostiveValue,NegativeValue
+Header,TalkingID,Name,MainTextID,PositiveTextList,PositiveTalkID,NegativeTextList,NegativeTalkID,PositiveValue,NegativeValue
 ,4001,친구와 대화1,3105,"3106, 3107",4002,3108,4003,50,0
 ,4002,친구와 대화2,3109,"3110, 3111",4005,3112,4004,50,30
 ,4003,친구와 대화3,3113,"3114, 3115",4002,,,50,0
