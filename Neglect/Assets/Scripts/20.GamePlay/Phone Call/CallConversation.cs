@@ -18,7 +18,7 @@ namespace GamePlay.Event
         public string CurrentName = "npc";
         public TextMeshProUGUI ChatName;
         public bool isComplete;
-        
+        public int choiceIndex;
 
         [Space]
         public TalkingData talkData;
@@ -38,7 +38,8 @@ namespace GamePlay.Event
         public List<Image> SelectImages;
         public List<TextMeshProUGUI> SelectTexts;
 
-
+        public CallconversationTextBox OtherTextBoxScript;
+        public CallconversationTextBox MyTextBoxScript;
         public RectTransform OtherTextBoxRect;
         public RectTransform MyTextBoxRect;
         [Space]
@@ -70,6 +71,8 @@ namespace GamePlay.Event
         {
             ChatName.text = CurrentName;
             CallEndButton.SetActive(false);
+            OtherTextBoxScript.isEndAnimation += ShowSelectButton; //상대방 텍스트 나레이션 끝나면 버튼이 나오도록
+            MyTextBoxScript.isEndAnimation += FillGage; //자신의 텍스트 나레이션 끝나면 게이지가 채워지도록
         }
         
         public void Start()
@@ -154,8 +157,6 @@ namespace GamePlay.Event
             if (OtherTextBoxRect == null)
                 OtherTextBoxRect = OtherChat.GetComponent<RectTransform>();
 
-
-
             isClickButton = false;
             ResetObject();
             SettingReply();
@@ -166,16 +167,17 @@ namespace GamePlay.Event
             {
                 OtherChat.gameObject.SetActive(true);
                 OtherText.gameObject.SetActive(true);
-                TalkTextSetting(OtherText , talkData != null ? talkData.mainText : "Test");
-                LayoutRebuilder.ForceRebuildLayoutImmediate(OtherTextBoxRect);
-                Vector3 vect = new Vector3(-200 + OtherTextBoxRect.rect.size.x/2 * OtherTextBoxRect.localScale.x, OtherChat.transform.localPosition.y, 0);
-                OtherTextBoxRect.anchoredPosition = vect;
             });
             UiSeq.Append(OtherChat.gameObject.transform.DOLocalMoveY(10f, 0.5f).From().SetRelative(true)).Join(OtherChat.DOFade(0f, 0f)).Join(OtherChat.DOFade(1f, 0.5f));
-            
             // ~ 상대 말풍선 애니메이션
-
-
+            UiSeq.AppendCallback(() =>
+            {
+                OtherTextBoxScript.SetNarration(talkData != null ? talkData.mainText : "Test"); //가 끝나면 showSelectButton 실행
+            });
+        }
+        public void ShowSelectButton()
+        {
+            Sequence UiSeq = DOTween.Sequence();
             UiSeq.AppendCallback(() =>
             {
                 for (int i = 0; i < ReplyCount; i++)
@@ -187,8 +189,8 @@ namespace GamePlay.Event
             for (int i = 0; i < ReplyCount; i++)
             {
                 SelectImages[i].DOFade(0f, 0f);
-                UiSeq.Append(SelectButtons[i].gameObject.transform.DOLocalMoveY(SelectButtons[i].gameObject.transform.localPosition.y - 10f, 0.5f)
-                .From()).Join(SelectImages[i].DOFade(1f, 0.5f));
+                UiSeq.Append(SelectButtons[i].gameObject.transform.DOLocalMoveY(SelectButtons[i].gameObject.transform.localPosition.y - 10f, 0.3f)
+                .From()).Join(SelectImages[i].DOFade(1f, 0.3f));
             }
             UiSeq.AppendCallback(() =>
             {
@@ -207,46 +209,44 @@ namespace GamePlay.Event
             });
             //~ 버튼 나오는 애니메이션
         }
-
         public void ChoiceBttons(int index) //버튼 클릭시
         {
             if (!isClickButton)
                 return;
+
+            choiceIndex = index;
             Sequence UiSeq = DOTween.Sequence();
 
             for (int i = 0; i < 3; i++)
             {
                 SelectButtons[i].interactable = false;
                 if (i != index)
-                    UiSeq.Join(SelectImages[i].DOFade(0f, 0.5f)).Join(SelectTexts[i].DOFade(0f, 0.5f));
+                    UiSeq.Join(SelectImages[i].DOFade(0f, 0.3f)).Join(SelectTexts[i].DOFade(0f, 0.3f));
             }
-            UiSeq.Append(SelectImages[index].DOFade(0f, 0.5f)).Join(SelectTexts[index].DOFade(0f, 0.5f));
+            UiSeq.Append(SelectImages[index].DOFade(0f, 0.3f)).Join(SelectTexts[index].DOFade(0f, 0.3f));
             // ~버튼 종료 애니메이션
-
-
 
             UiSeq.AppendCallback(() =>
             {
                 MyChat.gameObject.SetActive(true);
                 MyText.gameObject.SetActive(true);
-                TalkTextSetting(MyText, replyString[index]);
-                LayoutRebuilder.ForceRebuildLayoutImmediate(MyTextBoxRect);
-                Vector3 vect = new Vector3(200 - MyTextBoxRect.rect.size.x / 2 * MyTextBoxRect.localScale.x, MyTextBoxRect.transform.localPosition.y, 0);
-                MyTextBoxRect.anchoredPosition = vect;
-
             });
             UiSeq.Append(MyChat.gameObject.transform.DOLocalMoveY(10f, 0.5f).From().SetRelative(true)).Join(MyChat.DOFade(0f, 0f)).Join(MyChat.DOFade(1f, 0.5f));
-           
+            UiSeq.AppendCallback(() =>
+            {
+                MyTextBoxScript.SetNarration(replyString[index]);
+            });
             // ~ 내 채팅 나오는 애니메이션
+        }
+        public void FillGage()
+        {
+            Sequence UiSeq = DOTween.Sequence();
 
-
-            ChatGage = ChatGage + replygage[index] > 100 ? 100 : ChatGage + replygage[index];
+            ChatGage = ChatGage + replygage[choiceIndex] > 100 ? 100 : ChatGage + replygage[choiceIndex];
             ChatGage = ChatGage < 0 ? 0 : ChatGage;
 
             UiSeq.Append(GageBar.DOFillAmount(ChatGage / 100f, 1f));
             // 게이지 차는 애니메이션
-
-
             if (ChatGage < 100)
                 UiSeq.AppendCallback(() => ChatStart()); // 반복
             else
