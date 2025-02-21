@@ -1,6 +1,5 @@
 ﻿using DG.Tweening;
 using KoreanTyper;
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -24,7 +23,7 @@ namespace GamePlay
         public void Awake()
         {
             narrationReadTimer.SetMax();
-            SetNarration(narrationList[narrationIndex++]);
+            gameObject.SetActive(false);
         }
 
         public void Update()
@@ -46,6 +45,10 @@ namespace GamePlay
             }
         }
 
+        public void StartNarration()
+        {
+            SetNarration(narrationList[narrationIndex++]);
+        }
         public void SetNarration(string narration)
         {
             narrationSTR = narration;
