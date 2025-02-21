@@ -13,9 +13,7 @@ namespace Quest.Container
         [Header("복사할 채팅 프리팹")]
         public CallConversation CallPrefab;
 
-        [Header("생성된 채팅 오브젝트")]
-        public CallConversation CallObject;
-
+        private CallConversation callConversation;
         private PhoneControl phone;
         private IPhoneApplication app;
 
@@ -28,11 +26,13 @@ namespace Quest.Container
         public override void Play()
         {
             base.Play();
-            CallObject = PhoneUtil.InstantiateUI(CallPrefab, out phone);
-            CallObject.gameObject.SetActive(true);
-            CallObject.ClearAction += Complete;
+            callConversation = PhoneUtil.InstantiateUI(CallPrefab, out phone);
+            callConversation.gameObject.SetActive(true);
+            callConversation.ClearAction += Complete;
+            callConversation.onIgnoreEvent += Ignore;
             app = phone.applicationControl.currentPlayApplication;
-            app.AppPause(phone);
+            phone.applicationControl.PauseApp(app);
+            app.SetActiveBackground(true);
             phone.PhoneViewRotate(0);
             //CallObject.SettingDate()
         }
@@ -40,12 +40,13 @@ namespace Quest.Container
         public override void Complete()
         {
             base.Complete();
-            app.AppResume(phone);
+            phone.applicationControl.OpenApp(app);
         }
 
         public override void Ignore()
         {
             base.Ignore();
+            phone.applicationControl.OpenApp(app);
         }
     }
 }

@@ -33,14 +33,14 @@ namespace Quest.Container
         }
         public override void Complete()
         {
-            base.Complete();
             phone.applicationControl.OpenApp(app);
+            base.Complete();
         }
 
         public override void Ignore()
         {
-            base.Ignore();
             phone.applicationControl.OpenApp(app);
+            base.Ignore();
         }
     }
 }

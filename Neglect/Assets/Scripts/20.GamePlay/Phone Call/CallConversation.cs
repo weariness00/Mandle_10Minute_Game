@@ -61,6 +61,7 @@ namespace GamePlay.Event
         private int ReplyCount;
         public bool isClickButton;
         public Action ClearAction; // 클리어했을 때 호출
+        public Action onIgnoreEvent;
         public TextMeshProUGUI TimeText; //타이머 텍스트
 
         public MMF_Player CloseCall;
@@ -68,7 +69,9 @@ namespace GamePlay.Event
         public void Awake()
         {
             ChatName.text = CurrentName;
+            CallEndButton.SetActive(false);
         }
+        
         public void Start()
         {
             ChatStart();
@@ -254,17 +257,17 @@ namespace GamePlay.Event
                 });
             }
         }
+
         public void CallEndAnimation()
         {
             isComplete = true;
+            CloseCall.Events.OnComplete.AddListener(() =>
+            {
+                ClearAction?.Invoke();
+                Destroy(gameObject);
+            });
             CloseCall.PlayFeedbacks();
             TimeText.text += "\n통화종료";
-            //ClearAction();
-        }
-        public void CompleteCallAnimation()
-        {
-
-            Destroy(gameObject);
         }
     }
 }

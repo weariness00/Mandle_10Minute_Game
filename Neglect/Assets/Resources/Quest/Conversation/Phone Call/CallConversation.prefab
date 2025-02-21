@@ -1635,7 +1635,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &3881469577361673272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2626,19 +2626,7 @@ MonoBehaviour:
         m_Calls: []
     OnComplete:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 4586627753090403227}
-          m_TargetAssemblyTypeName: GamePlay.Event.CallConversation, Assembly-CSharp
-          m_MethodName: CompleteCallAnimation
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
     OnRestoreInitialValues:
       m_PersistentCalls:
         m_Calls: []

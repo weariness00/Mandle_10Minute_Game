@@ -56,5 +56,5 @@ MonoBehaviour:
     ignoreEventID: 0
     textArray: []
     extraDataIDArray: 
-  CallPrefab: {fileID: 4586627753090403227, guid: 8dce5ab246f073a4393eb44fada10d90, type: 3}
-  CallObject: {fileID: 4586627753090403227, guid: 1d5ea28f701293f479506dfbddd47d90, type: 3}
+  CallPrefab: {fileID: 4586627753090403227, guid: 1d5ea28f701293f479506dfbddd47d90, type: 3}
+  CallObject: {fileID: 0}

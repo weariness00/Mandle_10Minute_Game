@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mixer: {fileID: 24100000, guid: 5e495dbe377bc944db5acb4e48371758, type: 2}
   audioCanvasPrefab: {fileID: 7713334682955486246, guid: 1a9dd321ac8b08a4891b70c06901bb55, type: 3}
-  groupBlockPrefab: {fileID: 1283430657921842911, guid: 2e7f448c30e9b374090ef8c6dc27d1d4, type: 3}
+  groupBlockPrefab: {fileID: 5598955110625272075, guid: 2e7f448c30e9b374090ef8c6dc27d1d4, type: 3}
   groupParentName: Sound Setting

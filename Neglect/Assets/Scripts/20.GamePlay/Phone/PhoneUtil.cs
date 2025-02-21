@@ -49,7 +49,7 @@ public static class PhoneUtil
     {
         var homeApp = phone.applicationControl.GetApp("Home");
         var homeView = (HomeView)homeApp;
-        var obj = Object.Instantiate(component, homeView.uiCanvas.transform);
+        var obj = Object.Instantiate(component, homeView.extraUICanvas.transform);
         SetLayer(obj);
         return obj;
     }
@@ -61,7 +61,7 @@ public static class PhoneUtil
         var homeApp = phone.applicationControl.GetHomeApp();
         Debug.Assert(homeApp != null, $"Phone에 Home App이 존재하지 않아 {component.name}을 생성할 수 없습니다.");
         
-        var obj = Object.Instantiate(component, homeApp.uiCanvas.transform);
+        var obj = Object.Instantiate(component, homeApp.extraUICanvas.transform);
         SetLayer(obj);
         return obj;
     }
@@ -70,6 +70,6 @@ public static class PhoneUtil
     {
         var homeApp = phone.applicationControl.GetApp("Home");
         var homeView = (HomeView)homeApp;
-        return homeView.uiCanvas;
+        return homeView.extraUICanvas;
     }
 }

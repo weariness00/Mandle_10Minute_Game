@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Util;
 
@@ -12,9 +13,11 @@ namespace GamePlay.Phone
 {
     public partial class HomeView : MonoBehaviour
     {
+        [Header("Canvas")]
         public Canvas mainCanvas;
-        public Canvas uiCanvas;
-
+        public Canvas extraUICanvas;
+        public Canvas phoneUIControlCanvas;
+        
         [Header("App Button 관련")]
         [SerializeField] private AppButton appButtonPrefab;
         [SerializeField] private Transform appButtonParent;
@@ -106,15 +109,16 @@ namespace GamePlay.Phone
         public void SetActiveBackground(bool value)
         {
             mainCanvas.gameObject.SetActive(value);
-            interfaceRectTransform.gameObject.SetActive(value);
             informationCanvas.gameObject.SetActive(value);
+            phoneUIControlCanvas.gameObject.SetActive(value);
         }
         
         public void AppInstall(PhoneControl phone)
         {
             _phone = phone;
             mainCanvas.worldCamera = phone.phoneCamera;
-            uiCanvas.worldCamera = phone.phoneCamera;
+            extraUICanvas.worldCamera = phone.phoneCamera;
+            phoneUIControlCanvas.worldCamera = phone.phoneCamera;
             
             _phone.interfaceGroupOnOffButton.onClickEvent.AddListener(() =>
             {
@@ -171,10 +175,10 @@ namespace GamePlay.Phone
         public void AppPause(PhoneControl phone)
         {
             tween?.Kill();
-            Observable.Timer(TimeSpan.FromSeconds(0.3f)).Subscribe(_ =>
-            {
-                mainCanvas.gameObject.SetActive(false);
-            });
+            // Observable.Timer(TimeSpan.FromSeconds(0.3f)).Subscribe(_ =>
+            // {
+            //     mainCanvas.gameObject.SetActive(false);
+            // });
 
             interfaceRectTransform.gameObject.SetActive(false);
             interfaceRectTransform.anchoredPosition = new(0,-interfaceRectTransform.sizeDelta.y);
