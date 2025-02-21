@@ -43,12 +43,14 @@ namespace GamePlay.Phone
         {
             SetActiveBackground(true);
             conversation.Init();
+            conversation.StartConversation();
         }
 
         public void AppResume(PhoneControl phone)
         {
             SetActiveBackground(true);
             conversation.Init();
+            conversation.StartConversation();
         }
 
         public void AppPause(PhoneControl phone)
