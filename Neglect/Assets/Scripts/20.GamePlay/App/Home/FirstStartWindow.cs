@@ -24,11 +24,6 @@ namespace GamePlay.App
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            var narration =  FindObjectOfType<GamePlayerNarration>(true);
-            if (narration)
-            {
-                narration.StartNarration();
-            }
             Destroy(gameObject);
         }
     }

@@ -4180,7 +4180,7 @@ MonoBehaviour:
     isOverMin: 0
   tutorial: {fileID: 2125293679}
   isOnTutorial: 0
-  bgmAudioSource: {fileID: 1988841661}
+  bgmSound: {fileID: 8300000, guid: 6cdc9a01d287b7e45a4d1eefb10e6b6b, type: 3}
   gameName: Running Game
   appIcon: {fileID: 21300000, guid: 5d216461c6df6b54b9c820a75e9d9367, type: 3}
   resolution: {x: 600, y: 960}
