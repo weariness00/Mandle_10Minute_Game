@@ -44,6 +44,8 @@ namespace GamePlay.Phone
             vertical.Transform.SetParent(transform, false);
             horizon.Transform.SetParent(transform, false);
             horizon.Transform.localEulerAngles = new Vector3(0, 0, -90);
+
+            transform.localPosition = new Vector3(0, 0, 0.01f);
         }
 
         public void SetShader(Shader shader)

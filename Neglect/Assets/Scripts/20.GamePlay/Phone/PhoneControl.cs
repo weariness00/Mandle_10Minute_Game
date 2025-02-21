@@ -204,9 +204,6 @@ namespace GamePlay.Phone
                 });
             }
 
-            var pos = viewPort.transform.position;
-            pos.z = 0;
-            viewPort.transform.position = pos;
             viewPort.gameObject.SetActive(true);
             viewPort.SetActive(viewType);
             phoneCamera.targetTexture = viewPort.GetData(viewType).renderTexture;
