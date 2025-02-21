@@ -744,8 +744,8 @@ MonoBehaviour:
   applicationControl: {fileID: 553185174}
   VibrationAudio: {fileID: 21221871}
   phoneShader: {fileID: -6465566751694194690, guid: aaa673228006ca64fa4e4a508837c977, type: 3}
-  phoneVerticalSprite: {fileID: 21300000, guid: 5f1739d4758f4654f806a1dc1fc0b3fc, type: 3}
-  phoneHorizonSprite: {fileID: 21300000, guid: 2a2eb21732001e840856f20402db1256, type: 3}
+  phoneVerticalSprite: {fileID: 21300000, guid: 9991c613ace2ebd4e8c124539080d011, type: 3}
+  phoneHorizonSprite: {fileID: 21300000, guid: dc6856e3a15ae944489b13643c4a7edf, type: 3}
   phoneViewPortPrefab: {fileID: 999179191110555612, guid: 6b0c996386c6f6f41927ab640602129e, type: 3}
   currentPhoneViewPort: {fileID: 0}
   viewType: 0
@@ -976,14 +976,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.3679245, g: 0.3679245, b: 0.3679245, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 06894bd4e48af9247af27f2bd73c9599, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9991c613ace2ebd4e8c124539080d011, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1479,12 +1479,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7959da2e29375b6488b3a10af136e755, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Sprite: {fileID: 21300000, guid: 9991c613ace2ebd4e8c124539080d011, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 3.78, y: 7.38}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -2176,7 +2176,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5f1739d4758f4654f806a1dc1fc0b3fc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9991c613ace2ebd4e8c124539080d011, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2208,7 +2208,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 907516724}
   canvas: {fileID: 1956848752}
-  sprite: {fileID: 21300000, guid: 5f1739d4758f4654f806a1dc1fc0b3fc, type: 3}
+  sprite: {fileID: 21300000, guid: 9991c613ace2ebd4e8c124539080d011, type: 3}
 --- !u!1 &1962400150
 GameObject:
   m_ObjectHideFlags: 0
