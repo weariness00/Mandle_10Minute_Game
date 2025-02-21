@@ -94,6 +94,11 @@ namespace GamePlay.MiniGame
         public PhoneControl Phone => _phone;
         public AppState AppState { get; set; }
 
+        public virtual void SetActiveBackground(bool value)
+        {
+            
+        }
+        
         public virtual void AppInstall(PhoneControl phone)
         {
             _phone = phone;
@@ -115,6 +120,7 @@ namespace GamePlay.MiniGame
             var home = _phone.applicationControl.GetHomeApp();
             home.GetAppButton(this).highlightObject.SetActive(false);
 
+            GameManager.Instance.isGameStart.Value = true;
             if (GameManager.Instance.isInitQuest == false)
             {
                 GameManager.Instance.isInitQuest = true;

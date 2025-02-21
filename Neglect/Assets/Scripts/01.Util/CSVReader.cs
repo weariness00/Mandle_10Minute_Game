@@ -17,6 +17,18 @@ namespace Util
         {
             if (objectValue is T value)
                 return value;
+            if (typeof(T) == typeof(string))
+            {
+                if (objectValue is string[] stringArray)
+                {
+                    return (T)(object)string.Join("", stringArray);
+                }
+                if (objectValue is List<string> stringList)
+                {
+                    return (T)(object)string.Join("", stringList);
+                }
+            }
+            
             if (typeof(T).IsArray)
             {
                 var type = typeof(T).GetElementType();
@@ -26,7 +38,9 @@ namespace Util
                 else
                     array = Array.CreateInstance(type, 0);
                 if (array is T value2)
+                {
                     return value2;
+                }
             }
 
             // T가 List일 때
@@ -49,6 +63,17 @@ namespace Util
             {
                 if (objectValue is T value)
                     return value;
+                if (typeof(T) == typeof(string))
+                {
+                    if (objectValue is string[] stringArray)
+                    {
+                        return (T)(object)string.Join("", stringArray);
+                    }
+                    if (objectValue is List<string> stringList)
+                    {
+                        return (T)(object)string.Join("", stringList);
+                    }
+                }
                 if (typeof(T).IsArray)
                 {
                     var type = typeof(T).GetElementType();
@@ -122,7 +147,7 @@ namespace Util
     public class CSVReader
     {
         static string SPLIT_RE = @",(?=(?:[^""]*""[^""]*"")*(?![^""]*""))";
-        static string LINE_SPLIT_RE = @"\r\n|\n\r|\n|\r";
+        static string LINE_SPLIT_RE = @"\r\n|\n\r|\r";
         static char[] TRIM_CHARS = { '\"' };
         
         public static T DynamicCast<T>(object objectValue) where T : new()

@@ -51,7 +51,7 @@ namespace Quest
             questPlayDictionary.Clear();
             isQuestStart = true;
             questSpawnTimer.SetMin();
-            eventList = new(QuestDataList.Instance.GetAllEvent());
+            eventList = new(QuestDataList.Instance.GetAllMainEvent());
         }
         
         // 퀘스트를 매니저에 추가
@@ -92,7 +92,7 @@ namespace Quest
         {
             int index = Random.Range(0, eventList.Count);
             var e = eventList[index];
-            var quest = QuestDataList.Instance.InstantiateEvent(e.id);
+            var quest = QuestDataList.Instance.InstantiateMainEvent(e.id);
             quest.eventData = e;
             return quest;
         }

@@ -1,6 +1,4 @@
 ﻿using GamePlay.Phone;
-using Quest.UI;
-using System;
 using UniRx;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,6 +15,9 @@ namespace GamePlay
         [Tooltip("방해 이벤트를 초기화(시작)했는지")] public bool isInitQuest = false;
 
         public PostProcessingUtility realVolumeControl;
+
+        [Header("사전에 사용할 이벤트 ID")] 
+        public int batteryEventID;
         
         public void Awake()
         {
@@ -58,11 +59,6 @@ namespace GamePlay
                     });
                 }
             });
-        }
-
-        public void Start()
-        {
-            isGameStart.Value = true;
         }
 
         public void Update()

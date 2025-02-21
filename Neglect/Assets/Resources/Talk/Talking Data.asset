@@ -86,5 +86,14 @@ MonoBehaviour:
     negativeTextArray: []
     positiveScore: 0
     negativeScore: 0
+  - id: 4008
+    mainText: "[web\uBC1C\uC2E0] \n\uB7EC\uB2DD\uC561\uC158\uAC8C\uC784 \uC774\uB984
+      \uC2DC\uC98C 2\uC2DC\uC791 \uC0AC\uC804\uC608\uC57D \uC774\uBCA4\uD2B8 \uC54C\uB9BC"
+    positiveResultTalkID: -1
+    negativeResultTalkID: -1
+    positiveTextArray: []
+    negativeTextArray: []
+    positiveScore: 0
+    negativeScore: 0
   talkDataCSV: {fileID: 4900000, guid: f38926548fe386b4bbbfbc2af75639e5, type: 3}
   textDataCSV: {fileID: 4900000, guid: 99da7b52953aa8648911dc3b551dee40, type: 3}
