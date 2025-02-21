@@ -731,7 +731,7 @@ MonoBehaviour:
     _isMax: 0
     isOverMax: 0
     isOverMin: 0
-  informationCanvas: {fileID: 0}
+  informationCanvas: {fileID: 1834931468}
   interfaceRectTransform: {fileID: 1157845974}
   homeButton: {fileID: 485577334}
   backButton: {fileID: 1101506623}

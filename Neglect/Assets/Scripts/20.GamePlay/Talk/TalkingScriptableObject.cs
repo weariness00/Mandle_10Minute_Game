@@ -38,16 +38,18 @@ namespace GamePlay.Talk
             }
             { // Talking Data Table 초기화
                 var csv = talkDataCSV.ReadHorizon();
-                talkingDataArray = new TalkingData[csv.Count];
+                List<TalkingData> talkList = new();
 
                 for (var i = 0; i < csv.Count; i++)
                 {
                     var data = csv[i];
-                    var talkID = data.DynamicCast<int>("TalkingID");
+                    var talkID = data.DynamicCast<int>("TalkingID", -1);
+                    if(talkID == -1) continue;
                     TalkingData talk = new();
                     talk.id = talkID;
-                    talkingDataArray[i] = talk;
+                    talkList.Add(talk);
                 }
+                talkingDataArray = talkList.ToArray();
                 Array.Sort(talkingDataArray, (a,b) => a.id.CompareTo(b.id));
                 foreach (var data in csv)
                 {

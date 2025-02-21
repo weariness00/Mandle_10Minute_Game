@@ -22,6 +22,17 @@ namespace GamePlay.Phone
         }
 
         public IPhoneApplication GetApp(string appName) => applicationDictionary.GetValueOrDefault(appName);
+
+        public TApp GetApp<TApp>() where TApp : class, IPhoneApplication
+        {
+            foreach ((string key, IPhoneApplication value) in applicationDictionary)
+            {
+                if (value is TApp target)
+                    return target;
+            }
+
+            return null;
+        }
         public void AddApp(IPhoneApplication app)
         {
             OnAddAppEvent?.Invoke(app);

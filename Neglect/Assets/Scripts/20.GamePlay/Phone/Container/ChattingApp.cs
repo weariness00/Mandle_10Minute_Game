@@ -1,12 +1,13 @@
 ﻿using GamePlay.Chatting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace GamePlay.Phone
 {
     public partial class ChattingApp : MonoBehaviour
     {
         [Header("채팅 관련")] 
-        [SerializeField] private Conversation chatting;
+        public Conversation conversation;
     }
 
     public partial class ChattingApp : IPhoneApplication
@@ -25,15 +26,15 @@ namespace GamePlay.Phone
 
         public void SetActiveBackground(bool value)
         {
-            chatting.gameObject.SetActive(value);
+            conversation.gameObject.SetActive(value);
         }
 
         public void AppInstall(PhoneControl phone)
         {
             _phone = phone;
 
-            chatting.canvas.worldCamera = _phone.phoneCamera;
-            chatting.backButton.onClick.AddListener(() => phone.applicationControl.CloseApp(this));
+            conversation.canvas.worldCamera = _phone.phoneCamera;
+            conversation.backButton.onClick.AddListener(() => phone.applicationControl.CloseApp(this));
             
             SetActiveBackground(false);
         }
@@ -41,13 +42,13 @@ namespace GamePlay.Phone
         public void AppPlay(PhoneControl phone)
         {
             SetActiveBackground(true);
-            chatting.Init();
+            conversation.Init();
         }
 
         public void AppResume(PhoneControl phone)
         {
             SetActiveBackground(true);
-            chatting.Init();
+            conversation.Init();
         }
 
         public void AppPause(PhoneControl phone)
