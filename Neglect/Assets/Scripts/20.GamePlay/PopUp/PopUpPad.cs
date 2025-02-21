@@ -146,7 +146,7 @@ namespace GamePlay.PopUp
             mmfPosition.AnimatePositionTarget = gameObject;
             mmfPosition.InitialPosition = Vector3.zero;
             mmfPosition.DestinationPosition = Vector3.zero;
-            mmfPosition.DestinationPosition.y = -rectTransform.sizeDelta.y;
+            mmfPosition.DestinationPosition.y = -rectTransform.sizeDelta.y / 2;
             mmfPosition.AnimatePositionDuration = 1f;
         }
     }

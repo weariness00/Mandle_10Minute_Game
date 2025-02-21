@@ -155,8 +155,9 @@ namespace GamePlay.Phone
 
         public PhoneViewPort GetAppViewPort(IPhoneApplication app) => phoneViewPortDictionary.GetValueOrDefault(app.AppName);
 
+        public void PhoneViewRotate(int value) => PhoneViewRotate(value, null);
         public void PhoneViewRotate(PhoneViewType value) => PhoneViewRotate((int)value);
-        public void PhoneViewRotate(int value, Action isRotated = null)
+        public void PhoneViewRotate(int value, Action isRotated)
         {
             viewType = (PhoneViewType)value;
 

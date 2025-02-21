@@ -24,6 +24,9 @@ namespace GamePlay.Phone
         private Dictionary<string, AppButton> appButtonDictionary = new();
         
         private static readonly int ShineLocation = Shader.PropertyToID("_ShineLocation");
+
+        [Header("Informaton Canvas 관련")] 
+        public Canvas informationCanvas;
         
         [Header("Interface Button")] 
         public RectTransform interfaceRectTransform;
@@ -104,6 +107,7 @@ namespace GamePlay.Phone
         {
             mainCanvas.gameObject.SetActive(value);
             interfaceRectTransform.gameObject.SetActive(value);
+            informationCanvas.gameObject.SetActive(value);
         }
         
         public void AppInstall(PhoneControl phone)
