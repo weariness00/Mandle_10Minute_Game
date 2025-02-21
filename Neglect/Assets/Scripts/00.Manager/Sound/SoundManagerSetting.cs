@@ -11,6 +11,9 @@ namespace Manager
     [CreateAssetMenu(fileName = "Sound Manager Setting", menuName = "Manager/Sound", order = 0)]
     public class SoundManagerSetting : ScriptableObject
     {
+        public bool isInstantiate;
+        
+        [Space]
         public AudioMixer mixer;
         public Canvas audioCanvasPrefab; // 오디오 캔버스
         public SoundBlock groupBlockPrefab; // 오디오 슬라이드 프리펩
@@ -31,6 +34,7 @@ namespace Manager
             {
                 var block = Instantiate(groupBlockPrefab, groupParent);
                 block.name = group.name;
+                block.slider.value = SoundManager.Instance.GetVolume(group.name);
                 block.Initialize(group);
                 blockList.Add(block);
             }

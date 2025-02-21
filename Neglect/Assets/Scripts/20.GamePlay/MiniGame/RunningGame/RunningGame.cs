@@ -139,17 +139,22 @@ namespace GamePlay.MiniGame.RunningGame
     {
         public override void GamePlay()
         {
+            if (isOnTutorial)
+            {
+                lobbyCanvas.gameObject.SetActive(false);
+                lobbyObject.gameObject.SetActive(false);
+            
+                inGameCanvas.gameObject.SetActive(true);
+                inGameObject.gameObject.SetActive(true);
+            
+                if(rankQuest) rankQuest.Play();
+            
+                foreach (ObjectSpawner spawner in obstacleSpawnerList)
+                    spawner.Play();
+            }
+            
+            // isOnTutorial 이 base에 변경된다.
             base.GamePlay();
-            lobbyCanvas.gameObject.SetActive(false);
-            lobbyObject.gameObject.SetActive(false);
-            
-            inGameCanvas.gameObject.SetActive(true);
-            inGameObject.gameObject.SetActive(true);
-            
-            if(rankQuest) rankQuest.Play();
-            
-            foreach (ObjectSpawner spawner in obstacleSpawnerList)
-                spawner.Play();
         }
 
         public override void GameStop()

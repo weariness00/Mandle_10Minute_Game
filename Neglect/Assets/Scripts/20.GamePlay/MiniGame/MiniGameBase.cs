@@ -1,8 +1,8 @@
 ﻿using GamePlay.Phone;
 using Quest;
 using UniRx;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Util;
 
 namespace GamePlay.MiniGame
@@ -16,16 +16,23 @@ namespace GamePlay.MiniGame
         public ReactiveProperty<float> gameSpeed = new(1f);
         [SerializeField] protected MinMaxValue<float> playTime = new(0, 0, 60 * 10);
 
+        public MiniGameTutorial tutorial;
+        [HideInInspector] public bool isOnTutorial;
+        
         [Space] 
         public AudioSource bgmAudioSource;
         public virtual void Awake()
         {
+            isGamePlay.Value = false;
             playTime.SetMin();
+            
+            if(PlayerPrefs.HasKey($"{nameof(isOnTutorial)}{AppName}"))
+                isOnTutorial = PlayerPrefs.GetInt($"{nameof(isOnTutorial)}{AppName}") == 1;
         }
 
         public virtual void Start()
         {
-
+            
         }
 
         public virtual void Update()
@@ -43,10 +50,24 @@ namespace GamePlay.MiniGame
 
         public virtual void GamePlay()
         {
-            isGamePlay.Value = true;
-            isGameStart = true;
+            if (isOnTutorial)
+            {
+                isGamePlay.Value = true;
+                isGameStart = true;
             
-            bgmAudioSource.Play();
+                bgmAudioSource.Play();
+            }
+            else
+            {
+                isOnTutorial = true;
+                PlayerPrefs.SetInt($"{nameof(isOnTutorial)}{AppName}", 1);
+                tutorial.gameObject.SetActive(true);
+                tutorial.okButton.onClick.AddListener(() =>
+                {
+                    tutorial.gameObject.SetActive(false);
+                    GamePlay();
+                });
+            }
         }
 
         public virtual void GameStop()
@@ -146,5 +167,24 @@ namespace GamePlay.MiniGame
         {
         }
     }
-}
 
+#if UNITY_EDITOR
+
+    [CustomEditor(typeof(MiniGameBase), true)]
+    public class MiniGameBaseEditor : Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+
+            var script = target as MiniGameBase;
+
+            if (GUILayout.Button("튜토리얼 초기화"))
+            {
+                PlayerPrefs.SetInt($"{nameof(script.isOnTutorial)}{script.AppName}", 0);
+            }
+        }
+    }
+    
+#endif
+}

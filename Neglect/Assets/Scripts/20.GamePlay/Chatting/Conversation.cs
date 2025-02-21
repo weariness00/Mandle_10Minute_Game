@@ -81,7 +81,7 @@ namespace GamePlay.Chatting
         
         public void Init()
         {
-            if (talkData == null || prevTalkData == talkData) return;
+            if (talkData == null || ReferenceEquals(talkData, null) || prevTalkData == talkData) return;
             if (isInit) return;
             backButton.gameObject.SetActive(false);
             prevTalkData = talkData;
@@ -89,6 +89,7 @@ namespace GamePlay.Chatting
             ignoreEvent = new();
             completeEvent = new();
             ignoreTimer.SetMax();
+            
             SettingAnswer(); 
             OtherChatSpawn(talkData.mainText);
             ChatBox();
@@ -137,12 +138,6 @@ namespace GamePlay.Chatting
 
         public void SettingAnswer()
         {
-            if (talkData == null || ReferenceEquals(talkData, null))
-            {
-                Debug.LogError("talkData is null");
-                return; // talkData가 null이면 이 함수의 실행을 중단
-            }
-
             // pool 비우기
             foreach (AnswerBlock answerBlock in answerList)
                 answerBlockPool.Release(answerBlock);
@@ -208,10 +203,14 @@ namespace GamePlay.Chatting
             UiSeq.AppendCallback(() =>
             {
                 prevTalkData = talkData = TalkingScriptableObject.Instance.GetTalkData(block.isPositive ? talkData.positiveResultTalkID : talkData.negativeResultTalkID);
-                SettingAnswer(); 
-                OtherChatSpawn(talkData.mainText);
-                ChatBox();
-                if (GageBar.fillAmount >= 1 || (talkData.positiveResultTalkID == -1 && talkData.negativeResultTalkID == -1))
+
+                if (talkData != null)
+                {
+                    SettingAnswer(); 
+                    OtherChatSpawn(talkData.mainText);
+                    ChatBox();
+                }
+                if (GageBar.fillAmount >= 1 || talkData == null)
                 {
                     //클리어
                     completeEvent.Invoke();
