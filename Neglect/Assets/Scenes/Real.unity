@@ -987,6 +987,7 @@ MonoBehaviour:
   state: 0
   eventData:
     id: 0
+    name: 
     level: 0
     prefab: {fileID: 0}
     acceptEventID: 0
