@@ -35,6 +35,7 @@ namespace GamePlay.Phone
 
             soundBlock = PhoneUtil.InstantiateUI(soundBlockPrefab);
             soundBlock.slider.value = SoundManager.Instance.GetVolume("Master");
+            SoundManager.Instance.SetVolume("Master", soundBlock.slider.value);
             blockectTransform = soundBlock.GetComponent<RectTransform>();
             blockectTransform.anchoredPosition = new Vector2(blockectTransform.sizeDelta.y, 0);
             parent = soundBlock.slider.transform.parent;
