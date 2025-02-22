@@ -23,6 +23,8 @@ namespace GamePlay.PopUp
         public TextMeshProUGUI BetteryText;
         public TextMeshProUGUI ChargingText;
         public int energy;
+        public AudioSource ChargeCompleteSound;
+        
         public void OnEnable()
         {
             ShowNotificationMMF.PlayFeedbacks();    
@@ -52,6 +54,11 @@ namespace GamePlay.PopUp
         {
             
             HideNotificationMMF.PlayFeedbacks();
+        }
+
+        public void ChargeCompleteSoundPlay()
+        {
+            ChargeCompleteSound.Play();
         }
 
         public void SelfDestory()

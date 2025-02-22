@@ -28,8 +28,7 @@ namespace GamePlay.Event
 
         public Action ClearAction;
 
-        public MMF_Player ResetPostion;     
-        public MMF_Player TargetPostion;
+        public MMF_Player ResetPostion;    
 
 
         Vector3 offset;
