@@ -1,5 +1,6 @@
 using DG.Tweening;
 using GamePlay.Talk;
+using Manager;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using System;
@@ -19,9 +20,13 @@ namespace GamePlay.Event
         public TextMeshProUGUI ChatName;
         public bool isComplete;
         public int choiceIndex;
+        
+        public AudioSource EndSound;
 
         [Space]
         public TalkingData talkData;
+
+
 
         [Header("말풍선")]
         [Tooltip("상대방 말풍선")]
@@ -73,6 +78,7 @@ namespace GamePlay.Event
             CallEndButton.SetActive(false);
             OtherTextBoxScript.isEndAnimation += ShowSelectButton; //상대방 텍스트 나레이션 끝나면 버튼이 나오도록
             MyTextBoxScript.isEndAnimation += FillGage; //자신의 텍스트 나레이션 끝나면 게이지가 채워지도록
+
         }
         
         public void Start()
@@ -267,6 +273,7 @@ namespace GamePlay.Event
                 Destroy(gameObject);
             });
             CloseCall.PlayFeedbacks();
+            EndSound.Play();
             TimeText.text += "\n통화종료";
         }
     }

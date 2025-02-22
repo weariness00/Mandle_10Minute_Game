@@ -33,7 +33,6 @@ namespace Quest.Container
         }
         public override void Complete()
         {
-            phone.applicationControl.OpenApp(app);
             base.Complete();
         }
 
