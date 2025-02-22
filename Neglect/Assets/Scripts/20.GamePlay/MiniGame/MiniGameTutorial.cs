@@ -24,8 +24,6 @@ public class MiniGameTutorial : MonoBehaviour
         
         leftButton.onClick.AddListener(LeftPage);
         rightButton.onClick.AddListener(RightPage);
-        
-        gameObject.SetActive(false);
     }
     
     public void LeftPage()
