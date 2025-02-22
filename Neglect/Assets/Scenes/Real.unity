@@ -348,9 +348,12 @@ MonoBehaviour:
     _isMax: 0
     isOverMax: 0
     isOverMin: 0
-  isInitQuest: 0
+  narration: {fileID: 1888626932}
   realVolumeControl: {fileID: 988145022}
+  isInitQuest: 0
+  bgmSound: {fileID: 8300000, guid: edf324e4638cdad47b063bcded4f25c3, type: 3}
   batteryEventID: 0
+  introPopUpID: 9001
 --- !u!4 &838526771
 Transform:
   m_ObjectHideFlags: 0

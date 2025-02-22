@@ -54,6 +54,8 @@ namespace GamePlay.Talk
                 foreach (var data in csv)
                 {
                     var talkID = data.DynamicCast("TalkingID", -1);
+                    if(talkID == -1) continue;
+                    
                     var mainTextID = data.DynamicCast("MainTextID", -1);
                     var positiveTextIDArray = data.DynamicCast("PositiveTextList", Array.Empty<int>());
                     var negativeTextIDArray = data.DynamicCast("NegativeTextList", Array.Empty<int>());

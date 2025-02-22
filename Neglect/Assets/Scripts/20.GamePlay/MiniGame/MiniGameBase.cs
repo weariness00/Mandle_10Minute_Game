@@ -1,4 +1,5 @@
 ﻿using GamePlay.Phone;
+using Manager;
 using Quest;
 using UniRx;
 using UnityEditor;
@@ -20,7 +21,7 @@ namespace GamePlay.MiniGame
         [HideInInspector] public bool isOnTutorial;
         
         [Space] 
-        public AudioSource bgmAudioSource;
+        public AudioClip bgmSound;
         public virtual void Awake()
         {
             isGamePlay.Value = false;
@@ -54,8 +55,10 @@ namespace GamePlay.MiniGame
             {
                 isGamePlay.Value = true;
                 isGameStart = true;
-            
-                bgmAudioSource.Play();
+
+                var bgmSource = SoundManager.Instance.GetBGMSource();
+                bgmSource.clip = bgmSound;
+                bgmSource.Play();
             }
             else
             {
@@ -73,7 +76,7 @@ namespace GamePlay.MiniGame
         public virtual void GameStop()
         {
             isGamePlay.Value = false;
-            bgmAudioSource.Pause();
+            SoundManager.Instance.GetBGMSource().Pause();
         }
 
         public virtual void GameOver()
@@ -133,7 +136,9 @@ namespace GamePlay.MiniGame
             }
 
             var home = _phone.applicationControl.GetHomeApp();
-            home.GetAppButton(this).highlightObject.SetActive(true);
+            var appButton = home.GetAppButton(this);
+            appButton.highlightObject.SetActive(true);
+            appButton.button.interactable = false;
         }
 
         public virtual void AppPlay(PhoneControl phone)

@@ -1,4 +1,8 @@
-﻿using GamePlay.Phone;
+﻿using GamePlay.MiniGame;
+using GamePlay.Phone;
+using Manager;
+using Quest;
+using System.Collections;
 using UniRx;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,16 +15,22 @@ namespace GamePlay
         public ReactiveProperty<bool> isGameStart;
         public ReactiveProperty<bool> isGameClear;
         public MinMaxValue<float> playTimer = new(0, 0, 60 * 10);
-        
+
+        [Tooltip("나레이션 클래스")] public GamePlayerNarration narration;
+        [Tooltip("포스트 프로세싱을 사용할 Global Volume")]public PostProcessingUtility realVolumeControl;
         [Tooltip("방해 이벤트를 초기화(시작)했는지")] public bool isInitQuest = false;
-
-        public PostProcessingUtility realVolumeControl;
-
+        public AudioClip bgmSound;
+        
         [Header("사전에 사용할 이벤트 ID")] 
         public int batteryEventID;
+        public int introPopUpID;
         
         public void Awake()
         {
+            var bgmSource = SoundManager.Instance.GetBGMSource();
+            bgmSource.clip = bgmSound;
+            bgmSource.Play();
+            
             if (!SceneUtil.TryGetPhoneScene(out var s))
             {
                 void AddApp(Scene scene)
@@ -33,6 +43,8 @@ namespace GamePlay
                 }
                 SceneUtil.AsyncAddPhone(phoneScene =>
                 {
+                    StartCoroutine(loadedHomeAppEnumerator());
+                    
                     SceneUtil.AsyncAddChatting(AddApp);
                     SceneUtil.AsyncAddBank(AddApp);
                     SceneUtil.AsyncAddRunningGame(AddApp);
@@ -71,6 +83,36 @@ namespace GamePlay
                     GameClear();
                 }
             }
+        }
+
+        public IEnumerator loadedHomeAppEnumerator()
+        {
+            while (ReferenceEquals(PhoneUtil.currentPhone, null) || ReferenceEquals(PhoneUtil.currentPhone.applicationControl.GetHomeApp(), null))
+                yield return null;
+
+            var phone = PhoneUtil.currentPhone;
+            var home = phone.applicationControl.GetHomeApp();
+            home.firstStartWindow.clickEntry.callback.AddListener(data =>
+            {
+                var quest = QuestDataList.Instance.InstantiateEvent(introPopUpID);
+                quest.Play();
+                
+                // 친구의 팝업을 완료하면
+                quest.onCompleteEvent.AddListener(q1 =>
+                {
+                    // 친구와의 대화를 완료 하면 
+                    q1.onCompleteEvent.AddListener(q2 =>
+                    {
+                        // 나레이션 시작
+                        narration.StartNarration(); 
+
+                        // 미니 게임 버튼 활성화
+                        var miniGame = phone.applicationControl.GetApp<MiniGameBase>();
+                        var miniGameAppButton = home.GetAppButton(miniGame);
+                        miniGameAppButton.button.interactable = true;
+                    });
+                });
+            });
         }
     }
 
