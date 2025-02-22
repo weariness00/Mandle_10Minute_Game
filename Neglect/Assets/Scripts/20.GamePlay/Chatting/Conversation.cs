@@ -9,6 +9,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Pool;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Util;
 
@@ -63,6 +64,8 @@ namespace GamePlay.Chatting
             ignoreTimer.SetMax();
             ignoreEvent = new();
             completeEvent = new();
+            chatGage = 0;
+            gageBarImage.fillAmount = 0;
             
             // 이전 로그 지워주기
             for (int i = 0; i < chatLogScrollRect.content.childCount; i++)
@@ -197,10 +200,11 @@ namespace GamePlay.Chatting
         private ObjectPool<AnswerBlock> answerBlockPool;   
         private List<AnswerBlock> answerList = new();
 
+        [FormerlySerializedAs("ChatGage")]
         [Space]
         [Header("게이지")]
-        public int ChatGage;
-        public Image GageBar;
+        public int chatGage;
+        public Image gageBarImage;
 
         [Header("데이터베이스에서 가져올 정보")] 
         [Space]
@@ -214,7 +218,7 @@ namespace GamePlay.Chatting
         private bool isInit = false;
         public void ConversationClear()
         {
-            if (GageBar.fillAmount >= 1 || talkData == null || answerList.Count == 0)
+            if (gageBarImage.fillAmount >= 1 || talkData == null || answerList.Count == 0)
             {
                 //클리어
                 completeEvent?.Invoke();
@@ -247,8 +251,8 @@ namespace GamePlay.Chatting
             }
 
             ignoreTimer.Current += 3;
-            ChatGage += block.gage;
-            UiSeq.Append(GageBar.DOFillAmount(ChatGage / 100f, 1f));
+            chatGage += block.gage;
+            UiSeq.Append(gageBarImage.DOFillAmount(chatGage / 100f, 1f));
             UiSeq.AppendCallback(() =>
             {
                 prevTalkData = talkData;

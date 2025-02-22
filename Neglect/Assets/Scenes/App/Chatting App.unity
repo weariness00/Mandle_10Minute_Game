@@ -514,8 +514,8 @@ MonoBehaviour:
   myMessageSprite: {fileID: 21300000, guid: 02a2083fb43904c46a5544aaa9d67307, type: 3}
   answerGroupTransform: {fileID: 5128492189096956107}
   answerBlockPrefab: {fileID: 6326898798381916204, guid: 37298cdbcc4984b47ae473fd87014dd3, type: 3}
-  ChatGage: 0
-  GageBar: {fileID: 2642295413597058045}
+  chatGage: 0
+  gageBarImage: {fileID: 2642295413597058045}
   ignoreTimer:
     _min: 0
     _max: 15
