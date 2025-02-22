@@ -633,8 +633,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 234.56, y: -93.63}
-  m_SizeDelta: {x: 449.12, y: 0}
+  m_AnchoredPosition: {x: 280.835, y: -105.835}
+  m_SizeDelta: {x: 541.67, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1640950840
 MonoBehaviour:
@@ -673,8 +673,8 @@ MonoBehaviour:
   m_text: "\uC608\uC2DC\uB85C \uBCF4\uC5EC\uC8FC\uB294 \uAC81\uB2C8\uB2E4\n\uC9C4\uC9DC
     \uC608\uC2DC\uC6A9\n\uC785\uB2C8\uB2E4.\n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: ee89d75a416f5fd4fa1f3b2033acde8d, type: 2}
-  m_sharedMaterial: {fileID: 6798511891574570026, guid: ee89d75a416f5fd4fa1f3b2033acde8d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ce50875118459ef48a0bd62c7491d7dd, type: 2}
+  m_sharedMaterial: {fileID: 8095778784461696725, guid: ce50875118459ef48a0bd62c7491d7dd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
