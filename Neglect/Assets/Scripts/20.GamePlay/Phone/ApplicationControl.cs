@@ -92,7 +92,7 @@ namespace GamePlay.Phone
         {
             if (currentPlayApplication == app) currentPlayApplication = null;
 
-            applicationDictionary.Remove(app.AppName);
+            openAppDictionary.Remove(app.AppName);
             app.AppExit(phone);
             app.AppState = AppState.Close;
 

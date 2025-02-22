@@ -19,10 +19,12 @@ namespace Quest.Container
             if (chatting)
             {
                 var chatConversation = chatting.conversation;
+                chatConversation.Init();
+                chatConversation.SetTalkData(TalkingScriptableObject.Instance.GetTalkData(eventData.extraDataIDArray.Length == 0 ? -1 : eventData.extraDataIDArray[0]));
                 if (eventData.textArray.Length > 0) chatConversation.ChatName.text = eventData.textArray[0];
-                chatConversation.talkData = TalkingScriptableObject.Instance.GetTalkData(eventData.extraDataIDArray.Length == 0 ? -1 : eventData.extraDataIDArray[0]);
                 chatConversation.completeEvent.AddListener(Complete);
                 chatConversation.ignoreEvent.AddListener(Ignore);
+                chatConversation.StartConversation();
             }
         }
     }

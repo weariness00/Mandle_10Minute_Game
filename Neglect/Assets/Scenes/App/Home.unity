@@ -967,6 +967,7 @@ MonoBehaviour:
     _isMax: 0
     isOverMax: 0
     isOverMin: 0
+  firstStartWindow: {fileID: 902044946}
   informationCanvas: {fileID: 1834931468}
   interfaceRectTransform: {fileID: 1157845974}
   homeButton: {fileID: 485577334}
@@ -1188,6 +1189,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 410e68aea522413f9a906f8df91995b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventTrigger: {fileID: 0}
+  clickEntry:
+    eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1001 &934735777
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1987,7 +1994,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -2}
   m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &1834931466

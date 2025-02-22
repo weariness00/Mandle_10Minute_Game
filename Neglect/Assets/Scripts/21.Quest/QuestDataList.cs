@@ -109,7 +109,7 @@ namespace Quest
         public void SetEventCSV()
         {
             var eventCSV = eventDataTableCSV.ReadHorizon();
-            SetQuestTextData(out var questTextArray);
+            SetQuestTextData(out var textDataDictionary);
 
             List<EventData> eventList = new List<EventData>();
             List<EventData> mainEventList = new List<EventData>();
@@ -145,8 +145,8 @@ namespace Quest
 
                 data.acceptEventID = csv.DynamicCast<int>("AcceptEventID", -1);
                 data.ignoreEventID = csv.DynamicCast<int>("IgnoreEventID", -1);
-                
-                data.textArray = questTextArray.Where(d => textList.FirstOrDefault(ti => ti == d.id) != 0).Select(d => d.text).ToArray();
+
+                data.textArray = textDataDictionary.Where(d => textList.FirstOrDefault(tid => tid == d.Key) != 0).Select(d => d.Value).ToArray();
     
                 data.extraDataIDArray = csv.DynamicCast("ExtraDataID", Array.Empty<int>());
                 
@@ -165,19 +165,18 @@ namespace Quest
             }
         }
 
-        public void SetQuestTextData(out QuestTextData[] questTextArray)
+        public void SetQuestTextData(out Dictionary<int, string> textDataDictionary)
         {
-            var questTextCSV = textDataTableCSV.ReadHorizon();
-            questTextArray = new QuestTextData[questTextCSV.Count];
-
-            for (var i = 0; i < questTextCSV.Count; i++)
-            {
-                var csv = questTextCSV[i];
-                questTextArray[i] = new() 
-                    { 
-                        id = csv.DynamicCast<int>("ID"),
-                        text = csv.DynamicCast<string>("Content") 
-                    };
+            textDataDictionary = new();
+            { // Text Data Table 초기화
+                var csv = textDataTableCSV.ReadHorizon();
+                foreach (Dictionary<string, object> data in csv)
+                {
+                    var id = data.DynamicCast<int>("TextID");
+                    var text = data.DynamicCast<string>("TextContent");
+                    if(!textDataDictionary.TryAdd(id, text))
+                        Debug.LogWarning($"{id}에 이미 문자열이 할당되어 있습니다.");
+                }
             }
         }
 #endif

@@ -147,7 +147,7 @@ namespace Util
     public class CSVReader
     {
         static string SPLIT_RE = @",(?=(?:[^""]*""[^""]*"")*(?![^""]*""))";
-        static string LINE_SPLIT_RE = @"\r\n|\n\r|\r";
+        static string LINE_SPLIT_RE = @"(?:\r\n|\n\r|\r)(?=(?:[^""]*""[^""]*"")*[^""]*$)";
         static char[] TRIM_CHARS = { '\"' };
         
         public static T DynamicCast<T>(object objectValue) where T : new()
