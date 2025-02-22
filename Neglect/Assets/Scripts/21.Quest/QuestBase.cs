@@ -23,6 +23,8 @@ namespace Quest
         
         public virtual void Play()
         {
+            questName = eventData.name;
+            
             if (state != QuestState.InProgress && state != QuestState.Completed)
             {
                 subscription?.Dispose();

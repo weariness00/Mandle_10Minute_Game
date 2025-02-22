@@ -10,7 +10,8 @@ namespace Quest.Container
         {
             eventData = new()
             {
-                level = QuestLevel.Hard
+                name = questName,
+                level = QuestLevel.Hard,
             };
         }
 
