@@ -1,4 +1,5 @@
 ﻿using Manager;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -13,6 +14,14 @@ namespace GamePlay.Phone
         public virtual void Awake()
         {
             InputManager.game.PhoneClick.performed += ButtonClick;
+        }
+
+        public void OnDestroy()
+        {
+            if (InputManager.HasInstance)
+            {
+                InputManager.game.PhoneClick.performed -= ButtonClick;
+            }
         }
 
         public void ButtonClick(InputAction.CallbackContext context)

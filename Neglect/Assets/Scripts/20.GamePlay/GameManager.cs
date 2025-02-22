@@ -20,16 +20,15 @@ namespace GamePlay
         [Tooltip("포스트 프로세싱을 사용할 Global Volume")]public PostProcessingUtility realVolumeControl;
         [Tooltip("방해 이벤트를 초기화(시작)했는지")] public bool isInitQuest = false;
         public AudioClip bgmSound;
-        
+
         [Header("사전에 사용할 이벤트 ID")] 
+        public QuestBase gameClearQuest;
         public int batteryEventID;
         public int introPopUpID;
         
         public void Awake()
         {
             var bgmSource = SoundManager.Instance.GetBGMSource();
-            bgmSource.clip = bgmSound;
-            bgmSource.Play();
             
             if (!SceneUtil.TryGetPhoneScene(out var s))
             {
@@ -48,6 +47,9 @@ namespace GamePlay
                     SceneUtil.AsyncAddChatting(AddApp);
                     SceneUtil.AsyncAddBank(AddApp);
                     SceneUtil.AsyncAddRunningGame(AddApp);
+                    
+                    bgmSource.clip = bgmSound;
+                    bgmSource.Play();
                 });
             }
 
@@ -120,7 +122,13 @@ namespace GamePlay
     {
         public void GameClear()
         {
+            QuestManager.Instance.isQuestStart = false;
+            QuestManager.Instance.AddQuestQueue(gameClearQuest);
+            gameClearQuest.Play();
+            QuestManager.Instance.OnValueChange(QuestType.GameClear, playTimer.Current);
             isGameClear.Value = true;
+            
+            Destroy(gameObject);
         }
     }
 }

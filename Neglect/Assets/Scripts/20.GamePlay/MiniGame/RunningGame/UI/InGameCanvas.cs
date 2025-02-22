@@ -36,13 +36,11 @@ namespace GamePlay.MiniGame.RunningGame
             {
                 count -= Time.deltaTime;
                 int value = ((int)Mathf.Round(count));
+                if (value <= -1) break;
                 countDownText.text = value.ToString();
                 countDownText.color = countDownTextColor[startCount - (value + 1)];
                 if (value <= 0)
-                {
                     countDownText.text = "GO!";
-                    break;
-                }
                 yield return null;
             }
             

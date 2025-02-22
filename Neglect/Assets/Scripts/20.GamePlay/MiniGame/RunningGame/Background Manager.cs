@@ -175,7 +175,7 @@ namespace GamePlay.MiniGame.RunningGame
                 Vector3 pre = BackgroundObject.transform.position;
                 float offset1 = BackgroundSize.x / 2 + LeftPosX * 2; //이미지 사이클의 시작부터 움직인 거리
                 float offset2 = (BackgroundObject.transform.position.x + BackgroundSize.x / 2 + LeftPosX); // 조건문으로 인한 거리 차이
-                pre.x = LeftPosX + BackgroundSize.x/2 - offset1 + offset2; 
+                pre.x = LeftPosX + BackgroundSize.x/2 - offset1 + offset2;
                 BackgroundObject.transform.position = pre;
             }
 

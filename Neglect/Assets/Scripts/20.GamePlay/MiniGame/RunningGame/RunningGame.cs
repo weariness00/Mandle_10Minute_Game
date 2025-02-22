@@ -62,7 +62,7 @@ namespace GamePlay.MiniGame.RunningGame
                     else  GamePlay();
                 }
             };
-
+            
             // 인게임 게임 시작 눌렀을때 카운트 다운 끝나고 동작
             inGameCanvas.onGameStart += () =>
             {
@@ -86,6 +86,12 @@ namespace GamePlay.MiniGame.RunningGame
             {
                 foreach (ObjectSpawner spawner in obstacleSpawnerList)
                     spawner.timeScale = value;
+            });
+
+            player.life.Subscribe(value =>
+            {
+                if (value <= 0)
+                    GameOver();
             });
         }
 
@@ -178,7 +184,7 @@ namespace GamePlay.MiniGame.RunningGame
             base.GameClear();
             var rankQuest = QuestDataList.Instance.InstantiateEvent(rankEventID);
             QuestManager.Instance.AddQuestQueue(rankQuest);
-            QuestManager.Instance.OnValueChange(QuestType.GameRank, CurrentPlayerData.rank);
+            QuestManager.Instance.OnValueChange(QuestType.MiniGameRank, CurrentPlayerData.rank);
         }
 
         public override void GameOver()
@@ -187,7 +193,9 @@ namespace GamePlay.MiniGame.RunningGame
             
             var rankQuest = QuestDataList.Instance.InstantiateEvent(rankEventID);
             QuestManager.Instance.AddQuestQueue(rankQuest);
-            QuestManager.Instance.OnValueChange(QuestType.GameRank, CurrentPlayerData.rank);
+            QuestManager.Instance.OnValueChange(QuestType.MiniGameRank, CurrentPlayerData.rank);
+
+            GameManager.Instance.isGameClear.Value = true;
         }
     }
 

@@ -32,7 +32,6 @@ namespace Quest
                 }
             }
         }
-        
     }
 
     // 퀘스트 관리 관련
@@ -45,6 +44,7 @@ namespace Quest
         
         private List<EventData> eventList = new(); // 소환 가능한 이벤트 목록
         public List<QuestBase> GetAllQuest() => questAddList;
+        public List<QuestBase> GetPlayQuestList() => playQuestList;
         
         public void Init()
         {
@@ -59,6 +59,7 @@ namespace Quest
         {
             if(quest == null) return;
             
+            questAddList.Add(quest);
             if (playQuestList.Count == 0)
             {
                 quest.Play();
@@ -73,7 +74,6 @@ namespace Quest
         public IDisposable Add(QuestBase quest)
         {
             eventList.Remove(quest.eventData);
-            questAddList.Add(quest);
 
             Subject<object> subject = new();
             if (!questPlayDictionary.TryGetValue(quest.type, out subject))
@@ -89,10 +89,10 @@ namespace Quest
         public void Remove(QuestBase quest)
         {
             playQuestList.Remove(quest);
-            if (playQuestList.Count == 0)
+            if (playQuestList.Count == 0 && waitQuestList.Count != 0)
             {
                 var nextQuest = waitQuestList.Dequeue();
-                nextQuest.Play();
+                if(nextQuest) nextQuest.Play();
             }
         }
         
