@@ -28,6 +28,8 @@ namespace GamePlay.Phone
         public string RandomAccount;
         public List<int> RandomPassword;
 
+
+        public CanvasGroup keyPadCanvasGroup;
         [Header("패스워드 완료 후 계좌 이체 텍스트")]
         public TextMeshProUGUI InputAmountText;
         public TextMeshProUGUI InputAccountText;
@@ -41,7 +43,6 @@ namespace GamePlay.Phone
         public TextMeshProUGUI CheckAmountText;
 
         public List<GameObject> KeyPad_objects = new();
-        public List<Image> KeyPad_Image = new();
         public List<TextMeshProUGUI> KeyPad_Text = new();
 
         [Space]
@@ -76,6 +77,8 @@ namespace GamePlay.Phone
             password.Init();
             
             TradeHistoryInit();//거래 내역 초기화
+
+          
         }
 
         // 패스워드 초기화
@@ -181,41 +184,26 @@ namespace GamePlay.Phone
         }
         public void KeyPadMove(bool p)
         {
-            if (KeyPad_Image.Count == 0)
-            {
-                for (int i = 0; i < KeyPad_objects.Count; i++)
-                    KeyPad_Image.Add(KeyPad_objects[i].GetComponent<Image>());
-            }
             if (CurrentView != 2 && CurrentView != 3)
                 return;
             if (p == true && !IsKeyPad)
             {
                 IsKeyPad = true;
                 KeyPad.DOLocalMoveY(400, 0.5f).SetRelative(true);
-                for (int i = 0; i < KeyPad_Image.Count; i++)
-                {
-                    KeyPad_Image[i].DOFade(0, 0f);
-                    KeyPad_Image[i].DOFade(1, 0.5f);
-                }
-                for (int i = 0; i < KeyPad_Text.Count; i++)
-                {
-                    KeyPad_Text[i].DOFade(0, 0f);
-                    KeyPad_Text[i].DOFade(1, 0.5f);
-                }
+
+
+                keyPadCanvasGroup.alpha = 0;
+                keyPadCanvasGroup.DOFade(1, 0.5f);
+
             }
             else if (p == false && IsKeyPad)
             {
                 KeyPad.DOLocalMoveY(-400, 0.5f).SetRelative(true);
                 IsKeyPad = false;
-                for (int i = 0; i < KeyPad_Image.Count; i++)
-                {
-                    KeyPad_Image[i].DOFade(0, 0.5f);
-                }
-                for (int i = 0; i < KeyPad_Text.Count; i++)
-                {
-                    KeyPad_Text[i].DOFade(1, 0f);
-                    KeyPad_Text[i].DOFade(0, 0.5f);
-                }
+
+                keyPadCanvasGroup.alpha = 1;
+                keyPadCanvasGroup.DOFade(0, 0.5f);
+                
             }
         }
         public static string AddBar(string input)

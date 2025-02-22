@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Quest
 {
@@ -14,10 +15,12 @@ namespace Quest
 
         [Space] 
         [Tooltip("퀘스트 진행 상태")] public QuestState state = QuestState.NotStarted;
-
+        
         [HideInInspector] public EventData eventData;
         protected IDisposable subscription; // 퀘스트 매니저에서 구독하면 자동 할당됨
 
+        public UnityEvent<QuestBase> onCompleteEvent = new();
+        
         public virtual void Play()
         {
             if (state != QuestState.InProgress && state != QuestState.Completed)
@@ -62,6 +65,11 @@ namespace Quest
                 var quest = QuestDataList.Instance.InstantiateEvent(eventData.acceptEventID);
                 quest.eventData = acceptEvent;
                 quest.Play();
+                onCompleteEvent?.Invoke(quest);
+            }
+            else
+            {
+                onCompleteEvent?.Invoke(null);
             }
         }
     }

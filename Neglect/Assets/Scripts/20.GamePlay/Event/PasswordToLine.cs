@@ -96,8 +96,8 @@ namespace GamePlay.Event
                 else if (first == 3)
                 {
                     if (second == 1) InsertPasswordBetween(i, 2);
-                    if (second == 7) InsertPasswordBetween(i, 6);
-                    if (second == 9) InsertPasswordBetween(i, 5);
+                    if (second == 7) InsertPasswordBetween(i, 5);
+                    if (second == 9) InsertPasswordBetween(i, 6);
                 }
                 else if (first == 7)
                 {

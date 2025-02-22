@@ -56,6 +56,7 @@ MonoBehaviour:
   image: {fileID: 7699037866836707370}
   answerText: {fileID: 6906590369255017008}
   gage: 0
+  isPositive: 0
 --- !u!225 &-7466222157582125111
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -160,12 +161,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
+  m_fontSize: 18
   m_fontSizeBase: 30
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512

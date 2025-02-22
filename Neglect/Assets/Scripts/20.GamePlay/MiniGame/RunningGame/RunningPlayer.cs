@@ -16,6 +16,11 @@ namespace GamePlay.MiniGame.RunningGame
         public MinMaxValue<float> immortalTime = new(0, 0, 1);
         public MMF_Player hitEffect;
         public AudioSource audioSource;
+
+        [Space] 
+        [Header("점수 관련")] 
+        [Tooltip("몇 콤보다마다 추가 점수를 줄지")]public int comboInterval = 5;
+        [Tooltip("현재 콤보")] public int currentCombo = 0;
         
         [Space]
         [Header("체력 관련")]
@@ -87,6 +92,8 @@ namespace GamePlay.MiniGame.RunningGame
         {
             if (immortalTime.IsMin && other.CompareTag("Running Obstacle"))
             {
+                currentCombo = 0;
+                runningGame.gameSpeed.Value = 1;
                 var obstacle = other.GetComponent<RunningObstacle>();
                 obstacle.isCollision = true;
                 immortalTime.SetMax();
@@ -147,6 +154,11 @@ namespace GamePlay.MiniGame.RunningGame
             if (value > lifeMax) value = lifeMax;
             else if (value < 0) value = 0;
             life.Value = value;
+        }
+
+        public int GetComboMultiple()
+        {
+            return currentCombo / comboInterval + 1;
         }
     }
 

@@ -28,6 +28,9 @@ namespace GamePlay.Phone
         
         private static readonly int ShineLocation = Shader.PropertyToID("_ShineLocation");
 
+        [Header("화면 관리")] 
+        [Tooltip("처음 게임 킬때 나오는 화면")]public FirstStartWindow firstStartWindow;
+        
         [Header("Informaton Canvas 관련")] 
         public Canvas informationCanvas;
         
