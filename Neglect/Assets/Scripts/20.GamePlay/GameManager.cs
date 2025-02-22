@@ -95,7 +95,7 @@ namespace GamePlay
             home.firstStartWindow.clickEntry.callback.AddListener(data =>
             {
                 var quest = QuestDataList.Instance.InstantiateEvent(introPopUpID);
-                quest.Play();
+                QuestManager.Instance.AddQuestQueue(quest);
                 
                 // 친구의 팝업을 완료하면
                 quest.onCompleteEvent.AddListener(q1 =>

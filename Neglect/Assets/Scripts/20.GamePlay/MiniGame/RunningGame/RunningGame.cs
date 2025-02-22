@@ -22,7 +22,6 @@ namespace GamePlay.MiniGame.RunningGame
         public Canvas runningGameCanvasRoot;
 
         public int rankEventID;
-        private QuestBase rankQuest;
 
         [Header("Setting 관련")] 
         public Canvas settingCanvas;
@@ -177,8 +176,18 @@ namespace GamePlay.MiniGame.RunningGame
         public override void GameClear()
         {
             base.GameClear();
+            var rankQuest = QuestDataList.Instance.InstantiateEvent(rankEventID);
+            QuestManager.Instance.AddQuestQueue(rankQuest);
             QuestManager.Instance.OnValueChange(QuestType.GameRank, CurrentPlayerData.rank);
+        }
 
+        public override void GameOver()
+        {
+            base.GameOver();
+            
+            var rankQuest = QuestDataList.Instance.InstantiateEvent(rankEventID);
+            QuestManager.Instance.AddQuestQueue(rankQuest);
+            QuestManager.Instance.OnValueChange(QuestType.GameRank, CurrentPlayerData.rank);
         }
     }
 
@@ -205,9 +214,6 @@ namespace GamePlay.MiniGame.RunningGame
         {
             base.AppPlay(phone);
             SetActiveBackground(true);
-
-            rankQuest = QuestDataList.Instance.InstantiateEvent(rankEventID);
-            if(rankQuest) rankQuest.Play();
             
             // 게임 클리어 할 시
             GameManager.Instance.isGameClear.Subscribe(value =>

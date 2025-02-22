@@ -19,6 +19,10 @@ namespace Quest.Container
                 {
                     Complete();
                 }
+                else
+                {
+                    Ignore();
+                }
             }
         }
     }

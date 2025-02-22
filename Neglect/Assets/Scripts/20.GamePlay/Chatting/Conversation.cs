@@ -211,8 +211,8 @@ namespace GamePlay.Chatting
         private TalkingData talkData = null;
         private TalkingData prevTalkData;
         public MinMaxValue<float> ignoreTimer = new(15, 0, 15);
-        public UnityEvent completeEvent;
-        public UnityEvent ignoreEvent;
+        public UnityEvent completeEvent = new();
+        public UnityEvent ignoreEvent = new();
 
         public RectTransform ChatScrollBox;
         private bool isInit = false;
@@ -221,10 +221,10 @@ namespace GamePlay.Chatting
             if (gageBarImage.fillAmount >= 1 || talkData == null || answerList.Count == 0)
             {
                 //클리어
-                completeEvent?.Invoke();
                 isInit = false;
                 backButton.gameObject.SetActive(true);
                 
+                completeEvent?.Invoke();
                 ignoreEvent = new();
                 completeEvent = new();
             }
