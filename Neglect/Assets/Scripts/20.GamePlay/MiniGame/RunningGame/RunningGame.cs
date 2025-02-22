@@ -35,7 +35,7 @@ namespace GamePlay.MiniGame.RunningGame
         public Button lobbyExitButton;
         
         [Header("In Game 관련")]
-        public Canvas inGameCanvas;
+        public InGameCanvas inGameCanvas;
         public GameObject inGameObject;
         
         public List<ObjectSpawner> obstacleSpawnerList;
@@ -50,7 +50,7 @@ namespace GamePlay.MiniGame.RunningGame
             lobbyCanvas.gameObject.SetActive(true);
             lobbyObject.gameObject.SetActive(true);
             
-            inGameCanvas.gameObject.SetActive(false);
+            inGameCanvas.mainCanvas.gameObject.SetActive(false);
             inGameObject.gameObject.SetActive(false);
             
             InputManager.running.ESC.performed += context =>
@@ -62,6 +62,14 @@ namespace GamePlay.MiniGame.RunningGame
                     if (isGamePlay.Value) GameStop();
                     else  GamePlay();
                 }
+            };
+
+            // 인게임 게임 시작 눌렀을때 카운트 다운 끝나고 동작
+            inGameCanvas.onGameStart += () =>
+            {
+                isGamePlay.Value = true;
+                foreach (ObjectSpawner spawner in obstacleSpawnerList)
+                    spawner.Play();
             };
             
             foreach (ObjectSpawner spawner in obstacleSpawnerList)
@@ -141,20 +149,22 @@ namespace GamePlay.MiniGame.RunningGame
         {
             if (isOnTutorial)
             {
+                base.GamePlay();
+
                 lobbyCanvas.gameObject.SetActive(false);
                 lobbyObject.gameObject.SetActive(false);
             
-                inGameCanvas.gameObject.SetActive(true);
+                inGameCanvas.mainCanvas.gameObject.SetActive(true);
                 inGameObject.gameObject.SetActive(true);
-            
-                if(rankQuest) rankQuest.Play();
-            
-                foreach (ObjectSpawner spawner in obstacleSpawnerList)
-                    spawner.Play();
+
+                isGamePlay.Value = false;
+                inGameCanvas.GameContinueCountDown();
             }
-            
-            // isOnTutorial 이 base에 변경된다.
-            base.GamePlay();
+            else
+            {
+                // isOnTutorial 이 base에 변경된다.
+                base.GamePlay();
+            }
         }
 
         public override void GameStop()
@@ -197,6 +207,7 @@ namespace GamePlay.MiniGame.RunningGame
             SetActiveBackground(true);
 
             rankQuest = QuestDataList.Instance.InstantiateEvent(rankEventID);
+            if(rankQuest) rankQuest.Play();
             
             // 게임 클리어 할 시
             GameManager.Instance.isGameClear.Subscribe(value =>
