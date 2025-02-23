@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static Unity.Collections.AllocatorManager;
 
 namespace GamePlay.Event
 {
@@ -61,7 +62,7 @@ namespace GamePlay.Event
         [Tooltip("답변 게이지list")]
         public int[] replygage;
         [Tooltip("답변 후속 질문 이벤트")]
-        public string[] replyEvent;
+        public int[] replyEvent;
 
 
         private int ReplyCount;
@@ -85,11 +86,16 @@ namespace GamePlay.Event
         {
             ChatStart();
         }
+
+        public void SetTalkData(TalkingData data)
+        {
+            if (data == null || talkData == data) return;
+            talkData = data;
+        }
         public void SettingReply()
         {
             if (talkData == null)
             {
-                Debug.LogError("talkData is null");
                 return; // talkData가 null이면 이 함수의 실행을 중단
             }
             if (talkData.negativeTextArray.Length + talkData.positiveTextArray.Length == 0)
@@ -105,12 +111,14 @@ namespace GamePlay.Event
             
             for (int i = 0; i < talkData.positiveTextArray.Length; i++)
             {
-                replygage[ReplyCount] = 20;
+                replygage[ReplyCount] = talkData.positiveScore;
+                replyEvent[ReplyCount] = talkData.positiveResultTalkID;
                 ReplyCount++;
             }
             for (int i = 0; i < talkData.negativeTextArray.Length; i++)
             {
-                replygage[ReplyCount] = 0;
+                replygage[ReplyCount] = talkData.negativeScore;
+                replyEvent[ReplyCount] = talkData.negativeResultTalkID;
                 ReplyCount++;
             }
             for (int i = 0; i < ReplyCount; i++)
@@ -118,9 +126,11 @@ namespace GamePlay.Event
                 int index = UnityEngine.Random.Range(0, ReplyCount);
                 (replyString[i], replyString[index]) = (replyString[index], replyString[i]);
                 (replygage[i], replygage[index]) = (replygage[index], replygage[i]);
+                (replyEvent[i], replyEvent[index]) = (replyEvent[index], replyEvent[i]);
+
             }
         }
-
+        
         private float timer = 0f;
         void Update()
         {
@@ -173,12 +183,13 @@ namespace GamePlay.Event
             {
                 OtherChat.gameObject.SetActive(true);
                 OtherText.gameObject.SetActive(true);
+                OtherText.text = "";
             });
             UiSeq.Append(OtherChat.gameObject.transform.DOLocalMoveY(10f, 0.5f).From().SetRelative(true)).Join(OtherChat.DOFade(0f, 0f)).Join(OtherChat.DOFade(1f, 0.5f));
             // ~ 상대 말풍선 애니메이션
             UiSeq.AppendCallback(() =>
             {
-                OtherTextBoxScript.SetNarration(talkData != null ? talkData.mainText : "Test"); //가 끝나면 showSelectButton 실행
+                OtherTextBoxScript.SetNarration(talkData != null ? talkData.mainText : "Test" , 10); //가 끝나면 showSelectButton 실행
             });
         }
         public void ShowSelectButton()
@@ -220,6 +231,7 @@ namespace GamePlay.Event
             if (!isClickButton)
                 return;
 
+
             choiceIndex = index;
             Sequence UiSeq = DOTween.Sequence();
 
@@ -236,12 +248,15 @@ namespace GamePlay.Event
             {
                 MyChat.gameObject.SetActive(true);
                 MyText.gameObject.SetActive(true);
+                MyText.text = "";
             });
             UiSeq.Append(MyChat.gameObject.transform.DOLocalMoveY(10f, 0.5f).From().SetRelative(true)).Join(MyChat.DOFade(0f, 0f)).Join(MyChat.DOFade(1f, 0.5f));
             UiSeq.AppendCallback(() =>
             {
-                MyTextBoxScript.SetNarration(replyString[index]);
+                MyTextBoxScript.SetNarration(replyString[index] , 10);
             });
+
+
             // ~ 내 채팅 나오는 애니메이션
         }
         public void FillGage()
@@ -254,7 +269,10 @@ namespace GamePlay.Event
             UiSeq.Append(GageBar.DOFillAmount(ChatGage / 100f, 1f));
             // 게이지 차는 애니메이션
             if (ChatGage < 100)
-                UiSeq.AppendCallback(() => ChatStart()); // 반복
+                UiSeq.AppendCallback(() => {
+                    SetTalkData(TalkingScriptableObject.Instance.GetTalkData(replyEvent[choiceIndex]));
+                    ChatStart();
+                }); // 반복
             else
             {
                 UiSeq.AppendCallback(() =>
@@ -263,7 +281,7 @@ namespace GamePlay.Event
                 });
             }
         }
-
+       
         public void CallEndAnimation()
         {
             isComplete = true;
