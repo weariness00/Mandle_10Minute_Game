@@ -1393,7 +1393,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00:00
+  m_text: 14:00
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 81b60bb3813e00e4190bd849b0a3ceaf, type: 2}
   m_sharedMaterial: {fileID: -6456833398530862374, guid: 81b60bb3813e00e4190bd849b0a3ceaf, type: 2}
@@ -1596,8 +1596,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 410e68aea522413f9a906f8df91995b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayText: {fileID: 1614398172}
-  timeText: {fileID: 818021861}
   eventTrigger: {fileID: 0}
   clickEntry:
     eventID: 4
@@ -2422,7 +2420,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 2000:00:00
+  m_text: 2025:02:28
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 81b60bb3813e00e4190bd849b0a3ceaf, type: 2}
   m_sharedMaterial: {fileID: -6456833398530862374, guid: 81b60bb3813e00e4190bd849b0a3ceaf, type: 2}

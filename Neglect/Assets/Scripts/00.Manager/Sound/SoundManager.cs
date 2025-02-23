@@ -31,6 +31,7 @@ namespace Manager
             var groups = mixer.FindMatchingGroups("");
             foreach (AudioMixerGroup audioMixerGroup in groups)
                 SetVolume(audioMixerGroup.name, GetVolume(audioMixerGroup.name));
+            AudioListener.pause = false;
         }
         
         public void AudioSourcesGenerate()
@@ -69,7 +70,7 @@ namespace Manager
         {
             if(ReferenceEquals(setting, null)) return;
 
-            setting.mixer.SetFloat(volumeName,Mathf.Clamp(value - 80f, -80f, 0f));
+            setting.mixer.SetFloat(volumeName,Mathf.Clamp(value - 80f, -80f, 20f));
             PlayerPrefs.SetFloat($"{nameof(SoundManager)}{SoundExtension.Volume}{volumeName}", Mathf.Clamp(value, 0f, 100f));
         }
 
@@ -79,7 +80,7 @@ namespace Manager
             
             if(PlayerPrefs.HasKey($"{nameof(SoundManager)}{SoundExtension.Volume}{volumeName}"))
                 return PlayerPrefs.GetFloat($"{nameof(SoundManager)}{SoundExtension.Volume}{volumeName}");
-            return setting.mixer.GetFloat(volumeName, out float value) ? value : 0f;
+            return setting.mixer.GetFloat(volumeName, out float value) ? value : 30f;
         }
     }
 }
