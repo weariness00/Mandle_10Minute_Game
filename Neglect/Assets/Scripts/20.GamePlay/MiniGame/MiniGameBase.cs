@@ -20,7 +20,7 @@ namespace GamePlay.MiniGame
         public MiniGameTutorial tutorial;
         [HideInInspector] public bool isOnTutorial;
 
-        public QuestBase rankQuest;
+        [Tooltip("랭크 퀘스트")] public QuestBase rankQuest;
         
         [Space] 
         public AudioClip bgmSound;

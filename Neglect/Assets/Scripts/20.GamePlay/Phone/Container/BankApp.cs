@@ -282,7 +282,11 @@ namespace GamePlay.Phone
             currentCash -= InputAmount;
             currentCashText.text = AddCommas(currentCash.ToString()); //소지금액 차감 후 갱신
             completeAction?.Invoke();
-            if (Amountdifference > 0)
+            if (Amountdifference == 0)
+            {
+                GameManager.Instance.isGameClear.Value = true;
+            }
+            else if (Amountdifference > 0)
             {
                 if (eventData.extraDataIDArray.Length > 0)
                 {

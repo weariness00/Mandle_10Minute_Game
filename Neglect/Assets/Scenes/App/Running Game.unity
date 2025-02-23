@@ -4737,7 +4737,7 @@ MonoBehaviour:
     value: 1
   playTime:
     _min: 0
-    _max: 600
+    _max: 540
     _current: 0
     _isMin: 1
     _isMax: 0
@@ -4764,6 +4764,7 @@ MonoBehaviour:
   inGameObject: {fileID: 2146466120}
   obstacleSpawnerList:
   - {fileID: 369168967}
+  bankQuestID: 1004
   playerDataArray:
   - rank: 0
     score:

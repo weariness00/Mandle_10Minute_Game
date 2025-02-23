@@ -37,6 +37,9 @@ namespace GamePlay.MiniGame.RunningGame
         
         public List<ObjectSpawner> obstacleSpawnerList;
 
+        [Header("기타 사항")] 
+        [Tooltip("게임 클리어시 발동할 방해 이벤트")]public int bankQuestID;
+
         public override void Awake()
         {
             base.Awake();
@@ -181,6 +184,20 @@ namespace GamePlay.MiniGame.RunningGame
         {
             base.GameClear();
             QuestManager.Instance.OnValueChange(QuestType.MiniGameRank, CurrentPlayerData.rank);
+
+            QuestManager.Instance.isQuestStart = false;
+            var quest = QuestDataList.Instance.InstantiateEvent(bankQuestID);
+            QuestManager.Instance.AddQuestQueue(quest);
+
+            var home = Phone.applicationControl.GetHomeApp();
+            if (home)
+            {
+                var appButton = home.GetAppButton(this);
+                if (appButton)
+                {
+                    appButton.button.interactable = false;
+                }
+            }
         }
 
         public override void GameOver()
@@ -228,9 +245,9 @@ namespace GamePlay.MiniGame.RunningGame
         {
             base.AppResume(phone);
             SetActiveBackground(true);
-
+            
             InputManager.running.input.Enable();
-            if(isGameStart && !settingCanvas.gameObject.activeSelf) GamePlay();
+            settingCanvas.gameObject.SetActive(true);
         }
 
         public override void AppPause(PhoneControl phone)
