@@ -68,8 +68,7 @@ namespace Manager
         public void SetVolume(string volumeName, float value)
         {
             if(ReferenceEquals(setting, null)) return;
-
-            setting.mixer.SetFloat(volumeName,Mathf.Clamp(value - 80f, -80f, 0f));
+            setting.mixer.SetFloat(volumeName, Mathf.Lerp(-40f, 20f, value / 100f));
             PlayerPrefs.SetFloat($"{nameof(SoundManager)}{SoundExtension.Volume}{volumeName}", Mathf.Clamp(value, 0f, 100f));
         }
 
