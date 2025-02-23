@@ -7,6 +7,7 @@ namespace Quest
     {
         public int id = -1;
         public string name;
+        public bool isMainEvent;
         public QuestLevel level;
         public QuestBase prefab = null;
         public int acceptEventID = -1;

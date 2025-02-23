@@ -38,12 +38,13 @@ namespace Quest
     public partial class QuestManager
     {
         private Dictionary<QuestType, Subject<object>> questPlayDictionary = new(); // 퀘스트가 클리어되면 여기서 제외됨
-        private List<QuestBase> questAddList = new(); // 추가된 퀘스트들
-        private List<QuestBase> playQuestList = new(); // 플레이 중인 퀘스트들
-        private Queue<QuestBase> waitQuestList = new(); // 대기중인 퀘스트 playQuestList에 있는 퀘스트들이 끝나야 작동함
+        [SerializeField] private List<QuestBase> addMainQuestList = new();
+        [SerializeField]private List<QuestBase> questAddList = new(); // 추가된 퀘스트들
+        [SerializeField]private List<QuestBase> playQuestList = new(); // 플레이 중인 퀘스트들
+        [SerializeField]private Queue<QuestBase> waitQuestList = new(); // 대기중인 퀘스트 playQuestList에 있는 퀘스트들이 끝나야 작동함
         
         private List<EventData> eventList = new(); // 소환 가능한 이벤트 목록
-        public List<QuestBase> GetAllQuest() => questAddList;
+        public List<QuestBase> GetAllQuest() => addMainQuestList;
         public List<QuestBase> GetPlayQuestList() => playQuestList;
         
         public void Init()
@@ -60,6 +61,7 @@ namespace Quest
             if(quest == null) return;
             
             questAddList.Add(quest);
+            if(quest.eventData.isMainEvent) addMainQuestList.Add(quest);
             if (playQuestList.Count == 0)
             {
                 quest.Play();

@@ -11,6 +11,7 @@ namespace Quest.Container
             eventData = new()
             {
                 name = questName,
+                isMainEvent = true,
                 level = QuestLevel.Hard,
             };
         }

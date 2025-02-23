@@ -123,6 +123,7 @@ namespace Quest
                 if(id == -1) continue;
                 
                 data.id = id;
+                data.isMainEvent = isMainEvent;
                 if(isMainEvent) mainEventList.Add(data);
                 
                 eventList.Add(data);

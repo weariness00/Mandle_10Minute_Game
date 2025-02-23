@@ -19,12 +19,12 @@ namespace Quest
         [HideInInspector] public EventData eventData;
         protected IDisposable subscription; // 퀘스트 매니저에서 구독하면 자동 할당됨
 
+        private QuestBase rootQuest = null;
         public UnityEvent<QuestBase> onCompleteEvent = new();
         
         public virtual void Play()
         {
             questName = eventData.name;
-            
             if (state != QuestState.InProgress && state != QuestState.Completed)
             {
                 subscription?.Dispose();
@@ -32,18 +32,20 @@ namespace Quest
                 
                 state = QuestState.InProgress;
             }
+            if (rootQuest != null) rootQuest.state = state;
         }
 
         public virtual void Ignore()
         {
             subscription?.Dispose();
             state = QuestState.Failed;
-
+            if (rootQuest != null) rootQuest.state = state;
             if (eventData.ignoreEventID != -1)
             {
                 var ignoreEvent = QuestDataList.Instance.GetEventID(eventData.ignoreEventID);
                 var quest = QuestDataList.Instance.InstantiateEvent(eventData.ignoreEventID);
                 quest.eventData = ignoreEvent;
+                quest.rootQuest = rootQuest == null ? this : rootQuest;
                 QuestManager.Instance.AddQuestQueue(quest);
             }
             
@@ -60,11 +62,13 @@ namespace Quest
         {
             subscription?.Dispose();
             state = QuestState.Completed;
+            if (rootQuest != null) rootQuest.state = state;
             if (eventData.acceptEventID != -1)
             {
                 var acceptEvent = QuestDataList.Instance.GetEventID(eventData.acceptEventID);
                 var quest = QuestDataList.Instance.InstantiateEvent(eventData.acceptEventID);
                 quest.eventData = acceptEvent;
+                quest.rootQuest = rootQuest == null ? this : rootQuest;
                 QuestManager.Instance.AddQuestQueue(quest);
                 onCompleteEvent?.Invoke(quest);
             }
