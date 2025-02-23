@@ -1471,8 +1471,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC7AC\uC811\uC18D \uC2DC\uB3C4"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: ee89d75a416f5fd4fa1f3b2033acde8d, type: 2}
-  m_sharedMaterial: {fileID: 6798511891574570026, guid: ee89d75a416f5fd4fa1f3b2033acde8d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ce50875118459ef48a0bd62c7491d7dd, type: 2}
+  m_sharedMaterial: {fileID: 8095778784461696725, guid: ce50875118459ef48a0bd62c7491d7dd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1627,7 +1627,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &255857132739795281
 MonoBehaviour:
   m_ObjectHideFlags: 0
