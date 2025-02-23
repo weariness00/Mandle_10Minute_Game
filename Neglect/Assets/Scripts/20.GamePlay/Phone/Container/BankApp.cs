@@ -38,7 +38,8 @@ namespace GamePlay.Phone
         public MMF_Player pre_sign;  // 계좌가 없을때 뜨는 싸인
         public MMF_Player pre_sign_Current_Cash;  // 소지 금액보다 많은 금액을 쓸때 뜨는 싸인
         public RectTransform KeyPad;
-
+        public Transform keyDel;
+        public Transform keyEnd;
         [Header("마지막 확인 텍스트")]
         public TextMeshProUGUI CheckText;
         public TextMeshProUGUI CheckAmountText;
@@ -219,13 +220,15 @@ namespace GamePlay.Phone
         }
         public void KeyPadMove(bool p)
         {
+
             if (CurrentView != 2 && CurrentView != 3)
                 return;
             if (p == true && !IsKeyPad)
             {
+                KeyPadSuffle();
+
                 IsKeyPad = true;
                 KeyPad.DOLocalMoveY(400, 0.5f).SetRelative(true);
-
 
                 keyPadCanvasGroup.alpha = 0;
                 keyPadCanvasGroup.DOFade(1, 0.5f);
@@ -241,6 +244,24 @@ namespace GamePlay.Phone
                 
             }
         }
+        public void KeyPadSuffle()
+        {
+            Transform ButtonDel = KeyPad.GetChild(3); // Del 버튼
+            Transform ButtonEnd = KeyPad.GetChild(11); // End 버튼
+
+            for (int i = 0; i < KeyPad.childCount; i++)
+            {
+                int num = UnityEngine.Random.Range(0, KeyPad.childCount);
+                KeyPad.GetChild(i).SetSiblingIndex(num);
+            }// 셔플
+
+
+            keyDel.SetSiblingIndex(3); // 원상 복귀
+            keyEnd.SetSiblingIndex(11); // 원상복귀
+            if(keyDel.GetSiblingIndex() != 3)
+                keyDel.SetSiblingIndex(3); // 원상 복귀
+        }
+
         public static string AddBar(string input)
         {
             var result = input;
@@ -282,6 +303,8 @@ namespace GamePlay.Phone
                     QuestManager.Instance.AddQuestQueue(quest);
                 }
             }
+            ChangeView(0);
+            
         }
       
         public void ChangeMenuToTransTransaction(bool isMenu) //하드 코딩
