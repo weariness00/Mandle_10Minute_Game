@@ -289,6 +289,8 @@ namespace GamePlay.Phone
                     }
                 }
             }
+            ChangeView(0);
+            
         }
       
         public void ChangeMenuToTransTransaction(bool isMenu) //하드 코딩
