@@ -189,7 +189,7 @@ namespace GamePlay.Event
             // ~ 상대 말풍선 애니메이션
             UiSeq.AppendCallback(() =>
             {
-                OtherTextBoxScript.SetNarration(talkData != null ? talkData.mainText : "Test" , 10); //가 끝나면 showSelectButton 실행
+                OtherTextBoxScript.SetNarration(talkData != null ? talkData.mainText : "Test" , 25); //가 끝나면 showSelectButton 실행
             });
         }
         public void ShowSelectButton()
@@ -253,7 +253,7 @@ namespace GamePlay.Event
             UiSeq.Append(MyChat.gameObject.transform.DOLocalMoveY(10f, 0.5f).From().SetRelative(true)).Join(MyChat.DOFade(0f, 0f)).Join(MyChat.DOFade(1f, 0.5f));
             UiSeq.AppendCallback(() =>
             {
-                MyTextBoxScript.SetNarration(replyString[index] , 10);
+                MyTextBoxScript.SetNarration(replyString[index] , 25);
             });
 
 
