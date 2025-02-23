@@ -48,8 +48,11 @@ namespace Manager
                 GameObject obj = new GameObject { name = audioMixerGroup.name };
                 var audioSource = obj.AddComponent<AudioSource>();
 
+                audioSource.transform.SetParent(transform);
+                audioSource.playOnAwake = false;
                 audioSource.outputAudioMixerGroup = audioMixerGroup;
-                obj.transform.parent = transform;
+                if (audioSource.name == "BGM") audioSource.loop = true;
+                
                 audioSourceDictionary.TryAdd(audioMixerGroup.name, audioSource);
             }
         }
@@ -66,8 +69,8 @@ namespace Manager
         {
             if(ReferenceEquals(setting, null)) return;
 
-            setting.mixer.SetFloat(volumeName, value - 80f);
-            PlayerPrefs.SetFloat($"{nameof(SoundManager)}{Volume}{volumeName}", value);
+            setting.mixer.SetFloat(volumeName,Mathf.Clamp(value - 80f, -80f, 0f));
+            PlayerPrefs.SetFloat($"{nameof(SoundManager)}{Volume}{volumeName}", Mathf.Clamp(value, 0f, 100f));
         }
 
         public float GetVolume(string volumeName)
