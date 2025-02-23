@@ -260,33 +260,26 @@ namespace GamePlay.Phone
             HistoryUpload(2, InputAmount); //송금한 금액 거래내역에 넣기
             currentCash -= InputAmount;
             currentCashText.text = AddCommas(currentCash.ToString()); //소지금액 차감 후 갱신
-            if (Amountdifference == 0)
+            completeAction?.Invoke();
+            if (Amountdifference > 0)
             {
-                //resultText.text = $"{PassbookOwner}님에게\n{InputAmount}을 송금했습니다.";
-                completeAction?.Invoke();
+                if (eventData.extraDataIDArray.Length > 0)
+                {
+                    var quest = QuestDataList.Instance.InstantiateEvent(eventData.extraDataIDArray[0]);
+                    QuestManager.Instance.AddQuestQueue(quest);
+                }
             }
             else
             {
-                if (Amountdifference > 0)
+                if(eventData.extraDataIDArray.Length > 1)
                 {
-                    if (eventData.extraDataIDArray.Length > 0)
-                    {
-                        var quest = QuestDataList.Instance.InstantiateEvent(eventData.extraDataIDArray[0]);
-                        QuestManager.Instance.AddQuestQueue(quest);
-                    }
-                }
-                else
-                {
-                    if(eventData.extraDataIDArray.Length > 1)
-                    {
 
-                        HistoryUpload(1, -Amountdifference); //초과금 거래내역에 넣기
-                        currentCash += Amountdifference;
-                        currentCashText.text = AddCommas(currentCash.ToString()); //환불받은 초과금 추가 후 갱신
+                    HistoryUpload(1, -Amountdifference); //초과금 거래내역에 넣기
+                    currentCash += Amountdifference;
+                    currentCashText.text = AddCommas(currentCash.ToString()); //환불받은 초과금 추가 후 갱신
 
-                        var quest = QuestDataList.Instance.InstantiateEvent(eventData.extraDataIDArray[1]);
-                        QuestManager.Instance.AddQuestQueue(quest);
-                    }
+                    var quest = QuestDataList.Instance.InstantiateEvent(eventData.extraDataIDArray[1]);
+                    QuestManager.Instance.AddQuestQueue(quest);
                 }
             }
         }
