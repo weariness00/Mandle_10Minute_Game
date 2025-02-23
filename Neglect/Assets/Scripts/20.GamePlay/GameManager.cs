@@ -3,6 +3,7 @@ using GamePlay.Narration;
 using GamePlay.Phone;
 using Quest;
 using System.Collections;
+using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -27,6 +28,7 @@ namespace GamePlay
         
         public void Awake()
         {
+            QuestManager.Instance.Init();
             if (!SceneUtil.TryGetPhoneScene(out var s))
             {
                 void AddApp(Scene scene)
@@ -114,8 +116,12 @@ namespace GamePlay
         public void GameClear()
         {
             QuestManager.Instance.isQuestStart = false;
-            QuestManager.Instance.AddQuestQueue(gameClearQuest);
-            gameClearQuest.Play();
+
+            List<QuestBase> playQuestList = new(QuestManager.Instance.GetPlayQuestList());
+            foreach (QuestBase quest in playQuestList)
+                quest.Failed();
+            
+            QuestManager.Instance.AddAndPlay(gameClearQuest);
             QuestManager.Instance.OnValueChange(QuestType.GameClear, playTimer.Current);
             isGameClear.Value = true;
             

@@ -85,6 +85,14 @@ namespace Quest
             
             QuestManager.Instance.Remove(this);
         }
+
+        public virtual void Failed()
+        {
+            subscription?.Dispose();
+            state = QuestState.Failed;
+            if (rootQuest != null) rootQuest.state = state;
+            QuestManager.Instance.Remove(this);
+        }
     }
 
     public abstract partial class QuestBase

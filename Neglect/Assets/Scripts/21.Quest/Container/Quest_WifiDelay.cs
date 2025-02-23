@@ -11,7 +11,8 @@ namespace Quest.Container
     public class Quest_WifiDelay : QuestBase
     {
         public WiFiDelay WifiDelayPrefab;
-        
+
+        private WiFiDelay wiFiDelay;
         private PhoneControl phone;
         private IPhoneApplication app;
 
@@ -22,7 +23,7 @@ namespace Quest.Container
         public override void Play()
         {
             base.Play();
-            var wiFiDelay = PhoneUtil.InstantiateUI(WifiDelayPrefab , out phone);
+            wiFiDelay = PhoneUtil.InstantiateUI(WifiDelayPrefab , out phone);
             wiFiDelay.Complete += Complete;
 
             app = phone.applicationControl.currentPlayApplication;
@@ -41,6 +42,12 @@ namespace Quest.Container
         {
             base.Ignore();
             phone.applicationControl.OpenApp(app);
+        }
+
+        public override void Failed()
+        {
+            base.Failed();
+            if(wiFiDelay) Destroy(wiFiDelay.gameObject);
         }
     }
 }

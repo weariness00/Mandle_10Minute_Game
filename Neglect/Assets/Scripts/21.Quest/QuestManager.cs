@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GamePlay;
+using System;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
@@ -49,11 +50,27 @@ namespace Quest
         
         public void Init()
         {
-            questAddList.Clear();
             questPlayDictionary.Clear();
+            addMainQuestList.Clear();
+            questAddList.Clear();
+            playQuestList.Clear();
+            waitQuestList.Clear();
+        }
+
+        public void QuestStart()
+        {
             isQuestStart = true;
             questSpawnTimer.SetMin();
             eventList = new(QuestDataList.Instance.GetAllMainEvent());
+        }
+
+        public void AddAndPlay(QuestBase quest)
+        {
+            if(quest == null) return;
+            
+            questAddList.Add(quest);
+            if(quest.eventData.isMainEvent) addMainQuestList.Add(quest);
+            quest.Play();
         }
 
         public void AddQuestQueue(QuestBase quest)

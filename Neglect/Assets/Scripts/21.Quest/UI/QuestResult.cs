@@ -39,6 +39,8 @@ namespace Quest.UI
 
         public void MakeResultBlock(QuestBase quest)
         {
+            if(quest == null || ReferenceEquals(quest,null)) return;
+            
             var block = Instantiate(questResultBlockPrefab, scrollRect.content);
 
             block.titleText.text = quest.ToString();

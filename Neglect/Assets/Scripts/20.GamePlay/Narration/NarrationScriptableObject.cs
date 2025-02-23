@@ -60,6 +60,10 @@ namespace GamePlay.Narration
                 narrationArray = list.ToArray();
                 Array.Sort(narrationArray, (a,b) => a.id.CompareTo(b.id));
             }
+            
+            EditorUtility.SetDirty(this);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
         }
         
 #endif

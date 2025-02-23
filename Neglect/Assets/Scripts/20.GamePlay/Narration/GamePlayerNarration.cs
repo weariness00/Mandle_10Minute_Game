@@ -18,7 +18,7 @@ namespace GamePlay.Narration
         
         public void Awake()
         {
-            narrationReadTimer.SetMax();
+            narrationReadTimer.SetMin();
             gameObject.SetActive(false);
         }
 

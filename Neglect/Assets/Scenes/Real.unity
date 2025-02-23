@@ -838,8 +838,8 @@ MonoBehaviour:
     isOverMin: 0
   currentData:
     id: -1
-    name: 
-    text: 
+    name: ' '
+    text: ' '
     stayDuration: 0
 --- !u!225 &1888626933
 CanvasGroup:

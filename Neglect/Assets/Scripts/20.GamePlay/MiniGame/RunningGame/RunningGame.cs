@@ -21,8 +21,6 @@ namespace GamePlay.MiniGame.RunningGame
         public GameObject runningGameObjectRoot;
         public Canvas runningGameCanvasRoot;
 
-        public int rankEventID;
-
         [Header("Setting 관련")] 
         public Canvas settingCanvas;
         public Button continueButton;
@@ -182,17 +180,12 @@ namespace GamePlay.MiniGame.RunningGame
         public override void GameClear()
         {
             base.GameClear();
-            var rankQuest = QuestDataList.Instance.InstantiateEvent(rankEventID);
-            QuestManager.Instance.AddQuestQueue(rankQuest);
             QuestManager.Instance.OnValueChange(QuestType.MiniGameRank, CurrentPlayerData.rank);
         }
 
         public override void GameOver()
         {
             base.GameOver();
-            
-            var rankQuest = QuestDataList.Instance.InstantiateEvent(rankEventID);
-            QuestManager.Instance.AddQuestQueue(rankQuest);
             QuestManager.Instance.OnValueChange(QuestType.MiniGameRank, CurrentPlayerData.rank);
 
             GameManager.Instance.isGameClear.Value = true;

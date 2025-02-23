@@ -66,6 +66,13 @@ public class Quest_ChargeNow : QuestBase
         DeleteObject();
         phone.applicationControl.OpenApp(app);
     }
+
+    public override void Failed()
+    {
+        base.Failed();
+        DeleteObject();
+    }
+
     public void DeleteObject()
     {
         Charger.HideAnimation();
