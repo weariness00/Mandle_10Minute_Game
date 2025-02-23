@@ -505,6 +505,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chatLogScrollRect: {fileID: 4204260417784872262}
+  sendSound: {fileID: 8300000, guid: 4179cacf4d7fee34faa51bc350f909c4, type: 3}
   canvas: {fileID: 8003116136321939646}
   CurrentName: npc
   ChatName: {fileID: 9017951177761152216}

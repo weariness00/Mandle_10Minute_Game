@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f126ebc5dfb47618053c1c363df8454, type: 3}
+  m_Name: Narration Data
+  m_EditorClassIdentifier: 
+  narrationArray:
+  - id: 6001
+    name: "\uAC8C\uC784 \uB3C4\uC785\uBD80"
+    text: "\uC74C..\uC2DC\uC98C\uC885\uB8CC\uAE4C\uC9C0 10\uBD84 \uB0A8\uC558\uB2E4\uACE0?
+      \uB7AD\uD0B9 1\uC704\uB294 \uC544\uC9C1 \uB098\uACA0\uC9C0? "
+    stayDuration: 2
+  - id: 6002
+    name: "\uC740\uD589\uC785\uAE08 \uC774\uBCA4\uD2B8 \uB3C4\uC785\uBD80"
+    text: "\uAE4C\uBA39\uC9C0\uB9D0\uACE0 \uC624\uB298 \uC740\uD589\uC571\uC73C\uB85C
+      \uC785\uAE08\uD574\uB194\uC57C \uACA0\uB2E4"
+    stayDuration: 2
+  narrationCSV: {fileID: 4900000, guid: 7d40daf3eb555784394dedf71d5d159d, type: 3}
+  textCSV: {fileID: 4900000, guid: 99da7b52953aa8648911dc3b551dee40, type: 3}

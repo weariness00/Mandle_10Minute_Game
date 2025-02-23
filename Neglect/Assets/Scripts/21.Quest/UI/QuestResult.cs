@@ -1,5 +1,4 @@
-﻿using Manager;
-using UnityEditor;
+﻿using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,12 +33,14 @@ namespace Quest.UI
             
             // 블럭 생성
             var quests = QuestManager.Instance.GetAllQuest();
-            foreach (QuestBase quest in quests)
+            foreach (QuestBase quest in Enumerable.Reverse(quests).ToArray())
                 MakeResultBlock(quest);
         }
 
         public void MakeResultBlock(QuestBase quest)
         {
+            if(quest == null || ReferenceEquals(quest,null)) return;
+            
             var block = Instantiate(questResultBlockPrefab, scrollRect.content);
 
             block.titleText.text = quest.ToString();

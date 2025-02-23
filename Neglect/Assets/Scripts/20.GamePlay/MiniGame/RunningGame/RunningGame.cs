@@ -21,8 +21,6 @@ namespace GamePlay.MiniGame.RunningGame
         public GameObject runningGameObjectRoot;
         public Canvas runningGameCanvasRoot;
 
-        public int rankEventID;
-
         [Header("Setting 관련")] 
         public Canvas settingCanvas;
         public Button continueButton;
@@ -38,6 +36,9 @@ namespace GamePlay.MiniGame.RunningGame
         public GameObject inGameObject;
         
         public List<ObjectSpawner> obstacleSpawnerList;
+
+        [Header("기타 사항")] 
+        [Tooltip("게임 클리어시 발동할 방해 이벤트")]public int bankQuestID;
 
         public override void Awake()
         {
@@ -182,17 +183,26 @@ namespace GamePlay.MiniGame.RunningGame
         public override void GameClear()
         {
             base.GameClear();
-            var rankQuest = QuestDataList.Instance.InstantiateEvent(rankEventID);
-            QuestManager.Instance.AddQuestQueue(rankQuest);
             QuestManager.Instance.OnValueChange(QuestType.MiniGameRank, CurrentPlayerData.rank);
+
+            QuestManager.Instance.isQuestStart = false;
+            var quest = QuestDataList.Instance.InstantiateEvent(bankQuestID);
+            QuestManager.Instance.AddQuestQueue(quest);
+
+            var home = Phone.applicationControl.GetHomeApp();
+            if (home)
+            {
+                var appButton = home.GetAppButton(this);
+                if (appButton)
+                {
+                    appButton.button.interactable = false;
+                }
+            }
         }
 
         public override void GameOver()
         {
             base.GameOver();
-            
-            var rankQuest = QuestDataList.Instance.InstantiateEvent(rankEventID);
-            QuestManager.Instance.AddQuestQueue(rankQuest);
             QuestManager.Instance.OnValueChange(QuestType.MiniGameRank, CurrentPlayerData.rank);
 
             GameManager.Instance.isGameClear.Value = true;
@@ -235,9 +245,9 @@ namespace GamePlay.MiniGame.RunningGame
         {
             base.AppResume(phone);
             SetActiveBackground(true);
-
+            
             InputManager.running.input.Enable();
-            if(isGameStart && !settingCanvas.gameObject.activeSelf) GamePlay();
+            settingCanvas.gameObject.SetActive(true);
         }
 
         public override void AppPause(PhoneControl phone)

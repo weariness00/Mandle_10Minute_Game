@@ -19,6 +19,8 @@ namespace GamePlay.MiniGame
 
         public MiniGameTutorial tutorial;
         [HideInInspector] public bool isOnTutorial;
+
+        [Tooltip("랭크 퀘스트")] public QuestBase rankQuest;
         
         [Space] 
         public AudioClip bgmSound;
@@ -82,6 +84,7 @@ namespace GamePlay.MiniGame
 
         public virtual void GameOver()
         {
+            QuestManager.Instance.AddAndPlay(rankQuest);
             isGamePlay.Value = false;
             isGameStart = false;
             gameSpeed.Value = 0;
@@ -89,6 +92,7 @@ namespace GamePlay.MiniGame
 
         public virtual void GameClear()
         {
+            QuestManager.Instance.AddAndPlay(rankQuest);
         }
 
         public virtual void GameExit()
@@ -152,6 +156,7 @@ namespace GamePlay.MiniGame
             {
                 GameManager.Instance.isInitQuest = true;
                 QuestManager.Instance.Init();
+                QuestManager.Instance.QuestStart();
                 phone.PhoneViewRotate(PhoneViewType.Horizon);
             }
         }

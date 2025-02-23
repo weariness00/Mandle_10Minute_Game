@@ -11,6 +11,7 @@ namespace Quest.Container
     {
         public CallingScreen phoneCallScreenPrefab;
 
+        private CallingScreen callingScreen;
         private PhoneControl phone;
         private IPhoneApplication app;
         
@@ -21,25 +22,28 @@ namespace Quest.Container
         public override void Play()
         {
             base.Play();
-            var calls = PhoneUtil.InstantiateUI(phoneCallScreenPrefab, out phone);
+            callingScreen = PhoneUtil.InstantiateUI(phoneCallScreenPrefab, out phone);
             app = phone.applicationControl.currentPlayApplication;
             phone.applicationControl.PauseApp(app);
             phone.PhoneViewRotate(0);
             app.SetActiveBackground(true);
             
-            calls.name.text = eventData.textArray.Length == 0 ? "mom" : eventData.textArray[0];
-            calls.ClearAction += Complete;
-            calls.IgnoreAction += Ignore;
-        }
-        public override void Complete()
-        {
-            base.Complete();
-        }
+            callingScreen.name.text = eventData.textArray.Length == 0 ? "mom" : eventData.textArray[0];
 
+            if (eventData.extraDataIDArray.Length >= 1) isReverse = eventData.extraDataIDArray[0] == -99;
+            callingScreen.ClearAction += isReverse ? Ignore : Complete;
+            callingScreen.IgnoreAction += isReverse ? Complete : Ignore;
+        }
         public override void Ignore()
         {
             phone.applicationControl.OpenApp(app);
             base.Ignore();
+        }
+
+        public override void Failed()
+        {
+            base.Failed();
+            if(callingScreen) Destroy(callingScreen.gameObject);
         }
     }
 }

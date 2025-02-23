@@ -10,6 +10,8 @@ namespace Quest.Container
     public class Quest_Alarm : QuestBase
     {
         public Alarm questPrefab;
+
+        private Alarm alarm;
         private IPhoneApplication app;
         private PhoneControl phone;
         public override void OnNext(object value)
@@ -20,12 +22,12 @@ namespace Quest.Container
         public override void Play()
         {
             base.Play();
-            var Alarm = PhoneUtil.InstantiateUI(questPrefab, out var phone_);
+            alarm = PhoneUtil.InstantiateUI(questPrefab, out var phone_);
 
             phone = phone_;
-            Alarm.complete += Complete;
-            Alarm.ignore += Ignore;
-            Alarm.TimeSet("10:00");
+            alarm.complete += Complete;
+            alarm.ignore += Ignore;
+            alarm.TimeSet("10:00");
 
             app = phone.applicationControl.currentPlayApplication;
             phone.applicationControl.PauseApp(app);
@@ -48,6 +50,12 @@ namespace Quest.Container
         {
             base.Complete();
             phone.applicationControl.OpenApp(app);
+        }
+
+        public override void Failed()
+        {
+            base.Failed();
+            if(alarm) Destroy(alarm.gameObject);
         }
     }
 }
