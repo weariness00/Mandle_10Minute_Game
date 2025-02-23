@@ -127,10 +127,10 @@ namespace GamePlay.Chatting
         {
             var otherChat = Instantiate(messageBoxPrefab,Vector3.zero, messageBoxPrefab.transform.rotation, ChatScrollBox.gameObject.transform);
             otherChat.image.sprite = otherMessageSprite;
-            otherChat.SetText(text);
             otherChat.boxTransform.pivot = Vector2.up;
             otherChat.boxTransform.anchorMin = Vector2.up;
             otherChat.boxTransform.anchorMax = Vector2.up;
+            otherChat.Text.text = text;
 
             return otherChat;
         }
@@ -142,7 +142,7 @@ namespace GamePlay.Chatting
             answerChat.boxTransform.pivot = Vector2.one;
             answerChat.boxTransform.anchorMin = Vector2.one;
             answerChat.boxTransform.anchorMax = Vector2.one;
-            answerChat.SetText(text);
+            answerChat.Text.text = text;
             
             return answerChat;
         }

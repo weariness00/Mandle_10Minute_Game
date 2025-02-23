@@ -46,7 +46,7 @@ namespace GamePlay.Narration
 
                     NarrationData narration = new();
                     var narrationName = data.DynamicCast("NarrationName", "");
-                    var narrationTextID = data.DynamicCast("NarratoinText", -1);
+                    var narrationTextID = data.DynamicCast("NarrationText", -1);
                     var stayDuration = data.DynamicCast("NarrationTime", 2);
 
                     narration.id = id;

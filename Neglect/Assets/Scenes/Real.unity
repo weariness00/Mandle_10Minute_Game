@@ -836,11 +836,11 @@ MonoBehaviour:
     _isMax: 0
     isOverMax: 0
     isOverMin: 0
-  nextNarrationSettingDuration: 2
-  narrationSTR: 
-  narrationList:
-  - "10\uBD84 \uB2A6\uB294\uB2E4\uACE0 \uD588\uC73C\uB2C8\n\uADF8\uB3D9\uC548 \uAC8C\uC784\uC774\uB098
-    \uD55C\uD310 \uD560\uAE4C? "
+  currentData:
+    id: -1
+    name: 
+    text: 
+    stayDuration: 0
 --- !u!225 &1888626933
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -994,6 +994,7 @@ MonoBehaviour:
     ignoreEventID: 0
     textArray: []
     extraDataIDArray: 
+  isReverse: 0
   onCompleteEvent:
     m_PersistentCalls:
       m_Calls: []

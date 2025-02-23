@@ -48,7 +48,7 @@ namespace GamePlay.Chatting
             Text.rectTransform.anchoredPosition = new Vector3(paddingLeft, -paddingTop);
             image.rectTransform.sizeDelta = new Vector2(width + paddingLeft + paddingRight, height + paddingTop + paddingBottom);
         }
-
+        
         public void SetText(string text)
         {
             Text.text = InsertNewlines(text,10);
