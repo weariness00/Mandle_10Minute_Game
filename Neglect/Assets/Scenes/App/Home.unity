@@ -1236,6 +1236,7 @@ MonoBehaviour:
     isOverMax: 0
     isOverMin: 0
   firstStartWindow: {fileID: 902044946}
+  bgmSound: {fileID: 8300000, guid: edf324e4638cdad47b063bcded4f25c3, type: 3}
   informationCanvas: {fileID: 1834931468}
   interfaceRectTransform: {fileID: 1157845974}
   homeButton: {fileID: 485577334}
