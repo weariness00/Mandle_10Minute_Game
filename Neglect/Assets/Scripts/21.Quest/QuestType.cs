@@ -3,7 +3,9 @@
     public enum QuestType
     {
         None = -1,
-        GameRank, // 게임 랭크
+        MiniGameRank, // 미니 게임 게임 랭크
         PhoneNotification, // 핸드폰 알림
+        
+        GameClear, // 게임 클리어
     }
 }

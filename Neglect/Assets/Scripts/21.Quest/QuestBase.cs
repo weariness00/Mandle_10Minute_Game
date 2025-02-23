@@ -23,6 +23,8 @@ namespace Quest
         
         public virtual void Play()
         {
+            questName = eventData.name;
+            
             if (state != QuestState.InProgress && state != QuestState.Completed)
             {
                 subscription?.Dispose();
@@ -36,16 +38,16 @@ namespace Quest
         {
             subscription?.Dispose();
             state = QuestState.Failed;
-            
-            QuestManager.Instance.Remove(this);
 
             if (eventData.ignoreEventID != -1)
             {
                 var ignoreEvent = QuestDataList.Instance.GetEventID(eventData.ignoreEventID);
                 var quest = QuestDataList.Instance.InstantiateEvent(eventData.ignoreEventID);
                 quest.eventData = ignoreEvent;
-                quest.Play();
+                QuestManager.Instance.AddQuestQueue(quest);
             }
+            
+            QuestManager.Instance.Remove(this);
         }
 
         public virtual void Pause()
@@ -58,19 +60,20 @@ namespace Quest
         {
             subscription?.Dispose();
             state = QuestState.Completed;
-            QuestManager.Instance.Remove(this);
             if (eventData.acceptEventID != -1)
             {
                 var acceptEvent = QuestDataList.Instance.GetEventID(eventData.acceptEventID);
                 var quest = QuestDataList.Instance.InstantiateEvent(eventData.acceptEventID);
                 quest.eventData = acceptEvent;
-                quest.Play();
+                QuestManager.Instance.AddQuestQueue(quest);
                 onCompleteEvent?.Invoke(quest);
             }
             else
             {
                 onCompleteEvent?.Invoke(null);
             }
+            
+            QuestManager.Instance.Remove(this);
         }
     }
 

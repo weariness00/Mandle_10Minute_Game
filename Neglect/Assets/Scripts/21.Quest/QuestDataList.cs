@@ -138,8 +138,10 @@ namespace Quest
             {
                 var id = csv.DynamicCast<int>("EventID", -1);
                 if(id == -1) continue;
+                var eventName = csv.DynamicCast("Name", "");
                 var textList = csv.DynamicCast<int[]>("TextListID", Array.Empty<int>());
                 var data = GetEventID(id);
+                data.name = eventName;
                 data.level = LevelToInt(csv.DynamicCast("Level", ""));
                 data.prefab = GetQuestID(csv.DynamicCast<int>("PrefabID", -1));
 

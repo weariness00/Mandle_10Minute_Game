@@ -28,6 +28,9 @@ namespace Manager
             }
 
             AudioSourcesGenerate();
+            var groups = mixer.FindMatchingGroups("");
+            foreach (AudioMixerGroup audioMixerGroup in groups)
+                SetVolume(audioMixerGroup.name, GetVolume(audioMixerGroup.name));
         }
         
         public void AudioSourcesGenerate()

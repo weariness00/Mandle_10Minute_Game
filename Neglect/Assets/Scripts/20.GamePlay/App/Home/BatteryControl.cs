@@ -39,7 +39,7 @@ namespace GamePlay.App
                     if (value <= 10)
                     {
                         var quest = QuestDataList.Instance.InstantiateEvent(GameManager.Instance.batteryEventID);
-                        if (quest) quest.Play();
+                        QuestManager.Instance.AddQuestQueue(quest);
                         
                         onBatteryEventDisposable?.Dispose();
                     }

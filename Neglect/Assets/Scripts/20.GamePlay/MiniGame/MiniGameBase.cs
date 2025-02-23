@@ -24,6 +24,7 @@ namespace GamePlay.MiniGame
         public AudioClip bgmSound;
         public virtual void Awake()
         {
+            tutorial.gameObject.SetActive(false);
             isGamePlay.Value = false;
             playTime.SetMin();
             

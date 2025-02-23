@@ -5,13 +5,14 @@ namespace Quest
     [Serializable]
     public partial class EventData
     {
-        public int id;
+        public int id = -1;
+        public string name;
         public QuestLevel level;
-        public QuestBase prefab;
-        public int acceptEventID;
-        public int ignoreEventID;
-        public string[] textArray;
-        public int[] extraDataIDArray;
+        public QuestBase prefab = null;
+        public int acceptEventID = -1;
+        public int ignoreEventID = -1;
+        public string[] textArray = Array.Empty<string>();
+        public int[] extraDataIDArray = Array.Empty<int>();
     }
 
     public partial class EventData : IComparable

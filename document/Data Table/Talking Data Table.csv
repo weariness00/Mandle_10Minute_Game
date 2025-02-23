@@ -36,4 +36,4 @@ Header,TalkingID,Name,MainTextID,PositiveTextList,PositiveTalkID,NegativeTextLis
 ,4030,광고대화 종료,3166,,,,,,
 // ,기타 사항,,,,,,,,
 ,10001,광고 메시지 종료,3101,,,,,,
-,10100,튜토리얼 대화,9200,9201,,,,100,
+,10100,튜토리얼 대화,9010,,,,,,

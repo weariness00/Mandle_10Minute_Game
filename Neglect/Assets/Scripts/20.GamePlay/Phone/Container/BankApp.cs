@@ -236,7 +236,7 @@ namespace GamePlay.Phone
                     if (eventData.extraDataIDArray.Length > 0)
                     {
                         var quest = QuestDataList.Instance.InstantiateEvent(eventData.extraDataIDArray[0]);
-                        if(quest) quest.Play();
+                        QuestManager.Instance.AddQuestQueue(quest);
                     }
                 }
                 else
@@ -244,7 +244,7 @@ namespace GamePlay.Phone
                     if(eventData.extraDataIDArray.Length > 1)
                     {
                         var quest = QuestDataList.Instance.InstantiateEvent(eventData.extraDataIDArray[1]);
-                        if(quest) quest.Play();
+                        QuestManager.Instance.AddQuestQueue(quest);
                     }
                 }
             }

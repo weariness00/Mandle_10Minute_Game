@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventDataArray:
   - id: 1001
+    name: "\uAD11\uACE0 \uD31D\uC5C5"
     level: 0
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
     acceptEventID: 1107
@@ -24,6 +25,7 @@ MonoBehaviour:
       2\uC2DC\uC791 \uC0AC\uC804\uC608\uC57D \uC774\uBCA4\uD2B8 \uC54C\uB9BC"
     extraDataIDArray: 
   - id: 1002
+    name: "\uC804\uD654 \uD31D\uC5C5"
     level: 1
     prefab: {fileID: 7104001957306441222, guid: 28b853421a1930741bddba56a7064227, type: 3}
     acceptEventID: 1105
@@ -32,6 +34,7 @@ MonoBehaviour:
     - "\uC5C4\uB9C8"
     extraDataIDArray: 
   - id: 1003
+    name: "\uCE5C\uAD6C\uC758 \uCC44\uD305 \uD31D\uC5C5"
     level: 1
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
     acceptEventID: 1104
@@ -41,6 +44,7 @@ MonoBehaviour:
     - "\uB0B4\uC77C \uC6B0\uB9AC \uBA87\uC2DC\uC5D0 \uB9CC\uB098\uAE30\uB85C \uD588\uC9C0?"
     extraDataIDArray: 
   - id: 1004
+    name: "\uC6D4\uC138\uC785\uAE08 \uD31D\uC5C5"
     level: 2
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
     acceptEventID: 1111
@@ -50,6 +54,7 @@ MonoBehaviour:
     - "\uB9CC\uB4E4\uB798\uB2D8 \uC774\uBC88\uB2EC \uC6D4\uC138 \uC785\uAE08\uD574\uC8FC\uC138\uC694."
     extraDataIDArray: 
   - id: 1005
+    name: "\uAD11\uACE0\uC804\uD654 \uD31D\uC5C5"
     level: 0
     prefab: {fileID: 7104001957306441222, guid: 28b853421a1930741bddba56a7064227, type: 3}
     acceptEventID: 1113
@@ -58,6 +63,7 @@ MonoBehaviour:
     - "\uAD11\uACE0"
     extraDataIDArray: 
   - id: 1006
+    name: "\uD0DD\uBC30\uAE30\uC0AC \uCC44\uD305 \uD31D\uC5C5"
     level: 1
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
     acceptEventID: 1108
@@ -66,6 +72,8 @@ MonoBehaviour:
     - "\uD0DD\uBC30\uAE30\uC0AC"
     extraDataIDArray: 
   - id: 1007
+    name: "\uC624\uB79C\uB9CC\uC5D0 \uC5F0\uB77D\uD55C \uCE5C\uAD6C \uCC44\uD305
+      \uD31D\uC5C5"
     level: 1
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
     acceptEventID: 1109
@@ -74,6 +82,7 @@ MonoBehaviour:
     - "\uC624\uB79C\uB9CC\uC5D0 \uC5F0\uB77D\uD55C \uCE5C\uAD6C \uC774\uB984"
     extraDataIDArray: 
   - id: 1008
+    name: "\uB3D9\uCC3D\uD68C \uD68C\uC7A5 \uCC44\uD305 \uD31D\uC5C5"
     level: 1
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
     acceptEventID: 1110
@@ -81,7 +90,32 @@ MonoBehaviour:
     textArray:
     - "\uB3D9\uCC3D\uD68C \uD68C\uC7A5 \uCE5C\uAD6C \uC774\uB984"
     extraDataIDArray: 
+  - id: 1009
+    name: "\uD53C\uACE4\uD568\uC774\uBCA4\uD2B8"
+    level: 0
+    prefab: {fileID: 3942944286640142204, guid: 93adcad729c91f345a96dfcb87c53907, type: 3}
+    acceptEventID: -1
+    ignoreEventID: -1
+    textArray: []
+    extraDataIDArray: 
+  - id: 1010
+    name: "\uBC30\uD130\uB9AC\uBD80\uC871\uC774\uBCA4\uD2B8"
+    level: 1
+    prefab: {fileID: 6855458635590791947, guid: ce6b8270f35c7d548b5167f0c1f4d4b9, type: 3}
+    acceptEventID: -1
+    ignoreEventID: 1010
+    textArray: []
+    extraDataIDArray: 
+  - id: 1011
+    name: "\uC778\uD130\uB137\uC7AC\uC5F0\uACB0 \uC774\uBCA4\uD2B8"
+    level: 1
+    prefab: {fileID: 6727539367213804272, guid: adf2e60dcd3cff24397ce8e62ec709d5, type: 3}
+    acceptEventID: -1
+    ignoreEventID: 1011
+    textArray: []
+    extraDataIDArray: 
   - id: 1101
+    name: "\uD1B5\uD654\uBB34\uC2DC\uC774\uBCA4\uD2B8"
     level: 1
     prefab: {fileID: 7104001957306441222, guid: 28b853421a1930741bddba56a7064227, type: 3}
     acceptEventID: -1
@@ -89,6 +123,7 @@ MonoBehaviour:
     textArray: []
     extraDataIDArray: 
   - id: 1102
+    name: "\uC6D4\uC138 \uC801\uAC8C\uC785\uAE08\uD55C\uACBD\uC6B0 \uD31D\uC5C5"
     level: 0
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
     acceptEventID: -1
@@ -98,6 +133,7 @@ MonoBehaviour:
       \uB35C \uBCF4\uB0B4\uC2E0 \uB9CC\uD07C \uB2E4\uC2DC \uC785\uAE08 \uBD80\uD0C1\uB4DC\uB9AC\uACA0\uC2B5\uB2C8\uB2E4."
     extraDataIDArray: 
   - id: 1103
+    name: "\uC6D4\uC138 \uB9CE\uC774\uC785\uAE08\uD55C\uACBD\uC6B0 \uD31D\uC5C5"
     level: 0
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
     acceptEventID: -1
@@ -108,6 +144,7 @@ MonoBehaviour:
       \uC785\uAE08\uD574 \uB4DC\uB9B4\uAC8C\uC694"
     extraDataIDArray: 
   - id: 1104
+    name: "\uCE5C\uAD6C\uC640\uC758 \uCC44\uD305 App \uB300\uD654"
     level: 1
     prefab: {fileID: 6792380495647651490, guid: f3c1eec8e61df8547939c86f4313a64a, type: 3}
     acceptEventID: -1
@@ -116,6 +153,7 @@ MonoBehaviour:
     - "\uCE5C\uAD6C"
     extraDataIDArray: a10f0000
   - id: 1105
+    name: "\uC804\uD654 \uB300\uD654"
     level: 1
     prefab: {fileID: 2903363758632237792, guid: 04eca5ed438e8514c9b8cebefee60e75, type: 3}
     acceptEventID: -1
@@ -124,6 +162,7 @@ MonoBehaviour:
     - "\uC5C4\uB9C8"
     extraDataIDArray: b90f0000
   - id: 1106
+    name: "\uC740\uD589\uC5C5\uBB34 \uC774\uBCA4\uD2B8"
     level: 2
     prefab: {fileID: 2421299613985424272, guid: 5731f7c4bf27ea54599fdaf7529a4899, type: 3}
     acceptEventID: -1
@@ -131,6 +170,7 @@ MonoBehaviour:
     textArray: []
     extraDataIDArray: 4e0400004f040000
   - id: 1107
+    name: "\uAD11\uACE0\uB85C \uC778\uD55C \uCC44\uD305 App \uC774\uB3D9"
     level: 0
     prefab: {fileID: 6792380495647651490, guid: f3c1eec8e61df8547939c86f4313a64a, type: 3}
     acceptEventID: -1
@@ -139,6 +179,7 @@ MonoBehaviour:
     - "\uAD11\uACE0"
     extraDataIDArray: 11270000
   - id: 1108
+    name: "\uD0DD\uBC30\uAE30\uC0AC\uC640\uC758 \uCC44\uD305 App \uB300\uD654"
     level: 1
     prefab: {fileID: 6792380495647651490, guid: f3c1eec8e61df8547939c86f4313a64a, type: 3}
     acceptEventID: -1
@@ -147,6 +188,8 @@ MonoBehaviour:
     - "\uD0DD\uBC30\uAE30\uC0AC"
     extraDataIDArray: a90f0000
   - id: 1109
+    name: "\uC624\uB79C\uB9CC\uC5D0 \uC5F0\uB77D\uD55C \uCE5C\uAD6C \uCC44\uD305
+      App\uB300\uD654"
     level: 1
     prefab: {fileID: 6792380495647651490, guid: f3c1eec8e61df8547939c86f4313a64a, type: 3}
     acceptEventID: -1
@@ -155,6 +198,7 @@ MonoBehaviour:
     - "\uC624\uB79C\uB9CC\uC5D0 \uC5F0\uB77D\uD55C \uCE5C\uAD6C \uC774\uB984"
     extraDataIDArray: ab0f0000
   - id: 1110
+    name: "\uB3D9\uCC3D\uD68C \uD68C\uC7A5 \uCC44\uD305 App\uB300\uD654"
     level: 1
     prefab: {fileID: 6792380495647651490, guid: f3c1eec8e61df8547939c86f4313a64a, type: 3}
     acceptEventID: -1
@@ -163,6 +207,7 @@ MonoBehaviour:
     - "\uB3D9\uCC3D\uD68C \uD68C\uC7A5 \uCE5C\uAD6C \uC774\uB984"
     extraDataIDArray: b10f0000
   - id: 1111
+    name: "\uC9D1\uC8FC\uC778\uACFC\uC758 \uCC44\uD305 App\uB300\uD654"
     level: 2
     prefab: {fileID: 6792380495647651490, guid: f3c1eec8e61df8547939c86f4313a64a, type: 3}
     acceptEventID: 1106
@@ -171,6 +216,7 @@ MonoBehaviour:
     - "\uC9D1\uC8FC\uC778"
     extraDataIDArray: b50f0000
   - id: 1112
+    name: "\uC9D1\uC8FC\uC778\uACFC\uC758 \uC804\uD654 App\uB300\uD654"
     level: 2
     prefab: {fileID: 2903363758632237792, guid: 04eca5ed438e8514c9b8cebefee60e75, type: 3}
     acceptEventID: 1106
@@ -179,6 +225,7 @@ MonoBehaviour:
     - "\uC9D1\uC8FC\uC778"
     extraDataIDArray: b80f0000
   - id: 1113
+    name: "\uAD11\uACE0 \uC804\uD654 App \uB300\uD654"
     level: 1
     prefab: {fileID: 2903363758632237792, guid: 04eca5ed438e8514c9b8cebefee60e75, type: 3}
     acceptEventID: -1
@@ -187,6 +234,7 @@ MonoBehaviour:
     - "\uAD11\uACE0"
     extraDataIDArray: bd0f0000
   - id: 4004
+    name: "\uC6D4\uC138 \uC801\uAC8C \uBCF4\uB0B8 \uB9CC\uD07C \uB2E4\uC2DC \uBCF4\uB0B4\uAE30"
     level: 0
     prefab: {fileID: 2421299613985424272, guid: 5731f7c4bf27ea54599fdaf7529a4899, type: 3}
     acceptEventID: -1
@@ -194,6 +242,7 @@ MonoBehaviour:
     textArray: []
     extraDataIDArray: 
   - id: 9001
+    name: "\uCE5C\uAD6C\uAC00 \uB2A6\uB294\uB2E4\uB294 \uBA54\uC2DC\uC9C0"
     level: 0
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
     acceptEventID: 9100
@@ -204,6 +253,7 @@ MonoBehaviour:
       \uBBF8\uC548\uD558\uB2E4"
     extraDataIDArray: 
   - id: 9100
+    name: "\uB2A6\uB294 \uCE5C\uAD6C\uC640\uC758 \uCC44\uD305App"
     level: 0
     prefab: {fileID: 6792380495647651490, guid: f3c1eec8e61df8547939c86f4313a64a, type: 3}
     acceptEventID: -1
@@ -213,6 +263,7 @@ MonoBehaviour:
     extraDataIDArray: 74270000
   mainEventDataArray:
   - id: 1001
+    name: "\uAD11\uACE0 \uD31D\uC5C5"
     level: 0
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
     acceptEventID: 1107
@@ -223,6 +274,7 @@ MonoBehaviour:
       2\uC2DC\uC791 \uC0AC\uC804\uC608\uC57D \uC774\uBCA4\uD2B8 \uC54C\uB9BC"
     extraDataIDArray: 
   - id: 1002
+    name: "\uC804\uD654 \uD31D\uC5C5"
     level: 1
     prefab: {fileID: 7104001957306441222, guid: 28b853421a1930741bddba56a7064227, type: 3}
     acceptEventID: 1105
@@ -231,6 +283,7 @@ MonoBehaviour:
     - "\uC5C4\uB9C8"
     extraDataIDArray: 
   - id: 1003
+    name: "\uCE5C\uAD6C\uC758 \uCC44\uD305 \uD31D\uC5C5"
     level: 1
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
     acceptEventID: 1104
@@ -240,6 +293,7 @@ MonoBehaviour:
     - "\uB0B4\uC77C \uC6B0\uB9AC \uBA87\uC2DC\uC5D0 \uB9CC\uB098\uAE30\uB85C \uD588\uC9C0?"
     extraDataIDArray: 
   - id: 1004
+    name: "\uC6D4\uC138\uC785\uAE08 \uD31D\uC5C5"
     level: 2
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
     acceptEventID: 1111
@@ -249,6 +303,7 @@ MonoBehaviour:
     - "\uB9CC\uB4E4\uB798\uB2D8 \uC774\uBC88\uB2EC \uC6D4\uC138 \uC785\uAE08\uD574\uC8FC\uC138\uC694."
     extraDataIDArray: 
   - id: 1005
+    name: "\uAD11\uACE0\uC804\uD654 \uD31D\uC5C5"
     level: 0
     prefab: {fileID: 7104001957306441222, guid: 28b853421a1930741bddba56a7064227, type: 3}
     acceptEventID: 1113
@@ -257,6 +312,7 @@ MonoBehaviour:
     - "\uAD11\uACE0"
     extraDataIDArray: 
   - id: 1006
+    name: "\uD0DD\uBC30\uAE30\uC0AC \uCC44\uD305 \uD31D\uC5C5"
     level: 1
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
     acceptEventID: 1108
@@ -265,6 +321,8 @@ MonoBehaviour:
     - "\uD0DD\uBC30\uAE30\uC0AC"
     extraDataIDArray: 
   - id: 1007
+    name: "\uC624\uB79C\uB9CC\uC5D0 \uC5F0\uB77D\uD55C \uCE5C\uAD6C \uCC44\uD305
+      \uD31D\uC5C5"
     level: 1
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
     acceptEventID: 1109
@@ -273,12 +331,37 @@ MonoBehaviour:
     - "\uC624\uB79C\uB9CC\uC5D0 \uC5F0\uB77D\uD55C \uCE5C\uAD6C \uC774\uB984"
     extraDataIDArray: 
   - id: 1008
+    name: "\uB3D9\uCC3D\uD68C \uD68C\uC7A5 \uCC44\uD305 \uD31D\uC5C5"
     level: 1
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
     acceptEventID: 1110
     ignoreEventID: -1
     textArray:
     - "\uB3D9\uCC3D\uD68C \uD68C\uC7A5 \uCE5C\uAD6C \uC774\uB984"
+    extraDataIDArray: 
+  - id: 1009
+    name: "\uD53C\uACE4\uD568\uC774\uBCA4\uD2B8"
+    level: 0
+    prefab: {fileID: 3942944286640142204, guid: 93adcad729c91f345a96dfcb87c53907, type: 3}
+    acceptEventID: -1
+    ignoreEventID: -1
+    textArray: []
+    extraDataIDArray: 
+  - id: 1010
+    name: "\uBC30\uD130\uB9AC\uBD80\uC871\uC774\uBCA4\uD2B8"
+    level: 1
+    prefab: {fileID: 6855458635590791947, guid: ce6b8270f35c7d548b5167f0c1f4d4b9, type: 3}
+    acceptEventID: -1
+    ignoreEventID: 1010
+    textArray: []
+    extraDataIDArray: 
+  - id: 1011
+    name: "\uC778\uD130\uB137\uC7AC\uC5F0\uACB0 \uC774\uBCA4\uD2B8"
+    level: 1
+    prefab: {fileID: 6727539367213804272, guid: adf2e60dcd3cff24397ce8e62ec709d5, type: 3}
+    acceptEventID: -1
+    ignoreEventID: 1011
+    textArray: []
     extraDataIDArray: 
   questArray:
   - {fileID: 64922150804996188, guid: 05982b62e9cc2a34583ed13892cd2de5, type: 3}
