@@ -28,8 +28,10 @@ namespace Quest.Container
             app.SetActiveBackground(true);
             
             calls.name.text = eventData.textArray.Length == 0 ? "mom" : eventData.textArray[0];
-            calls.ClearAction += Complete;
-            calls.IgnoreAction += Ignore;
+
+            if (eventData.extraDataIDArray.Length >= 1) isReverse = eventData.extraDataIDArray[0] == -99;
+            calls.ClearAction += isReverse ? Ignore : Complete;
+            calls.IgnoreAction += isReverse ? Complete : Ignore;
         }
         public override void Complete()
         {

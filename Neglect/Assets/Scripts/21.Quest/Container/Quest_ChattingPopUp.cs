@@ -15,11 +15,13 @@ namespace Quest.Container
         {
             base.Play();
             var popUp = PhoneUtil.InstantiateUI(popUpPrefab);
-            popUp.button.onClick.AddListener(Complete);
-            popUp.destroyPopUpEvent.AddListener(Ignore);
-
             if(eventData.textArray.Length >= 1) popUp.titleText.text = eventData.textArray[0];
             if(eventData.textArray.Length >= 2) popUp.explainText.text = eventData.textArray[1];
+
+            if (eventData.extraDataIDArray.Length >= 1) isReverse = eventData.extraDataIDArray[0] == -99;
+            
+            popUp.button.onClick.AddListener(isReverse ? Ignore : Complete);
+            popUp.destroyPopUpEvent.AddListener(isReverse ? Complete : Ignore);
             
             PhoneUtil.currentPhone.PhoneVibration();
         }

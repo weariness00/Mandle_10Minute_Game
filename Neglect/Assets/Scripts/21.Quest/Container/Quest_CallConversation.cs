@@ -29,8 +29,8 @@ namespace Quest.Container
             base.Play();
             callConversation = PhoneUtil.InstantiateUI(CallPrefab, out phone);
             callConversation.gameObject.SetActive(true);
-            callConversation.ClearAction += Complete;
-            callConversation.onIgnoreEvent += Ignore;
+            callConversation.ClearAction += isReverse ? Ignore : Complete;
+            callConversation.onIgnoreEvent += isReverse ? Complete : Ignore;
             app = phone.applicationControl.currentPlayApplication;
             phone.applicationControl.PauseApp(app);
             app.SetActiveBackground(true);

@@ -17,6 +17,7 @@ namespace Quest
         [Tooltip("퀘스트 진행 상태")] public QuestState state = QuestState.NotStarted;
         
         [HideInInspector] public EventData eventData;
+        [HideInInspector] public bool isReverse; // 성공 실패에 대한 것을 뒤집을 것인지
         protected IDisposable subscription; // 퀘스트 매니저에서 구독하면 자동 할당됨
 
         private QuestBase rootQuest = null;
@@ -32,7 +33,12 @@ namespace Quest
                 
                 state = QuestState.InProgress;
             }
-            if (rootQuest != null) rootQuest.state = state;
+
+            if (rootQuest != null)
+            {
+                rootQuest.state = state;
+                isReverse = rootQuest.isReverse;
+            }
         }
 
         public virtual void Ignore()
