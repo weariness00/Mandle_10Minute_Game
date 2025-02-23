@@ -181,8 +181,11 @@ namespace GamePlay.Phone
             interfaceRectTransform.anchoredPosition = interfaceOriginAnchorsPosition;
             
             var bgmSource = SoundManager.Instance.GetBGMSource();
-            bgmSource.clip = bgmSound;
-            bgmSource.Play();
+            if (bgmSource.clip != bgmSound && bgmSource.isPlaying == false)
+            {
+                bgmSource.clip = bgmSound;
+                bgmSource.Play();
+            }
         }
 
         public void AppPause(PhoneControl phone)

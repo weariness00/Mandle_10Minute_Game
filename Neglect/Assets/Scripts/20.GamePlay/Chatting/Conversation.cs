@@ -1,5 +1,6 @@
 using DG.Tweening;
 using GamePlay.Talk;
+using Manager;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace GamePlay.Chatting
     public partial class Conversation
     {
         public ScrollRect chatLogScrollRect;
+
+        public AudioClip sendSound;
         
         private ChatTextBox otherChatBox;
         private ChatTextBox answerChatBox;
@@ -166,6 +169,8 @@ namespace GamePlay.Chatting
             
             otherChatBox.boxTransform.DOLocalMoveY(otherChatBox.boxTransform.localPosition.y - 50f, 0.5f).From();
             isChatLogContentSizeUpdate = true;
+            var audioSource = SoundManager.Instance.GetAudioSource("Effect");
+            audioSource.PlayOneShot(sendSound);
         }
         
         public void ShowAnswerChatBox()
@@ -174,6 +179,8 @@ namespace GamePlay.Chatting
             
             answerChatBox.boxTransform.DOLocalMoveY(answerChatBox.boxTransform.localPosition.y - 50f, 0.5f).From();
             isChatLogContentSizeUpdate = true;
+            var audioSource = SoundManager.Instance.GetAudioSource("Effect");
+            audioSource.PlayOneShot(sendSound);
         }
     }
     
@@ -262,6 +269,7 @@ namespace GamePlay.Chatting
                 {
                     SettingAnswer(); 
                     otherChatBox = SpawnOtherChat(talkData.mainText);
+                    ShowOtherChatBox();
                     ShowMyAnswerList();
                 }
                 ConversationClear();

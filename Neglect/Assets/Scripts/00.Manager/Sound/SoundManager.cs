@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Audio;
 using Util;
@@ -12,7 +13,6 @@ namespace Manager
         public Canvas soundCanvas;
         public RectTransform soundCanvasRectTransform;
 
-        private static readonly string Volume = "Volume";
         private Dictionary<string, AudioSource> audioSourceDictionary = new Dictionary<string, AudioSource>();
  
         public void Awake()
@@ -70,15 +70,15 @@ namespace Manager
             if(ReferenceEquals(setting, null)) return;
 
             setting.mixer.SetFloat(volumeName,Mathf.Clamp(value - 80f, -80f, 0f));
-            PlayerPrefs.SetFloat($"{nameof(SoundManager)}{Volume}{volumeName}", Mathf.Clamp(value, 0f, 100f));
+            PlayerPrefs.SetFloat($"{nameof(SoundManager)}{SoundExtension.Volume}{volumeName}", Mathf.Clamp(value, 0f, 100f));
         }
 
         public float GetVolume(string volumeName)
         {
             if(ReferenceEquals(setting, null)) return 0f;
             
-            if(PlayerPrefs.HasKey($"{nameof(SoundManager)}{Volume}{volumeName}"))
-                return PlayerPrefs.GetFloat($"{nameof(SoundManager)}{Volume}{volumeName}");
+            if(PlayerPrefs.HasKey($"{nameof(SoundManager)}{SoundExtension.Volume}{volumeName}"))
+                return PlayerPrefs.GetFloat($"{nameof(SoundManager)}{SoundExtension.Volume}{volumeName}");
             return setting.mixer.GetFloat(volumeName, out float value) ? value : 0f;
         }
     }
