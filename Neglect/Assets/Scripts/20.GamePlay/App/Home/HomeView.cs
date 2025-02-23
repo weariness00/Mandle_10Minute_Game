@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using GamePlay.App;
+using Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace GamePlay.Phone
 
         [Header("화면 관리")] 
         [Tooltip("처음 게임 킬때 나오는 화면")]public FirstStartWindow firstStartWindow;
+        [Tooltip("앱 키면 나오는 bgm")] public AudioClip bgmSound;
         
         [Header("Informaton Canvas 관련")] 
         public Canvas informationCanvas;
@@ -163,6 +165,10 @@ namespace GamePlay.Phone
             viewPort.horizon.Release();
             viewPort.horizon = viewPort.vertical;
             phone.PhoneViewRotate(PhoneViewType.Vertical);
+
+            var bgmSource = SoundManager.Instance.GetBGMSource();
+            bgmSource.clip = bgmSound;
+            bgmSource.Play();
         }
 
         public void AppResume(PhoneControl phone)
@@ -173,6 +179,10 @@ namespace GamePlay.Phone
             
             interfaceRectTransform.gameObject.SetActive(true);
             interfaceRectTransform.anchoredPosition = interfaceOriginAnchorsPosition;
+            
+            var bgmSource = SoundManager.Instance.GetBGMSource();
+            bgmSource.clip = bgmSound;
+            bgmSource.Play();
         }
 
         public void AppPause(PhoneControl phone)

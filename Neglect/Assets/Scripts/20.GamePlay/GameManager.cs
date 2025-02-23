@@ -19,7 +19,6 @@ namespace GamePlay
         [Tooltip("나레이션 클래스")] public GamePlayerNarration narration;
         [Tooltip("포스트 프로세싱을 사용할 Global Volume")]public PostProcessingUtility realVolumeControl;
         [Tooltip("방해 이벤트를 초기화(시작)했는지")] public bool isInitQuest = false;
-        public AudioClip bgmSound;
 
         [Header("사전에 사용할 이벤트 ID")] 
         public QuestBase gameClearQuest;
@@ -28,8 +27,6 @@ namespace GamePlay
         
         public void Awake()
         {
-            var bgmSource = SoundManager.Instance.GetBGMSource();
-            
             if (!SceneUtil.TryGetPhoneScene(out var s))
             {
                 void AddApp(Scene scene)
@@ -47,9 +44,6 @@ namespace GamePlay
                     SceneUtil.AsyncAddChatting(AddApp);
                     SceneUtil.AsyncAddBank(AddApp);
                     SceneUtil.AsyncAddRunningGame(AddApp);
-                    
-                    bgmSource.clip = bgmSound;
-                    bgmSource.Play();
                 });
             }
 
