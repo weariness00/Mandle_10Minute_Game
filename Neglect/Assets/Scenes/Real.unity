@@ -836,6 +836,7 @@ MonoBehaviour:
     _isMax: 0
     isOverMax: 0
     isOverMin: 0
+  typingSound: {fileID: 8300000, guid: fef37f15a929fb042af9e62497ed5ac0, type: 3}
   currentData:
     id: -1
     name: ' '
