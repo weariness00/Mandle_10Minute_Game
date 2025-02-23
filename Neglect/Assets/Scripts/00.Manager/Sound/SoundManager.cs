@@ -29,8 +29,13 @@ namespace Manager
 
             AudioSourcesGenerate();
             var groups = mixer.FindMatchingGroups("");
-            foreach (AudioMixerGroup audioMixerGroup in groups)
-                SetVolume(audioMixerGroup.name, GetVolume(audioMixerGroup.name));
+            foreach (AudioMixerGroup group in groups)
+            {
+                if(group.name == "Master")
+                    SetVolume(group.name, GetVolume(group.name));
+                else
+                    SetVolume(group.name, 100);
+            }
             AudioListener.pause = false;
         }
         
@@ -80,7 +85,7 @@ namespace Manager
             
             if(PlayerPrefs.HasKey($"{nameof(SoundManager)}{SoundExtension.Volume}{volumeName}"))
                 return PlayerPrefs.GetFloat($"{nameof(SoundManager)}{SoundExtension.Volume}{volumeName}");
-            return setting.mixer.GetFloat(volumeName, out float value) ? value : 30f;
+            return setting.mixer.GetFloat(volumeName, out float value) ? Mathf.Clamp(value, 0f, 100f) : 30f;
         }
     }
 }
