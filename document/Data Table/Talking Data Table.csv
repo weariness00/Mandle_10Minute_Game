@@ -37,3 +37,5 @@ Header,TalkingID,Name,MainTextID,PositiveTextList,PositiveTalkID,NegativeTextLis
 // ,기타 사항,,,,,,,,
 ,10001,광고 메시지 종료,3101,,,,,,
 ,10100,튜토리얼 대화,9010,,,,,,
+,11001,월세 초과 대화,4001,,,,,,
+,11002,월세 부족 대화,4002,,,,,,
