@@ -38,8 +38,6 @@ namespace GamePlay.Phone
         public MMF_Player pre_sign;  // 계좌가 없을때 뜨는 싸인
         public MMF_Player pre_sign_Current_Cash;  // 소지 금액보다 많은 금액을 쓸때 뜨는 싸인
         public RectTransform KeyPad;
-        public Transform keyDel;
-        public Transform keyEnd;
         [Header("마지막 확인 텍스트")]
         public TextMeshProUGUI CheckText;
         public TextMeshProUGUI CheckAmountText;
@@ -256,10 +254,10 @@ namespace GamePlay.Phone
             }// 셔플
 
 
-            keyDel.SetSiblingIndex(3); // 원상 복귀
-            keyEnd.SetSiblingIndex(11); // 원상복귀
-            if(keyDel.GetSiblingIndex() != 3)
-                keyDel.SetSiblingIndex(3); // 원상 복귀
+            ButtonDel.SetSiblingIndex(3); // 원상 복귀
+            ButtonEnd.SetSiblingIndex(11); // 원상복귀
+            if(ButtonDel.GetSiblingIndex() != 3)
+                ButtonDel.SetSiblingIndex(3); // 원상 복귀
         }
 
         public static string AddBar(string input)
