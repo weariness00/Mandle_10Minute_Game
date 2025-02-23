@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using Util;
 
-namespace GamePlay
+namespace GamePlay.Narration
 {
     public class GamePlayerNarration : MonoBehaviour
     {
@@ -13,12 +13,8 @@ namespace GamePlay
         public CanvasGroup canvasGroup; // 알파 값 사용용도
         public TMP_Text narrationText; // 나레이션 텍스트
         public MinMaxValue<float> narrationReadTimer = new(0,0,1); // 나레이션 읽는 속도
-        public float nextNarrationSettingDuration = 2f;
-        public string narrationSTR;
 
-        [TextArea]
-        [Tooltip("나레이션 순서")]public List<string> narrationList;
-        private int narrationIndex = 0;
+        [SerializeField] private NarrationData currentData;
         
         public void Awake()
         {
@@ -31,27 +27,20 @@ namespace GamePlay
             if (!narrationReadTimer.IsMax)
             {
                 narrationReadTimer.Current += Time.deltaTime;
-                narrationText.text = narrationSTR.Typing(narrationReadTimer.NormalizeToRange());
+                narrationText.text = currentData.text.Typing(narrationReadTimer.NormalizeToRange());
                 if (narrationReadTimer.IsMax)
                 {
-                    DOVirtual.DelayedCall(nextNarrationSettingDuration, () =>
+                    DOVirtual.DelayedCall(currentData.stayDuration, () =>
                     {
-                        if (narrationIndex < narrationList.Count)
-                            SetNarration(narrationList[narrationIndex++]);
-                        else
-                            canvasGroup.DOFade(0,4f).OnComplete(() => narrationObject.SetActive(true));
+                        canvasGroup.DOFade(0,4f).OnComplete(() => narrationObject.SetActive(true));
                     });
                 }
             }
         }
 
-        public void StartNarration()
+        public void StartNarration(NarrationData data)
         {
-            SetNarration(narrationList[narrationIndex++]);
-        }
-        public void SetNarration(string narration)
-        {
-            narrationSTR = narration;
+            currentData = data;
             narrationReadTimer.SetMin();
             canvasGroup.alpha = 1;
             narrationObject.SetActive(true);

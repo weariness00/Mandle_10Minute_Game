@@ -1,6 +1,6 @@
 ﻿using GamePlay.MiniGame;
+using GamePlay.Narration;
 using GamePlay.Phone;
-using Manager;
 using Quest;
 using System.Collections;
 using UniRx;
@@ -99,9 +99,6 @@ namespace GamePlay
                     // 친구와의 대화를 완료 하면 
                     q1.onCompleteEvent.AddListener(q2 =>
                     {
-                        // 나레이션 시작
-                        narration.StartNarration(); 
-
                         // 미니 게임 버튼 활성화
                         var miniGame = phone.applicationControl.GetApp<MiniGameBase>();
                         var miniGameAppButton = home.GetAppButton(miniGame);
