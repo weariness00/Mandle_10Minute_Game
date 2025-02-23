@@ -291,7 +291,7 @@ MonoBehaviour:
   phoneControl: {fileID: 0}
   miniGameName: x
   isMiniGameAddToApp: 0
-  eventID: 1004
+  eventID: 1105
 --- !u!4 &607314949
 Transform:
   m_ObjectHideFlags: 0
@@ -419,9 +419,6 @@ MonoBehaviour:
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
   m_ScrollDeltaPerTick: 6
-  excludeLayer:
-    serializedVersion: 2
-    m_Bits: 512
 --- !u!114 &862089536
 MonoBehaviour:
   m_ObjectHideFlags: 0

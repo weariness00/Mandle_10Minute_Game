@@ -1,6 +1,7 @@
 using DG.Tweening;
 using KoreanTyper;
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
@@ -29,9 +30,24 @@ namespace GamePlay.Event
                 }
             }
         }
-        public void SetNarration(string narration)
+        string InsertNewlinesEveryNChars(string text, int n)
         {
-            narrationSTR = narration;
+            if (string.IsNullOrEmpty(text) || n <= 0) return text;
+
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            for (int i = 0; i < text.Length; i++)
+            {
+                sb.Append(text[i]);
+                if ((i + 1) % n == 0 && i != text.Length - 1)
+                {
+                    sb.Append('\n');
+                }
+            }
+            return sb.ToString();
+        }
+        public void SetNarration(string narration , int n)
+        {
+            narrationSTR = InsertNewlinesEveryNChars(narration, n);
             narrationReadTimer.SetMin();
         }
     }

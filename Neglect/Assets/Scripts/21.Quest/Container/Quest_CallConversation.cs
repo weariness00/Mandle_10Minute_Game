@@ -1,5 +1,6 @@
 using GamePlay.Event;
 using GamePlay.Phone;
+using GamePlay.Talk;
 using Manager;
 using System.Collections;
 using System.Collections.Generic;
@@ -33,6 +34,10 @@ namespace Quest.Container
             app = phone.applicationControl.currentPlayApplication;
             phone.applicationControl.PauseApp(app);
             app.SetActiveBackground(true);
+
+            callConversation.SetTalkData(TalkingScriptableObject.Instance.GetTalkData(eventData.extraDataIDArray.Length == 0 ? -1 : eventData.extraDataIDArray[0]));
+            if (eventData.textArray.Length > 0) callConversation.ChatName.text = eventData.textArray[0];
+
             phone.PhoneViewRotate(0);
             //CallObject.SettingDate()
         }

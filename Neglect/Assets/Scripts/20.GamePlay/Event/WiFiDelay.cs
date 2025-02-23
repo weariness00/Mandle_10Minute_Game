@@ -43,20 +43,19 @@ namespace GamePlay.Event
                     return;
                 }
             }
-            if (chance == 1)
+            else if (chance == 1)
             {
                 if (randomvalue >= 7)
                 {
 
                     Roading.SetActive(true);
-
                     ReConnectPopup.SetActive(false);
                     RoadingMMF.PlayFeedbacks();
                     return;
                 }
             }
-            Complete();
             Destroy(gameObject);
+            Complete();
         }
 
         public void Reconnect()

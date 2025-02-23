@@ -22,12 +22,13 @@ namespace Quest.Container
         public override void Play()
         {
             base.Play();
-            var wiFiDelay = PhoneUtil.InstantiateUI(WifiDelayPrefab);
-            wiFiDelay.Complete += Complete; 
-            
+            var wiFiDelay = PhoneUtil.InstantiateUI(WifiDelayPrefab , out phone);
+            wiFiDelay.Complete += Complete;
+
             app = phone.applicationControl.currentPlayApplication;
             phone.applicationControl.PauseApp(app);
-            phone.PhoneViewRotate(0);
+            app.SetActiveBackground(true);
+            phone.PhoneViewRotate(1);
         }
 
         public override void Complete()

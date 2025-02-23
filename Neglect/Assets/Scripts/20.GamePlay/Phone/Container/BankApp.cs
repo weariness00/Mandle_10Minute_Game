@@ -36,6 +36,7 @@ namespace GamePlay.Phone
         public int InputAmount;   //입력된 통장 번호
         public string InputAccount;  //입력된 계좌 번호
         public MMF_Player pre_sign;  // 계좌가 없을때 뜨는 싸인
+        public MMF_Player pre_sign_Current_Cash;  // 소지 금액보다 많은 금액을 쓸때 뜨는 싸인
         public RectTransform KeyPad;
 
         [Header("마지막 확인 텍스트")]
@@ -50,10 +51,13 @@ namespace GamePlay.Phone
         public string AnswerAccount;
         public int AnswerAmount;
         public string PassbookOwner;
-
         private bool IsKeyPad = false;
         public int CurrentView = -1; //현재 화면
-
+        [Header("이체할 대상")]
+        public TMP_Text targetPassbookOwnerText;
+        [Header("소지금액")]
+        public int currentCash;
+        public TMP_Text currentCashText;
         [Header("결과 정보")]
         public Button resultOkButton;
         public TMP_Text resultText;
@@ -77,7 +81,7 @@ namespace GamePlay.Phone
             password.Init();
             
             TradeHistoryInit();//거래 내역 초기화
-
+            InitCurrentCash();
           
         }
 
@@ -94,6 +98,20 @@ namespace GamePlay.Phone
         }
 
         // 송금할 돈 초기화
+        public void InitCurrentCash()
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                if (i >= 4)
+                    currentCash = currentCash * 10 + 0;
+                else if (i == 0)
+                    currentCash = currentCash * 10 + UnityEngine.Random.Range(1, 10);
+                else
+                    currentCash = currentCash * 10 + UnityEngine.Random.Range(0, 10);
+            }
+            currentCashText.text = AddCommas(currentCash.ToString());
+        }
+
         public void InitTransferMoney()
         {
             for (int i = 0; i < 8; i++)
@@ -112,10 +130,12 @@ namespace GamePlay.Phone
                 else
                     RandomAmount = RandomAmount * 10 + UnityEngine.Random.Range(0, 10);
             }
+            
             AnswerAccount = RandomAccount;
             AnswerAmount = RandomAmount;
 
             BankMemo.TextSetting("To Owner", RandomAccount, RandomAmount);
+            targetPassbookOwnerText.text = PassbookOwner +"님에게";
         }
 
         public bool IsSkip() // 비정상적인 패스워드 입력 체크
@@ -144,7 +164,10 @@ namespace GamePlay.Phone
             CheckText.text = AddBar(AnswerAccount) + "\n" + PassbookOwner + "님에게\n";
 
             string pre1 = InputAmount.ToString();
-            CheckAmountText.text = AddCommas(pre1) + "원";
+            string pre1Comma = AddCommas(pre1);
+            CheckAmountText.text = pre1Comma + "원을 \n송금하겠습니까?";
+            
+            resultText.text = $"{PassbookOwner}님에게\n{pre1Comma}원을\n송금했습니다.";
         }
         public void CheckAccount() // 입력 정보 확인 텍스트 수정
         {
@@ -157,6 +180,18 @@ namespace GamePlay.Phone
                 pre_sign.PlayFeedbacks();
             }
         }
+        public void CheckAmount() // 
+        {
+            if (currentCash >= InputAmount)
+            {
+                ChangeView(4);
+            }
+            else
+            {
+                pre_sign_Current_Cash.PlayFeedbacks();
+            }
+        }
+
         public static string AddCommas(string input)
         {
             input = input.Trim();
@@ -216,17 +251,18 @@ namespace GamePlay.Phone
 
             return result;
         }
-        public void BankComplete() // 입력정보 최종 확인 후 송금
+
+        public void BankComplete() // 입력정보 최종 확인 후 송금 사실상 마지막장면에는 뒤로가기 버튼이 없으므로 확정임 
         {
             int Amountdifference = 0;
             Amountdifference = AnswerAmount - InputAmount;
-            Debug.Log(Amountdifference + "만큼 금액 차이 발생"); //  이 금액이 후속이벤트 
 
-            ChangeView(5);
+            HistoryUpload(2, InputAmount); //송금한 금액 거래내역에 넣기
+            currentCash -= InputAmount;
+            currentCashText.text = AddCommas(currentCash.ToString()); //소지금액 차감 후 갱신
             if (Amountdifference == 0)
             {
-                resultText.text = $"{PassbookOwner}님에게\n{InputAmount}을 송금했습니다.";
-                HistoryUpload(2, InputAmount); 
+                //resultText.text = $"{PassbookOwner}님에게\n{InputAmount}을 송금했습니다.";
                 completeAction?.Invoke();
             }
             else
@@ -243,6 +279,11 @@ namespace GamePlay.Phone
                 {
                     if(eventData.extraDataIDArray.Length > 1)
                     {
+
+                        HistoryUpload(1, -Amountdifference); //초과금 거래내역에 넣기
+                        currentCash += Amountdifference;
+                        currentCashText.text = AddCommas(currentCash.ToString()); //환불받은 초과금 추가 후 갱신
+
                         var quest = QuestDataList.Instance.InstantiateEvent(eventData.extraDataIDArray[1]);
                         QuestManager.Instance.AddQuestQueue(quest);
                     }
