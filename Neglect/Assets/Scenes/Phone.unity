@@ -742,7 +742,8 @@ MonoBehaviour:
   ChargingPort: {fileID: 1797089278}
   interfaceGroupOnOffButton: {fileID: 1488175886}
   applicationControl: {fileID: 553185174}
-  VibrationAudio: {fileID: 21221871}
+  emptyClickSound: {fileID: 8300000, guid: c1d05f2930eb3c94585592e53dcd4621, type: 3}
+  vibrationSound: {fileID: 8300000, guid: 6c11170cb460ea8439b6d566a89bc963, type: 3}
   phoneShader: {fileID: -6465566751694194690, guid: aaa673228006ca64fa4e4a508837c977, type: 3}
   phoneVerticalSprite: {fileID: 21300000, guid: 9991c613ace2ebd4e8c124539080d011, type: 3}
   phoneHorizonSprite: {fileID: 21300000, guid: dc6856e3a15ae944489b13643c4a7edf, type: 3}
@@ -1569,6 +1570,9 @@ MonoBehaviour:
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
   m_ScrollDeltaPerTick: 6
+  excludeLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1420697096
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -113,7 +114,8 @@ namespace GamePlay.Phone
     public partial class PhoneControl
     {
         [Header("기타 효과 관련")] 
-        public AudioSource VibrationAudio;
+        [Tooltip("화면에 상호작용이 안되는 빈 공간을 눌렀을때")] public AudioClip emptyClickSound;
+        [Tooltip("핸드폰 진동 사운드")]public AudioClip vibrationSound;
         
         public void FadeOut(float duration, Color color)
         {
@@ -135,7 +137,7 @@ namespace GamePlay.Phone
         public void PhoneVibration(float duration = 0.1f)
         {
             transform.DOShakePosition(duration, 0.3f, 50, 90f);
-            VibrationAudio.Play();
+            SoundManager.Instance.GetAudioSource("Effect").PlayOneShot(vibrationSound);
         }
     }
         
@@ -323,10 +325,17 @@ namespace GamePlay.Phone
                 lastPressedObject = downObj;
                 pointerData.pointerPress = downObj;
 
-                if (!ReferenceEquals(draggingObject, null))
+                var isDragNull = ReferenceEquals(draggingObject, null);
+                var isLastPressNull = ReferenceEquals(lastPressedObject, null);
+                if (!isDragNull)
                 {
                     ExecuteEvents.Execute(draggingObject, pointerData, ExecuteEvents.beginDragHandler);
                     ExecuteEvents.Execute(draggingObject, pointerData, ExecuteEvents.selectHandler); // 선택 처리
+                }
+                // 아무것도 클릭 된게 없으면
+                else if (isLastPressNull)
+                {
+                    SoundManager.Instance.GetAudioSource("Effect").PlayOneShot(emptyClickSound);
                 }
             }
 
