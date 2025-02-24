@@ -141,10 +141,11 @@ namespace Quest
                 if(id == -1) continue;
                 var eventName = csv.DynamicCast("Name", "");
                 var textList = csv.DynamicCast<int[]>("TextListID", Array.Empty<int>());
+                var prefabID = csv.DynamicCast<int>("PrefabID", -1);
                 var data = GetEventID(id);
                 data.name = eventName;
                 data.level = LevelToInt(csv.DynamicCast("Level", ""));
-                data.prefab = GetQuestID(csv.DynamicCast<int>("PrefabID", -1));
+                data.prefab = GetQuestID(prefabID);
 
                 data.acceptEventID = csv.DynamicCast<int>("AcceptEventID", -1);
                 data.ignoreEventID = csv.DynamicCast<int>("IgnoreEventID", -1);
@@ -153,7 +154,7 @@ namespace Quest
     
                 data.extraDataIDArray = csv.DynamicCast("ExtraDataID", Array.Empty<int>());
                 
-                Debug.Assert(data.prefab != null, "Event Data에 프리펩이 존재하지 않습니다.");
+                Debug.Assert(data.prefab != null, $"Event Data에 {prefabID}프리펩이 존재하지 않습니다.");
             }
 
             QuestLevel LevelToInt(string level)

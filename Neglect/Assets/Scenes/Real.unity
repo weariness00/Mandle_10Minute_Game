@@ -1001,6 +1001,7 @@ MonoBehaviour:
     textArray: []
     extraDataIDArray: 
   isReverse: 0
+  isLoop: 0
   onCompleteEvent:
     m_PersistentCalls:
       m_Calls: []
