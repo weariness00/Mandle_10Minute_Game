@@ -27,7 +27,7 @@ namespace GamePlay.Phone
         public int RandomAmount;
         public string RandomAccount;
         public List<int> RandomPassword;
-
+        public int inputAmountsum;
 
         public CanvasGroup keyPadCanvasGroup;
         [Header("패스워드 완료 후 계좌 이체 텍스트")]
