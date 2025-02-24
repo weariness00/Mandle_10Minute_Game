@@ -348,7 +348,7 @@ namespace GamePlay.MiniGame.RunningGame
             SetActiveBackground(true);
             
             InputManager.running.input.Enable();
-            settingCanvas.gameObject.SetActive(true);
+            if(inGameObject.activeSelf) settingCanvas.gameObject.SetActive(true);
         }
 
         public override void AppPause(PhoneControl phone)

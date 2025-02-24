@@ -159,6 +159,7 @@ namespace GamePlay.Phone
 
         public void PhoneViewRotate(int value) => PhoneViewRotate(value, null);
         public void PhoneViewRotate(PhoneViewType value) => PhoneViewRotate((int)value);
+        public void PhoneViewRotate(PhoneViewType value, Action isRotated) => PhoneViewRotate((int)value, isRotated);
         public void PhoneViewRotate(int value, Action isRotated)
         {
             viewType = (PhoneViewType)value;

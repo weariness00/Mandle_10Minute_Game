@@ -45,6 +45,8 @@ namespace Quest
         [SerializeField]private Queue<QuestBase> waitQuestList = new(); // 대기중인 퀘스트 playQuestList에 있는 퀘스트들이 끝나야 작동함
         
         private List<EventData> eventList = new(); // 소환 가능한 이벤트 목록
+
+        public bool IsHasPlayQuest => playQuestList.Count != 0; // 현재 플레이중인 퀘스트가 있는지
         public List<QuestBase> GetAllQuest() => addMainQuestList;
         public List<QuestBase> GetPlayQuestList() => playQuestList;
         

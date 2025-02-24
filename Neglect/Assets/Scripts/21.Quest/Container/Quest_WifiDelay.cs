@@ -27,6 +27,8 @@ namespace Quest.Container
             wiFiDelay.Complete += Complete;
 
             app = phone.applicationControl.currentPlayApplication;
+            if (eventData.extraDataIDArray.Length > 1) isLoop = eventData.extraDataIDArray[1] == -45;
+            
             phone.applicationControl.PauseApp(app);
             app.SetActiveBackground(true);
             phone.PhoneViewRotate(1);
