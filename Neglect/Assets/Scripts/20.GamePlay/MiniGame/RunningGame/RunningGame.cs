@@ -136,7 +136,7 @@ namespace GamePlay.MiniGame.RunningGame
         {
             base.Update();
 
-            if (isGamePlay.Value)
+            if (isGameStart.Value)
             {
                 UpdatePlayerData();
             }
