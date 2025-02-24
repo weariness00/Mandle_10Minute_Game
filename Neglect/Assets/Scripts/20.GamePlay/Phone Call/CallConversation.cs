@@ -330,7 +330,8 @@ namespace GamePlay.Event
                 CloseMyText.PlayFeedbacks();
             CloseCall.PlayFeedbacks();
             EndSound.Play();
-            TimeText.text += "\n통화종료";
+            if(!TimeText.text.Contains("\n통화종료"))
+                TimeText.text += "\n통화종료";
         }
     }
 }

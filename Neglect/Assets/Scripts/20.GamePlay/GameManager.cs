@@ -112,12 +112,13 @@ namespace GamePlay
         {
             QuestManager.Instance.isQuestStart = false;
             isGameClear.Value = true;
-            List<QuestBase> playQuestList = new(QuestManager.Instance.GetPlayQuestList());
-            foreach (QuestBase quest in playQuestList)
-                quest.Failed();
             
             QuestManager.Instance.AddAndPlay(gameClearQuest);
             QuestManager.Instance.OnValueChange(QuestType.GameClear, playTimer.Current);
+            
+            List<QuestBase> playQuestList = new(QuestManager.Instance.GetPlayQuestList());
+            foreach (QuestBase quest in playQuestList)
+                quest.Failed();
         }
 
         public void GameEnding()
