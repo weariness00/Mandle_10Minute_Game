@@ -158,7 +158,7 @@ namespace GamePlay.Phone
                 var appButton = Instantiate(appButtonPrefab, appButtonParent);
                 if (app.AppIcon) appButton.button.image.sprite = app.AppIcon;
                 appButton.button.onClick.AddListener(() => phone.applicationControl.OpenApp(app));
-                appButton.gameObject.layer = LayerMask.NameToLayer("Phone");
+                PhoneUtil.SetLayer(appButton);
 
                 appButtonDictionary.TryAdd(app.AppName, appButton);
             });

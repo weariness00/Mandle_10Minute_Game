@@ -49,10 +49,6 @@ namespace GamePlay.MiniGame.RunningGame
         {
             var rankList = new List<RankUIBlock>(blockList);
             rankList.Sort((a,b) =>  b.data.score.Value.CompareTo(a.data.score.Value));
-
-            // foreach (Coroutine coroutine in blockPositionUpdateCoroutineList)
-            //     if(coroutine != null) StopCoroutine(coroutine);
-            // blockPositionUpdateCoroutineList.Clear();
             
             foreach (Tween tween in blockPositionUpdateTweenList)
                 tween?.Kill();
@@ -64,13 +60,11 @@ namespace GamePlay.MiniGame.RunningGame
                 block.rankText.text = $"{i + 1}";
                 block.data.rank = i + 1;
 
-                // if (!ReferenceEquals(block, blockList[i]))
                 var destPos = new Vector2(0, -25 + (-block.rectTransform.sizeDelta.y * i));
                 if (Math.Abs(block.rectTransform.anchoredPosition.y - destPos.y) > 0.1f)
                 {
                     var tween = block.rectTransform.DOAnchorPos(destPos, 0.5f);
                     blockPositionUpdateTweenList.Add(tween);
-                    // blockPositionUpdateCoroutineList.Add(StartCoroutine(UpdateRankPositionEnumerator(block, destPos)));
                 }
             }
         }

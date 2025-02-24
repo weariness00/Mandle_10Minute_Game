@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -47,7 +48,9 @@ namespace GamePlay.MiniGame.RunningGame
             for (int i = 0; i < resultGroupTransform.childCount; i++)
                 Destroy(resultGroupTransform.GetChild(i).gameObject);
 
-            foreach (RunningGame.PlayerData data in runningGame.playerDataArray)
+            List<RunningGame.PlayerData> list = new(runningGame.playerDataArray);
+            list.Sort((a,b) => a.rank.CompareTo(b.rank));
+            foreach (RunningGame.PlayerData data in list)
             {
                 var block = Instantiate(resultBlockPrefab, resultGroupTransform);
                 PhoneUtil.SetLayer(block);

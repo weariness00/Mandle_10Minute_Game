@@ -158,12 +158,9 @@ namespace GamePlay.MiniGame
             {
                 if (value)
                 {
-                    var allButton = home.GetAllAppButton();
-                    foreach (AppButton button in allButton)
+                    var allButtonArray = home.GetAllAppButton();
+                    foreach (AppButton button in allButtonArray)
                         button.button.interactable = false;
-                    allButton.LastOrDefault().button.interactable = true;
-                    
-                    appButton.button.interactable = true;
                     GameClear();
                 }
             });

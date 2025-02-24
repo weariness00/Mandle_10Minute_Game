@@ -54,7 +54,7 @@ namespace Quest
                 var quest = QuestDataList.Instance.InstantiateEvent(eventData.ignoreEventID);
                 quest.eventData = ignoreEvent;
                 quest.rootQuest = rootQuest == null ? this : rootQuest;
-                QuestManager.Instance.AddQuestQueue(quest);
+                QuestManager.Instance.AddAndPlay(quest);
                 
                 onIgnoreEvent?.Invoke(quest);
             }
@@ -83,7 +83,7 @@ namespace Quest
                 var quest = QuestDataList.Instance.InstantiateEvent(eventData.acceptEventID);
                 quest.eventData = acceptEvent;
                 quest.rootQuest = rootQuest == null ? this : rootQuest;
-                QuestManager.Instance.AddQuestQueue(quest);
+                QuestManager.Instance.AddAndPlay(quest);
                 onCompleteEvent?.Invoke(quest);
             }
             else
