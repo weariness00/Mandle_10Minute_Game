@@ -1,4 +1,5 @@
-﻿using GamePlay.Phone;
+﻿using GamePlay.MiniGame.RunningGame.UI;
+using GamePlay.Phone;
 using System;
 using Manager;
 using Quest;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Util;
 
@@ -30,6 +32,10 @@ namespace GamePlay.MiniGame.RunningGame
         public Canvas lobbyCanvas;
         public GameObject lobbyObject;
         public Button lobbyExitButton;
+
+        [FormerlySerializedAs("menuCanvas")] [Header("Menu 관련")] 
+        public MatchingCanvas matchingCanvas;
+        public GameObject matchingObject;
         
         [Header("In Game 관련")]
         public InGameCanvas inGameCanvas;
@@ -50,6 +56,9 @@ namespace GamePlay.MiniGame.RunningGame
             lobbyCanvas.gameObject.SetActive(true);
             lobbyObject.gameObject.SetActive(true);
             
+            matchingCanvas.mainCanvas.gameObject.SetActive(false);
+            matchingObject.SetActive(false);
+            
             inGameCanvas.mainCanvas.gameObject.SetActive(false);
             inGameObject.gameObject.SetActive(false);
             
@@ -63,6 +72,14 @@ namespace GamePlay.MiniGame.RunningGame
                     else  GamePlay();
                 }
             };
+            
+            matchingCanvas.gameStartButton.onClick.AddListener(() =>
+            {
+                matchingCanvas.mainCanvas.gameObject.SetActive(false);
+                matchingObject.SetActive(false);
+                
+                GamePlay();
+            });
             
             // 인게임 게임 시작 눌렀을때 카운트 다운 끝나고 동작
             inGameCanvas.onGameStart += () =>
