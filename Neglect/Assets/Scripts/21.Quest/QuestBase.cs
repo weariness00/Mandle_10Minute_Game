@@ -44,7 +44,7 @@ namespace Quest
         public virtual void Ignore()
         {
             subscription?.Dispose();
-            state = QuestState.Failed;
+            state = isReverse ? QuestState.Completed : QuestState.Failed;
             if (rootQuest != null) rootQuest.state = state;
             if (eventData.ignoreEventID != -1)
             {
@@ -67,7 +67,7 @@ namespace Quest
         public virtual void Complete()
         {
             subscription?.Dispose();
-            state = QuestState.Completed;
+            state = isReverse ? QuestState.Failed : QuestState.Completed;
             if (rootQuest != null) rootQuest.state = state;
             if (eventData.acceptEventID != -1)
             {

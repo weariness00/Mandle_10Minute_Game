@@ -22,8 +22,8 @@ namespace Quest.Container
 
             if (eventData.extraDataIDArray.Length >= 1) isReverse = eventData.extraDataIDArray[0] == -99;
             
-            popUp.button.onClick.AddListener(isReverse ? Ignore : Complete);
-            popUp.destroyPopUpEvent.AddListener(isReverse ? Complete : Ignore);
+            popUp.button.onClick.AddListener(Complete);
+            popUp.destroyPopUpEvent.AddListener(Ignore);
             
             PhoneUtil.currentPhone.PhoneVibration();
         }

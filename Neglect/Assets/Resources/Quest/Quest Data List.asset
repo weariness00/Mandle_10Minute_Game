@@ -48,7 +48,7 @@ MonoBehaviour:
     extraDataIDArray: 
   - id: 1004
     name: "\uC6D4\uC138\uC785\uAE08 \uC774\uBCA4\uD2B8"
-    isMainEvent: 1
+    isMainEvent: 0
     level: 2
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
     acceptEventID: 1111
@@ -291,6 +291,15 @@ MonoBehaviour:
     ignoreEventID: -1
     textArray: []
     extraDataIDArray: 
+  - id: 8999
+    name: "\uBBF8\uB2C8\uAC8C\uC784 1\uB4F1 \uB2EC\uC131 \uC774\uBCA4\uD2B8"
+    isMainEvent: 0
+    level: 2
+    prefab: {fileID: 0}
+    acceptEventID: -1
+    ignoreEventID: -1
+    textArray: []
+    extraDataIDArray: 
   - id: 9001
     name: "\uC2DC\uC98C \uC885\uB8CC \uC54C\uB9BC"
     isMainEvent: 0
@@ -347,17 +356,6 @@ MonoBehaviour:
     textArray:
     - "\uCE5C\uAD6C"
     - "\uB0B4\uC77C \uC6B0\uB9AC \uBA87\uC2DC\uC5D0 \uB9CC\uB098\uAE30\uB85C \uD588\uC9C0?"
-    extraDataIDArray: 
-  - id: 1004
-    name: "\uC6D4\uC138\uC785\uAE08 \uC774\uBCA4\uD2B8"
-    isMainEvent: 1
-    level: 2
-    prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
-    acceptEventID: 1111
-    ignoreEventID: 1112
-    textArray:
-    - "\uC9D1\uC8FC\uC778"
-    - "\uB9CC\uB4E4\uB798\uB2D8 \uC774\uBC88\uB2EC \uC6D4\uC138 \uC785\uAE08\uD574\uC8FC\uC138\uC694."
     extraDataIDArray: 
   - id: 1005
     name: "\uAD11\uACE0\uC804\uD654"
