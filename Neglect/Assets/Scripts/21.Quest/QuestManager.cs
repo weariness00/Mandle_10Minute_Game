@@ -134,7 +134,7 @@ namespace Quest
             int index = Random.Range(0, eventList.Count);
             var e = eventList[index];
             var quest = QuestDataList.Instance.InstantiateMainEvent(e.id);
-            quest.eventData = e;
+            if(quest) quest.eventData = e;
             return quest;
         }
     }

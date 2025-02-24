@@ -53,27 +53,6 @@ namespace GamePlay
                     SceneUtil.AsyncAddRunningGame(AddApp);
                 });
             }
-
-            isGameClear.Subscribe(value =>
-            {
-                if (value)
-                {
-                    // 게임 클리어하면 결과씬 로드
-                    SceneUtil.AsyncAddGameResult(scene =>
-                    {
-                        foreach (GameObject rootGameObject in scene.GetRootGameObjects())
-                        {
-                            var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
-                            if (app != null)
-                            {
-                                var phone = PhoneUtil.currentPhone;
-                                phone.applicationControl.AddApp(app);
-                                phone.applicationControl.OpenApp(app);
-                            }
-                        }
-                    });
-                }
-            });
         }
 
         public void Update()
@@ -128,16 +107,32 @@ namespace GamePlay
     {
         public void GameClear()
         {
+            isGameClear.Value = true;
             QuestManager.Instance.isQuestStart = false;
-
             List<QuestBase> playQuestList = new(QuestManager.Instance.GetPlayQuestList());
             foreach (QuestBase quest in playQuestList)
                 quest.Failed();
             
             QuestManager.Instance.AddAndPlay(gameClearQuest);
             QuestManager.Instance.OnValueChange(QuestType.GameClear, playTimer.Current);
-            isGameClear.Value = true;
-            
+        }
+
+        public void GameEnding()
+        {
+            // 게임 클리어하면 결과씬 로드
+            SceneUtil.AsyncAddGameResult(scene =>
+            {
+                foreach (GameObject rootGameObject in scene.GetRootGameObjects())
+                {
+                    var app = rootGameObject.GetComponentInChildren<IPhoneApplication>();
+                    if (app != null)
+                    {
+                        var phone = PhoneUtil.currentPhone;
+                        phone.applicationControl.AddApp(app);
+                        phone.applicationControl.OpenApp(app);
+                    }
+                }
+            });
             Destroy(gameObject);
         }
     }

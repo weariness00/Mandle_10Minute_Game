@@ -89,6 +89,8 @@ namespace GamePlay.Phone
             highlightMaterial.SetFloat(ShineLocation, value);
         }
 
+        public AppButton[] GetAllAppButton() => appButtonDictionary.Values.ToArray();
+        
         public AppButton GetAppButton(IPhoneApplication app)
         {
             if (app == null) return null;

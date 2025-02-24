@@ -1,6 +1,8 @@
-﻿using GamePlay.Phone;
+﻿using GamePlay.App;
+using GamePlay.Phone;
 using Manager;
 using Quest;
+using System.Linq;
 using UniRx;
 using UnityEditor;
 using UnityEngine;
@@ -11,7 +13,7 @@ namespace GamePlay.MiniGame
     public partial class MiniGameBase : MonoBehaviour
     {
         [Header("공통 사항")]
-        public bool isGameStart = false;
+        public ReactiveProperty<bool> isGameStart = new(false);
         public ReactiveProperty<bool> isGamePlay = new(true);
         public ReactiveProperty<bool> isGameClear = new(false);
         public ReactiveProperty<float> gameSpeed = new(1f);
@@ -46,7 +48,6 @@ namespace GamePlay.MiniGame
                 playTime.Current += Time.deltaTime;
                 if (playTime.IsMax)
                 {
-                    isGameClear.Value = true;
                     GameClear();
                 }
             }
@@ -57,7 +58,7 @@ namespace GamePlay.MiniGame
             if (isOnTutorial)
             {
                 isGamePlay.Value = true;
-                isGameStart = true;
+                isGameStart.Value = true;
 
                 var bgmSource = SoundManager.Instance.GetBGMSource();
                 bgmSource.clip = bgmSound;
@@ -86,13 +87,13 @@ namespace GamePlay.MiniGame
         {
             QuestManager.Instance.AddAndPlay(rankQuest);
             isGamePlay.Value = false;
-            isGameStart = false;
             gameSpeed.Value = 0;
         }
 
         public virtual void GameClear()
         {
             isGamePlay.Value = false;
+            isGameClear.Value = true;
             QuestManager.Instance.AddAndPlay(rankQuest);
         }
 
@@ -140,17 +141,65 @@ namespace GamePlay.MiniGame
                     canvas.worldCamera = phone.phoneCamera;
                 }
             }
-
-            GameManager.Instance.isGameClear.Subscribe(value =>
-            {
-                if (value)
-                    GameClear();
-            });
-
+            
             var home = _phone.applicationControl.GetHomeApp();
             var appButton = home.GetAppButton(this);
             appButton.highlightObject.SetActive(true);
             appButton.button.interactable = false;
+
+            // 러닝 게임 시작시 GameManager의 타이머가 흐르도록 설정
+            isGameStart.Subscribe(value =>
+            {
+                if (value)
+                {
+                    GameManager.Instance.isGameStart.Value = true;
+                }
+            });
+            
+            // 게임 클리어
+            GameManager.Instance.isGameClear.Subscribe(value =>
+            {
+                if (value)
+                {
+                    var allButton = home.GetAllAppButton();
+                    foreach (AppButton button in allButton)
+                        button.button.interactable = false;
+                    allButton.LastOrDefault().button.interactable = true;
+                    
+                    appButton.button.interactable = true;
+                    GameClear();
+                }
+            });
+            
+            GameManager.Instance.onLastEvent.AddListener(quest =>
+            {
+                // 은행 어플에 진입하는 퀘스트 까지 가면 게임 앱 버튼 비활성화
+                quest.onCompleteEvent.AddListener(chatQuest =>
+                {
+                    chatQuest.onCompleteEvent.AddListener(bankQuest =>
+                    {
+                        appButton.button.interactable = false;
+                    });
+                });
+                
+                quest.onIgnoreEvent.AddListener(callScreenQuest =>
+                {
+                    // 은행앱 진입
+                    callScreenQuest.onCompleteEvent.AddListener(phoneCallQuest =>
+                    {
+                        phoneCallQuest.onCompleteEvent.AddListener(bankQuest =>
+                        {
+                            appButton.button.interactable = false;
+                        });
+                    });
+                    
+                    // 2번 무시
+                    callScreenQuest.onIgnoreEvent.AddListener(q =>
+                    {
+                        
+                    });
+                });
+            });
         }
 
         public virtual void AppPlay(PhoneControl phone)

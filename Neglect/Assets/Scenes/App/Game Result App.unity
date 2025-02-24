@@ -1640,6 +1640,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Quest Result Block
       objectReference: {fileID: 0}
+    - target: {fileID: 6956318656352589423, guid: 85706f6a64464d34dbbdf9e2d7d0b035, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

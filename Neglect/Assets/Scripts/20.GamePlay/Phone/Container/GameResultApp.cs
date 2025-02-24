@@ -35,7 +35,7 @@ namespace GamePlay.Phone.Container
             _phone = phone;
             questResult.mainCanvas.worldCamera = _phone.phoneCamera;
             
-            questResult.nextButton.onClick.AddListener(() => phone.applicationControl.OnHome());
+            questResult.nextButton.onClick.AddListener(() => AppUnInstall(_phone));
         }
 
         public void AppPlay(PhoneControl phone)
@@ -62,6 +62,7 @@ namespace GamePlay.Phone.Container
 
         public void AppUnInstall(PhoneControl phone)
         {
+            SceneUtil.LoadReal();
         }
     }
     

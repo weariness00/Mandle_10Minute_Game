@@ -282,7 +282,7 @@ namespace GamePlay.Phone
             completeAction?.Invoke();
             if (Amountdifference == 0)
             {
-                GameManager.Instance.isGameClear.Value = true;
+                GameManager.Instance.GameClear();
             }
             else if (Amountdifference > 0)
             {

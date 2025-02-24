@@ -1,4 +1,5 @@
 ﻿using System;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,10 +21,25 @@ namespace GamePlay.MiniGame.RunningGame
         [Space] 
         public RunningGame runningGame;
 
+        private IDisposable show;
+        
         public void Awake()
         {
             resultObject.SetActive(false);
         }
+
+        public void OnEnable()
+        {
+            show?.Dispose();
+            timeOverObject.SetActive(true);
+            resultObject.SetActive(false);
+            show = Observable.Interval(TimeSpan.FromSeconds(3f)).Subscribe(_ =>
+            {
+                timeOverObject.SetActive(false);
+                resultObject.SetActive(true);
+            });
+        }
+
 
         public void InstantiateResult()
         {
