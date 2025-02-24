@@ -1,6 +1,7 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace GamePlay.MiniGame.RunningGame.UI
@@ -14,11 +15,39 @@ namespace GamePlay.MiniGame.RunningGame.UI
         public Button gameStartButton;
         public TMP_Text gameStartButtonText;
 
+        [Header("Match Loading 관련")] 
+        public GameObject matchLoadingObject;
+        public TMP_Text matchTimeText;
+        [Tooltip("몇초 뒤에 매칭이 완료됬다고 할 것인지")] public float whenMatchedDuration;
+
+        [HideInInspector] public UnityEvent onMatchedEvent = new();
+        private float matchTimer = 0f;
+        
         [Space] 
         public RunningGame runningGame;
 
+        public void Update()
+        {
+            if (matchLoadingObject.activeSelf)
+            {
+                // mm:ss로 표시
+                matchTimer += Time.deltaTime;
+                var t = TimeSpan.FromSeconds(matchTimer);
+                matchTimeText.text = $"{(int)t.TotalMinutes:D2} : {t.Seconds:D2}";
+
+                // 매칭 완료
+                if (matchTimer > whenMatchedDuration)
+                {
+                    onMatchedEvent?.Invoke();
+                }
+            }
+        }
+
         public void OnEnable()
         {
+            matchLoadingObject.SetActive(false);
+            matchTimer = 0f;
+
             var data = runningGame.CurrentPlayerData;
             rankText.text = $"현재 랭킹 : {(data.rank == 0 ? 2 : data.rank)}위";
             topScoreText.text = "최고 점수 : " + (PlayerPrefs.HasKey($"{nameof(RunningGame)}Score") ? PlayerPrefs.GetInt($"{nameof(RunningGame)}Score").ToString() : data.score.ToString());

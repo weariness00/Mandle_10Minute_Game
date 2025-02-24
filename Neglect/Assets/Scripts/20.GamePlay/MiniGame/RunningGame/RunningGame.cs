@@ -70,21 +70,31 @@ namespace GamePlay.MiniGame.RunningGame
 
             InputManager.running.ESC.performed += SettingOnOff;
             
+            // 인게임 게임 시작 눌렀을때 카운트 다운 끝나고 동작
+            inGameCanvas.onGameStart += () =>
+            {
+                lobbyCanvas.gameObject.SetActive(false);
+                lobbyObject.SetActive(false);
+                
+                isGamePlay.Value = true;
+                foreach (ObjectSpawner spawner in obstacleSpawnerList)
+                    spawner.Play();
+            };
+            
+            // 매칭 시작 버튼 누르면
             matchingCanvas.gameStartButton.onClick.AddListener(() =>
+            {
+                matchingCanvas.matchLoadingObject.SetActive(true);
+            });
+            
+            // 매칭 끝났을 경우
+            matchingCanvas.onMatchedEvent.AddListener(() =>
             {
                 matchingCanvas.mainCanvas.gameObject.SetActive(false);
                 matchingObject.SetActive(false);
                 
                 GamePlay();
             });
-            
-            // 인게임 게임 시작 눌렀을때 카운트 다운 끝나고 동작
-            inGameCanvas.onGameStart += () =>
-            {
-                isGamePlay.Value = true;
-                foreach (ObjectSpawner spawner in obstacleSpawnerList)
-                    spawner.Play();
-            };
             
             // 등수 확인 후 매칭으로 이동
             resultCanvas.okButton.onClick.AddListener(() =>
