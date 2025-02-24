@@ -24,7 +24,7 @@ MonoBehaviour:
     - "\uAD11\uACE0"
     - "[web\uBC1C\uC2E0] \r\n\uB7EC\uB2DD\uC561\uC158\uAC8C\uC784 \uC774\uB984 \uC2DC\uC98C
       2\uC2DC\uC791 \uC0AC\uC804\uC608\uC57D \uC774\uBCA4\uD2B8 \uC54C\uB9BC"
-    extraDataIDArray: 9dffffff
+    extraDataIDArray: 
   - id: 1002
     name: "\uC5C4\uB9C8\uC640\uC758 \uC804\uD654"
     isMainEvent: 1
@@ -66,9 +66,9 @@ MonoBehaviour:
     ignoreEventID: -1
     textArray:
     - "\uAD11\uACE0"
-    extraDataIDArray: 9dffffff
+    extraDataIDArray: 9dffffffd3ffffff
   - id: 1006
-    name: "\uD0DD\uBC30\uAE30\uC0AC \uCC44\uD0D5"
+    name: "\uD0DD\uBC30\uAE30\uC0AC \uCC44\uD305"
     isMainEvent: 1
     level: 1
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
@@ -111,25 +111,34 @@ MonoBehaviour:
     acceptEventID: -1
     ignoreEventID: -1
     textArray: []
-    extraDataIDArray: 
+    extraDataIDArray: 00000000d3ffffff
   - id: 1010
     name: "\uBC30\uD130\uB9AC\uBD80\uC871\uC774\uBCA4\uD2B8"
     isMainEvent: 1
-    level: 1
+    level: 0
     prefab: {fileID: 6855458635590791947, guid: ce6b8270f35c7d548b5167f0c1f4d4b9, type: 3}
     acceptEventID: -1
     ignoreEventID: 1010
     textArray: []
-    extraDataIDArray: 
+    extraDataIDArray: 00000000d3ffffff
   - id: 1011
     name: "\uC778\uD130\uB137\uC7AC\uC5F0\uACB0 \uC774\uBCA4\uD2B8"
     isMainEvent: 1
-    level: 1
+    level: 0
     prefab: {fileID: 6727539367213804272, guid: adf2e60dcd3cff24397ce8e62ec709d5, type: 3}
     acceptEventID: -1
     ignoreEventID: 1011
     textArray: []
-    extraDataIDArray: 
+    extraDataIDArray: 00000000d3ffffff
+  - id: 1012
+    name: "\uC54C\uB78C\uC774\uBCA4\uD2B8"
+    isMainEvent: 1
+    level: 0
+    prefab: {fileID: 3937081454122872287, guid: 3b86fa2080bed814a942540a7b81269d, type: 3}
+    acceptEventID: -1
+    ignoreEventID: 1012
+    textArray: []
+    extraDataIDArray: 00000000d3ffffff
   - id: 1101
     name: "\uD1B5\uD654\uBB34\uC2DC\uC774\uBCA4\uD2B8"
     isMainEvent: 0
@@ -335,7 +344,7 @@ MonoBehaviour:
     - "\uAD11\uACE0"
     - "[web\uBC1C\uC2E0] \r\n\uB7EC\uB2DD\uC561\uC158\uAC8C\uC784 \uC774\uB984 \uC2DC\uC98C
       2\uC2DC\uC791 \uC0AC\uC804\uC608\uC57D \uC774\uBCA4\uD2B8 \uC54C\uB9BC"
-    extraDataIDArray: 9dffffff
+    extraDataIDArray: 
   - id: 1002
     name: "\uC5C4\uB9C8\uC640\uC758 \uC804\uD654"
     isMainEvent: 1
@@ -366,9 +375,9 @@ MonoBehaviour:
     ignoreEventID: -1
     textArray:
     - "\uAD11\uACE0"
-    extraDataIDArray: 9dffffff
+    extraDataIDArray: 9dffffffd3ffffff
   - id: 1006
-    name: "\uD0DD\uBC30\uAE30\uC0AC \uCC44\uD0D5"
+    name: "\uD0DD\uBC30\uAE30\uC0AC \uCC44\uD305"
     isMainEvent: 1
     level: 1
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
@@ -411,25 +420,34 @@ MonoBehaviour:
     acceptEventID: -1
     ignoreEventID: -1
     textArray: []
-    extraDataIDArray: 
+    extraDataIDArray: 00000000d3ffffff
   - id: 1010
     name: "\uBC30\uD130\uB9AC\uBD80\uC871\uC774\uBCA4\uD2B8"
     isMainEvent: 1
-    level: 1
+    level: 0
     prefab: {fileID: 6855458635590791947, guid: ce6b8270f35c7d548b5167f0c1f4d4b9, type: 3}
     acceptEventID: -1
     ignoreEventID: 1010
     textArray: []
-    extraDataIDArray: 
+    extraDataIDArray: 00000000d3ffffff
   - id: 1011
     name: "\uC778\uD130\uB137\uC7AC\uC5F0\uACB0 \uC774\uBCA4\uD2B8"
     isMainEvent: 1
-    level: 1
+    level: 0
     prefab: {fileID: 6727539367213804272, guid: adf2e60dcd3cff24397ce8e62ec709d5, type: 3}
     acceptEventID: -1
     ignoreEventID: 1011
     textArray: []
-    extraDataIDArray: 
+    extraDataIDArray: 00000000d3ffffff
+  - id: 1012
+    name: "\uC54C\uB78C\uC774\uBCA4\uD2B8"
+    isMainEvent: 1
+    level: 0
+    prefab: {fileID: 3937081454122872287, guid: 3b86fa2080bed814a942540a7b81269d, type: 3}
+    acceptEventID: -1
+    ignoreEventID: 1012
+    textArray: []
+    extraDataIDArray: 00000000d3ffffff
   questArray:
   - {fileID: 64922150804996188, guid: 05982b62e9cc2a34583ed13892cd2de5, type: 3}
   - {fileID: 7104001957306441222, guid: 28b853421a1930741bddba56a7064227, type: 3}
