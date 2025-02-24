@@ -28,7 +28,7 @@ namespace Quest.Container
             alarm.complete += Complete;
             alarm.ignore += Ignore;
             alarm.TimeSet("10:00");
-
+            alarm.phone = phone_;
             app = phone.applicationControl.currentPlayApplication;
             phone.applicationControl.PauseApp(app);
 
