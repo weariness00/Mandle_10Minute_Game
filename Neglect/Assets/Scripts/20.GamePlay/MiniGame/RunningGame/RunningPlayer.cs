@@ -5,6 +5,7 @@ using UniRx;
 using UnityEngine;
 using Util;
 
+
 namespace GamePlay.MiniGame.RunningGame
 {
     public partial class RunningPlayer : MonoBehaviour

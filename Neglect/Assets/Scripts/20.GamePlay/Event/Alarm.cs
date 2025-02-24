@@ -1,3 +1,4 @@
+using GamePlay.Phone;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace GamePlay.Event
         public Action complete;
         public Action ignore;
         public TextMeshProUGUI timeText;
-
+        public PhoneControl phone;
         public void TimeSet(string text)
         {
             timeText.text = text;
