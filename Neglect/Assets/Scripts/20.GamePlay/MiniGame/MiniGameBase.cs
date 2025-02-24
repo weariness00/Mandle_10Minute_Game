@@ -207,7 +207,6 @@ namespace GamePlay.MiniGame
             var home = _phone.applicationControl.GetHomeApp();
             home.GetAppButton(this).highlightObject.SetActive(false);
 
-            GameManager.Instance.isGameStart.Value = true;
             if (GameManager.Instance.isInitQuest == false)
             {
                 GameManager.Instance.isInitQuest = true;
