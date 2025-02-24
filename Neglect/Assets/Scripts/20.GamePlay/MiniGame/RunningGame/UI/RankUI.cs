@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UniRx;
@@ -15,6 +16,7 @@ namespace GamePlay.MiniGame.RunningGame
         public List<RankUIBlock> blockList;
 
         private List<Coroutine> blockPositionUpdateCoroutineList = new();
+        private List<Tween> blockPositionUpdateTweenList = new();
         
         public void Start()
         {
@@ -47,9 +49,14 @@ namespace GamePlay.MiniGame.RunningGame
         {
             var rankList = new List<RankUIBlock>(blockList);
             rankList.Sort((a,b) =>  b.data.score.Value.CompareTo(a.data.score.Value));
+
+            // foreach (Coroutine coroutine in blockPositionUpdateCoroutineList)
+            //     if(coroutine != null) StopCoroutine(coroutine);
+            // blockPositionUpdateCoroutineList.Clear();
             
-            foreach (Coroutine coroutine in blockPositionUpdateCoroutineList)
-                StopCoroutine(coroutine);
+            foreach (Tween tween in blockPositionUpdateTweenList)
+                tween?.Kill();
+            blockPositionUpdateTweenList.Clear();
             
             for (var i = 0; i < rankList.Count; i++)
             {
@@ -59,9 +66,11 @@ namespace GamePlay.MiniGame.RunningGame
 
                 // if (!ReferenceEquals(block, blockList[i]))
                 var destPos = new Vector2(0, -25 + (-block.rectTransform.sizeDelta.y * i));
-                if (Math.Abs(block.rectTransform.anchoredPosition.y - destPos.y) > 0.1f) 
+                if (Math.Abs(block.rectTransform.anchoredPosition.y - destPos.y) > 0.1f)
                 {
-                    blockPositionUpdateCoroutineList.Add(StartCoroutine(UpdateRankPositionEnumerator(block, destPos)));
+                    var tween = block.rectTransform.DOAnchorPos(destPos, 0.5f);
+                    blockPositionUpdateTweenList.Add(tween);
+                    // blockPositionUpdateCoroutineList.Add(StartCoroutine(UpdateRankPositionEnumerator(block, destPos)));
                 }
             }
         }

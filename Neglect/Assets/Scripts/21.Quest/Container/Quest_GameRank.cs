@@ -26,7 +26,7 @@ namespace Quest.Container
             if (value is int currentRank)
             {
                 Debug.Log(currentRank);
-                if (currentRank >= goalRank)
+                if (currentRank <= goalRank)
                 {
                     Complete();
                 }

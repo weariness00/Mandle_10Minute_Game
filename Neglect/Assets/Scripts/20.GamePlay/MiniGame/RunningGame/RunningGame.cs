@@ -76,6 +76,7 @@ namespace GamePlay.MiniGame.RunningGame
                 lobbyCanvas.gameObject.SetActive(false);
                 lobbyObject.SetActive(false);
                 
+                isGameStart.Value = true;
                 isGamePlay.Value = true;
                 foreach (ObjectSpawner spawner in obstacleSpawnerList)
                     spawner.Play();
@@ -93,6 +94,8 @@ namespace GamePlay.MiniGame.RunningGame
                 matchingCanvas.mainCanvas.gameObject.SetActive(false);
                 matchingObject.SetActive(false);
                 
+                QuestManager.Instance.Init();
+                QuestManager.Instance.QuestStart();
                 GamePlay();
             });
             
@@ -232,9 +235,12 @@ namespace GamePlay.MiniGame.RunningGame
             base.GameClear();
             InputManager.running.ESC.performed -= SettingOnOff;
             QuestManager.Instance.OnValueChange(QuestType.MiniGameRank, CurrentPlayerData.rank);
+            QuestManager.Instance.isQuestStart = false;
 
             matchingCanvas.gameStartButton.onClick.RemoveAllListeners();
             matchingCanvas.gameStartButtonText.text = "게임 끝!";
+            matchingCanvas.seasonText.text = "시즌 종료";
+            matchingCanvas.warringText.text = "시즌이 종료되었습니다. 게임을 종료해주십시오.";
             matchingCanvas.gameStartButton.onClick.AddListener(() =>
             {
                 if (Phone)
@@ -246,11 +252,9 @@ namespace GamePlay.MiniGame.RunningGame
                     SceneUtil.LoadRunningGame();
                 }
             });
-            
+
             resultCanvas.mainCanvas.gameObject.SetActive(true);
             resultCanvas.InstantiateResult();
-            
-
         }
 
         public override void GameOver()
@@ -258,9 +262,13 @@ namespace GamePlay.MiniGame.RunningGame
             base.GameOver();
             InputManager.running.ESC.performed -= SettingOnOff;
             QuestManager.Instance.OnValueChange(QuestType.MiniGameRank, CurrentPlayerData.rank);
+            QuestManager.Instance.isQuestStart = false;
 
+            GameManager.Instance.isGameStart.Value = false;
             matchingCanvas.gameStartButton.onClick.RemoveAllListeners();
             matchingCanvas.gameStartButtonText.text = "게임 끝!";
+            matchingCanvas.seasonText.text = "시즌 종료";
+            matchingCanvas.warringText.text = "시즌이 종료되었습니다. 게임을 종료해주십시오.";
             matchingCanvas.gameStartButton.onClick.AddListener(() =>
             {
                 if (Phone)
@@ -272,7 +280,6 @@ namespace GamePlay.MiniGame.RunningGame
                     SceneUtil.LoadRunningGame();
                 }
             });
-            
             
             resultCanvas.mainCanvas.gameObject.SetActive(true);
             resultCanvas.InstantiateResult();

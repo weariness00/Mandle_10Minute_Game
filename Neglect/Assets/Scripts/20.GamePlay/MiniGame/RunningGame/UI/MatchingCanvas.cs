@@ -12,12 +12,16 @@ namespace GamePlay.MiniGame.RunningGame.UI
 
         public TMP_Text rankText; // 전체 랭킹
         public TMP_Text topScoreText; // 본인 점수 중 가장 높은 점수
+
+        public TMP_Text seasonText;
+        public TMP_Text warringText;
         public Button gameStartButton;
         public TMP_Text gameStartButtonText;
 
         [Header("Match Loading 관련")] 
         public GameObject matchLoadingObject;
-        public TMP_Text matchTimeText;
+        public TMP_Text matchCheckText; // 매칭중인지 알려주는 텍스트
+        public TMP_Text matchTimeText; // 매칭 시간 알려주는 텍스트
         [Tooltip("몇초 뒤에 매칭이 완료됬다고 할 것인지")] public float whenMatchedDuration;
 
         [HideInInspector] public UnityEvent onMatchedEvent = new();
@@ -34,9 +38,13 @@ namespace GamePlay.MiniGame.RunningGame.UI
                 matchTimer += Time.deltaTime;
                 var t = TimeSpan.FromSeconds(matchTimer);
                 matchTimeText.text = $"{(int)t.TotalMinutes:D2} : {t.Seconds:D2}";
-
-                // 매칭 완료
                 if (matchTimer > whenMatchedDuration)
+                {
+                    matchCheckText.text = "매칭 완료!";
+                    matchTimeText.text = "";
+                }
+                // 매칭 완료
+                if (matchTimer > whenMatchedDuration + 1)
                 {
                     onMatchedEvent?.Invoke();
                 }
@@ -46,6 +54,7 @@ namespace GamePlay.MiniGame.RunningGame.UI
         public void OnEnable()
         {
             matchLoadingObject.SetActive(false);
+            matchCheckText.text = "매칭 중";
             matchTimer = 0f;
 
             var data = runningGame.CurrentPlayerData;

@@ -30,15 +30,5 @@ namespace Quest.Container
             PasswordObj.phone = phone;
             phone.PhoneViewRotate(0);
         }
-
-        public override void Complete()
-        {
-            Debug.Log("성공");
-            base.Complete();
-        }
-        public override void Ignore()
-        {
-            base.Ignore();
-        }
     }
 }

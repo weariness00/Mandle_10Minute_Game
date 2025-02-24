@@ -57,9 +57,6 @@ namespace GamePlay.MiniGame
         {
             if (isOnTutorial)
             {
-                isGamePlay.Value = true;
-                isGameStart.Value = true;
-
                 var bgmSource = SoundManager.Instance.GetBGMSource();
                 bgmSource.clip = bgmSound;
                 bgmSource.Play();
@@ -206,14 +203,7 @@ namespace GamePlay.MiniGame
         {
             var home = _phone.applicationControl.GetHomeApp();
             home.GetAppButton(this).highlightObject.SetActive(false);
-
-            if (GameManager.Instance.isInitQuest == false)
-            {
-                GameManager.Instance.isInitQuest = true;
-                QuestManager.Instance.Init();
-                QuestManager.Instance.QuestStart();
-                phone.PhoneViewRotate(PhoneViewType.Horizon);
-            }
+            phone.PhoneViewRotate(PhoneViewType.Horizon);
         }
 
         public virtual void AppResume(PhoneControl phone)

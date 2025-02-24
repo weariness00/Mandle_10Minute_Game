@@ -110,6 +110,7 @@ namespace GamePlay
     {
         public void GameClear()
         {
+            QuestManager.Instance.isQuestStart = false;
             isGameClear.Value = true;
             List<QuestBase> playQuestList = new(QuestManager.Instance.GetPlayQuestList());
             foreach (QuestBase quest in playQuestList)

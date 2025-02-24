@@ -8363,8 +8363,8 @@ RectTransform:
   - {fileID: 1325598041}
   - {fileID: 750221895}
   - {fileID: 1770793134}
-  - {fileID: 1417450453}
   - {fileID: 1406914970}
+  - {fileID: 1417450453}
   - {fileID: 1231427265}
   m_Father: {fileID: 1900557411}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8428,9 +8428,12 @@ MonoBehaviour:
   mainCanvas: {fileID: 1913823663}
   rankText: {fileID: 14964450}
   topScoreText: {fileID: 863634855}
+  seasonText: {fileID: 1406914971}
+  warringText: {fileID: 1417450454}
   gameStartButton: {fileID: 1770793135}
   gameStartButtonText: {fileID: 239190690}
   matchLoadingObject: {fileID: 1231427264}
+  matchCheckText: {fileID: 129062569}
   matchTimeText: {fileID: 561505370}
   whenMatchedDuration: 3
   onMatchedEvent:
