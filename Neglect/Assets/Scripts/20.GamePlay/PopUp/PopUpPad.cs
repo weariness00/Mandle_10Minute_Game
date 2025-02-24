@@ -45,8 +45,11 @@ namespace GamePlay.PopUp
         public void Update()
         {
             destroyTimer.Current += Time.deltaTime;
-            if(destroyTimer.IsMax)
+            if (destroyTimer.IsMax)
+            {
+                destroyPopUpEvent?.Invoke();
                 Destroy(gameObject);
+            }
         }
 
         public void OnEnable()

@@ -43,6 +43,9 @@ namespace GamePlay.MiniGame.RunningGame
         
         public List<ObjectSpawner> obstacleSpawnerList;
 
+        [Header("Result 관련")] 
+        public ResultCanvas resultCanvas;
+
         [Header("기타 사항")] 
         [Tooltip("게임 클리어시 발동할 방해 이벤트")]public int bankQuestID;
 
@@ -61,6 +64,8 @@ namespace GamePlay.MiniGame.RunningGame
             
             inGameCanvas.mainCanvas.gameObject.SetActive(false);
             inGameObject.gameObject.SetActive(false);
+            
+            resultCanvas.mainCanvas.gameObject.SetActive(false);
             
             InputManager.running.ESC.performed += context =>
             {
@@ -205,6 +210,8 @@ namespace GamePlay.MiniGame.RunningGame
             QuestManager.Instance.isQuestStart = false;
             var quest = QuestDataList.Instance.InstantiateEvent(bankQuestID);
             QuestManager.Instance.AddQuestQueue(quest);
+            
+            resultCanvas.mainCanvas.gameObject.SetActive(true);
 
             var home = Phone.applicationControl.GetHomeApp();
             if (home)
@@ -222,12 +229,18 @@ namespace GamePlay.MiniGame.RunningGame
             base.GameOver();
             QuestManager.Instance.OnValueChange(QuestType.MiniGameRank, CurrentPlayerData.rank);
 
-            if(Phone)
-                GameManager.Instance.isGameClear.Value = true;
-            else
+            resultCanvas.mainCanvas.gameObject.SetActive(true);
+            resultCanvas.okButton.onClick.AddListener(() =>
             {
-                SceneUtil.LoadRunningGame();
-            }
+                if (Phone)
+                {
+                    
+                }
+                else
+                {
+                    SceneUtil.LoadRunningGame();
+                }
+            });
         }
     }
 

@@ -92,6 +92,7 @@ namespace GamePlay.MiniGame
 
         public virtual void GameClear()
         {
+            isGamePlay.Value = false;
             QuestManager.Instance.AddAndPlay(rankQuest);
         }
 
