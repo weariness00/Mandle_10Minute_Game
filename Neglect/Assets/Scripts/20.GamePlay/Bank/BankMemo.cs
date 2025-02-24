@@ -36,6 +36,7 @@ namespace GamePlay.Event
         public void ShowAnimation()
         {
             gameObject.SetActive(true);
+            canvasGroup.alpha = 1f;
             MemoSeq.Append(canvasGroup.DOFade(0f, 1f).From());
             MemoSeq.Join(memoRectTransform.DOAnchorPosX(-memoRectTransform.sizeDelta.x / 2, 1f));
         }
