@@ -62,6 +62,9 @@ namespace GamePlay
                 playTimer.Current += Time.deltaTime;
                 if (lastEventID != -1 && playTimer.Current >= lastEventTime)
                 {
+                    // 마지막 이벤트가 동작되면 이벤트 랜덤 생성 정지
+                    QuestManager.Instance.isQuestStart = false;
+                    
                     var lastQuest = QuestDataList.Instance.InstantiateEvent(lastEventID);
                     onLastEvent?.Invoke(lastQuest);
                     QuestManager.Instance.AddQuestQueue(lastQuest);
@@ -108,7 +111,6 @@ namespace GamePlay
         public void GameClear()
         {
             isGameClear.Value = true;
-            QuestManager.Instance.isQuestStart = false;
             List<QuestBase> playQuestList = new(QuestManager.Instance.GetPlayQuestList());
             foreach (QuestBase quest in playQuestList)
                 quest.Failed();
