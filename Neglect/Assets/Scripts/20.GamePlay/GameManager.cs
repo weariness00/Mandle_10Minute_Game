@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using Util;
 
@@ -16,6 +17,7 @@ namespace GamePlay
         public ReactiveProperty<bool> isGameStart;
         public ReactiveProperty<bool> isGameClear;
         public MinMaxValue<float> playTimer = new(0, 0, 60 * 10);
+        public float lastEventTime = 60f * 8f;
 
         [Tooltip("나레이션 클래스")] public GamePlayerNarration narration;
         [Tooltip("포스트 프로세싱을 사용할 Global Volume")]public PostProcessingUtility realVolumeControl;
@@ -25,6 +27,9 @@ namespace GamePlay
         public QuestBase gameClearQuest;
         public int batteryEventID;
         public int introPopUpID;
+        public int lastEventID;
+
+        [HideInInspector] public UnityEvent<QuestBase> onLastEvent;
         
         public void Awake()
         {
@@ -41,7 +46,7 @@ namespace GamePlay
                 }
                 SceneUtil.AsyncAddPhone(phoneScene =>
                 {
-                    StartCoroutine(loadedHomeAppEnumerator());
+                    StartCoroutine(LoadedHomeAppEnumerator());
                     
                     SceneUtil.AsyncAddChatting(AddApp);
                     SceneUtil.AsyncAddBank(AddApp);
@@ -76,6 +81,14 @@ namespace GamePlay
             if (isGameStart.Value && !isGameClear.Value)
             {
                 playTimer.Current += Time.deltaTime;
+                if (lastEventID != -1 && playTimer.Current >= lastEventTime)
+                {
+                    var lastQuest = QuestDataList.Instance.InstantiateEvent(lastEventID);
+                    onLastEvent?.Invoke(lastQuest);
+                    QuestManager.Instance.AddQuestQueue(lastQuest);
+                    lastEventID = -1;
+                }
+                
                 if (playTimer.IsMax)
                 {
                     GameClear();
@@ -83,7 +96,7 @@ namespace GamePlay
             }
         }
 
-        public IEnumerator loadedHomeAppEnumerator()
+        public IEnumerator LoadedHomeAppEnumerator()
         {
             while (ReferenceEquals(PhoneUtil.currentPhone, null) || ReferenceEquals(PhoneUtil.currentPhone.applicationControl.GetHomeApp(), null))
                 yield return null;

@@ -7,6 +7,9 @@ namespace GamePlay.MiniGame.RunningGame
     public class ResultCanvas : MonoBehaviour
     {
         public Canvas mainCanvas;
+
+        public GameObject timeOverObject; // 타임 오버 관련 오브젝트
+        public GameObject resultObject; // 결과 관련 오브젝트
         
         public ResultUIBlock resultBlockPrefab;
         public Transform resultGroupTransform;
@@ -16,6 +19,11 @@ namespace GamePlay.MiniGame.RunningGame
 
         [Space] 
         public RunningGame runningGame;
+
+        public void Awake()
+        {
+            resultObject.SetActive(false);
+        }
 
         public void InstantiateResult()
         {

@@ -27,7 +27,7 @@ namespace GamePlay.Phone.Container
 
         public void SetActiveBackground(bool value)
         {
-            
+            questResult.mainCanvas.gameObject.SetActive(value);
         }
         
         public void AppInstall(PhoneControl phone)
@@ -35,26 +35,29 @@ namespace GamePlay.Phone.Container
             _phone = phone;
             questResult.mainCanvas.worldCamera = _phone.phoneCamera;
             
-            questResult.nextButton.onClick.AddListener(() => AppExit(_phone));
+            questResult.nextButton.onClick.AddListener(() => phone.applicationControl.OnHome());
         }
 
         public void AppPlay(PhoneControl phone)
         {
+            SetActiveBackground(true);
             questResult.Init();
             _phone.PhoneViewRotate(PhoneViewType.Vertical);
         }
 
         public void AppResume(PhoneControl phone)
         {
+            SetActiveBackground(true);
         }
 
         public void AppPause(PhoneControl phone)
         {
+            SetActiveBackground(false);
         }
 
         public void AppExit(PhoneControl phone)
         {
-            SceneUtil.LoadReal();
+            SetActiveBackground(false);
         }
 
         public void AppUnInstall(PhoneControl phone)

@@ -348,12 +348,17 @@ MonoBehaviour:
     _isMax: 0
     isOverMax: 0
     isOverMin: 0
+  lastEventTime: 480
   narration: {fileID: 1888626932}
   realVolumeControl: {fileID: 988145022}
   isInitQuest: 0
   gameClearQuest: {fileID: 1891820674}
-  batteryEventID: 0
+  batteryEventID: 1010
   introPopUpID: 9001
+  lastEventID: 1004
+  onLastEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &838526771
 Transform:
   m_ObjectHideFlags: 0
@@ -997,6 +1002,9 @@ MonoBehaviour:
     extraDataIDArray: 
   isReverse: 0
   onCompleteEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onIgnoreEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!4 &1891820675

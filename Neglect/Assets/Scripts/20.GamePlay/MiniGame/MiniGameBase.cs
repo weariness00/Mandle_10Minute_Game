@@ -141,6 +141,12 @@ namespace GamePlay.MiniGame
                 }
             }
 
+            GameManager.Instance.isGameClear.Subscribe(value =>
+            {
+                if (value)
+                    GameClear();
+            });
+
             var home = _phone.applicationControl.GetHomeApp();
             var appButton = home.GetAppButton(this);
             appButton.highlightObject.SetActive(true);

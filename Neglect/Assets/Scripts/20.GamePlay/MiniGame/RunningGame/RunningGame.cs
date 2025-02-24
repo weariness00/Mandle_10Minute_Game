@@ -94,17 +94,6 @@ namespace GamePlay.MiniGame.RunningGame
                     spawner.Play();
             };
             
-            foreach (ObjectSpawner spawner in obstacleSpawnerList)
-            {
-                spawner.SpawnSuccessAction.AddListener(obj =>
-                {
-                    PhoneUtil.SetLayer(obj);
-                    SceneManager.MoveGameObjectToScene(obj, SceneUtil.GetRunningGameScene());
-                    obj.GetComponent<RunningObstacle>().runningGame = this;
-                    obj.transform.SetParent(inGameObject.transform);
-                });
-            }
-            
             gameSpeed.Subscribe(value =>
             {
                 foreach (ObjectSpawner spawner in obstacleSpawnerList)
@@ -116,6 +105,17 @@ namespace GamePlay.MiniGame.RunningGame
                 if (value <= 0)
                     GameOver();
             });
+            
+            foreach (ObjectSpawner spawner in obstacleSpawnerList)
+            {
+                spawner.SpawnSuccessAction.AddListener(obj =>
+                {
+                    PhoneUtil.SetLayer(obj);
+                    SceneManager.MoveGameObjectToScene(obj, SceneUtil.GetRunningGameScene());
+                    obj.GetComponent<RunningObstacle>().runningGame = this;
+                    obj.transform.SetParent(inGameObject.transform);
+                });
+            }
         }
 
         public override void Update()
@@ -267,13 +267,6 @@ namespace GamePlay.MiniGame.RunningGame
         {
             base.AppPlay(phone);
             SetActiveBackground(true);
-            
-            // 게임 클리어 할 시
-            GameManager.Instance.isGameClear.Subscribe(value =>
-            {
-                if(value)
-                    isGamePlay.Value = false;
-            });
         }
 
         public override void AppResume(PhoneControl phone)

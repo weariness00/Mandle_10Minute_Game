@@ -22,6 +22,7 @@ namespace Quest
 
         private QuestBase rootQuest = null;
         public UnityEvent<QuestBase> onCompleteEvent = new();
+        public UnityEvent<QuestBase> onIgnoreEvent = new();
         
         public virtual void Play()
         {
@@ -53,6 +54,12 @@ namespace Quest
                 quest.eventData = ignoreEvent;
                 quest.rootQuest = rootQuest == null ? this : rootQuest;
                 QuestManager.Instance.AddQuestQueue(quest);
+                
+                onIgnoreEvent?.Invoke(quest);
+            }
+            else
+            {
+                onIgnoreEvent?.Invoke(null);
             }
             
             QuestManager.Instance.Remove(this);
