@@ -37,6 +37,9 @@ namespace GamePlay
             scene = SceneManager.GetSceneByName(RunningGameScene);
             return scene.IsValid() && scene.isLoaded;
         }
+        
+        
+        public static void LoadRunningGame(Action<Scene> loadedAction = null)=> Instance.StartCoroutine(Instance.LoadSceneEnumerator(RunningGameScene, loadedAction));
         public static void AsyncAddRunningGame(Action<Scene> loadedAction = null) =>Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(RunningGameScene, loadedAction));
 
         public static bool TryGetFlappingScene(out Scene scene)
@@ -62,7 +65,6 @@ namespace GamePlay
                 yield return null;
             }
             var scene = SceneManager.GetSceneByName(sceneName);
-            UnloadedObject(scene);
             loadedAction?.Invoke(scene);
         }
         
