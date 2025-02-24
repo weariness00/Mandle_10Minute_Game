@@ -1518,7 +1518,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &5883430967004105228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1549,6 +1549,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chatLogScrollRect: {fileID: 0}
+  sendSound: {fileID: 0}
   canvas: {fileID: 0}
   CurrentName: npc
   ChatName: {fileID: 9017951179093132918}

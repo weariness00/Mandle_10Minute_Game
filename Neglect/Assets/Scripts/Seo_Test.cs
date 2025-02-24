@@ -1,6 +1,7 @@
-﻿using GamePlay;
+using GamePlay;
 using GamePlay.MiniGame.FlappingGame;
 using GamePlay.Phone;
+using Manager;
 using Quest;
 using TMPro;
 using UniRx;
@@ -65,6 +66,7 @@ namespace SeoTestTestTest
             {
                 GameManager.Instance.GameClear();
             }
+            
         }
     }
     
