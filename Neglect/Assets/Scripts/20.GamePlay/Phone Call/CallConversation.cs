@@ -21,7 +21,7 @@ namespace GamePlay.Event
         public TextMeshProUGUI ChatName;
         public bool isComplete;
         public int choiceIndex;
-        
+
         public AudioSource EndSound;
 
         [Space]
@@ -72,16 +72,19 @@ namespace GamePlay.Event
         public TextMeshProUGUI TimeText; //타이머 텍스트
 
         public MMF_Player CloseCall;
+        public MMF_Player CloseMyText;
         public GameObject CallEndButton;
+
+        private TalkingData checkTalkdata;
         public void Awake()
         {
             ChatName.text = CurrentName;
             CallEndButton.SetActive(false);
-            OtherTextBoxScript.isEndAnimation += ShowSelectButton; //상대방 텍스트 나레이션 끝나면 버튼이 나오도록
-            MyTextBoxScript.isEndAnimation += FillGage; //자신의 텍스트 나레이션 끝나면 게이지가 채워지도록
+            //OtherTextBoxScript.isEndAnimation += ShowSelectButton; //상대방 텍스트 나레이션 끝나면 버튼이 나오도록
+            //MyTextBoxScript.isEndAnimation += FillGage; //자신의 텍스트 나레이션 끝나면 게이지가 채워지도록
 
         }
-        
+
         public void Start()
         {
             ChatStart();
@@ -107,8 +110,8 @@ namespace GamePlay.Event
             List<string> combinedList = new List<string>(talkData.positiveTextArray);
             combinedList.AddRange(talkData.negativeTextArray);
             replyString = combinedList.ToArray();
-  
-            
+
+
             for (int i = 0; i < talkData.positiveTextArray.Length; i++)
             {
                 replygage[ReplyCount] = talkData.positiveScore;
@@ -130,7 +133,7 @@ namespace GamePlay.Event
 
             }
         }
-        
+
         private float timer = 0f;
         void Update()
         {
@@ -156,10 +159,10 @@ namespace GamePlay.Event
         public void TalkTextSetting(TextMeshProUGUI Boxs, string text)
         {
             string Result = "";
-            for(int i = 0; i < text.Length; i++)
+            for (int i = 0; i < text.Length; i++)
             {
                 Result += text[i];
-                if (i%10 ==0 && i != 0)
+                if (i % 10 == 0 && i != 0)
                 {
                     Result += "\n";
                 }
@@ -189,7 +192,7 @@ namespace GamePlay.Event
             // ~ 상대 말풍선 애니메이션
             UiSeq.AppendCallback(() =>
             {
-                OtherTextBoxScript.SetNarration(talkData != null ? talkData.mainText : "Test" , 17); //가 끝나면 showSelectButton 실행
+                OtherTextBoxScript.SetNarration(talkData != null ? talkData.mainText : "Test", 17, ShowSelectButton); //가 끝나면 showSelectButton 실행
             });
         }
         public void ShowSelectButton()
@@ -253,7 +256,7 @@ namespace GamePlay.Event
             UiSeq.Append(MyChat.gameObject.transform.DOLocalMoveY(10f, 0.5f).From().SetRelative(true)).Join(MyChat.DOFade(0f, 0f)).Join(MyChat.DOFade(1f, 0.5f));
             UiSeq.AppendCallback(() =>
             {
-                MyTextBoxScript.SetNarration(replyString[index] , 17);
+                MyTextBoxScript.SetNarration(replyString[index], 17, FillGage);
             });
 
 
@@ -277,11 +280,44 @@ namespace GamePlay.Event
             {
                 UiSeq.AppendCallback(() =>
                 {
-                    CallEndButton.SetActive(true);
+                    mainTextexist();
                 });
             }
         }
-       
+
+
+        public void mainTextexist()
+        {
+            Sequence UiSeq = DOTween.Sequence();
+            checkTalkdata = talkData;
+            SetTalkData(TalkingScriptableObject.Instance.GetTalkData(replyEvent[choiceIndex]));
+            if(talkData == checkTalkdata)
+            {
+                CallEndButton.SetActive(true);
+                return;
+            }
+
+
+            UiSeq.AppendCallback(() =>
+            {
+
+                MyChat.gameObject.SetActive(false);
+                MyText.gameObject.SetActive(false);
+                OtherText.text = "";
+            });
+            UiSeq.Append(OtherChat.gameObject.transform.DOLocalMoveY(10f, 0.5f).From().SetRelative(true)).Join(OtherChat.DOFade(0f, 0f)).Join(OtherChat.DOFade(1f, 0.5f));
+            // ~ 상대 말풍선 애니메이션
+            UiSeq.AppendCallback(() =>
+            {
+                OtherTextBoxScript.SetNarration(talkData != null ? talkData.mainText : "Test", 17, null); //가 끝나면 showSelectButton 실행
+            });
+            UiSeq.AppendCallback(() =>
+            {
+                CallEndButton.SetActive(true);
+            });
+        }
+
+
         public void CallEndAnimation()
         {
             isComplete = true;
@@ -290,6 +326,8 @@ namespace GamePlay.Event
                 ClearAction?.Invoke();
                 Destroy(gameObject);
             });
+            if (checkTalkdata == talkData)
+                CloseMyText.PlayFeedbacks();
             CloseCall.PlayFeedbacks();
             EndSound.Play();
             TimeText.text += "\n통화종료";
