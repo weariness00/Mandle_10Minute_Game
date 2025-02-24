@@ -13,6 +13,7 @@ namespace GamePlay.MiniGame.RunningGame
         public RunningGame runningGame;
         [HideInInspector] public Rigidbody2D rigidbody2D;
         [HideInInspector] public BoxCollider2D collider2D;
+        public SpriteRenderer modelRenderer;
         
         public MinMaxValue<float> immortalTime = new(0, 0, 1);
         public MMF_Player hitEffect;
@@ -76,6 +77,13 @@ namespace GamePlay.MiniGame.RunningGame
             if(!runningGame.isGamePlay.Value) return;
             Jump();
             Sliding();
+        }
+
+        public void OnEnable()
+        {
+            var color = modelRenderer.material.color;
+            color.a = 1;
+            modelRenderer.material.color = color;
         }
 
         public void OnCollisionEnter2D(Collision2D other)

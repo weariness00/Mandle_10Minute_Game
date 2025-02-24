@@ -102,11 +102,16 @@ namespace GamePlay.MiniGame.RunningGame
             // 등수 확인 후 매칭으로 이동
             resultCanvas.okButton.onClick.AddListener(() =>
             {
+                settingCanvas.gameObject.SetActive(false);
+                
+                lobbyCanvas.gameObject.SetActive(false);
+                lobbyObject.SetActive(false);
+                
                 matchingCanvas.mainCanvas.gameObject.SetActive(true);
                 matchingObject.SetActive(true);
                 
                 inGameCanvas.mainCanvas.gameObject.SetActive(false);
-                inGameObject.gameObject.SetActive(false);
+                inGameObject.SetActive(false);
             
                 resultCanvas.mainCanvas.gameObject.SetActive(false);
             });
@@ -234,8 +239,11 @@ namespace GamePlay.MiniGame.RunningGame
         {
             base.GameClear();
             InputManager.running.ESC.performed -= SettingOnOff;
-            QuestManager.Instance.OnValueChange(QuestType.MiniGameRank, CurrentPlayerData.rank);
-            QuestManager.Instance.isQuestStart = false;
+            if (QuestManager.HasInstance)
+            {
+                QuestManager.Instance.OnValueChange(QuestType.MiniGameRank, CurrentPlayerData.rank);
+                QuestManager.Instance.isQuestStart = false;
+            }
 
             matchingCanvas.gameStartButton.onClick.RemoveAllListeners();
             matchingCanvas.gameStartButtonText.text = "게임 끝!";
@@ -252,7 +260,7 @@ namespace GamePlay.MiniGame.RunningGame
                     SceneUtil.LoadRunningGame();
                 }
             });
-
+            
             resultCanvas.mainCanvas.gameObject.SetActive(true);
             resultCanvas.InstantiateResult();
         }
@@ -261,10 +269,16 @@ namespace GamePlay.MiniGame.RunningGame
         {
             base.GameOver();
             InputManager.running.ESC.performed -= SettingOnOff;
-            QuestManager.Instance.OnValueChange(QuestType.MiniGameRank, CurrentPlayerData.rank);
-            QuestManager.Instance.isQuestStart = false;
+            if (QuestManager.HasInstance)
+            {
+                QuestManager.Instance.OnValueChange(QuestType.MiniGameRank, CurrentPlayerData.rank);
+                QuestManager.Instance.isQuestStart = false;
+            }
 
-            GameManager.Instance.isGameStart.Value = false;
+            if (GameManager.HasInstance)
+            {
+                GameManager.Instance.isGameStart.Value = false;
+            }
             matchingCanvas.gameStartButton.onClick.RemoveAllListeners();
             matchingCanvas.gameStartButtonText.text = "게임 끝!";
             matchingCanvas.seasonText.text = "시즌 종료";

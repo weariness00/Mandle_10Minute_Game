@@ -3573,6 +3573,7 @@ MonoBehaviour:
   runningGame: {fileID: 1407920007}
   rigidbody2D: {fileID: 0}
   collider2D: {fileID: 0}
+  modelRenderer: {fileID: 1718808433}
   immortalTime:
     _min: 0
     _max: 1

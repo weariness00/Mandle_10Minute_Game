@@ -31,6 +31,7 @@ namespace Quest.Container
             callingScreen.name.text = eventData.textArray.Length == 0 ? "mom" : eventData.textArray[0];
 
             if (eventData.extraDataIDArray.Length >= 1) isReverse = eventData.extraDataIDArray[0] == -99;
+            if (eventData.extraDataIDArray.Length >= 2) isLoop = eventData.extraDataIDArray[1] == -45;
             callingScreen.ClearAction += Complete;
             callingScreen.IgnoreAction += Ignore;
         }

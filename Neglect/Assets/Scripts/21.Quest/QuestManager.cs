@@ -113,6 +113,9 @@ namespace Quest
                 var nextQuest = waitQuestList.Dequeue();
                 if(nextQuest) nextQuest.Play();
             }
+            
+            if(!quest.isLoop && quest.eventData.isMainEvent)
+                eventList.Add(quest.eventData);
         }
         
         /// <summary>
