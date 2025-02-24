@@ -51,6 +51,8 @@ namespace GamePlay.MiniGame.RunningGame
             rigidbody2D = GetComponentInChildren<Rigidbody2D>();
             collider2D = GetComponentInChildren<BoxCollider2D>();
             animator.animator = GetComponentInChildren<Animator>();
+
+            runningGame.gameSpeed.Subscribe(value => animator.SetAllSpeed(value));
         }
 
         public void Start()
@@ -173,12 +175,16 @@ namespace GamePlay.MiniGame.RunningGame
             public static implicit operator Animator(RunningPlayerAnimator value) => value.animator;
 
             [HideInInspector] public Animator animator;
-            
+
+            private static readonly int f_GameSpeed = Animator.StringToHash("Game Speed");
             private static readonly int t_Jump = Animator.StringToHash("Jump");
             private static readonly int t_Randing = Animator.StringToHash("Randing");
             private static readonly int t_StartSliding = Animator.StringToHash("Start Sliding");
             private static readonly int t_EndSliding = Animator.StringToHash("End Sliding");
 
+            // 모든 애니메이션 속도 조절
+            public void SetAllSpeed(float value) => animator.SetFloat(f_GameSpeed, value);
+            
             public void Jump()
             {
                 animator.ResetTrigger(t_Randing);

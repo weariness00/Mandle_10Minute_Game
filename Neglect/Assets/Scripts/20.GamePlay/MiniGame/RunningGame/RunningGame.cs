@@ -205,7 +205,12 @@ namespace GamePlay.MiniGame.RunningGame
             base.GameOver();
             QuestManager.Instance.OnValueChange(QuestType.MiniGameRank, CurrentPlayerData.rank);
 
-            GameManager.Instance.isGameClear.Value = true;
+            if(Phone)
+                GameManager.Instance.isGameClear.Value = true;
+            else
+            {
+                SceneUtil.LoadRunningGame();
+            }
         }
     }
 
