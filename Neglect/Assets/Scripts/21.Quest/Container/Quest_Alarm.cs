@@ -33,6 +33,7 @@ namespace Quest.Container
             app = phone.applicationControl.currentPlayApplication;
             phone.applicationControl.PauseApp(app);
 
+            phone.interfaceGroupOnOffButton.gameObject.SetActive(false);
             phone.FadeOut(0.1f, Color.black);
             phone.PhoneViewRotate(PhoneViewType.Vertical, ()=> phone.FadeIn(1f, Color.black));
             

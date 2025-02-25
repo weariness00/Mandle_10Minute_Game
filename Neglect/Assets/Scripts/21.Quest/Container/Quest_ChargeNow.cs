@@ -10,7 +10,6 @@ using UnityEngine.InputSystem;
 
 public class Quest_ChargeNow : QuestBase
 {
-
     public ChargeNotification notification;
     public ChargerConnect charger;
 
@@ -38,7 +37,7 @@ public class Quest_ChargeNow : QuestBase
         phone = phone_;
         Charger.phone = phone;
         Charger.gameObject.SetActive(true);
-        phone.PhoneViewRotate(1);
+        phone.PhoneViewRotate(PhoneViewType.Horizon);
 
         app = phone.applicationControl.currentPlayApplication;
         phone.applicationControl.PauseApp(app);

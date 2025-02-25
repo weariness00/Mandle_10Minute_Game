@@ -15,33 +15,37 @@ namespace GamePlay.MiniGame.RunningGame
         [HideInInspector] public BoxCollider2D collider2D;
         public SpriteRenderer modelRenderer;
         
+        [Header("Hit 관련")]
         public MinMaxValue<float> immortalTime = new(0, 0, 1);
         public MMF_Player hitEffect;
-        public AudioSource audioSource;
+        public AudioClip hitSound;
+        
+        private AudioSource effectSource;
 
-        [Space] 
         [Header("점수 관련")] 
         [Tooltip("몇 콤보다마다 추가 점수를 줄지")]public int comboInterval = 5;
         [Tooltip("현재 콤보")] public int currentCombo = 0;
         
-        [Space]
         [Header("체력 관련")]
         public ReactiveProperty<int> life = new (5);
         public int lifeMax = 5;
         public MinMaxValue<int> healCounting = new(0, 0, 5);
         
-        [Space]
         [Header("Jump 관련")]
         [Tooltip("점프 높이")]public float jumpForce = 1f;
         [Tooltip("점프하는데 걸리는 시간")]public MinMaxValue<float> jumpTime = new(0,0,1f, false, true);
         public bool isJumping = false;
 
         [Space] 
+        public AudioClip jumpSound;
         public AudioClip randingClip;
         
-        [Space]
+        [Header("Sliding 관련")]
         [Tooltip("슬라이딩 충돌 박스 크기")] public Vector2 slidingColliderBoxSize;
         public bool isSliding = false;
+
+        [Space] 
+        public AudioSource slidingSource; // 지속적으로 나야하는 사운드
         
         private Vector3 originPosition;
         private Vector3 jumpDestinationPosition;
@@ -55,6 +59,8 @@ namespace GamePlay.MiniGame.RunningGame
             animator.animator = GetComponentInChildren<Animator>();
 
             runningGame.gameSpeed.Subscribe(value => animator.SetAllSpeed(value));
+
+            effectSource = SoundManager.Instance.GetAudioSource("Effect");
         }
 
         public void Start()
@@ -94,7 +100,7 @@ namespace GamePlay.MiniGame.RunningGame
                 {
                     animator.Randing();
                     isJumping = false;
-                    audioSource.PlayOneShot(randingClip);
+                    effectSource.PlayOneShot(randingClip);
                 }
             }
         }
@@ -111,6 +117,7 @@ namespace GamePlay.MiniGame.RunningGame
                 life.Value--;
                 healCounting.SetMin();
                 if(hitEffect) hitEffect.PlayFeedbacks();
+                effectSource.PlayOneShot(hitSound);
             }
         }
         
@@ -134,6 +141,8 @@ namespace GamePlay.MiniGame.RunningGame
                 originPosition = transform.position;
                 jumpDestinationPosition = transform.position + jumpForce * Vector3.up;
                 animator.Jump();
+                
+                effectSource.PlayOneShot(jumpSound);
             }
         }
 
@@ -148,6 +157,7 @@ namespace GamePlay.MiniGame.RunningGame
                 
                 isSliding = true;
                 animator.StartSliding();
+                slidingSource.Play();
             }
             else if (isSliding && !InputManager.running.SlidingDown)
             {
@@ -156,6 +166,7 @@ namespace GamePlay.MiniGame.RunningGame
                 
                 isSliding = false;
                 animator.EndSliding();
+                slidingSource.Stop();
             }
         }
 

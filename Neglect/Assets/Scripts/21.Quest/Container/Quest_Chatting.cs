@@ -11,7 +11,7 @@ namespace Quest.Container
     public class Quest_Chatting : QuestBase
     {
         private AppButton appButton;
-        
+
         public override void OnNext(object value)
         {
         }
@@ -24,7 +24,6 @@ namespace Quest.Container
             if (chatting)
             {
                 appButton = phone.applicationControl.GetHomeApp().GetAppButton(chatting);
-                appButton.button.interactable = true;
                 
                 var chatConversation = chatting.conversation;
                 chatConversation.Init();
@@ -39,18 +38,6 @@ namespace Quest.Container
                 chatConversation.ignoreEvent.AddListener(isReverse ? Complete : Ignore);
                 chatConversation.StartConversation();
             }
-        }
-
-        public override void Complete()
-        {
-            base.Complete();
-            if(appButton) appButton.button.interactable = false;
-        }
-
-        public override void Ignore()
-        {
-            base.Ignore();
-            if(appButton) appButton.button.interactable = false;
         }
 
         public override void Failed()
