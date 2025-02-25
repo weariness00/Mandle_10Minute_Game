@@ -187,14 +187,13 @@ namespace GamePlay.MiniGame.RunningGame
     // 애니메이션 관련
     public partial class RunningPlayer
     {
-        private RunningPlayerAnimator animator = new();
+        public RunningPlayerAnimator animator = new();
 
         [Serializable]
         public class RunningPlayerAnimator
         {
             public static implicit operator Animator(RunningPlayerAnimator value) => value.animator;
-
-            [HideInInspector] public Animator animator;
+            public Animator animator;
 
             private static readonly int f_GameSpeed = Animator.StringToHash("Game Speed");
             private static readonly int t_Jump = Animator.StringToHash("Jump");

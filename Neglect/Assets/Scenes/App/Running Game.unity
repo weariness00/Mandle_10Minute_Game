@@ -3864,6 +3864,8 @@ MonoBehaviour:
   slidingColliderBoxSize: {x: 0.8, y: 0.5}
   isSliding: 0
   slidingSource: {fileID: 1129686693}
+  animator:
+    animator: {fileID: 1718808434}
 --- !u!50 &769697472
 Rigidbody2D:
   serializedVersion: 4

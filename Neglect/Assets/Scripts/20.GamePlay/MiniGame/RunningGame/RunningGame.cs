@@ -68,7 +68,7 @@ namespace GamePlay.MiniGame.RunningGame
             inGameObject.gameObject.SetActive(false);
             
             resultCanvas.mainCanvas.gameObject.SetActive(false);
-
+            
             InputManager.running.ESC.performed += SettingOnOff;
             
             // 인게임 게임 시작 눌렀을때 카운트 다운 끝나고 동작
@@ -79,6 +79,10 @@ namespace GamePlay.MiniGame.RunningGame
                 
                 isGameStart.Value = true;
                 isGamePlay.Value = true;
+                
+                // 플레이어 애니메이션 활성화
+                player.animator.animator.enabled = true;
+
                 foreach (ObjectSpawner spawner in obstacleSpawnerList)
                     spawner.Play();
             };
@@ -142,6 +146,12 @@ namespace GamePlay.MiniGame.RunningGame
                     obj.transform.SetParent(inGameObject.transform);
                 });
             }
+        }
+
+        public override void Start()
+        {
+            base.Start();
+            player.animator.animator.enabled = false;
         }
 
         public override void Update()
@@ -256,6 +266,8 @@ namespace GamePlay.MiniGame.RunningGame
         {
             base.GameStop();
             inGameCanvas.StopCountDown();
+
+            player.animator.animator.enabled = false;
             foreach (ObjectSpawner spawner in obstacleSpawnerList)
                 spawner.Pause();
         }
