@@ -73,13 +73,13 @@ namespace GamePlay.Event
 
         public MMF_Player CloseCall;
         public MMF_Player CloseMyText;
-        public GameObject CallEndButton;
+        public Button CallEndButton;
 
         private TalkingData checkTalkdata;
         public void Awake()
         {
             ChatName.text = CurrentName;
-            CallEndButton.SetActive(false);
+            CallEndButton.gameObject.SetActive(false);
             //OtherTextBoxScript.isEndAnimation += ShowSelectButton; //상대방 텍스트 나레이션 끝나면 버튼이 나오도록
             //MyTextBoxScript.isEndAnimation += FillGage; //자신의 텍스트 나레이션 끝나면 게이지가 채워지도록
 
@@ -293,7 +293,7 @@ namespace GamePlay.Event
             SetTalkData(TalkingScriptableObject.Instance.GetTalkData(replyEvent[choiceIndex]));
             if(talkData == checkTalkdata)
             {
-                CallEndButton.SetActive(true);
+                CallEndButton.gameObject.SetActive(true);
                 return;
             }
 
@@ -313,7 +313,7 @@ namespace GamePlay.Event
             });
             UiSeq.AppendCallback(() =>
             {
-                CallEndButton.SetActive(true);
+                CallEndButton.gameObject.SetActive(true);
             });
         }
 
@@ -321,6 +321,7 @@ namespace GamePlay.Event
         public void CallEndAnimation()
         {
             isComplete = true;
+            CallEndButton.interactable = false;
             CloseCall.Events.OnComplete.AddListener(() =>
             {
                 ClearAction?.Invoke();
