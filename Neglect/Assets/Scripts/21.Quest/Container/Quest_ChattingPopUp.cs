@@ -34,7 +34,6 @@ namespace Quest.Container
             base.Complete();
             var phone = PhoneUtil.currentPhone;
             phone.applicationControl.OpenApp("Chatting");
-            phone.PhoneViewRotate(PhoneViewType.Vertical);
         }
 
         public override void Failed()

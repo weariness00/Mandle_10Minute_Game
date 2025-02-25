@@ -57,16 +57,18 @@ namespace SeoTestTestTest
 
             var script = target as Seo_Test;
 
-            if (GUILayout.Button("퀘스트 생성"))
+            if (EditorApplication.isPlaying)
             {
-                script.MakeQuest();
-            }
+                if (GUILayout.Button("퀘스트 생성"))
+                {
+                    script.MakeQuest();
+                }
 
-            if (GUILayout.Button("퀘스트 결과창 생성"))
-            {
-                GameManager.Instance.GameClear();
+                if (GUILayout.Button("퀘스트 결과창 생성"))
+                {
+                    GameManager.Instance.GameClear();
+                }
             }
-            
         }
     }
     

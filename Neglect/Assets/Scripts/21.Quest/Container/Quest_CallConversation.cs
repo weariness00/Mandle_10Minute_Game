@@ -32,7 +32,6 @@ namespace Quest.Container
             callConversation.ClearAction += isReverse ? Ignore : Complete;
             callConversation.onIgnoreEvent += isReverse ? Complete : Ignore;
             app = phone.applicationControl.currentPlayApplication;
-            phone.applicationControl.PauseApp(app);
             app.SetActiveBackground(true);
 
             callConversation.SetTalkData(TalkingScriptableObject.Instance.GetTalkData(eventData.extraDataIDArray.Length == 0 ? -1 : eventData.extraDataIDArray[0]));

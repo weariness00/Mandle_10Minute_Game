@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Events;
 using Util;
 using Random = UnityEngine.Random;
 
@@ -43,6 +44,8 @@ namespace Quest
         [SerializeField]private List<QuestBase> questAddList = new(); // 추가된 퀘스트들
         [SerializeField]private List<QuestBase> playQuestList = new(); // 플레이 중인 퀘스트들
         [SerializeField]private Queue<QuestBase> waitQuestList = new(); // 대기중인 퀘스트 playQuestList에 있는 퀘스트들이 끝나야 작동함
+
+        [HideInInspector] public UnityEvent<QuestBase> onEndQuestEvent = new(); // 진행중인 퀘스트가 끝났을때
         
         private List<EventData> eventList = new(); // 소환 가능한 이벤트 목록
 
@@ -57,6 +60,7 @@ namespace Quest
             questAddList.Clear();
             playQuestList.Clear();
             waitQuestList.Clear();
+            onEndQuestEvent.RemoveAllListeners();
         }
 
         public void QuestStart()
@@ -110,6 +114,7 @@ namespace Quest
         public void Remove(QuestBase quest)
         {
             playQuestList.Remove(quest);
+            onEndQuestEvent?.Invoke(quest);
             if (playQuestList.Count == 0 && waitQuestList.Count != 0)
             {
                 var nextQuest = waitQuestList.Dequeue();

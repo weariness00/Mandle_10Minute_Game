@@ -1,4 +1,5 @@
 using GamePlay;
+using GamePlay.App;
 using GamePlay.Chatting;
 using GamePlay.Narration;
 using GamePlay.Phone;
@@ -9,6 +10,8 @@ namespace Quest.Container
 {
     public class Quest_Chatting : QuestBase
     {
+        private AppButton appButton;
+
         public override void OnNext(object value)
         {
         }
@@ -20,6 +23,8 @@ namespace Quest.Container
             var chatting = phone.applicationControl.GetApp<ChattingApp>();
             if (chatting)
             {
+                appButton = phone.applicationControl.GetHomeApp().GetAppButton(chatting);
+                
                 var chatConversation = chatting.conversation;
                 chatConversation.Init();
                 
@@ -33,6 +38,12 @@ namespace Quest.Container
                 chatConversation.ignoreEvent.AddListener(isReverse ? Complete : Ignore);
                 chatConversation.StartConversation();
             }
+        }
+
+        public override void Failed()
+        {
+            base.Failed();
+            if(appButton) appButton.button.interactable = false;
         }
     }
 }

@@ -141,7 +141,7 @@ namespace GamePlay.Phone
             backButton.onClick.AddListener(() =>
             {
                 if(onClickBackList.Count == 0)
-                    _phone.applicationControl.CloseApp();
+                    _phone.applicationControl.OnHome();
                 else
                 {
                     onClickBackList.Last().Invoke();
@@ -163,10 +163,10 @@ namespace GamePlay.Phone
                 appButtonDictionary.TryAdd(app.AppName, appButton);
             });
             
-            var viewPort = phone.GetAppViewPort(this);
-            viewPort.horizon.Release();
-            viewPort.horizon = viewPort.vertical;
-            phone.PhoneViewRotate(PhoneViewType.Vertical);
+            // var viewPort = phone.GetAppViewPort(this);
+            // viewPort.horizon.Release();
+            // viewPort.horizon = viewPort.vertical;
+            // phone.PhoneViewRotate(PhoneViewType.Vertical);
 
             var bgmSource = SoundManager.Instance.GetBGMSource();
             bgmSource.clip = bgmSound;
