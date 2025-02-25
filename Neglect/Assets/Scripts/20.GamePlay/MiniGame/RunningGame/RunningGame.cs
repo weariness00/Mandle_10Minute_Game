@@ -156,12 +156,10 @@ namespace GamePlay.MiniGame.RunningGame
 
         private void SettingOnOff(InputAction.CallbackContext context)
         {
-            settingCanvas.gameObject.SetActive(!settingCanvas.gameObject.activeSelf);
-
-            if (isGameStart.Value)
+            if (inGameCanvas.gameObject.activeSelf)
             {
-                if (isGamePlay.Value) GameStop();
-                else  GamePlay();
+                settingCanvas.gameObject.SetActive(true);
+                GameStop();
             }
         }
     }
@@ -257,6 +255,7 @@ namespace GamePlay.MiniGame.RunningGame
         public override void GameStop()
         {
             base.GameStop();
+            inGameCanvas.StopCountDown();
             foreach (ObjectSpawner spawner in obstacleSpawnerList)
                 spawner.Pause();
         }
@@ -264,6 +263,7 @@ namespace GamePlay.MiniGame.RunningGame
         public override void GameClear()
         {
             base.GameClear();
+            inGameCanvas.StopCountDown();
             InputManager.running.ESC.performed -= SettingOnOff;
             if (QuestManager.HasInstance)
             {
@@ -294,6 +294,7 @@ namespace GamePlay.MiniGame.RunningGame
         public override void GameOver()
         {
             base.GameOver();
+            inGameCanvas.StopCountDown();
             InputManager.running.ESC.performed -= SettingOnOff;
             if (QuestManager.HasInstance)
             {

@@ -22,6 +22,10 @@ namespace Quest.Container
             base.Play();
             var phoen = PhoneUtil.currentPhone;
             
+            foreach (AppButton button in phoen.applicationControl.GetHomeApp().GetAllAppButton())
+            {
+                button.button.interactable = false;
+            }
             bankApp = phoen.applicationControl.GetApp("Bank") as BankApp;
             appButton = phoen.applicationControl.GetHomeApp().GetAppButton(bankApp);
             appButton.button.interactable = true;
