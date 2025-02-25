@@ -5,6 +5,7 @@ using UniRx;
 using UnityEngine;
 using Util;
 
+
 namespace GamePlay.MiniGame.RunningGame
 {
     public partial class RunningPlayer : MonoBehaviour
@@ -12,6 +13,7 @@ namespace GamePlay.MiniGame.RunningGame
         public RunningGame runningGame;
         [HideInInspector] public Rigidbody2D rigidbody2D;
         [HideInInspector] public BoxCollider2D collider2D;
+        public SpriteRenderer modelRenderer;
         
         public MinMaxValue<float> immortalTime = new(0, 0, 1);
         public MMF_Player hitEffect;
@@ -51,6 +53,8 @@ namespace GamePlay.MiniGame.RunningGame
             rigidbody2D = GetComponentInChildren<Rigidbody2D>();
             collider2D = GetComponentInChildren<BoxCollider2D>();
             animator.animator = GetComponentInChildren<Animator>();
+
+            runningGame.gameSpeed.Subscribe(value => animator.SetAllSpeed(value));
         }
 
         public void Start()
@@ -73,6 +77,13 @@ namespace GamePlay.MiniGame.RunningGame
             if(!runningGame.isGamePlay.Value) return;
             Jump();
             Sliding();
+        }
+
+        public void OnEnable()
+        {
+            var color = modelRenderer.material.color;
+            color.a = 1;
+            modelRenderer.material.color = color;
         }
 
         public void OnCollisionEnter2D(Collision2D other)
@@ -173,12 +184,16 @@ namespace GamePlay.MiniGame.RunningGame
             public static implicit operator Animator(RunningPlayerAnimator value) => value.animator;
 
             [HideInInspector] public Animator animator;
-            
+
+            private static readonly int f_GameSpeed = Animator.StringToHash("Game Speed");
             private static readonly int t_Jump = Animator.StringToHash("Jump");
             private static readonly int t_Randing = Animator.StringToHash("Randing");
             private static readonly int t_StartSliding = Animator.StringToHash("Start Sliding");
             private static readonly int t_EndSliding = Animator.StringToHash("End Sliding");
 
+            // 모든 애니메이션 속도 조절
+            public void SetAllSpeed(float value) => animator.SetFloat(f_GameSpeed, value);
+            
             public void Jump()
             {
                 animator.ResetTrigger(t_Randing);

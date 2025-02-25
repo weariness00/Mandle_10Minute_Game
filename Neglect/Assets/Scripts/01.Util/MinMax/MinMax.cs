@@ -5,6 +5,9 @@ namespace Util
     [System.Serializable]
     public class MinMax<T>
     {
+        [SerializeField] private T _min;
+        [SerializeField] private T _max;
+        
         public T Min
         {
             get => _min;
@@ -15,15 +18,6 @@ namespace Util
         {
             get => _max;
             set => _max = value;
-        }
-
-        [SerializeField] private T _min;
-        [SerializeField] private T _max;
-        
-        public MinMax()
-        {
-            _min = default;
-            _max = default;
         }
         
         public MinMax(T min, T max)

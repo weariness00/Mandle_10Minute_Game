@@ -43,7 +43,7 @@ namespace GamePlay.Event
             {
                 Vector2 mousePos = Mouse.current.position.ReadValue();
                 Vector2 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-                offset = Charger.transform.position - new Vector3(worldPos.x, worldPos.y, 0);
+                offset = Charger.transform.position - new Vector3(worldPos.x, worldPos.y, 30);
                 RaycastHit2D hit = Physics2D.Raycast(worldPos, Vector2.zero);
                 if(hit.collider!=null&& hit.collider.gameObject == Charger)
                     isDrag = true;
@@ -53,7 +53,7 @@ namespace GamePlay.Event
                 Vector2 mousePos = Mouse.current.position.ReadValue();
                 Vector2 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
                 
-                Charger.transform.position = offset + new Vector3(worldPos.x, worldPos.y, 0); ;
+                Charger.transform.position = offset + new Vector3(worldPos.x, worldPos.y, 30) ;
             }
 
             if (!isClear&& Mouse.current.leftButton.wasReleasedThisFrame)

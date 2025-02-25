@@ -1,6 +1,7 @@
-﻿using GamePlay;
+using GamePlay;
 using GamePlay.MiniGame.FlappingGame;
 using GamePlay.Phone;
+using Manager;
 using Quest;
 using TMPro;
 using UniRx;
@@ -41,7 +42,7 @@ namespace SeoTestTestTest
         {
             var setting = QuestSettingProviderHelper.setting;
             var e = setting.InstantiateEvent(eventID);
-            e.Play();
+            QuestManager.Instance.AddQuestQueue(e);
         }
     }
     
@@ -63,8 +64,9 @@ namespace SeoTestTestTest
 
             if (GUILayout.Button("퀘스트 결과창 생성"))
             {
-                
+                GameManager.Instance.GameClear();
             }
+            
         }
     }
     

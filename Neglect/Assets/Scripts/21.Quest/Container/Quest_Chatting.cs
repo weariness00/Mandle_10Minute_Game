@@ -1,4 +1,6 @@
+using GamePlay;
 using GamePlay.Chatting;
+using GamePlay.Narration;
 using GamePlay.Phone;
 using GamePlay.Talk;
 using UnityEngine;
@@ -20,10 +22,15 @@ namespace Quest.Container
             {
                 var chatConversation = chatting.conversation;
                 chatConversation.Init();
-                chatConversation.SetTalkData(TalkingScriptableObject.Instance.GetTalkData(eventData.extraDataIDArray.Length == 0 ? -1 : eventData.extraDataIDArray[0]));
+                
+                // Name 셋팅
                 if (eventData.textArray.Length > 0) chatConversation.ChatName.text = eventData.textArray[0];
-                chatConversation.completeEvent.AddListener(Complete);
-                chatConversation.ignoreEvent.AddListener(Ignore);
+                
+                // Extra Data 셋팅
+                chatConversation.SetTalkData(TalkingScriptableObject.Instance.GetTalkData(eventData.extraDataIDArray.Length == 0 ? -1 : eventData.extraDataIDArray[0]));
+                if(eventData.extraDataIDArray.Length > 1) GameManager.Instance.narration.StartNarration(NarrationScriptableObject.Instance.GetNarrationID(eventData.extraDataIDArray[1]));
+                chatConversation.completeEvent.AddListener(isReverse ? Ignore : Complete);
+                chatConversation.ignoreEvent.AddListener(isReverse ? Complete : Ignore);
                 chatConversation.StartConversation();
             }
         }

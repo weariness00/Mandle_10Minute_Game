@@ -1548,6 +1548,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 773c4f226e6e26c4f9756120d7a5ff5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chatLogScrollRect: {fileID: 0}
+  sendSound: {fileID: 0}
   canvas: {fileID: 0}
   CurrentName: npc
   ChatName: {fileID: 9017951179093132918}
@@ -1557,20 +1559,8 @@ MonoBehaviour:
   myMessageSprite: {fileID: 0}
   answerGroupTransform: {fileID: 0}
   answerBlockPrefab: {fileID: 0}
-  ChatGage: 0
-  GageBar: {fileID: 2642295412017670483}
-  talkData:
-    id: 0
-    mainText: ww
-    positiveResultTalkID: 0
-    negativeResultTalkID: 0
-    positiveTextArray:
-    - pos
-    - pos1
-    negativeTextArray:
-    - neg1
-    positiveScore: 0
-    negativeScore: 0
+  chatGage: 0
+  gageBarImage: {fileID: 0}
   ignoreTimer:
     _min: 0
     _max: 15
@@ -1585,8 +1575,6 @@ MonoBehaviour:
   ignoreEvent:
     m_PersistentCalls:
       m_Calls: []
-  NextTextPosY: 0
-  Scrollbar: {fileID: 4169084649797877642}
   ChatScrollBox: {fileID: 9040395770981817758}
 --- !u!1 &7512614969737218240
 GameObject:

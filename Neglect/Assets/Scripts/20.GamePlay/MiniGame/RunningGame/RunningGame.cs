@@ -1,11 +1,14 @@
-﻿using GamePlay.Phone;
+﻿using GamePlay.MiniGame.RunningGame.UI;
+using GamePlay.Phone;
 using System;
 using Manager;
 using Quest;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Util;
 
@@ -21,8 +24,6 @@ namespace GamePlay.MiniGame.RunningGame
         public GameObject runningGameObjectRoot;
         public Canvas runningGameCanvasRoot;
 
-        public int rankEventID;
-
         [Header("Setting 관련")] 
         public Canvas settingCanvas;
         public Button continueButton;
@@ -32,12 +33,22 @@ namespace GamePlay.MiniGame.RunningGame
         public Canvas lobbyCanvas;
         public GameObject lobbyObject;
         public Button lobbyExitButton;
+
+        [Header("Menu 관련")] 
+        public MatchingCanvas matchingCanvas;
+        public GameObject matchingObject;
         
         [Header("In Game 관련")]
         public InGameCanvas inGameCanvas;
         public GameObject inGameObject;
         
         public List<ObjectSpawner> obstacleSpawnerList;
+
+        [Header("Result 관련")] 
+        public ResultCanvas resultCanvas;
+
+        [Header("기타 사항")] 
+        [Tooltip("게임 클리어시 발동할 방해 이벤트")]public int bankQuestID;
 
         public override void Awake()
         {
@@ -49,38 +60,61 @@ namespace GamePlay.MiniGame.RunningGame
             lobbyCanvas.gameObject.SetActive(true);
             lobbyObject.gameObject.SetActive(true);
             
+            matchingCanvas.mainCanvas.gameObject.SetActive(false);
+            matchingObject.SetActive(false);
+            
             inGameCanvas.mainCanvas.gameObject.SetActive(false);
             inGameObject.gameObject.SetActive(false);
             
-            InputManager.running.ESC.performed += context =>
-            {
-                settingCanvas.gameObject.SetActive(!settingCanvas.gameObject.activeSelf);
+            resultCanvas.mainCanvas.gameObject.SetActive(false);
 
-                if (isGameStart)
-                {
-                    if (isGamePlay.Value) GameStop();
-                    else  GamePlay();
-                }
-            };
+            InputManager.running.ESC.performed += SettingOnOff;
             
             // 인게임 게임 시작 눌렀을때 카운트 다운 끝나고 동작
             inGameCanvas.onGameStart += () =>
             {
+                lobbyCanvas.gameObject.SetActive(false);
+                lobbyObject.SetActive(false);
+                
+                isGameStart.Value = true;
                 isGamePlay.Value = true;
                 foreach (ObjectSpawner spawner in obstacleSpawnerList)
                     spawner.Play();
             };
             
-            foreach (ObjectSpawner spawner in obstacleSpawnerList)
+            // 매칭 시작 버튼 누르면
+            matchingCanvas.gameStartButton.onClick.AddListener(() =>
             {
-                spawner.SpawnSuccessAction.AddListener(obj =>
-                {
-                    PhoneUtil.SetLayer(obj);
-                    SceneManager.MoveGameObjectToScene(obj, SceneUtil.GetRunningGameScene());
-                    obj.GetComponent<RunningObstacle>().runningGame = this;
-                    obj.transform.SetParent(inGameObject.transform);
-                });
-            }
+                matchingCanvas.matchLoadingObject.SetActive(true);
+            });
+            
+            // 매칭 끝났을 경우
+            matchingCanvas.onMatchedEvent.AddListener(() =>
+            {
+                matchingCanvas.mainCanvas.gameObject.SetActive(false);
+                matchingObject.SetActive(false);
+                
+                QuestManager.Instance.Init();
+                QuestManager.Instance.QuestStart();
+                GamePlay();
+            });
+            
+            // 등수 확인 후 매칭으로 이동
+            resultCanvas.okButton.onClick.AddListener(() =>
+            {
+                settingCanvas.gameObject.SetActive(false);
+                
+                lobbyCanvas.gameObject.SetActive(false);
+                lobbyObject.SetActive(false);
+                
+                matchingCanvas.mainCanvas.gameObject.SetActive(true);
+                matchingObject.SetActive(true);
+                
+                inGameCanvas.mainCanvas.gameObject.SetActive(false);
+                inGameObject.SetActive(false);
+            
+                resultCanvas.mainCanvas.gameObject.SetActive(false);
+            });
             
             gameSpeed.Subscribe(value =>
             {
@@ -93,15 +127,37 @@ namespace GamePlay.MiniGame.RunningGame
                 if (value <= 0)
                     GameOver();
             });
+            
+            foreach (ObjectSpawner spawner in obstacleSpawnerList)
+            {
+                spawner.SpawnSuccessAction.AddListener(obj =>
+                {
+                    PhoneUtil.SetLayer(obj);
+                    SceneManager.MoveGameObjectToScene(obj, SceneUtil.GetRunningGameScene());
+                    obj.GetComponent<RunningObstacle>().runningGame = this;
+                    obj.transform.SetParent(inGameObject.transform);
+                });
+            }
         }
 
         public override void Update()
         {
             base.Update();
 
-            if (isGamePlay.Value)
+            if (isGameStart.Value)
             {
                 UpdatePlayerData();
+            }
+        }
+
+        private void SettingOnOff(InputAction.CallbackContext context)
+        {
+            settingCanvas.gameObject.SetActive(!settingCanvas.gameObject.activeSelf);
+
+            if (isGameStart.Value)
+            {
+                if (isGamePlay.Value) GameStop();
+                else  GamePlay();
             }
         }
     }
@@ -122,7 +178,7 @@ namespace GamePlay.MiniGame.RunningGame
             public ReactiveProperty<int> score = new(0);
             public string name;
             [SerializeField] private MinMaxValue<float> scoreRandomIncreaseTimer = new(0, 0, 1, false, true);
-            [SerializeField] private MinMax<int> scoreRandomIncrease = new(0,0);
+            public MinMax<int> scoreRandomIncrease = new(0,0);
 
             public ReactiveProperty<Color> mainColor = new (Color.white);
 
@@ -182,20 +238,65 @@ namespace GamePlay.MiniGame.RunningGame
         public override void GameClear()
         {
             base.GameClear();
-            var rankQuest = QuestDataList.Instance.InstantiateEvent(rankEventID);
-            QuestManager.Instance.AddQuestQueue(rankQuest);
-            QuestManager.Instance.OnValueChange(QuestType.MiniGameRank, CurrentPlayerData.rank);
+            InputManager.running.ESC.performed -= SettingOnOff;
+            if (QuestManager.HasInstance)
+            {
+                QuestManager.Instance.OnValueChange(QuestType.MiniGameRank, CurrentPlayerData.rank);
+                QuestManager.Instance.isQuestStart = false;
+            }
+
+            matchingCanvas.gameStartButton.onClick.RemoveAllListeners();
+            matchingCanvas.gameStartButtonText.text = "게임 끝!";
+            matchingCanvas.seasonText.text = "시즌 종료";
+            matchingCanvas.warringText.text = "시즌이 종료되었습니다. 게임을 종료해주십시오.";
+            matchingCanvas.gameStartButton.onClick.AddListener(() =>
+            {
+                if (Phone)
+                {
+                    GameManager.Instance.GameEnding();
+                }
+                else
+                {
+                    SceneUtil.LoadRunningGame();
+                }
+            });
+            
+            resultCanvas.mainCanvas.gameObject.SetActive(true);
+            resultCanvas.InstantiateResult();
         }
 
         public override void GameOver()
         {
             base.GameOver();
-            
-            var rankQuest = QuestDataList.Instance.InstantiateEvent(rankEventID);
-            QuestManager.Instance.AddQuestQueue(rankQuest);
-            QuestManager.Instance.OnValueChange(QuestType.MiniGameRank, CurrentPlayerData.rank);
+            InputManager.running.ESC.performed -= SettingOnOff;
+            if (QuestManager.HasInstance)
+            {
+                QuestManager.Instance.OnValueChange(QuestType.MiniGameRank, CurrentPlayerData.rank);
+                QuestManager.Instance.isQuestStart = false;
+            }
 
-            GameManager.Instance.isGameClear.Value = true;
+            if (GameManager.HasInstance)
+            {
+                GameManager.Instance.isGameStart.Value = false;
+            }
+            matchingCanvas.gameStartButton.onClick.RemoveAllListeners();
+            matchingCanvas.gameStartButtonText.text = "게임 끝!";
+            matchingCanvas.seasonText.text = "시즌 종료";
+            matchingCanvas.warringText.text = "시즌이 종료되었습니다. 게임을 종료해주십시오.";
+            matchingCanvas.gameStartButton.onClick.AddListener(() =>
+            {
+                if (Phone)
+                {
+                    GameManager.Instance.GameEnding();
+                }
+                else
+                {
+                    SceneUtil.LoadRunningGame();
+                }
+            });
+            
+            resultCanvas.mainCanvas.gameObject.SetActive(true);
+            resultCanvas.InstantiateResult();
         }
     }
 
@@ -216,28 +317,38 @@ namespace GamePlay.MiniGame.RunningGame
             // 나가기 누르면 앱으로 이동 ( 게임은 종료되지 않음 )
             exitButton.onClick.AddListener(phone.applicationControl.OnHome);
             lobbyExitButton.onClick.AddListener(phone.applicationControl.OnHome);
+            
+            GameManager.Instance.onLastEvent.AddListener(quest =>
+            {
+                quest.onIgnoreEvent.AddListener(callScreenQuest =>
+                {
+                    // 2번 무시
+                    callScreenQuest.onIgnoreEvent.AddListener(q =>
+                    {
+                        foreach (PlayerData data in playerDataArray)
+                        {
+                            if (data == CurrentPlayerData) continue;
+                            data.scoreRandomIncrease.Max = 50;
+                            data.scoreRandomIncrease.Min = 50;
+                        }
+                    });
+                });
+            });
         }
 
         public override void AppPlay(PhoneControl phone)
         {
             base.AppPlay(phone);
             SetActiveBackground(true);
-            
-            // 게임 클리어 할 시
-            GameManager.Instance.isGameClear.Subscribe(value =>
-            {
-                if(value)
-                    isGamePlay.Value = false;
-            });
         }
 
         public override void AppResume(PhoneControl phone)
         {
             base.AppResume(phone);
             SetActiveBackground(true);
-
+            
             InputManager.running.input.Enable();
-            if(isGameStart && !settingCanvas.gameObject.activeSelf) GamePlay();
+            if(inGameObject.activeSelf) settingCanvas.gameObject.SetActive(true);
         }
 
         public override void AppPause(PhoneControl phone)

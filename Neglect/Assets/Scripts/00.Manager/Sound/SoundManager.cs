@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Audio;
 using Util;
@@ -12,7 +13,6 @@ namespace Manager
         public Canvas soundCanvas;
         public RectTransform soundCanvasRectTransform;
 
-        private static readonly string Volume = "Volume";
         private Dictionary<string, AudioSource> audioSourceDictionary = new Dictionary<string, AudioSource>();
  
         public void Awake()
@@ -29,8 +29,14 @@ namespace Manager
 
             AudioSourcesGenerate();
             var groups = mixer.FindMatchingGroups("");
-            foreach (AudioMixerGroup audioMixerGroup in groups)
-                SetVolume(audioMixerGroup.name, GetVolume(audioMixerGroup.name));
+            foreach (AudioMixerGroup group in groups)
+            {
+                if(group.name == "Master")
+                    SetVolume(group.name, GetVolume(group.name));
+                else
+                    SetVolume(group.name, 100);
+            }
+            AudioListener.pause = false;
         }
         
         public void AudioSourcesGenerate()
@@ -48,8 +54,11 @@ namespace Manager
                 GameObject obj = new GameObject { name = audioMixerGroup.name };
                 var audioSource = obj.AddComponent<AudioSource>();
 
+                audioSource.transform.SetParent(transform);
+                audioSource.playOnAwake = false;
                 audioSource.outputAudioMixerGroup = audioMixerGroup;
-                obj.transform.parent = transform;
+                if (audioSource.name == "BGM") audioSource.loop = true;
+                
                 audioSourceDictionary.TryAdd(audioMixerGroup.name, audioSource);
             }
         }
@@ -66,17 +75,17 @@ namespace Manager
         {
             if(ReferenceEquals(setting, null)) return;
 
-            setting.mixer.SetFloat(volumeName, value - 80f);
-            PlayerPrefs.SetFloat($"{nameof(SoundManager)}{Volume}{volumeName}", value);
+            setting.mixer.SetFloat(volumeName,Mathf.Clamp(value - 80f, -80f, 20f));
+            PlayerPrefs.SetFloat($"{nameof(SoundManager)}{SoundExtension.Volume}{volumeName}", Mathf.Clamp(value, 0f, 100f));
         }
 
         public float GetVolume(string volumeName)
         {
             if(ReferenceEquals(setting, null)) return 0f;
             
-            if(PlayerPrefs.HasKey($"{nameof(SoundManager)}{Volume}{volumeName}"))
-                return PlayerPrefs.GetFloat($"{nameof(SoundManager)}{Volume}{volumeName}");
-            return setting.mixer.GetFloat(volumeName, out float value) ? value : 0f;
+            if(PlayerPrefs.HasKey($"{nameof(SoundManager)}{SoundExtension.Volume}{volumeName}"))
+                return PlayerPrefs.GetFloat($"{nameof(SoundManager)}{SoundExtension.Volume}{volumeName}");
+            return setting.mixer.GetFloat(volumeName, out float value) ? Mathf.Clamp(value, 0f, 100f) : 30f;
         }
     }
 }

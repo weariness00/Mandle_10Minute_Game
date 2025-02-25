@@ -271,12 +271,11 @@ MonoBehaviour:
     positiveScore: 100
     negativeScore: 0
   - id: 4025
-    mainText: "\uB0B4\uC77C \uC810\uC2EC\uBA38\uACE0 \uC9D1\uC73C\uB85C \uAC08 \uAC83
-      \uAC19\uC544\uC694"
+    mainText: "\uB0B4\uC77C \uC9D1\uC5D0 \uC62C\uAC70\uB2C8?"
     positiveResultTalkID: 4027
     negativeResultTalkID: 4026
     positiveTextArray:
-    - "\uB0B4\uC77C \uC810\uC2EC\uBA38\uACE0 \uC9D1\uC73C\uB85C \uAC08 \uAC83 \uAC19\uC544\uC694"
+    - "\uB0B4\uC77C \uC810\uC2EC\uBA39\uACE0 \uC9D1\uC73C\uB85C \uAC08 \uAC83 \uAC19\uC544\uC694"
     negativeTextArray:
     - "\uC544\uB1E8 \uB0B4\uC77C \uD560 \uC77C\uC774 \uC788\uC5B4\uC11C \uBABB \uAC08
       \uAC83 \uAC19\uC544\uC694"
@@ -351,14 +350,33 @@ MonoBehaviour:
     positiveScore: 0
     negativeScore: 0
   - id: 10100
-    mainText: "\uCC28\uAC00 \uB9C9\uD600\uC11C 10\uBD84\uC815\uB3C4 \uB2A6\uC744
-      \uAC83 \uAC19\uC544 \uBBF8\uC548\uD558\uB2E4"
+    mainText: "\uACE7 \uC2DC\uC98C 1 \uB7AD\uD0B9\uC804\uC774 \uC885\uB8CC\uAC00
+      \uB429\uB2C8\uB2E4. \uC2DC\uC98C\uC774 \uC885\uB8CC\uAC00 \uB41C\uD6C4 \uD504\uB9AC\uC2DC\uC98C\uC774
+      \uBC14\uB85C \uC2DC\uC791\uB429\uB2C8\uB2E4."
     positiveResultTalkID: -1
     negativeResultTalkID: -1
-    positiveTextArray:
-    - "\uC54C\uACA0\uC5B4"
+    positiveTextArray: []
     negativeTextArray: []
-    positiveScore: 100
+    positiveScore: 0
+    negativeScore: 0
+  - id: 11001
+    mainText: "\uB9CC\uB4E4\uB798\uB2D8 \uC6D4\uC138\uB97C \uB354 \uBCF4\uB0C8\uB358\uB370
+      \uC740\uD589 \uACC4\uC88C\uBC88\uD638\uB97C \uC368\uC8FC\uBA74 \uB2E4\uC2DC
+      \uC785\uAE08\uD574 \uB4DC\uB9B4\uAC8C\uC694"
+    positiveResultTalkID: -1
+    negativeResultTalkID: -1
+    positiveTextArray: []
+    negativeTextArray: []
+    positiveScore: 0
+    negativeScore: 0
+  - id: 11002
+    mainText: "\uB9CC\uB4E4\uB798\uB2D8 \uC6D4\uC138\uB97C \uB35C \uBCF4\uB0B4\uC168\uC5B4\uC694
+      \uB35C \uBCF4\uB0B4\uC2E0 \uB9CC\uD07C \uB2E4\uC2DC \uC785\uAE08 \uBD80\uD0C1\uB4DC\uB9AC\uACA0\uC2B5\uB2C8\uB2E4."
+    positiveResultTalkID: -1
+    negativeResultTalkID: -1
+    positiveTextArray: []
+    negativeTextArray: []
+    positiveScore: 0
     negativeScore: 0
   talkDataCSV: {fileID: 4900000, guid: f38926548fe386b4bbbfbc2af75639e5, type: 3}
   textDataCSV: {fileID: 4900000, guid: 99da7b52953aa8648911dc3b551dee40, type: 3}

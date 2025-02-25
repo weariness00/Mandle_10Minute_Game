@@ -21,6 +21,7 @@ namespace Quest.Container
             bankApp = phoen.applicationControl.GetApp("Bank") as BankApp;
             bankApp.InitPassword();
             bankApp.InitTransferMoney();
+            bankApp.eventData = eventData;
             bankApp.completeAction += Complete;
             bankApp.ignoreAction += Ignore;
         }

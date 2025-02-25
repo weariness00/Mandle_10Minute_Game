@@ -17,14 +17,17 @@ namespace Quest
         [Tooltip("퀘스트 진행 상태")] public QuestState state = QuestState.NotStarted;
         
         [HideInInspector] public EventData eventData;
+        [HideInInspector] public bool isReverse; // 성공 실패에 대한 것을 뒤집을 것인지
+        [HideInInspector] public bool isLoop = false; // 재활용 가능한 퀘스트인지 ( 해결해도 다시 큐에 돌아가서 또 나타날 수 있다.)
         protected IDisposable subscription; // 퀘스트 매니저에서 구독하면 자동 할당됨
 
+        private QuestBase rootQuest = null;
         public UnityEvent<QuestBase> onCompleteEvent = new();
+        public UnityEvent<QuestBase> onIgnoreEvent = new();
         
         public virtual void Play()
         {
             questName = eventData.name;
-            
             if (state != QuestState.InProgress && state != QuestState.Completed)
             {
                 subscription?.Dispose();
@@ -32,19 +35,32 @@ namespace Quest
                 
                 state = QuestState.InProgress;
             }
+
+            if (rootQuest != null)
+            {
+                rootQuest.state = state;
+                isReverse = rootQuest.isReverse;
+            }
         }
 
         public virtual void Ignore()
         {
             subscription?.Dispose();
-            state = QuestState.Failed;
-
+            state = isReverse ? QuestState.Completed : QuestState.Failed;
+            if (rootQuest != null) rootQuest.state = state;
             if (eventData.ignoreEventID != -1)
             {
                 var ignoreEvent = QuestDataList.Instance.GetEventID(eventData.ignoreEventID);
                 var quest = QuestDataList.Instance.InstantiateEvent(eventData.ignoreEventID);
                 quest.eventData = ignoreEvent;
-                QuestManager.Instance.AddQuestQueue(quest);
+                quest.rootQuest = rootQuest == null ? this : rootQuest;
+                QuestManager.Instance.AddAndPlay(quest);
+                
+                onIgnoreEvent?.Invoke(quest);
+            }
+            else
+            {
+                onIgnoreEvent?.Invoke(null);
             }
             
             QuestManager.Instance.Remove(this);
@@ -59,13 +75,15 @@ namespace Quest
         public virtual void Complete()
         {
             subscription?.Dispose();
-            state = QuestState.Completed;
+            state = isReverse ? QuestState.Failed : QuestState.Completed;
+            if (rootQuest != null) rootQuest.state = state;
             if (eventData.acceptEventID != -1)
             {
                 var acceptEvent = QuestDataList.Instance.GetEventID(eventData.acceptEventID);
                 var quest = QuestDataList.Instance.InstantiateEvent(eventData.acceptEventID);
                 quest.eventData = acceptEvent;
-                QuestManager.Instance.AddQuestQueue(quest);
+                quest.rootQuest = rootQuest == null ? this : rootQuest;
+                QuestManager.Instance.AddAndPlay(quest);
                 onCompleteEvent?.Invoke(quest);
             }
             else
@@ -73,6 +91,14 @@ namespace Quest
                 onCompleteEvent?.Invoke(null);
             }
             
+            QuestManager.Instance.Remove(this);
+        }
+
+        public virtual void Failed()
+        {
+            subscription?.Dispose();
+            state = QuestState.Failed;
+            if (rootQuest != null) rootQuest.state = state;
             QuestManager.Instance.Remove(this);
         }
     }

@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -9,9 +7,8 @@ namespace GamePlay.Event
     public class Alarm : MonoBehaviour
     {
         public Action complete;
-        public Action ignore;
+        public Action ignoreEvent;
         public TextMeshProUGUI timeText;
-
         public void TimeSet(string text)
         {
             timeText.text = text;
@@ -25,14 +22,15 @@ namespace GamePlay.Event
 
         public void IgnoreEvent()
         {
-            if(ignore != null) 
-                ignore();
+            if (ignoreEvent != null)
+            {
+                ignoreEvent?.Invoke();
+            }
             SelfDestroy();
         }
 
         public void SelfDestroy()
         {
-
             Destroy(gameObject);
         }
     }

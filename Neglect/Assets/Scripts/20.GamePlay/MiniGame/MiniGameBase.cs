@@ -1,6 +1,8 @@
-﻿using GamePlay.Phone;
+﻿using GamePlay.App;
+using GamePlay.Phone;
 using Manager;
 using Quest;
+using System.Linq;
 using UniRx;
 using UnityEditor;
 using UnityEngine;
@@ -11,7 +13,7 @@ namespace GamePlay.MiniGame
     public partial class MiniGameBase : MonoBehaviour
     {
         [Header("공통 사항")]
-        public bool isGameStart = false;
+        public ReactiveProperty<bool> isGameStart = new(false);
         public ReactiveProperty<bool> isGamePlay = new(true);
         public ReactiveProperty<bool> isGameClear = new(false);
         public ReactiveProperty<float> gameSpeed = new(1f);
@@ -19,6 +21,8 @@ namespace GamePlay.MiniGame
 
         public MiniGameTutorial tutorial;
         [HideInInspector] public bool isOnTutorial;
+
+        [Tooltip("랭크 퀘스트")] public QuestBase rankQuest;
         
         [Space] 
         public AudioClip bgmSound;
@@ -44,7 +48,6 @@ namespace GamePlay.MiniGame
                 playTime.Current += Time.deltaTime;
                 if (playTime.IsMax)
                 {
-                    isGameClear.Value = true;
                     GameClear();
                 }
             }
@@ -54,9 +57,6 @@ namespace GamePlay.MiniGame
         {
             if (isOnTutorial)
             {
-                isGamePlay.Value = true;
-                isGameStart = true;
-
                 var bgmSource = SoundManager.Instance.GetBGMSource();
                 bgmSource.clip = bgmSound;
                 bgmSource.Play();
@@ -82,13 +82,16 @@ namespace GamePlay.MiniGame
 
         public virtual void GameOver()
         {
+            QuestManager.Instance.AddAndPlay(rankQuest);
             isGamePlay.Value = false;
-            isGameStart = false;
             gameSpeed.Value = 0;
         }
 
         public virtual void GameClear()
         {
+            isGamePlay.Value = false;
+            isGameClear.Value = true;
+            QuestManager.Instance.AddAndPlay(rankQuest);
         }
 
         public virtual void GameExit()
@@ -135,25 +138,71 @@ namespace GamePlay.MiniGame
                     canvas.worldCamera = phone.phoneCamera;
                 }
             }
-
+            
             var home = _phone.applicationControl.GetHomeApp();
             var appButton = home.GetAppButton(this);
             appButton.highlightObject.SetActive(true);
-            appButton.button.interactable = false;
+            
+            foreach (AppButton button in home.GetAllAppButton())
+                button.button.interactable = false;
+
+            // 러닝 게임 시작시 GameManager의 타이머가 흐르도록 설정
+            isGameStart.Subscribe(value =>
+            {
+                if (value)
+                {
+                    GameManager.Instance.isGameStart.Value = true;
+                }
+            });
+            
+            // 게임 클리어
+            GameManager.Instance.isGameClear.Subscribe(value =>
+            {
+                if (value)
+                {
+                    var allButtonArray = home.GetAllAppButton();
+                    foreach (AppButton button in allButtonArray)
+                        button.button.interactable = false;
+                    GameClear();
+                }
+            });
+            
+            GameManager.Instance.onLastEvent.AddListener(quest =>
+            {
+                // 은행 어플에 진입하는 퀘스트 까지 가면 게임 앱 버튼 비활성화
+                quest.onCompleteEvent.AddListener(chatQuest =>
+                {
+                    chatQuest.onCompleteEvent.AddListener(bankQuest =>
+                    {
+                        appButton.button.interactable = false;
+                    });
+                });
+                
+                quest.onIgnoreEvent.AddListener(callScreenQuest =>
+                {
+                    // 은행앱 진입
+                    callScreenQuest.onCompleteEvent.AddListener(phoneCallQuest =>
+                    {
+                        phoneCallQuest.onCompleteEvent.AddListener(bankQuest =>
+                        {
+                            appButton.button.interactable = false;
+                        });
+                    });
+                    
+                    // 2번 무시
+                    callScreenQuest.onIgnoreEvent.AddListener(q =>
+                    {
+                        
+                    });
+                });
+            });
         }
 
         public virtual void AppPlay(PhoneControl phone)
         {
             var home = _phone.applicationControl.GetHomeApp();
             home.GetAppButton(this).highlightObject.SetActive(false);
-
-            GameManager.Instance.isGameStart.Value = true;
-            if (GameManager.Instance.isInitQuest == false)
-            {
-                GameManager.Instance.isInitQuest = true;
-                QuestManager.Instance.Init();
-                phone.PhoneViewRotate(PhoneViewType.Horizon);
-            }
+            phone.PhoneViewRotate(PhoneViewType.Horizon);
         }
 
         public virtual void AppResume(PhoneControl phone)

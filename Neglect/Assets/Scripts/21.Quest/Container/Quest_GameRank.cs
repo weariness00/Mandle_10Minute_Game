@@ -10,12 +10,23 @@ namespace Quest.Container
     {
         [Tooltip("목표 랭크")] public int goalRank;
 
+        public void Awake()
+        {
+            eventData = new()
+            {
+                level = QuestLevel.Hard,
+                isMainEvent = true,
+            };
+
+            eventData.name = questName;
+        }
+
         public override void OnNext(object value)
         {
             if (value is int currentRank)
             {
                 Debug.Log(currentRank);
-                if (currentRank >= goalRank)
+                if (currentRank <= goalRank)
                 {
                     Complete();
                 }

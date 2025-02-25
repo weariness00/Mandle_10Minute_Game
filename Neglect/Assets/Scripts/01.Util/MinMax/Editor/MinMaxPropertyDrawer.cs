@@ -1,89 +1,115 @@
 using UnityEditor;
-using UnityEngine.UIElements;
-
+using UnityEngine;
 namespace Util.Editor
 {
     [CustomPropertyDrawer(typeof(MinMax<int>))]
     public class MinMaxIntPropertyDrawer : PropertyDrawer
     {
-        public override VisualElement CreatePropertyGUI(SerializedProperty property)
+        private SerializedProperty min;
+        private SerializedProperty max;
+
+        private float currentValueInterval = 30;
+        private float minValueInterval = 30;
+        private float maxValueInterval = 30;
+
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var container = new VisualElement();
-            container.style.flexDirection = FlexDirection.Row; // 가로 정렬
-            
-            var propertyLabel = new Label(property.displayName); // 부모 변수 이름 가져오기
-            var min = property.FindPropertyRelative("_min");
-            var max = property.FindPropertyRelative("_max");
+            EditorGUI.BeginProperty(position, label, property);
 
-            var minField = new IntegerField("");
-            var maxField = new IntegerField("");
-            
-            minField.style.marginRight = 5;
+            max = property.FindPropertyRelative("_max");
+            min = property.FindPropertyRelative("_min");
 
-            minField.value = min.intValue;
-            minField.style.width = 100;
-            minField.RegisterValueChangedCallback(evt =>
-            {
-                min.intValue = evt.newValue;
-                property.serializedObject.ApplyModifiedProperties();
-            });
-            
-            maxField.value = max.intValue;
-            maxField.style.width = 100;
-            maxField.RegisterValueChangedCallback(evt =>
-            {
-                max.intValue = evt.newValue;
-                property.serializedObject.ApplyModifiedProperties();
-            });
-            
-            container.Add(propertyLabel);
-            container.Add(minField);
-            container.Add(new Label("~"));
-            container.Add(maxField);
+            Rect labelPosition = new Rect(position.x, position.y, position.width, position.height);
+            position = EditorGUI.PrefixLabel(
+                labelPosition,
+                EditorGUIUtility.GetControlID(FocusType.Passive),
+                label
+            );
 
-            return container;
+            int indent = EditorGUI.indentLevel;
+            EditorGUI.indentLevel = 0;
+
+            float sumInterval = 0;
+
+            // Min Value 필드
+            int minDigitCount = min.intValue.GetDigitCount();
+            minValueInterval = minDigitCount <= 2 ? 25 : minDigitCount * 11;
+            var minPos = new Rect(position.x + sumInterval, position.y, minValueInterval, position.height);
+            min.intValue = EditorGUI.IntField(minPos, min.intValue);
+            sumInterval += minValueInterval;
+
+            int textInterval = 20;
+            var rangeTextPos = new Rect(position.x + sumInterval, position.y, textInterval, position.height);
+            EditorGUI.LabelField(rangeTextPos, $" ~ ");
+            sumInterval += textInterval;
+
+            int maxDigitCount = max.intValue.GetDigitCount();
+            maxValueInterval = maxDigitCount <= 2 ? 25 : maxDigitCount * 11;
+            var maxPos = new Rect(position.x + sumInterval, position.y, maxValueInterval, position.height);
+            max.intValue = EditorGUI.IntField(maxPos, max.intValue);
+            sumInterval += maxValueInterval;
+
+            EditorGUI.indentLevel = indent;
+            EditorGUI.EndProperty();
+
+            property.serializedObject.ApplyModifiedProperties();
         }
     }
-    
+
     [CustomPropertyDrawer(typeof(MinMax<float>))]
     public class MinMaxFloatPropertyDrawer : PropertyDrawer
     {
-        public override VisualElement CreatePropertyGUI(SerializedProperty property)
+        private SerializedProperty min;
+        private SerializedProperty max;
+
+        private float currentValueInterval = 30;
+        private float minValueInterval = 30;
+        private float maxValueInterval = 30;
+
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var container = new VisualElement();
-            container.style.flexDirection = FlexDirection.Row; // 가로 정렬
-            
-            var propertyLabel = new Label(property.displayName); // 부모 변수 이름 가져오기
-            var min = property.FindPropertyRelative("_min");
-            var max = property.FindPropertyRelative("_max");
+            EditorGUI.BeginProperty(position, label, property);
 
-            var minField = new FloatField("");
-            var maxField = new FloatField("");
+            max = property.FindPropertyRelative("_max");
+            min = property.FindPropertyRelative("_min");
             
-            minField.style.marginRight = 5;
+            // Label 필드
+            Rect labelPosition = new Rect(position.x, position.y, label.text.Length * 1, position.height);
+            position = EditorGUI.PrefixLabel(
+                labelPosition,
+                EditorGUIUtility.GetControlID(FocusType.Passive),
+                label
+            );
 
-            minField.value = min.floatValue;
-            minField.style.width = 100;
-            minField.RegisterValueChangedCallback(evt =>
-            {
-                min.floatValue = evt.newValue;
-                property.serializedObject.ApplyModifiedProperties();
-            });
-            
-            maxField.value = max.floatValue;
-            maxField.style.width = 100;
-            maxField.RegisterValueChangedCallback(evt =>
-            {
-                max.floatValue = evt.newValue;
-                property.serializedObject.ApplyModifiedProperties();
-            });
-            
-            container.Add(propertyLabel);
-            container.Add(minField);
-            container.Add(new Label("~"));
-            container.Add(maxField);
+            int indent = EditorGUI.indentLevel;
+            EditorGUI.indentLevel = 0;
 
-            return container;
+            float sumInterval = 0; // 전체 간격 길이
+
+            // min value 필드 값
+            int minDigitCount = min.intValue.GetDigitCount();
+            minValueInterval = minDigitCount <= 2 ? 25 : minDigitCount * 9;
+            var minPos = new Rect(position.x + sumInterval, position.y, minValueInterval, position.height);
+            min.intValue = EditorGUI.IntField(minPos, min.intValue);
+            sumInterval += minValueInterval;
+
+            // "~" 문자열 필드
+            int textInterval = 20;
+            var rangeTextPos = new Rect(position.x + sumInterval, position.y, textInterval, position.height);
+            EditorGUI.LabelField(rangeTextPos, $" ~ ");
+            sumInterval += textInterval;
+
+            // Max Value 필드 값
+            int maxDigitCount = max.intValue.GetDigitCount();
+            maxValueInterval = maxDigitCount <= 2 ? 25 : maxDigitCount * 9;
+            var maxPos = new Rect(position.x + sumInterval, position.y, maxValueInterval, position.height);
+            max.intValue = EditorGUI.IntField(maxPos, max.intValue);
+            sumInterval += maxValueInterval;
+
+            EditorGUI.indentLevel = indent;
+            EditorGUI.EndProperty();
+
+            property.serializedObject.ApplyModifiedProperties();
         }
     }
 }

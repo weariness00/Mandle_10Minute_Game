@@ -15,7 +15,8 @@ namespace Quest
         public override void Play()
         {
             base.Play();
-            
+            if (eventData.extraDataIDArray.Length > 1) isLoop = eventData.extraDataIDArray[1] == -45;
+
             GameManager.Instance.realVolumeControl.Tired(repeatCount,duration);
             Complete();
         }

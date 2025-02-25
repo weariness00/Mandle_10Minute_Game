@@ -7,6 +7,8 @@ namespace Quest.Container
     {
         public PopUpPad popUpPrefab;
 
+        private PopUpPad popUp;
+
         public override void OnNext(object value)
         {
         }
@@ -14,12 +16,15 @@ namespace Quest.Container
         public override void Play()
         {
             base.Play();
-            var popUp = PhoneUtil.InstantiateUI(popUpPrefab);
-            popUp.button.onClick.AddListener(Complete);
-            popUp.destroyPopUpEvent.AddListener(Ignore);
-
+            popUp = PhoneUtil.InstantiateUI(popUpPrefab);
             if(eventData.textArray.Length >= 1) popUp.titleText.text = eventData.textArray[0];
             if(eventData.textArray.Length >= 2) popUp.explainText.text = eventData.textArray[1];
+
+            if (eventData.extraDataIDArray.Length >= 1) isReverse = eventData.extraDataIDArray[0] == -99;
+            if (eventData.extraDataIDArray.Length >= 2) isLoop = eventData.extraDataIDArray[0] == -45;
+            
+            popUp.button.onClick.AddListener(Complete);
+            popUp.destroyPopUpEvent.AddListener(Ignore);
             
             PhoneUtil.currentPhone.PhoneVibration();
         }
@@ -30,6 +35,12 @@ namespace Quest.Container
             var phone = PhoneUtil.currentPhone;
             phone.applicationControl.OpenApp("Chatting");
             phone.PhoneViewRotate(PhoneViewType.Vertical);
+        }
+
+        public override void Failed()
+        {
+            base.Failed();
+            if(popUp) Destroy(popUp.gameObject);
         }
     }
 }

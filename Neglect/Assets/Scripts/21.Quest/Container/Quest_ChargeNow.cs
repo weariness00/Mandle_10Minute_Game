@@ -30,6 +30,8 @@ public class Quest_ChargeNow : QuestBase
     {
         base.Play();
 
+        if (eventData.extraDataIDArray.Length > 1) isLoop = eventData.extraDataIDArray[1] == -45;
+        
         ChargerPopup = PhoneUtil.InstantiateUI(notification, out var phone_);
         ChargerPopup.gameObject.SetActive(true);
         Charger = Instantiate(charger , SpawnPos , transform.rotation);
@@ -47,11 +49,6 @@ public class Quest_ChargeNow : QuestBase
         ChargerPopup.IgnoreAction += Ignore;
     }
 
-    private void Update()
-    {
-
-    }
-
     public override void Complete()
     {
         base.Complete();
@@ -66,6 +63,13 @@ public class Quest_ChargeNow : QuestBase
         DeleteObject();
         phone.applicationControl.OpenApp(app);
     }
+
+    public override void Failed()
+    {
+        base.Failed();
+        DeleteObject();
+    }
+
     public void DeleteObject()
     {
         Charger.HideAnimation();

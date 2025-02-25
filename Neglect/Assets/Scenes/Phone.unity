@@ -380,7 +380,7 @@ Transform:
   m_GameObject: {fileID: 344269318}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.193, y: 2.08, z: 0}
+  m_LocalPosition: {x: -2.19, y: 1.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -630,8 +630,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC9C4\uB3D9"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: ee89d75a416f5fd4fa1f3b2033acde8d, type: 2}
-  m_sharedMaterial: {fileID: 6798511891574570026, guid: ee89d75a416f5fd4fa1f3b2033acde8d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ce50875118459ef48a0bd62c7491d7dd, type: 2}
+  m_sharedMaterial: {fileID: 8095778784461696725, guid: ce50875118459ef48a0bd62c7491d7dd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -742,7 +742,8 @@ MonoBehaviour:
   ChargingPort: {fileID: 1797089278}
   interfaceGroupOnOffButton: {fileID: 1488175886}
   applicationControl: {fileID: 553185174}
-  VibrationAudio: {fileID: 21221871}
+  emptyClickSound: {fileID: 8300000, guid: c1d05f2930eb3c94585592e53dcd4621, type: 3}
+  vibrationSound: {fileID: 8300000, guid: 6c11170cb460ea8439b6d566a89bc963, type: 3}
   phoneShader: {fileID: -6465566751694194690, guid: aaa673228006ca64fa4e4a508837c977, type: 3}
   phoneVerticalSprite: {fileID: 21300000, guid: 9991c613ace2ebd4e8c124539080d011, type: 3}
   phoneHorizonSprite: {fileID: 21300000, guid: dc6856e3a15ae944489b13643c4a7edf, type: 3}
@@ -1067,7 +1068,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.175}
+  m_Offset: {x: 0, y: 0.35}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1078,7 +1079,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.2, y: 0.35}
+  m_Size: {x: 0.2, y: 0.55}
   m_EdgeRadius: 0
 --- !u!114 &807254261
 MonoBehaviour:
@@ -1229,7 +1230,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.175}
+  m_Offset: {x: 0, y: -0.35}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1240,7 +1241,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.2, y: 0.35}
+  m_Size: {x: 0.2, y: 0.55}
   m_EdgeRadius: 0
 --- !u!50 &849376062
 Rigidbody2D:
@@ -1959,7 +1960,7 @@ Transform:
   m_GameObject: {fileID: 1797089278}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -4.33, z: 2}
+  m_LocalPosition: {x: 0, y: -4.33, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
