@@ -31,7 +31,7 @@ MonoBehaviour:
     level: 1
     prefab: {fileID: 7104001957306441222, guid: 28b853421a1930741bddba56a7064227, type: 3}
     acceptEventID: 1105
-    ignoreEventID: 1101
+    ignoreEventID: -1
     textArray:
     - "\uC5C4\uB9C8"
     extraDataIDArray: 
@@ -41,7 +41,7 @@ MonoBehaviour:
     level: 1
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
     acceptEventID: 1104
-    ignoreEventID: 1101
+    ignoreEventID: -1
     textArray:
     - "\uCE5C\uAD6C"
     - "\uB0B4\uC77C \uC6B0\uB9AC \uBA87\uC2DC\uC5D0 \uB9CC\uB098\uAE30\uB85C \uD588\uC9C0?"
@@ -351,7 +351,7 @@ MonoBehaviour:
     level: 1
     prefab: {fileID: 7104001957306441222, guid: 28b853421a1930741bddba56a7064227, type: 3}
     acceptEventID: 1105
-    ignoreEventID: 1101
+    ignoreEventID: -1
     textArray:
     - "\uC5C4\uB9C8"
     extraDataIDArray: 
@@ -361,7 +361,7 @@ MonoBehaviour:
     level: 1
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
     acceptEventID: 1104
-    ignoreEventID: 1101
+    ignoreEventID: -1
     textArray:
     - "\uCE5C\uAD6C"
     - "\uB0B4\uC77C \uC6B0\uB9AC \uBA87\uC2DC\uC5D0 \uB9CC\uB098\uAE30\uB85C \uD588\uC9C0?"
@@ -462,7 +462,7 @@ MonoBehaviour:
   questSpawnTimer:
     _min: 0
     _max: 30
-    _current: 10.018007
+    _current: 3.6594574
     _isMin: 0
     _isMax: 0
     isOverMax: 1
