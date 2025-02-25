@@ -51,14 +51,14 @@ namespace GamePlay.Container
             else if (type == 1)
             {
                 tradeAmount.color = Color.blue;
-                tradeAmount.text = "+"+AddCommas(amount.ToString());
+                tradeAmount.text = "+"+AddCommas(amount.ToString())+"원";
                 tradeTopicText.text = "월세 초과금";
                 tradeTypeText.text = "입금";
             }
             else if (type == 2)
             {
                 tradeAmount.color = Color.red;
-                tradeAmount.text = "-"+AddCommas(amount.ToString());
+                tradeAmount.text = "-"+AddCommas(amount.ToString()) + "원";
                 tradeTopicText.text = "월세";
                 tradeTypeText.text = "출금";
             }
