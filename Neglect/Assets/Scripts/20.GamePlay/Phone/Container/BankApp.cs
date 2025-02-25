@@ -306,8 +306,9 @@ namespace GamePlay.Phone
                 }
             }
             inputAmountsum += InputAmount;
-            InputAccountText.text = "";
-            InputAmountText.text = "0";
+            InputAccount = "";
+            InputAmount = 0;
+            SetText();
             BankMemo.TextSetting("To Owner", RandomAccount, RandomAmount-inputAmountsum);
             ChangeView(0);
             
