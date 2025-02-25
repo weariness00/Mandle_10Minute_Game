@@ -142,10 +142,6 @@ PrefabInstance:
       propertyPath: m_PresetInfoIsWorld
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2941553390802446208, guid: 1d5ea28f701293f479506dfbddd47d90, type: 3}
-      propertyPath: typingSound
-      value: 
-      objectReference: {fileID: 8300000, guid: fef37f15a929fb042af9e62497ed5ac0, type: 3}
     - target: {fileID: 4441662835322059515, guid: 1d5ea28f701293f479506dfbddd47d90, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -154,6 +150,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4586627753090403227, guid: 1d5ea28f701293f479506dfbddd47d90, type: 3}
+      propertyPath: CallEndButton
+      value: 
+      objectReference: {fileID: 817395591}
     - target: {fileID: 5334976221854886427, guid: 1d5ea28f701293f479506dfbddd47d90, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -254,10 +254,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6547326160912665185, guid: 1d5ea28f701293f479506dfbddd47d90, type: 3}
-      propertyPath: typingSound
-      value: 
-      objectReference: {fileID: 8300000, guid: fef37f15a929fb042af9e62497ed5ac0, type: 3}
     - target: {fileID: 7580179272359391903, guid: 1d5ea28f701293f479506dfbddd47d90, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -567,6 +563,9 @@ MonoBehaviour:
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
+  excludeLayer:
+    serializedVersion: 2
+    m_Bits: 0
   m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
@@ -582,6 +581,17 @@ MonoBehaviour:
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
   m_ScrollDeltaPerTick: 6
+--- !u!114 &817395591 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2070219575718304581, guid: 1d5ea28f701293f479506dfbddd47d90, type: 3}
+  m_PrefabInstance: {fileID: 357936908}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1514620097
 GameObject:
   m_ObjectHideFlags: 0

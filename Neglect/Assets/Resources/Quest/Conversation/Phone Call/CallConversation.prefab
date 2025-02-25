@@ -1871,7 +1871,7 @@ MonoBehaviour:
   TimeText: {fileID: 743942467544635317}
   CloseCall: {fileID: 8008337984528266428}
   CloseMyText: {fileID: 2250393499334081697}
-  CallEndButton: {fileID: 4928818977703317395}
+  CallEndButton: {fileID: 2070219575718304581}
 --- !u!1 &6163881036161435589
 GameObject:
   m_ObjectHideFlags: 0
