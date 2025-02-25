@@ -9,7 +9,6 @@ namespace Quest
         
         public override void OnNext(object value)
         {
-        
         }
 
         public override void Play()

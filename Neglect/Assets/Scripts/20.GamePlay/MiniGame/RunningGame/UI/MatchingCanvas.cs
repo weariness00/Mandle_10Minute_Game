@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,9 +11,13 @@ namespace GamePlay.MiniGame.RunningGame.UI
     {
         public Canvas mainCanvas;
 
+        [Header("Player Information 관련")] 
+        public Image rankIcon;
+        public List<Sprite> rankSpriteList;
         public TMP_Text rankText; // 전체 랭킹
         public TMP_Text topScoreText; // 본인 점수 중 가장 높은 점수
 
+        [Header("Matching Start Information 관련")]
         public TMP_Text seasonText;
         public TMP_Text warringText;
         public Button gameStartButton;
@@ -58,7 +63,9 @@ namespace GamePlay.MiniGame.RunningGame.UI
             matchTimer = 0f;
 
             var data = runningGame.CurrentPlayerData;
-            rankText.text = $"현재 랭킹 : {(data.rank == 0 ? 2 : data.rank)}위";
+            var hasRank = data.rank != 0;
+            rankIcon.sprite = rankSpriteList[hasRank ? data.rank - 1 : 1];
+            rankText.text = $"현재 랭킹 : {(hasRank ? data.rank : 2)}위";
             topScoreText.text = "최고 점수 : " + (PlayerPrefs.HasKey($"{nameof(RunningGame)}Score") ? PlayerPrefs.GetInt($"{nameof(RunningGame)}Score").ToString() : data.score.ToString());
         }
 

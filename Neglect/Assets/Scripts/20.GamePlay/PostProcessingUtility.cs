@@ -100,7 +100,7 @@ namespace GamePlay
                 vignetteSequence.Append(DOTween.To(
                         () => vignette.intensity.value,
                         value => vignette.intensity.value = value,
-                        0.8f,
+                        1f,
                         duration)
                     .SetLoops(repeatCount, LoopType.Yoyo)
                     .SetEase(Ease.InOutSine));

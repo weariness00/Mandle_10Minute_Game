@@ -462,6 +462,8 @@ namespace GamePlay.Phone
             {
                 _phone.applicationControl.OnHome();
             });
+
+            _phone.applicationControl.GetHomeApp().GetAppButton(this).button.interactable = false;
         }
 
         public void AppPlay(PhoneControl phone)
