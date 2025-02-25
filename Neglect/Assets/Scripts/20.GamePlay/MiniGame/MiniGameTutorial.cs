@@ -22,6 +22,7 @@ public class MiniGameTutorial : MonoBehaviour
         pageIndex = new(0,0,tutorialImageList.Count -1);
         PageUpdate();
         
+        okButton.onClick.AddListener(() => pageIndex.SetMin());
         leftButton.onClick.AddListener(LeftPage);
         rightButton.onClick.AddListener(RightPage);
     }
