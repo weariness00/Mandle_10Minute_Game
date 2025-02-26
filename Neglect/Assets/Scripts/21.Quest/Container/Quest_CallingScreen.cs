@@ -24,6 +24,7 @@ namespace Quest.Container
             base.Play();
             callingScreen = PhoneUtil.InstantiateUI(phoneCallScreenPrefab, out phone);
             app = phone.applicationControl.currentPlayApplication;
+            phone.interfaceGroupOnOffButton.gameObject.SetActive(false);
             phone.applicationControl.PauseApp(app);
             phone.PhoneViewRotate(0);
             app.SetActiveBackground(true);

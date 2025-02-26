@@ -3,12 +3,13 @@ using GamePlay.Phone;
 using System;
 using Manager;
 using Quest;
+using Quest.Container;
+using System.Collections;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Util;
 
@@ -67,7 +68,7 @@ namespace GamePlay.MiniGame.RunningGame
             inGameObject.gameObject.SetActive(false);
             
             resultCanvas.mainCanvas.gameObject.SetActive(false);
-
+            
             InputManager.running.ESC.performed += SettingOnOff;
             
             // 인게임 게임 시작 눌렀을때 카운트 다운 끝나고 동작
@@ -78,6 +79,10 @@ namespace GamePlay.MiniGame.RunningGame
                 
                 isGameStart.Value = true;
                 isGamePlay.Value = true;
+                
+                // 플레이어 애니메이션 활성화
+                player.animator.animator.enabled = true;
+
                 foreach (ObjectSpawner spawner in obstacleSpawnerList)
                     spawner.Play();
             };
@@ -93,9 +98,12 @@ namespace GamePlay.MiniGame.RunningGame
             {
                 matchingCanvas.mainCanvas.gameObject.SetActive(false);
                 matchingObject.SetActive(false);
-                
-                QuestManager.Instance.Init();
-                QuestManager.Instance.QuestStart();
+
+                if (QuestManager.HasInstance)
+                {
+                    QuestManager.Instance.Init();
+                    QuestManager.Instance.QuestStart();
+                }
                 GamePlay();
             });
             
@@ -140,6 +148,12 @@ namespace GamePlay.MiniGame.RunningGame
             }
         }
 
+        public override void Start()
+        {
+            base.Start();
+            player.animator.animator.enabled = false;
+        }
+
         public override void Update()
         {
             base.Update();
@@ -152,12 +166,10 @@ namespace GamePlay.MiniGame.RunningGame
 
         private void SettingOnOff(InputAction.CallbackContext context)
         {
-            settingCanvas.gameObject.SetActive(!settingCanvas.gameObject.activeSelf);
-
-            if (isGameStart.Value)
+            if (inGameCanvas.gameObject.activeSelf)
             {
-                if (isGamePlay.Value) GameStop();
-                else  GamePlay();
+                settingCanvas.gameObject.SetActive(true);
+                GameStop();
             }
         }
     }
@@ -179,9 +191,14 @@ namespace GamePlay.MiniGame.RunningGame
             public string name;
             [SerializeField] private MinMaxValue<float> scoreRandomIncreaseTimer = new(0, 0, 1, false, true);
             public MinMax<int> scoreRandomIncrease = new(0,0);
+            [HideInInspector] public float increaseMultiple = 1f;
 
             public ReactiveProperty<Color> mainColor = new (Color.white);
 
+
+            private float originIncreaseMultiple = 1f;
+            private IDisposable _disposable;
+            
             public void RandomIncreaseScore(float deltaTime)
             {
                 scoreRandomIncreaseTimer.Current += deltaTime;
@@ -192,6 +209,23 @@ namespace GamePlay.MiniGame.RunningGame
                     score.Value += scoreRandomIncrease.Random();
                 }
             }
+
+            public void SetMultiple(float value)
+            {
+                _disposable?.Dispose();
+                originIncreaseMultiple = value;
+                increaseMultiple = value;
+            }
+            
+            public void StartMultipleDuration(float value, float duration)
+            {
+                _disposable?.Dispose();
+                increaseMultiple = originIncreaseMultiple;
+                originIncreaseMultiple = increaseMultiple;
+                increaseMultiple = value;
+                _disposable = Observable.Interval(TimeSpan.FromSeconds(duration)).Subscribe(_ => { increaseMultiple = originIncreaseMultiple; });
+            }
+            
         }
 
         public void UpdatePlayerData()
@@ -231,6 +265,9 @@ namespace GamePlay.MiniGame.RunningGame
         public override void GameStop()
         {
             base.GameStop();
+            inGameCanvas.StopCountDown();
+
+            player.animator.animator.enabled = false;
             foreach (ObjectSpawner spawner in obstacleSpawnerList)
                 spawner.Pause();
         }
@@ -238,6 +275,7 @@ namespace GamePlay.MiniGame.RunningGame
         public override void GameClear()
         {
             base.GameClear();
+            inGameCanvas.StopCountDown();
             InputManager.running.ESC.performed -= SettingOnOff;
             if (QuestManager.HasInstance)
             {
@@ -268,6 +306,7 @@ namespace GamePlay.MiniGame.RunningGame
         public override void GameOver()
         {
             base.GameOver();
+            inGameCanvas.StopCountDown();
             InputManager.running.ESC.performed -= SettingOnOff;
             if (QuestManager.HasInstance)
             {
@@ -318,21 +357,25 @@ namespace GamePlay.MiniGame.RunningGame
             exitButton.onClick.AddListener(phone.applicationControl.OnHome);
             lobbyExitButton.onClick.AddListener(phone.applicationControl.OnHome);
             
-            GameManager.Instance.onLastEvent.AddListener(quest =>
+            QuestManager.Instance.onEndQuestEvent.AddListener(quest =>
             {
-                quest.onIgnoreEvent.AddListener(callScreenQuest =>
+                // 뱅크앱 실패일 경우
+                if (quest is Quest_Bank { state: QuestState.Failed })
                 {
-                    // 2번 무시
-                    callScreenQuest.onIgnoreEvent.AddListener(q =>
+                    for (var i = 1; i < playerDataArray.Length; i++)
                     {
-                        foreach (PlayerData data in playerDataArray)
-                        {
-                            if (data == CurrentPlayerData) continue;
-                            data.scoreRandomIncrease.Max = 50;
-                            data.scoreRandomIncrease.Min = 50;
-                        }
-                    });
-                });
+                        playerDataArray[i].SetMultiple(2f);
+                    }
+                    return;
+                }
+                // 어떤 이벤트든 실패했을 경우
+                if (quest.state == QuestState.Failed)
+                {
+                    for (var i = 1; i < playerDataArray.Length; i++)
+                    {
+                        playerDataArray[i].StartMultipleDuration(2f, 30f);
+                    }
+                }
             });
         }
 

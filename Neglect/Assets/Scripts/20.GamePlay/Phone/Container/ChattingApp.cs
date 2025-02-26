@@ -42,15 +42,16 @@ namespace GamePlay.Phone
         public void AppPlay(PhoneControl phone)
         {
             SetActiveBackground(true);
-            conversation.Init();
             conversation.StartConversation();
+            phone.PhoneViewRotate(PhoneViewType.Vertical, () => phone.FadeIn(1f, Color.black));
         }
 
         public void AppResume(PhoneControl phone)
         {
             SetActiveBackground(true);
-            conversation.Init();
             conversation.StartConversation();
+            phone.FadeOut(0.1f, Color.black);
+            phone.PhoneViewRotate(PhoneViewType.Vertical, () => phone.FadeIn(1f, Color.black));
         }
 
         public void AppPause(PhoneControl phone)

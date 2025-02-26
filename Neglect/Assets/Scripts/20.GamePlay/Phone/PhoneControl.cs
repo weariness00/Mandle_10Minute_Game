@@ -117,20 +117,24 @@ namespace GamePlay.Phone
         [Tooltip("화면에 상호작용이 안되는 빈 공간을 눌렀을때")] public AudioClip emptyClickSound;
         [Tooltip("핸드폰 진동 사운드")]public AudioClip vibrationSound;
         
-        public void FadeOut(float duration, Color color)
+        public void FadeOut(float duration, Color color, float delay = 0f)
         {
             fadeTween?.Kill();
-            
+
+            var a = fadeRenderer.color.a;
+            color.a = a;
             fadeRenderer.color = color;
-            fadeTween = fadeRenderer.DOFade(1f, duration);
+            fadeTween = fadeRenderer.DOFade(1f, duration).SetDelay(delay);
         }
         
-        public void FadeIn(float duration, Color color)
+        public void FadeIn(float duration, Color color, float delay = 0f)
         {
             fadeTween?.Kill();
             
+            var a = fadeRenderer.color.a;
+            color.a = a;
             fadeRenderer.color = color;
-            fadeTween = fadeRenderer.DOFade(0f, duration);
+            fadeTween = fadeRenderer.DOFade(0f, duration).SetDelay(delay);
         }
         
         // 핸드폰 진동

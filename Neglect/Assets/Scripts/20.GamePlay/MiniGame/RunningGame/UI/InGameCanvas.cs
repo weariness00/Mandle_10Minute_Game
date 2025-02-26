@@ -28,6 +28,11 @@ namespace GamePlay.MiniGame.RunningGame
             continueCanvas.gameObject.SetActive(true);
             StartCoroutine(GameContinueEnumerator(count));
         }
+
+        public void StopCountDown()
+        {
+            StopAllCoroutines();
+        }
         
         private IEnumerator GameContinueEnumerator(float count = 3f)
         {
