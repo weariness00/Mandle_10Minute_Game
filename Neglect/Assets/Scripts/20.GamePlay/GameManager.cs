@@ -1,10 +1,8 @@
-﻿using GamePlay.App.Dummy;
-using GamePlay.MiniGame;
+﻿using GamePlay.MiniGame;
 using GamePlay.Narration;
 using GamePlay.Phone;
 using Quest;
 using System.Collections;
-using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 using UnityEngine.Events;

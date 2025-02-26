@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5133da5444984a2c96563a6534b07ac9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCanvas: {fileID: 0}
+  mainCanvas: {fileID: 34901862}
   goodEndingCanvas: {fileID: 816285077}
   badEndingCanvas: {fileID: 1521613115}
 --- !u!114 &34901860
@@ -271,7 +271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   questResult: {fileID: 6744783487038665574}
-  endingCanvas: {fileID: 0}
+  endingCanvas: {fileID: 34901859}
   appName: Game Result
   icon: {fileID: 21300000, guid: 3a32abd82ace5f74b9fcaf05744a5206, type: 3}
   verticalResolution: {x: 600, y: 960}
