@@ -142,6 +142,18 @@ PrefabInstance:
       propertyPath: m_PresetInfoIsWorld
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3514192669866322058, guid: 1d5ea28f701293f479506dfbddd47d90, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3514192669866322058, guid: 1d5ea28f701293f479506dfbddd47d90, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3514192669866322058, guid: 1d5ea28f701293f479506dfbddd47d90, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 129
+      objectReference: {fileID: 0}
     - target: {fileID: 4441662835322059515, guid: 1d5ea28f701293f479506dfbddd47d90, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -169,6 +181,10 @@ PrefabInstance:
     - target: {fileID: 5363461935368096015, guid: 1d5ea28f701293f479506dfbddd47d90, type: 3}
       propertyPath: m_Name
       value: CallConversation
+      objectReference: {fileID: 0}
+    - target: {fileID: 5761177894084305399, guid: 1d5ea28f701293f479506dfbddd47d90, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 221
       objectReference: {fileID: 0}
     - target: {fileID: 5852731576706408226, guid: 1d5ea28f701293f479506dfbddd47d90, type: 3}
       propertyPath: m_Pivot.x
@@ -266,10 +282,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8153780078484622504, guid: 1d5ea28f701293f479506dfbddd47d90, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 4b413d8862a6df4428689af160653283, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
