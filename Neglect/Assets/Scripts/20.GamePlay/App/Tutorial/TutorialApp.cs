@@ -1,5 +1,8 @@
 ﻿using GamePlay.Phone;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace GamePlay.App.Tutorial
 {
@@ -7,6 +10,10 @@ namespace GamePlay.App.Tutorial
     {
         [Header("Tutorial Canvas 관련")] 
         public Canvas tutorialCanvas;
+        public GameObject realTutorialImagePrefab; // 실제 튜토리얼 이미지
+
+        [HideInInspector] public GameObject realTutorialObject;
+        [HideInInspector] public Button realTutorialButton;
     }
 
     public partial class TutorialApp : IPhoneApplication
@@ -24,7 +31,9 @@ namespace GamePlay.App.Tutorial
         public PhoneControl Phone => _phone;
         public void SetActiveBackground(bool value)
         {
+            realTutorialObject.SetActive(value);
             tutorialCanvas.gameObject.SetActive(value);
+            _phone.isUpdateInteract = !value;
         }
 
         public void AppInstall(PhoneControl phone)
@@ -34,8 +43,19 @@ namespace GamePlay.App.Tutorial
             var home = _phone.applicationControl.GetHomeApp();
             var appButton = home.GetAppButton(this);
             home.appGridControl.Insert(appButton, new (3,1));
-
+            home.firstStartWindow.clickEntry.callback.AddListener(arg0 =>
+            {
+                SetActiveBackground(true);
+            });
+            
             tutorialCanvas.worldCamera = _phone.phoneCamera;
+            
+            realTutorialObject = Instantiate(realTutorialImagePrefab, GameManager.Instance.worldCanvas.transform);
+            realTutorialButton = realTutorialObject.GetComponentInChildren<Button>();
+            realTutorialButton.onClick.AddListener(() =>
+            {
+                phone.applicationControl.CloseApp(this);
+            });
             
             SetActiveBackground(false);
         }

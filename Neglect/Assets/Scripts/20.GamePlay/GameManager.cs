@@ -24,7 +24,8 @@ namespace GamePlay
         [Tooltip("포스트 프로세싱을 사용할 Global Volume")]public PostProcessingUtility realVolumeControl;
         [Tooltip("방해 이벤트를 초기화(시작)했는지")] public bool isInitQuest = false;
 
-        [Space]
+        [Space] 
+        [Tooltip("월드 전체 Canvas")]public Canvas worldCanvas;
         [Tooltip("단순 비어있는 ui image")] public Image emptyUIPrefab;
         
         [Header("사전에 사용할 이벤트 ID")] 
@@ -98,7 +99,10 @@ namespace GamePlay
                 var quest = QuestDataList.Instance.InstantiateEvent(introPopUpID);
                 QuestManager.Instance.AddQuestQueue(quest);
                 if (quest is Quest_ChattingPopUp chattingPopUp)
+                {
                     chattingPopUp.popUp.destroyTimer.Max = 999999999;
+                    chattingPopUp.popUp.destroyMoveDistance = Vector2.positiveInfinity;
+                }
                 
                 quest.onCompleteEvent.AddListener(q => Destroy(ui.gameObject));
                 quest.onIgnoreEvent.AddListener(q => Destroy(ui.gameObject));
