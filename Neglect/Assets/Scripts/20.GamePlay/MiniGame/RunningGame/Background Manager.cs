@@ -1,7 +1,9 @@
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 using Util;
 
@@ -20,7 +22,12 @@ namespace GamePlay.MiniGame.RunningGame
         public GroundObject FloorPrefab; // 생성할 바닥 프리팹
 
         [Header("생성된 배경")]
-        public GroundObject BackgroundObject; // 생성된 배경 이미지
+        public GroundObject backgroundObject; // 생성된 배경 이미지
+        public SpriteRenderer prevBackgroundSpriteRenderer;
+        public MinMaxValue<float> updateBackgroundSpriteTimer = new(0,0,150, false, true); // 이미지가 몇초마다 바뀔 것인지
+        public List<Sprite> backgroundSpriteList; // 배경에 사용될 이미지들
+        private int backgroundSpriteIndex = 0;
+        
         public List<GroundObject> ForegroundObject = new List<GroundObject>(); // 생성된 전경 이미지
 
         public GroundObject FloorObject; // 생성된 바닥 프리팹
@@ -111,12 +118,12 @@ namespace GamePlay.MiniGame.RunningGame
                 PhoneUtil.SetLayer(obj);
                 ForeFogSetting(obj, i);
             }
-            SpriteRenderer BackSprite = BackgroundObject.GetComponent<SpriteRenderer>();
+            SpriteRenderer BackSprite = backgroundObject.spriteRenderer.GetComponent<SpriteRenderer>();
             Vector2 pisize = BackSprite.bounds.size;
             BackgroundSize = pisize;
-            BackgroundObject.Setting(BackgroundSpeed);
-            BackgroundObject.runningGame = runningGame;
-            PhoneUtil.SetLayer(BackgroundObject);
+            backgroundObject.Setting(BackgroundSpeed);
+            backgroundObject.runningGame = runningGame;
+            PhoneUtil.SetLayer(backgroundObject);
 
             SpriteRenderer FloorSprite = FloorPrefab.GetComponent<SpriteRenderer>();
             pisize = FloorSprite.bounds.size *4; //4개 연결
@@ -163,6 +170,25 @@ namespace GamePlay.MiniGame.RunningGame
 
         public void Update()
         {
+            if (backgroundSpriteList.Count - 1 > backgroundSpriteIndex && runningGame.isGamePlay.Value)
+            {
+                updateBackgroundSpriteTimer.Current += Time.deltaTime;
+                if (updateBackgroundSpriteTimer.IsMax)
+                {
+                    prevBackgroundSpriteRenderer.sprite = backgroundSpriteList[backgroundSpriteIndex];
+                    var pC = prevBackgroundSpriteRenderer.color;
+                    pC.a = 1;
+                    prevBackgroundSpriteRenderer.color = pC;
+                    prevBackgroundSpriteRenderer.DOFade(0, 5f);
+                    backgroundObject.spriteRenderer.sprite = backgroundSpriteList[++backgroundSpriteIndex];
+                    var cC = backgroundObject.spriteRenderer.color;
+                    cC.a = 0;
+                    backgroundObject.spriteRenderer.color = cC;
+                    backgroundObject.spriteRenderer.DOFade(1, 5f);
+                    updateBackgroundSpriteTimer.Current -= updateBackgroundSpriteTimer.Max;
+                }
+            }
+            
             if (IsPause)
                 return;
             GroundMove();
@@ -170,13 +196,13 @@ namespace GamePlay.MiniGame.RunningGame
 
         public void GroundMove()
         {
-            if (BackgroundObject.transform.position.x + BackgroundSize.x/2 < -LeftPosX)
+            if (backgroundObject.transform.position.x + BackgroundSize.x/2 < -LeftPosX)
             {
-                Vector3 pre = BackgroundObject.transform.position;
+                Vector3 pre = backgroundObject.transform.position;
                 float offset1 = BackgroundSize.x / 2 + LeftPosX * 2; //이미지 사이클의 시작부터 움직인 거리
-                float offset2 = (BackgroundObject.transform.position.x + BackgroundSize.x / 2 + LeftPosX); // 조건문으로 인한 거리 차이
+                float offset2 = (backgroundObject.transform.position.x + BackgroundSize.x / 2 + LeftPosX); // 조건문으로 인한 거리 차이
                 pre.x = LeftPosX + BackgroundSize.x/2 - offset1 + offset2;
-                BackgroundObject.transform.position = pre;
+                backgroundObject.transform.position = pre;
             }
 
             if (FloorObject.transform.position.x + FloorSize.x/2 < -LeftPosX) //화면 끝에 도달했을때
