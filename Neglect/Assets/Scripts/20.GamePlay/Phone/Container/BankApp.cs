@@ -463,7 +463,11 @@ namespace GamePlay.Phone
                 _phone.applicationControl.OnHome();
             });
 
-            _phone.applicationControl.GetHomeApp().GetAppButton(this).button.interactable = false;
+            var home = _phone.applicationControl.GetHomeApp();
+            var appButton = home.GetAppButton(this);
+            appButton.button.interactable = false;
+            
+            home.appGridControl.Insert(appButton, new Vector2Int(2,0));
         }
 
         public void AppPlay(PhoneControl phone)

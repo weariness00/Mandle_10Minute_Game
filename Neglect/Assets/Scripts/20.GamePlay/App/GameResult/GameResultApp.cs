@@ -1,15 +1,25 @@
-﻿using GamePlay.App;
+﻿using GamePlay.Phone;
 using Quest;
 using Quest.UI;
+using System;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace GamePlay.Phone.Container
+namespace GamePlay.App.GameResult
 {
     public partial class GameResultApp : MonoBehaviour
     {
         [Header("Quest 결과 관련")] 
         public QuestResult questResult;
+
+        [Header("Ending 관련")] 
+        public GameEndingCanvas endingCanvas;
+
+        public void Awake()
+        {
+            endingCanvas.mainCanvas.gameObject.SetActive(false);
+        }
     }
 
     public partial class GameResultApp : IPhoneApplication
@@ -35,6 +45,7 @@ namespace GamePlay.Phone.Container
         {
             _phone = phone;
             questResult.mainCanvas.worldCamera = _phone.phoneCamera;
+            endingCanvas.mainCanvas.worldCamera = _phone.phoneCamera;
             
             questResult.nextButton.onClick.AddListener(() => AppUnInstall(_phone));
         }
