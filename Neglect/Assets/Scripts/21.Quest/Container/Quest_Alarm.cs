@@ -1,3 +1,4 @@
+using GamePlay;
 using GamePlay.Event;
 using GamePlay.Phone;
 using Quest;
@@ -29,7 +30,12 @@ namespace Quest.Container
             phone = phone_;
             alarm.complete += Complete;
             alarm.ignoreEvent += () => StartCoroutine(IgnoreEnumerator());
-            alarm.TimeSet("10:00");
+
+            int playTimeMinutes = Mathf.FloorToInt(GameManager.Instance.playTimer.Current)/60 + 50+ 11 *60; //현재 시각 분으로 환산 ( 11시 + 55분 + 플레이타임/60)
+            int minutes = playTimeMinutes % 60;
+            int hours = playTimeMinutes / 60;
+
+            alarm.TimeSet(hours +  ":" + minutes);
             app = phone.applicationControl.currentPlayApplication;
             phone.applicationControl.PauseApp(app);
 
