@@ -529,9 +529,9 @@ MonoBehaviour:
     acceptDuration: 0
     ignoreEventID: -1
     ignoreDuration: 0
-    playNarrationID: -1
-    completeNarrationID: -1
-    ignoreNarrationID: -1
+    playNarrationID: 0
+    completeNarrationID: 6001
+    ignoreNarrationID: 0
     textArray:
     - SchoolDash
     extraDataIDArray: 74270000

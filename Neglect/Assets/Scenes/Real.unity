@@ -291,7 +291,7 @@ MonoBehaviour:
   phoneControl: {fileID: 0}
   miniGameName: x
   isMiniGameAddToApp: 0
-  eventID: 1010
+  eventID: 1012
 --- !u!4 &607314949
 Transform:
   m_ObjectHideFlags: 0
@@ -649,10 +649,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86964cc64fed4d34293ed6c7de2fccbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  appGridPosition: {x: 3, y: 2}
+  appCellSize: {x: 1, y: 1}
   appName: Dummy 1
   icon: {fileID: 21300000, guid: 2e66e537f7470dd418fd852f9a53b3aa, type: 3}
   verticalResolution: {x: 600, y: 960}
-  appGridPosition: {x: 3, y: 2}
   _phone: {fileID: 0}
 --- !u!1 &1540776519
 GameObject:
@@ -1079,7 +1080,12 @@ MonoBehaviour:
     level: 0
     prefab: {fileID: 0}
     acceptEventID: 0
+    acceptDuration: 0
     ignoreEventID: 0
+    ignoreDuration: 0
+    playNarrationID: -1
+    completeNarrationID: -1
+    ignoreNarrationID: -1
     textArray: []
     extraDataIDArray: 
   isReverse: 0

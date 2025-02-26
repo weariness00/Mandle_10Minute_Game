@@ -33,7 +33,6 @@ namespace Quest.Container
                 
                 // Extra Data 셋팅
                 chatConversation.SetTalkData(TalkingScriptableObject.Instance.GetTalkData(eventData.extraDataIDArray.Length == 0 ? -1 : eventData.extraDataIDArray[0]));
-                if(eventData.extraDataIDArray.Length > 1) GameManager.Instance.narration.StartNarration(NarrationScriptableObject.Instance.GetNarrationID(eventData.extraDataIDArray[1]));
                 chatConversation.completeEvent.AddListener(isReverse ? Ignore : Complete);
                 chatConversation.ignoreEvent.AddListener(isReverse ? Complete : Ignore);
                 chatConversation.StartConversation();

@@ -29,7 +29,7 @@ namespace Quest.Container
             alarm = PhoneUtil.InstantiateUI(questPrefab, out var phone_);
             phone = phone_;
             alarm.complete += Complete;
-            alarm.ignoreEvent += () => StartCoroutine(IgnoreEnumerator());
+            alarm.ignoreEvent += Ignore;
 
             int playTimeMinutes = Mathf.FloorToInt(GameManager.Instance.playTimer.Current)/60 + 50+ 11 *60; //현재 시각 분으로 환산 ( 11시 + 55분 + 플레이타임/60)
             int minutes = playTimeMinutes % 60;
@@ -56,20 +56,6 @@ namespace Quest.Container
         {
             base.Failed();
             if(alarm) Destroy(alarm.gameObject);
-        }
-
-        private IEnumerator IgnoreEnumerator()
-        {
-            QuestManager.Instance.Remove(this);
-            phone.applicationControl.OpenApp(app);
-            var oneWait = new WaitForSeconds(1f);
-            yield return new WaitForSeconds(10f);
-            while (QuestManager.HasInstance && QuestManager.Instance.IsHasPlayQuest)
-                yield return oneWait;
-            if (QuestManager.HasInstance && QuestManager.Instance.isQuestStart)
-            {
-                Ignore();
-            }
         }
     }
 }

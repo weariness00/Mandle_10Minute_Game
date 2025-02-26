@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GamePlay;
+using GamePlay.Narration;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -35,6 +37,7 @@ namespace Quest
                 
                 state = QuestState.InProgress;
             }
+            if (eventData.playNarrationID != -1) GameManager.Instance.narration.StartNarrationID(eventData.playNarrationID);
 
             if (rootQuest != null)
             {
@@ -42,45 +45,13 @@ namespace Quest
                 isReverse = rootQuest.isReverse;
             }
         }
-
-        public virtual void Ignore()
-        {
-            subscription?.Dispose();
-            state = isReverse ? QuestState.Completed : QuestState.Failed;
-            if (rootQuest != null) rootQuest.state = state;
-            if (eventData.ignoreEventID != -1)
-            {
-                var ignoreEvent = QuestDataList.Instance.GetEventID(eventData.ignoreEventID);
-                var quest = QuestDataList.Instance.InstantiateEvent(eventData.ignoreEventID);
-                quest.eventData = ignoreEvent;
-                quest.rootQuest = rootQuest == null ? this : rootQuest;
-                
-                if(eventData.ignoreDuration == 0)
-                    QuestManager.Instance.AddAndPlay(quest);
-                else
-                    StartCoroutine(PlayQuestDurationEnumerator(quest, eventData.acceptDuration));
-                
-                onIgnoreEvent?.Invoke(quest);
-            }
-            else
-            {
-                onIgnoreEvent?.Invoke(null);
-            }
-            
-            QuestManager.Instance.Remove(this);
-        }
-
-        public virtual void Pause()
-        {
-            subscription?.Dispose();
-            state = QuestState.Wait;
-        }
-
+        
         public virtual void Complete()
         {
             subscription?.Dispose();
             state = isReverse ? QuestState.Failed : QuestState.Completed;
             if (rootQuest != null) rootQuest.state = state;
+            if (eventData.completeNarrationID != -1) GameManager.Instance.narration.StartNarrationID(eventData.completeNarrationID);
             if (eventData.acceptEventID != -1)
             {
                 var acceptEvent = QuestDataList.Instance.GetEventID(eventData.acceptEventID);
@@ -100,6 +71,40 @@ namespace Quest
             }
             
             QuestManager.Instance.Remove(this);
+        }
+
+        public virtual void Ignore()
+        {
+            subscription?.Dispose();
+            state = isReverse ? QuestState.Completed : QuestState.Failed;
+            if (rootQuest != null) rootQuest.state = state;
+            if (eventData.ignoreNarrationID != -1) GameManager.Instance.narration.StartNarrationID(eventData.ignoreNarrationID);
+            if (eventData.ignoreEventID != -1)
+            {
+                var ignoreEvent = QuestDataList.Instance.GetEventID(eventData.ignoreEventID);
+                var quest = QuestDataList.Instance.InstantiateEvent(eventData.ignoreEventID);
+                quest.eventData = ignoreEvent;
+                quest.rootQuest = rootQuest == null ? this : rootQuest;
+                
+                if(eventData.ignoreDuration == 0)
+                    QuestManager.Instance.AddAndPlay(quest);
+                else
+                    StartCoroutine(PlayQuestDurationEnumerator(quest, eventData.ignoreDuration));
+                
+                onIgnoreEvent?.Invoke(quest);
+            }
+            else
+            {
+                onIgnoreEvent?.Invoke(null);
+            }
+            
+            QuestManager.Instance.Remove(this);
+        }
+
+        public virtual void Pause()
+        {
+            subscription?.Dispose();
+            state = QuestState.Wait;
         }
 
         public virtual void Failed()

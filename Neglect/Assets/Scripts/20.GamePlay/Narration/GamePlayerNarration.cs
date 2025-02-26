@@ -58,6 +58,7 @@ namespace GamePlay.Narration
             }
         }
 
+        public void StartNarrationID(int id) => StartNarration(NarrationScriptableObject.Instance.GetNarrationID(id));
         public void StartNarration(NarrationData data)
         {
             currentData = data;
