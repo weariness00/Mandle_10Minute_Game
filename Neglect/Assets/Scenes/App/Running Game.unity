@@ -415,7 +415,7 @@ MonoBehaviour:
         Mode: 0
         PropertyName: _Tint
         FlickerDuration: 1
-        FlickerPeriod: 0.04
+        FlickerPeriod: 0.1
         FlickerColor: {r: 1, g: 1, b: 1, a: 0}
         MaterialIndexes: 00000000
         UseMaterialPropertyBlocks: 0
@@ -7970,8 +7970,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: ec1e22a8a311e394aa501b5cfc38a18c, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -9079,8 +9079,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Time Over!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: ce50875118459ef48a0bd62c7491d7dd, type: 2}
-  m_sharedMaterial: {fileID: 8095778784461696725, guid: ce50875118459ef48a0bd62c7491d7dd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 81b60bb3813e00e4190bd849b0a3ceaf, type: 2}
+  m_sharedMaterial: {fileID: -6456833398530862374, guid: 81b60bb3813e00e4190bd849b0a3ceaf, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9104,8 +9104,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 100
+  m_fontSizeBase: 100
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
