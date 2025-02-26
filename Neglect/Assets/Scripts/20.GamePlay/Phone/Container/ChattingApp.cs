@@ -32,6 +32,9 @@ namespace GamePlay.Phone
         public void AppInstall(PhoneControl phone)
         {
             _phone = phone;
+            var home = _phone.applicationControl.GetHomeApp();
+            var appButton = home.GetAppButton(this);
+            home.appGridControl.Insert(appButton, new(3, 0));
 
             conversation.canvas.worldCamera = _phone.phoneCamera;
             conversation.backButton.onClick.AddListener(() => phone.applicationControl.CloseApp(this));

@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using GamePlay.App;
+using GamePlay.App.Home;
 using Manager;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace GamePlay.Phone
         
         [Header("App Button 관련")]
         [SerializeField] private AppButton appButtonPrefab;
+        public AppGridControl appGridControl;
         [SerializeField] private Transform appButtonParent;
         [SerializeField] private Material highlightMaterial;
         [SerializeField] private MinMaxValue<float> shineTimer = new (0,0,1, false, true);
@@ -48,6 +50,8 @@ namespace GamePlay.Phone
 
         public void Awake()
         {
+            firstStartWindow.gameObject.SetActive(true);
+            
             interfaceOriginAnchorsPosition = interfaceRectTransform.anchoredPosition;
 
             shineTimer.isOverMax = true;
@@ -155,11 +159,12 @@ namespace GamePlay.Phone
             // 홈에 버튼 생성
             phone.applicationControl.OnAddAppEvent.AddListener(app =>
             {
-                var appButton = Instantiate(appButtonPrefab, appButtonParent);
+                var appButton = Instantiate(appButtonPrefab, appGridControl.transform);
                 if (app.AppIcon) appButton.button.image.sprite = app.AppIcon;
                 appButton.button.onClick.AddListener(() => phone.applicationControl.OpenApp(app));
                 PhoneUtil.SetLayer(appButton);
-
+                
+                appGridControl.Insert(appButton);
                 appButtonDictionary.TryAdd(app.AppName, appButton);
             });
             

@@ -1225,6 +1225,7 @@ MonoBehaviour:
   extraUICanvas: {fileID: 270890959}
   phoneUIControlCanvas: {fileID: 2081011756}
   appButtonPrefab: {fileID: -2374475228425929192, guid: bbde688acf1b8aa4aaf0671bf12be137, type: 3}
+  appGridControl: {fileID: 966393099}
   appButtonParent: {fileID: 966393097}
   highlightMaterial: {fileID: 2100000, guid: 1c1c797273d74234daf8efc3f7efd279, type: 2}
   shineTimer:
@@ -1521,7 +1522,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &902044943
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1624,7 +1625,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5175211974706169741, guid: bbde688acf1b8aa4aaf0671bf12be137, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5175211974706169741, guid: bbde688acf1b8aa4aaf0671bf12be137, type: 3}
       propertyPath: m_AnchorMin.x
@@ -1632,15 +1633,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5175211974706169741, guid: bbde688acf1b8aa4aaf0671bf12be137, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5175211974706169741, guid: bbde688acf1b8aa4aaf0671bf12be137, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5175211974706169741, guid: bbde688acf1b8aa4aaf0671bf12be137, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5175211974706169741, guid: bbde688acf1b8aa4aaf0671bf12be137, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1672,11 +1673,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5175211974706169741, guid: bbde688acf1b8aa4aaf0671bf12be137, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5175211974706169741, guid: bbde688acf1b8aa4aaf0671bf12be137, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -100
       objectReference: {fileID: 0}
     - target: {fileID: 5175211974706169741, guid: bbde688acf1b8aa4aaf0671bf12be137, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1726,6 +1727,7 @@ GameObject:
   m_Component:
   - component: {fileID: 966393097}
   - component: {fileID: 966393098}
+  - component: {fileID: 966393099}
   m_Layer: 5
   m_Name: App Icon Group
   m_TagString: Untagged
@@ -1760,7 +1762,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 966393096}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
   m_Name: 
@@ -1777,6 +1779,27 @@ MonoBehaviour:
   m_Spacing: {x: 25, y: 20}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &966393099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 966393096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7994dfbfa5e1421298d43cc596590268, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  padding:
+    m_Left: 50
+    m_Right: 50
+    m_Top: 50
+    m_Bottom: 50
+  spacing: {x: 25, y: 20}
+  cellSize: {x: 100, y: 100}
+  gridCount: {x: 0, y: 0}
 --- !u!1 &1056841738
 GameObject:
   m_ObjectHideFlags: 0
@@ -2193,6 +2216,9 @@ MonoBehaviour:
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
+  excludeLayer:
+    serializedVersion: 2
+    m_Bits: 0
   m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
@@ -2208,9 +2234,6 @@ MonoBehaviour:
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
   m_ScrollDeltaPerTick: 6
-  excludeLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &1202456526
 MonoBehaviour:
   m_ObjectHideFlags: 0

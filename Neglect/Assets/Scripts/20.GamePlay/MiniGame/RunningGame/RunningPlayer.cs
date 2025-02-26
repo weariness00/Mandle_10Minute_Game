@@ -116,6 +116,7 @@ namespace GamePlay.MiniGame.RunningGame
                 immortalTime.SetMax();
                 life.Value--;
                 healCounting.SetMin();
+                hitEffect.GetFeedbackOfType<MMF_Flicker>().FlickerDuration = immortalTime.Max;
                 if(hitEffect) hitEffect.PlayFeedbacks();
                 effectSource.PlayOneShot(hitSound);
             }
