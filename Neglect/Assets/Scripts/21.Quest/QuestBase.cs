@@ -118,7 +118,7 @@ namespace Quest
         private IEnumerator PlayQuestDurationEnumerator(QuestBase quest, float duration)
         {
             yield return new WaitForSeconds(duration);
-            QuestManager.Instance.AddAndPlay(quest);
+            QuestManager.Instance.AddQuestQueue(quest);
         }
     }
 

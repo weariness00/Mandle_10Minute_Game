@@ -2,6 +2,7 @@
 using GamePlay.Phone;
 using Manager;
 using Quest;
+using Quest.Container;
 using System.Linq;
 using UniRx;
 using UnityEditor;
@@ -166,6 +167,15 @@ namespace GamePlay.MiniGame
                 }
             });
             
+            QuestManager.Instance.onEndQuestEvent.AddListener(quest =>
+            {
+                // 뱅크앱이 끝났을 경우
+                if (quest is Quest_Bank bank)
+                {
+                    appButton.button.interactable = true;
+                }
+            });
+            
             GameManager.Instance.onLastEvent.AddListener(quest =>
             {
                 // 은행 어플에 진입하는 퀘스트 까지 가면 게임 앱 버튼 비활성화
@@ -186,12 +196,6 @@ namespace GamePlay.MiniGame
                         {
                             appButton.button.interactable = false;
                         });
-                    });
-                    
-                    // 2번 무시
-                    callScreenQuest.onIgnoreEvent.AddListener(q =>
-                    {
-                        
                     });
                 });
             });

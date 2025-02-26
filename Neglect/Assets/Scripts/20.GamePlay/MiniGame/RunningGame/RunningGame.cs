@@ -356,18 +356,9 @@ namespace GamePlay.MiniGame.RunningGame
             // 나가기 누르면 앱으로 이동 ( 게임은 종료되지 않음 )
             exitButton.onClick.AddListener(phone.applicationControl.OnHome);
             lobbyExitButton.onClick.AddListener(phone.applicationControl.OnHome);
-            
+
             QuestManager.Instance.onEndQuestEvent.AddListener(quest =>
             {
-                // 뱅크앱 실패일 경우
-                if (quest is Quest_Bank { state: QuestState.Failed })
-                {
-                    for (var i = 1; i < playerDataArray.Length; i++)
-                    {
-                        playerDataArray[i].SetMultiple(2f);
-                    }
-                    return;
-                }
                 // 어떤 이벤트든 실패했을 경우
                 if (quest.state == QuestState.Failed)
                 {
@@ -376,6 +367,20 @@ namespace GamePlay.MiniGame.RunningGame
                         playerDataArray[i].StartMultipleDuration(2f, 30f);
                     }
                 }
+            });
+            GameManager.Instance.onLastEvent.AddListener(quest =>
+            {
+                quest.onIgnoreEvent.AddListener(callScreenQuest =>
+                {
+                    // 2번 무시
+                    callScreenQuest.onIgnoreEvent.AddListener(q =>
+                    {
+                        for (var i = 1; i < playerDataArray.Length; i++)
+                        {
+                            playerDataArray[i].SetMultiple(2f);
+                        }
+                    });
+                });
             });
         }
 
