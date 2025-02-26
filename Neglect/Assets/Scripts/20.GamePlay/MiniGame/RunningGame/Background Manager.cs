@@ -23,6 +23,7 @@ namespace GamePlay.MiniGame.RunningGame
 
         [Header("생성된 배경")]
         public GroundObject backgroundObject; // 생성된 배경 이미지
+        public SpriteRenderer backgroundSpriteRenderer; // 아예 아무런 배경이 없으면 뒤에가 빛춰 보임으로 prev 스프라이트를 넣어준다.
         public SpriteRenderer prevBackgroundSpriteRenderer;
         public MinMaxValue<float> updateBackgroundSpriteTimer = new(0,0,150, false, true); // 이미지가 몇초마다 바뀔 것인지
         public List<Sprite> backgroundSpriteList; // 배경에 사용될 이미지들
@@ -175,6 +176,7 @@ namespace GamePlay.MiniGame.RunningGame
                 updateBackgroundSpriteTimer.Current += Time.deltaTime;
                 if (updateBackgroundSpriteTimer.IsMax)
                 {
+                    backgroundSpriteRenderer.sprite = backgroundSpriteList[backgroundSpriteIndex];
                     prevBackgroundSpriteRenderer.sprite = backgroundSpriteList[backgroundSpriteIndex];
                     var pC = prevBackgroundSpriteRenderer.color;
                     pC.a = 1;
