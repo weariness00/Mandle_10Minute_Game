@@ -277,6 +277,16 @@ namespace GamePlay.MiniGame.RunningGame
             
             resultCanvas.mainCanvas.gameObject.SetActive(true);
             resultCanvas.InstantiateResult();
+            resultCanvas.okButton.onClick.AddListener(() =>
+            {
+                if (GameManager.HasInstance)
+                {
+                    if(CurrentPlayerData.rank == 1)
+                        GameManager.Instance.ending.GoodEnding();
+                    else
+                        GameManager.Instance.ending.BadEnding();
+                }
+            });
         }
 
         public override void GameOver()

@@ -20,6 +20,7 @@ namespace GamePlay
         public MinMaxValue<float> playTimer = new(0, 0, 60 * 10);
         public float lastEventTime = 60f * 8f;
 
+        [Tooltip("게임 엔딩 관리")] public GameEnding ending;
         [Tooltip("나레이션 클래스")] public GamePlayerNarration narration;
         [Tooltip("포스트 프로세싱을 사용할 Global Volume")]public PostProcessingUtility realVolumeControl;
         [Tooltip("방해 이벤트를 초기화(시작)했는지")] public bool isInitQuest = false;
