@@ -24,9 +24,8 @@ namespace GamePlay.MiniGame.RunningGame
             {
                 if (!isCollision)
                 {
-                    runningGame.player.currentCombo++;
+                    runningGame.player.currentCombo.Value++;
                     runningGame.CurrentPlayerData.score.Value += extraScore * runningGame.player.GetComboMultiple();
-                    runningGame.gameSpeed.Value = Mathf.Clamp(runningGame.player.currentCombo / 25f + 1, 1,2);
                     runningGame.player.healCounting.Current++;
                     if (runningGame.player.healCounting.IsMax)
                     {

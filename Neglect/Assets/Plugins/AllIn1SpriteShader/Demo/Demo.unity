@@ -7004,9 +7004,12 @@ Material:
     - _PosterizeGamma: 0.75
     - _PosterizeNumColors: 8
     - _PosterizeOutline: 0
+    - _RadialClip: 45
+    - _RadialClip2: 0
     - _RadialClipAngle: 90
     - _RadialClipArc1: 45
     - _RadialClipArc2: 0
+    - _RadialStartAngle: 90
     - _RandomSeed: 0
     - _RectSize: 1
     - _RotateUvAmount: 0
@@ -22951,9 +22954,12 @@ Material:
     - _PosterizeGamma: 0.75
     - _PosterizeNumColors: 8
     - _PosterizeOutline: 0
+    - _RadialClip: 45
+    - _RadialClip2: 0
     - _RadialClipAngle: 90
     - _RadialClipArc1: 45
     - _RadialClipArc2: 0
+    - _RadialStartAngle: 90
     - _RandomSeed: 0
     - _RectSize: 1
     - _RotateUvAmount: 0
@@ -25984,9 +25990,12 @@ Material:
     - _PosterizeGamma: 0.75
     - _PosterizeNumColors: 8
     - _PosterizeOutline: 0
+    - _RadialClip: 45
+    - _RadialClip2: 0
     - _RadialClipAngle: 90
     - _RadialClipArc1: 45
     - _RadialClipArc2: 0
+    - _RadialStartAngle: 90
     - _RandomSeed: 0
     - _RectSize: 1
     - _RotateUvAmount: 0
@@ -36818,9 +36827,12 @@ Material:
     - _PosterizeGamma: 0.75
     - _PosterizeNumColors: 8
     - _PosterizeOutline: 0
+    - _RadialClip: 45
+    - _RadialClip2: 0
     - _RadialClipAngle: 90
     - _RadialClipArc1: 45
     - _RadialClipArc2: 0
+    - _RadialStartAngle: 90
     - _RandomSeed: 0
     - _RectSize: 1
     - _RotateUvAmount: 0
@@ -42880,7 +42892,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1723167442}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
