@@ -352,6 +352,7 @@ MonoBehaviour:
   narration: {fileID: 1888626932}
   realVolumeControl: {fileID: 988145022}
   isInitQuest: 0
+  emptyUIPrefab: {fileID: 5997216556781781617, guid: 4738808ce6d6d85469cfbcc391dead19, type: 3}
   gameClearQuest: {fileID: 1891820674}
   batteryEventID: 1010
   introPopUpID: 9001
