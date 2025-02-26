@@ -1,21 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using Util;
 
 namespace GamePlay.MiniGame.RunningGame
 {
-    public class RunningObstacle : MonoBehaviour
+    public class BirdObstacle : RunningObstacle
     {
-        [HideInInspector] public RunningGame runningGame;
+        public List<AnimationCurve> curveList;
+        public CurveMovement2D moveCurve;
 
-        public float speed = 1f;
-        [Tooltip("장애물을 피할 시 주는 추가 점수")]public int extraScore = 10;
-        [Tooltip("플레이어가 성공적으로 피했을때")]public bool isCollision = false;
-        
-        public void Update()
+        public void Start()
         {
-            if(!runningGame.isGamePlay.Value) return;
-            transform.position += Time.deltaTime * runningGame.gameSpeed.Value * speed * Vector3.left;
+            moveCurve.curve = curveList.Random();
+            moveCurve.Init();
+        }
+
+        public new void Update()
+        {
+            if (runningGame.isGamePlay.Value)
+            {
+                moveCurve.speed = runningGame.gameSpeed.Value;
+                moveCurve.Move();
+            }
         }
 
         public void OnTriggerExit2D(Collider2D other)
@@ -34,9 +40,9 @@ namespace GamePlay.MiniGame.RunningGame
                         runningGame.player.Healing(1);
                     }
                 }
+
                 Destroy(gameObject, 2f);
             }
         }
     }
 }
-

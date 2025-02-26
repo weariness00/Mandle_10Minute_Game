@@ -82,7 +82,7 @@ namespace GamePlay.MiniGame.RunningGame
             {
                 QuestManager.Instance.onEndQuestEvent.AddListener(quest =>
                 {
-                    if (quest.state == QuestState.Completed)
+                    if (quest.state == QuestState.Completed && runningGame.isGameStart.Value)
                     {
                         currentCombo.Value = 100;
                     }
