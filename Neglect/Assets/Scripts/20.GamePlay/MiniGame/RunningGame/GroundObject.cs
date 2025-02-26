@@ -6,6 +6,7 @@ namespace GamePlay.MiniGame.RunningGame
 {
     public class GroundObject : MonoBehaviour
     {
+        public SpriteRenderer spriteRenderer;
         public RunningGame runningGame;
         // Start is called before the first frame update
         public float MoveSpeed;

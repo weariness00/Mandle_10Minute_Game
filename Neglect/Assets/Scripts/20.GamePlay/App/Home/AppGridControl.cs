@@ -28,12 +28,13 @@ namespace GamePlay.App.Home
         {
             rectTransform = GetComponent<RectTransform>();
 
-            gridCount.x = (int)((rectTransform.sizeDelta.x - padding.left) / (cellSize.x + spacing.x));
-            gridCount.y = (int)((rectTransform.sizeDelta.y - padding.top) / (cellSize.y + spacing.y));
+            var size = rectTransform.sizeDelta;
+            if(size == Vector2.zero) return;
+            gridCount.x = (int)((size.x - padding.left) / (cellSize.x + spacing.x));
+            gridCount.y = (int)((size.y - padding.top) / (cellSize.y + spacing.y));
 
             foreach (var data in gridList)
             {
-                
                 data.UpdateCellTransform(padding, cellSize, spacing);
             }
         }

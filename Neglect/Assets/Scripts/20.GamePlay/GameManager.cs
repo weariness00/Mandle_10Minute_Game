@@ -1,4 +1,5 @@
-﻿using GamePlay.MiniGame;
+﻿using GamePlay.App.Dummy;
+using GamePlay.MiniGame;
 using GamePlay.Narration;
 using GamePlay.Phone;
 using Quest;
@@ -48,6 +49,7 @@ namespace GamePlay
                 {
                     StartCoroutine(LoadedHomeAppEnumerator());
                     
+                    SceneUtil.AsyncAddTutorial(AddApp);
                     SceneUtil.AsyncAddChatting(AddApp);
                     SceneUtil.AsyncAddBank(AddApp);
                     SceneUtil.AsyncAddRunningGame(AddApp);
@@ -103,6 +105,10 @@ namespace GamePlay
                     });
                 });
             });
+            
+            var dummyArray = FindObjectsOfType<DummyApp>();
+            foreach (DummyApp app in dummyArray)
+                PhoneUtil.currentPhone.applicationControl.AddApp(app);
         }
     }
 

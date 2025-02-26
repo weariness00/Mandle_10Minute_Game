@@ -13,6 +13,7 @@ namespace GamePlay
         private static readonly string RealScene = "Real";
         private static readonly string PhoneScene = "Phone";
         private static readonly string HomeScene = "Home";
+        private static readonly string TutorialScene = "Game Tutorial App";
         private static readonly string RunningGameScene = "Running Game";
         private static readonly string FlappingGameScene = "Flapping Game";
         private static readonly string BankScene = "BankApp";
@@ -28,6 +29,7 @@ namespace GamePlay
         }
         public static void AsyncAddPhone(Action<Scene> loadedAction = null) =>Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(PhoneScene, loadedAction));
         public static void AsyncAddHome(Action<Scene> loadedAction = null) =>Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(HomeScene, loadedAction));
+        public static void AsyncAddTutorial(Action<Scene> loadedAction = null) =>Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(TutorialScene, loadedAction));
         public static void AsyncAddBank(Action<Scene> loadedAction = null) => Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(BankScene, loadedAction));
         public static void AsyncAddChatting(Action<Scene> loadedAction = null) => Instance.StartCoroutine(Instance.LoadSceneAsyncEnumerator(ChattingScene, loadedAction));
         
