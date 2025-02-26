@@ -27,6 +27,9 @@ EditorBuildSettings:
     path: Assets/Scenes/App/Chatting App.unity
     guid: 7131d5863e808a545b336d463ef51bac
   - enabled: 1
+    path: Assets/Scenes/App/Dummy App.unity
+    guid: af0a6f13f0575df458a18fb9dd515db3
+  - enabled: 1
     path: Assets/Scenes/App/Game Tutorial App.unity
     guid: 5519aa147e576c64ab3a38d106c23d15
   - enabled: 1

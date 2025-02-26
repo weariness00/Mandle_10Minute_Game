@@ -11,7 +11,12 @@ namespace Quest
         public QuestLevel level;
         public QuestBase prefab = null;
         public int acceptEventID = -1;
+        public float acceptDuration = 0;
         public int ignoreEventID = -1;
+        public float ignoreDuration = 0;
+        public int playNarrationID = -1;
+        public int completeNarrationID = -1;
+        public int ignoreNarrationID = -1;
         public string[] textArray = Array.Empty<string>();
         public int[] extraDataIDArray = Array.Empty<int>();
     }

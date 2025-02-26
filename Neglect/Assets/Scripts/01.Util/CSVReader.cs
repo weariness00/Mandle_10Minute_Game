@@ -56,13 +56,18 @@ namespace Util
             }
             return defaultValue;
         }
-        public static T DynamicCast<T>(this Dictionary<string, object> dictionary, string key) => dictionary.DynamicCast<T>(key, default);
         public static T DynamicCast<T>(this Dictionary<string,object> dictionary, string key, T defaultValue)
         {
             if (dictionary.TryGetValue(key, out var objectValue))
             {
                 if (objectValue is T value)
                     return value;
+                if (objectValue is int intValue && typeof(T) == typeof(float))
+                {
+                    float f = intValue;
+                    return (T)(object)f;
+                }
+                
                 if (typeof(T) == typeof(string))
                 {
                     if (objectValue is string[] stringArray)
@@ -76,12 +81,29 @@ namespace Util
                 }
                 if (typeof(T).IsArray)
                 {
-                    var type = typeof(T).GetElementType();
-                    var array = Array.CreateInstance(typeof(T).GetElementType(), 1);
-                    if (objectValue.GetType() == typeof(T).GetElementType())
+                    var valueType = objectValue.GetType();
+                    var genericType = typeof(T);
+                    var array = Array.CreateInstance(genericType.GetElementType(), 1);
+                    if (valueType == genericType.GetElementType())
                         array.SetValue(objectValue, 0);
+                    else if (typeof(float) == genericType.GetElementType())
+                    {
+                        if (valueType == typeof(int) && objectValue is int intValue2)
+                        {
+                            array.SetValue((float)intValue2, 0);
+                        }
+                        else if (valueType.GetElementType() == typeof(int) && objectValue is int[] intArray)
+                        {
+                            float[] fArray = Array.ConvertAll(intArray, i => (float)i);
+                            return (T)(object)fArray;
+                        }
+                        else
+                            return defaultValue;
+                    }
+                    // else if (genericType.GetElementType() == typeof(float) && valueType.GetElementType() == typeof(int))
+                    //     array.SetValue(Array.ConvertAll(objectValue as int[], item => (float)item), 0);
                     else
-                        array = Array.CreateInstance(type, 0);
+                        return defaultValue;
                     if (array is T value2)
                         return value2;
                 }

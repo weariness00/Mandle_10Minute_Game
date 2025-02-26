@@ -9536,7 +9536,12 @@ MonoBehaviour:
     level: 0
     prefab: {fileID: 0}
     acceptEventID: -1
+    acceptDuration: 0
     ignoreEventID: -1
+    ignoreDuration: 0
+    playNarrationID: -1
+    completeNarrationID: -1
+    ignoreNarrationID: -1
     textArray: []
     extraDataIDArray: 
   isReverse: 0

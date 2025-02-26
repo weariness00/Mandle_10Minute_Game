@@ -49,6 +49,7 @@ namespace GamePlay
                 {
                     StartCoroutine(LoadedHomeAppEnumerator());
                     
+                    SceneUtil.AsyncAddDummy(AddApp);
                     SceneUtil.AsyncAddTutorial(AddApp);
                     SceneUtil.AsyncAddChatting(AddApp);
                     SceneUtil.AsyncAddBank(AddApp);
@@ -105,10 +106,6 @@ namespace GamePlay
                     });
                 });
             });
-            
-            var dummyArray = FindObjectsOfType<DummyApp>();
-            foreach (DummyApp app in dummyArray)
-                PhoneUtil.currentPhone.applicationControl.AddApp(app);
         }
     }
 

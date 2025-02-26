@@ -54,7 +54,11 @@ namespace Quest
                 var quest = QuestDataList.Instance.InstantiateEvent(eventData.ignoreEventID);
                 quest.eventData = ignoreEvent;
                 quest.rootQuest = rootQuest == null ? this : rootQuest;
-                QuestManager.Instance.AddAndPlay(quest);
+                
+                if(eventData.ignoreDuration == 0)
+                    QuestManager.Instance.AddAndPlay(quest);
+                else
+                    StartCoroutine(PlayQuestDurationEnumerator(quest, eventData.acceptDuration));
                 
                 onIgnoreEvent?.Invoke(quest);
             }
@@ -83,7 +87,11 @@ namespace Quest
                 var quest = QuestDataList.Instance.InstantiateEvent(eventData.acceptEventID);
                 quest.eventData = acceptEvent;
                 quest.rootQuest = rootQuest == null ? this : rootQuest;
-                QuestManager.Instance.AddAndPlay(quest);
+                
+                if(eventData.acceptDuration == 0)
+                    QuestManager.Instance.AddAndPlay(quest);
+                else
+                    StartCoroutine(PlayQuestDurationEnumerator(quest, eventData.acceptDuration));
                 onCompleteEvent?.Invoke(quest);
             }
             else
@@ -100,6 +108,12 @@ namespace Quest
             state = QuestState.Failed;
             if (rootQuest != null) rootQuest.state = state;
             QuestManager.Instance.Remove(this);
+        }
+
+        private IEnumerator PlayQuestDurationEnumerator(QuestBase quest, float duration)
+        {
+            yield return new WaitForSeconds(duration);
+            QuestManager.Instance.AddAndPlay(quest);
         }
     }
 

@@ -123,7 +123,6 @@ namespace GamePlay.App.Home
             public GameObject uiObject;
 
             public Vector2Int endIndex => index * size;
-
             public void UpdateIndex(Vector2Int _index, Vector2Int gridCount)
             {
                 // var newindex = _index + Vector2Int.right;
@@ -140,6 +139,15 @@ namespace GamePlay.App.Home
                 uiRectTransform.sizeDelta = cellSize * size + spacing * (size - Vector2Int.one);
                 uiRectTransform.anchoredPosition = cellSize * index + spacing * index + new Vector2(padding.left, padding.top);
                 uiRectTransform.anchoredPosition *= new Vector2(1,-1);
+
+                var originLocalPosition = uiRectTransform.localPosition;
+                
+                uiRectTransform.anchorMin = Vector2.one * 0.5f;
+                uiRectTransform.anchorMax = Vector2.one * 0.5f;
+                uiRectTransform.pivot = Vector2.one * 0.5f;
+
+                // 피봇을 움직이면 size만큼 더 움직이게 된다.
+                uiRectTransform.localPosition = originLocalPosition + 0.5f * new Vector3(cellSize.x, -cellSize.y);
             }
         }
     }

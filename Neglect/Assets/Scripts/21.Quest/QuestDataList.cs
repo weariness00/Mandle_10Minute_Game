@@ -142,16 +142,24 @@ namespace Quest
                 var eventName = csv.DynamicCast("Name", "");
                 var textList = csv.DynamicCast<int[]>("TextListID", Array.Empty<int>());
                 var prefabID = csv.DynamicCast<int>("PrefabID", -1);
+                var nextEventDuration = csv.DynamicCast("NextEventDuration", new float[]{0,0});
+                var narrationID = csv.DynamicCast("NarrationID", new int[] { -1, -1, -1 });
                 var data = GetEventID(id);
                 data.name = eventName;
                 data.level = LevelToInt(csv.DynamicCast("Level", ""));
                 data.prefab = GetQuestID(prefabID);
 
                 data.acceptEventID = csv.DynamicCast<int>("AcceptEventID", -1);
+                data.acceptDuration = nextEventDuration[0];
                 data.ignoreEventID = csv.DynamicCast<int>("IgnoreEventID", -1);
+                data.ignoreDuration = nextEventDuration[1];
+
+                data.playNarrationID = narrationID[0];
+                data.completeNarrationID = narrationID[1];
+                data.ignoreNarrationID = narrationID[2];
 
                 data.textArray = textDataDictionary.Where(d => textList.FirstOrDefault(tid => tid == d.Key) != 0).Select(d => d.Value).ToArray();
-    
+                
                 data.extraDataIDArray = csv.DynamicCast("ExtraDataID", Array.Empty<int>());
                 
                 Debug.Assert(data.prefab != null, $"Event Data에 {prefabID}프리펩이 존재하지 않습니다.");
@@ -176,8 +184,8 @@ namespace Quest
                 var csv = textDataTableCSV.ReadHorizon();
                 foreach (Dictionary<string, object> data in csv)
                 {
-                    var id = data.DynamicCast<int>("TextID");
-                    var text = data.DynamicCast<string>("TextContent");
+                    var id = data.DynamicCast("TextID", -1);
+                    var text = data.DynamicCast("TextContent", "");
                     if(!textDataDictionary.TryAdd(id, text))
                         Debug.LogWarning($"{id}에 이미 문자열이 할당되어 있습니다.");
                 }

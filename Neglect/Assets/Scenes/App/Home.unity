@@ -1795,7 +1795,7 @@ MonoBehaviour:
   padding:
     m_Left: 50
     m_Right: 50
-    m_Top: 50
+    m_Top: 100
     m_Bottom: 50
   spacing: {x: 25, y: 20}
   cellSize: {x: 100, y: 100}

@@ -30,8 +30,8 @@ namespace GamePlay.Talk
                 var csv = textDataCSV.ReadHorizon();
                 foreach (Dictionary<string, object> data in csv)
                 {
-                    var id = data.DynamicCast<int>("TextID");
-                    var text = data.DynamicCast<string>("TextContent");
+                    var id = data.DynamicCast("TextID", -1);
+                    var text = data.DynamicCast("TextContent", "");
                     if(!textDataDictionary.TryAdd(id, text))
                         Debug.LogWarning($"{id}에 이미 문자열이 할당되어 있습니다.");
                 }
