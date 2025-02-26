@@ -39,7 +39,7 @@ namespace Quest.Container
         public override void Complete()
         {
             base.Complete();
-            if(appButton) appButton.button.interactable = false;
+            if (appButton) appButton.button.interactable = false;
         }
 
         public override void Ignore()

@@ -11,6 +11,7 @@ namespace Util
     public class ObjectSpawner : MonoBehaviour
     {
         public bool isStartSpawn = false; // 이 컴포넌트가 생성되자마자 스폰하게 할 것인지
+        public bool isEnableSpawn = true; // 비활성화 -> 활성화 될때 스폰하게 할 것인지
         private bool isPlay = false;
         [Tooltip("Count와 상관없이 계속 스폰 할 건지")] public bool isLoop = false;
         [Tooltip("생성 잠시 중단")] public bool isPause;
@@ -59,7 +60,7 @@ namespace Util
 
         public void OnEnable()
         {
-            if(isPlay && gameObject.activeInHierarchy && SpawnCoroutine == null) SpawnCoroutine = StartCoroutine(SpawnerEnumerator());
+            if(isEnableSpawn && isPlay && gameObject.activeInHierarchy && SpawnCoroutine == null) SpawnCoroutine = StartCoroutine(SpawnerEnumerator(0f));
         }
 
         public void OnDisable()
@@ -67,16 +68,16 @@ namespace Util
             SpawnCoroutine = null;
         }
 
-        public void Play()
+        public void Play(float delay = 0f)
         {
             isPause = false;
             isPlay = true;
-            if (gameObject.activeInHierarchy && SpawnCoroutine == null) SpawnCoroutine = StartCoroutine(SpawnerEnumerator());
+            if (gameObject.activeInHierarchy && SpawnCoroutine == null) SpawnCoroutine = StartCoroutine(SpawnerEnumerator(delay));
         }
 
         public void Stop()
         {
-            StopCoroutine(SpawnCoroutine);
+            if(SpawnCoroutine != null) StopCoroutine(SpawnCoroutine);
             isPlay = false;
             SpawnCoroutine = null;
         }
@@ -86,8 +87,10 @@ namespace Util
             isPause = true;
         }
 
-        private IEnumerator SpawnerEnumerator()
+        private IEnumerator SpawnerEnumerator(float delay)
         {
+            if (delay > 0)
+                yield return new WaitForSeconds(delay);
             while (isPlay && (!spawnCount.IsMax || isLoop))
             {
                 if (isPause == false)

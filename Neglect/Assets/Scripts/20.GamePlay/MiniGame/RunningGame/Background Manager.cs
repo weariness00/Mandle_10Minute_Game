@@ -74,6 +74,29 @@ namespace GamePlay.MiniGame.RunningGame
         public GameObject ForeParent;
         public GameObject FloorParent;
 
+        public void Awake()
+        {
+            runningGame.inGame.onGameChangeEvent.AddListener(() =>
+            {
+                if (backgroundSpriteList.Count - 1 > backgroundSpriteIndex)
+                {
+                    backgroundSpriteRenderer.sprite = backgroundSpriteList[backgroundSpriteIndex];
+                    prevBackgroundSpriteRenderer.sprite = backgroundSpriteList[backgroundSpriteIndex];
+                    var pC = prevBackgroundSpriteRenderer.color;
+                    pC.a = 1;
+                    prevBackgroundSpriteRenderer.color = pC;
+                    prevBackgroundSpriteRenderer.DOFade(0, 5f);
+                    backgroundObject.spriteRenderer.sprite = backgroundSpriteList[++backgroundSpriteIndex];
+                    var cC = backgroundObject.spriteRenderer.color;
+                    cC.a = 0;
+                    backgroundObject.spriteRenderer.color = cC;
+                    backgroundObject.spriteRenderer.DOFade(1, 5f);
+                    updateBackgroundSpriteTimer.Current -= updateBackgroundSpriteTimer.Max;
+                    RenewalForeFogColor();
+                }
+            });
+        }
+
         public void OnEnable()
         {
             Play();
@@ -111,7 +134,7 @@ namespace GamePlay.MiniGame.RunningGame
                 else
                     ForegroundObject[i].groundType = 1;
 
-                    SpriteRenderer spriteRenderer = ForegroundObject[i].GetComponent<SpriteRenderer>();
+                SpriteRenderer spriteRenderer = ForegroundObject[i].GetComponent<SpriteRenderer>();
                 ForegroundRender.Add(spriteRenderer);
                 Vector2 pixelSize = spriteRenderer.bounds.size;
                 ForegroundSize.Add(pixelSize);
@@ -237,27 +260,6 @@ namespace GamePlay.MiniGame.RunningGame
 
         public void Update()
         {
-            if (backgroundSpriteList.Count - 1 > backgroundSpriteIndex && runningGame.isGamePlay.Value)
-            {
-                updateBackgroundSpriteTimer.Current += Time.deltaTime;
-                if (updateBackgroundSpriteTimer.IsMax)
-                {
-                    backgroundSpriteRenderer.sprite = backgroundSpriteList[backgroundSpriteIndex];
-                    prevBackgroundSpriteRenderer.sprite = backgroundSpriteList[backgroundSpriteIndex];
-                    var pC = prevBackgroundSpriteRenderer.color;
-                    pC.a = 1;
-                    prevBackgroundSpriteRenderer.color = pC;
-                    prevBackgroundSpriteRenderer.DOFade(0, 5f);
-                    backgroundObject.spriteRenderer.sprite = backgroundSpriteList[++backgroundSpriteIndex];
-                    var cC = backgroundObject.spriteRenderer.color;
-                    cC.a = 0;
-                    backgroundObject.spriteRenderer.color = cC;
-                    backgroundObject.spriteRenderer.DOFade(1, 5f);
-                    updateBackgroundSpriteTimer.Current -= updateBackgroundSpriteTimer.Max;
-                    RenewalForeFogColor();
-                }
-            }
-            
             if (IsPause)
                 return;
             GroundMove();
