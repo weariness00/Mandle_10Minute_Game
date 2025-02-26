@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 using Util;
+using static UnityEditor.PlayerSettings;
 
 namespace GamePlay.MiniGame.RunningGame
 {
@@ -137,33 +138,98 @@ namespace GamePlay.MiniGame.RunningGame
         public void ForeFogSetting(GroundObject target, int index) // isBack == 1 맨 뒤의 흐린 구름 전용
         {
             SpriteRenderer Renderer = ForegroundRender[index];
-            int randomValue = UnityEngine.Random.Range(1, 3); // 0 가깝고 흐릿함 / 1 중간 선명 //2 느리고 어두움  
             Vector3 Pos = target.transform.position;
             float RandomScale = UnityEngine.Random.Range(1.5f, 2f);
             target.transform.localScale = new Vector3(RandomScale, RandomScale, 1);
-
-            Color pre = Renderer.color;
+            int randomValue = UnityEngine.Random.Range(1, 3); // 0 가깝고 흐릿함 / 1 중간 선명 //2 느리고 어두움  
 
             if (target.groundType == 0)
             {
                 Pos.z = 1.2f;
-                Renderer.color = new Color(1f, 1f, 1f, 150 / 255f);
+                ForeFogSetColor(target, index, randomValue);
                 target.Setting(UnityEngine.Random.Range(FarFogSpeed.Min, FarFogSpeed.Max));
             }
             else if (randomValue == 1)
             {
                 Pos.z = 1f;
                 target.Setting(UnityEngine.Random.Range(CloseFogSpeed.Min, CloseFogSpeed.Max));
-                Renderer.color = new Color(240 / 255f, 240 / 255f, 240 / 255f, 1f);
+                ForeFogSetColor(target, index, randomValue);
             }
             else if (randomValue == 2)
             {
                 Pos.z = 1.1f;
-                Renderer.color = new Color(1f, 1f, 1f, 1f);
+                ForeFogSetColor(target, index, randomValue);
                 target.Setting(UnityEngine.Random.Range(MiddleFogSpeed.Min, MiddleFogSpeed.Max));
             }
             target.transform.position = Pos;
         }
+
+        public void ForeFogSetColor(GroundObject targets ,int targetIndexs , int posNum) // 구름 색깔 변경
+        {
+
+            SpriteRenderer Renderer = ForegroundRender[targetIndexs];
+            if (targets.groundType == 0)
+            {
+                if (backgroundSpriteIndex == 0)
+                {
+                    Renderer.color = new Color(1f, 1f, 1f, 150 / 255f);
+                }
+                else if (backgroundSpriteIndex == 1)
+                {
+                    Renderer.color = new Color(1f, 200f / 255f, 120 / 255f, 1f);
+                }
+                else if (backgroundSpriteIndex == 2)
+                {
+                    Renderer.color = new Color(120 / 255f, 120f / 255f, 210 / 255f, 1f);
+                }
+            }
+            else if (posNum == 1)
+            {
+                if (backgroundSpriteIndex == 0)
+                {
+                    Renderer.color = new Color(240 / 255f, 240 / 255f, 240 / 255f, 1f);
+                }
+                else if (backgroundSpriteIndex == 1)
+                {
+                    Renderer.color = new Color(200/255f, 150f / 255f, 100 / 255f, 1f);
+                }
+                else if (backgroundSpriteIndex == 2)
+                {
+                    Renderer.color = new Color(60 / 255f, 50f / 255f, 135 / 255f, 1f);
+
+                }
+            }
+            else if (posNum == 2)
+            {
+                if (backgroundSpriteIndex == 0)
+                {
+                    Renderer.color = new Color(1f, 1f, 1f, 1f);
+                }
+                else if (backgroundSpriteIndex == 1)
+                {
+                    Renderer.color = new Color(200 / 255f, 150f / 255f, 150 / 255f, 1f);
+                }
+                else if (backgroundSpriteIndex == 2)
+                {
+                    Renderer.color = new Color(90 / 255f, 90f / 255f, 180 / 255f, 1f);
+
+                }
+            }
+        }
+
+        public void RenewalForeFogColor()
+        {
+            for (int i = 0; i < ForegroundObject.Count; i++)
+            {
+
+                if (ForegroundObject[i].transform.position.x > -LeftPosX + ForegroundSize[i].x / 2 * ForegroundObject[i].transform.localScale.x)
+                {
+                    int randomValue = UnityEngine.Random.Range(1, 3); // 0 가깝고 흐릿함 / 1 중간 선명 //2 느리고 어두움  
+                    ForeFogSetColor(ForegroundObject[i], i, randomValue);
+                }
+            }
+        }
+
         public void Stop()
         {
             IsPause = true;
@@ -188,6 +254,7 @@ namespace GamePlay.MiniGame.RunningGame
                     backgroundObject.spriteRenderer.color = cC;
                     backgroundObject.spriteRenderer.DOFade(1, 5f);
                     updateBackgroundSpriteTimer.Current -= updateBackgroundSpriteTimer.Max;
+                    RenewalForeFogColor();
                 }
             }
             
