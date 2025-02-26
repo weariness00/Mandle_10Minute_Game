@@ -40,7 +40,8 @@ namespace GamePlay.App.Home
         }
 
         public void Insert(Component uiComponent) => Insert(uiComponent.gameObject);
-        public void Insert(Component uiComponent, Vector2Int index) => Insert(uiComponent.gameObject, index, Vector2Int.one);
+        public void Insert(Component uiComponent, Vector2Int index) => Insert(uiComponent, index, Vector2Int.one);
+        public void Insert(Component uiComponent, Vector2Int index, Vector2Int size) => Insert(uiComponent.gameObject, index, size);
         public void Insert(GameObject uiObject)
         {
             if(gridList.Count == 0)
@@ -147,7 +148,8 @@ namespace GamePlay.App.Home
                 uiRectTransform.pivot = Vector2.one * 0.5f;
 
                 // 피봇을 움직이면 size만큼 더 움직이게 된다.
-                uiRectTransform.localPosition = originLocalPosition + 0.5f * new Vector3(cellSize.x, -cellSize.y);
+                var realSize = cellSize * size + spacing * (size - Vector2Int.one);
+                uiRectTransform.localPosition = originLocalPosition + 0.5f * new Vector3(realSize.x, -realSize.y);
             }
         }
     }

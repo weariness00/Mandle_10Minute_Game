@@ -5,7 +5,10 @@ namespace GamePlay.App.Dummy
 {
     public partial class DummyApp : MonoBehaviour
     {
-    
+        [Header("App Button 관련")]
+        [SerializeField] private Vector2Int appGridPosition;
+        [SerializeField] private Vector2Int appCellSize = Vector2Int.one;
+
     }
 
     public partial class DummyApp : IPhoneApplication
@@ -14,7 +17,6 @@ namespace GamePlay.App.Dummy
         [SerializeField] private string appName;
         [SerializeField] private Sprite icon;
         [SerializeField] private Vector2Int verticalResolution;
-        [SerializeField] private Vector2Int appGridPosition;
         [SerializeField] private PhoneControl _phone;
         public AppState AppState { get; set; }
 
@@ -32,7 +34,7 @@ namespace GamePlay.App.Dummy
 
             var home = _phone.applicationControl.GetHomeApp();
             var appButton = home.GetAppButton(this);
-            home.appGridControl.Insert(appButton, appGridPosition);
+            home.appGridControl.Insert(appButton, appGridPosition, appCellSize);
             
             appButton.button.onClick.RemoveAllListeners();
         }
