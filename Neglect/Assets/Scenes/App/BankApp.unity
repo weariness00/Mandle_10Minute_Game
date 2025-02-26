@@ -2475,6 +2475,9 @@ MonoBehaviour:
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
+  excludeLayer:
+    serializedVersion: 2
+    m_Bits: 0
   m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
@@ -3639,6 +3642,7 @@ MonoBehaviour:
   eventData:
     id: 0
     name: 
+    isMainEvent: 0
     level: 0
     prefab: {fileID: 0}
     acceptEventID: 0
@@ -3648,6 +3652,7 @@ MonoBehaviour:
   RandomAmount: 0
   RandomAccount: 
   RandomPassword: 
+  inputAmountsum: 0
   keyPadCanvasGroup: {fileID: 6794597814835458439}
   InputAmountText: {fileID: 161332229922056398}
   InputAccountText: {fileID: 991766322192599585}
@@ -3894,7 +3899,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 84785ecaea1e73a43808b0ed8ea66fb5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
