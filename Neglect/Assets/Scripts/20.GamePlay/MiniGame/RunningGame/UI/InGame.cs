@@ -11,7 +11,7 @@ using Util;
 
 namespace GamePlay.MiniGame.RunningGame
 {
-    public class InGame : MonoBehaviour
+    public partial class InGame : MonoBehaviour
     {
         public RunningGame runningGame;
         public GameObject mainObject;
@@ -70,26 +70,6 @@ namespace GamePlay.MiniGame.RunningGame
                 foreach (ObjectSpawner spawner in objectSpawnerList)
                     spawner.timeScale = value;
             });
-
-            if (QuestManager.HasInstance)
-            {
-                QuestManager.Instance.onEndQuestEvent.AddListener(quest =>
-                {
-                    if (quest.state == QuestState.Failed)
-                    {
-                        currentSpawner.Stop();
-                        currentSpawner = eventIgnoreSpawner;
-                        currentSpawner.Play();
-                        StartCoroutine(IgnoreSpawnerEnumerator());
-                    }
-                    else if (quest.state == QuestState.Completed && currentSpawner == eventIgnoreSpawner)
-                    {
-                        currentSpawner.Stop();
-                        currentSpawner = objectSpawnerList[spawnerIndex];
-                        currentSpawner.Play();
-                    }
-                });
-            }
         }
 
         public void Update()
@@ -145,6 +125,30 @@ namespace GamePlay.MiniGame.RunningGame
                 currentSpawner = objectSpawnerList[spawnerIndex];
                 currentSpawner.Play();
             }
+        }
+    }
+
+    // Running Game 스크립트에서 사용할 App 관련 함수
+    public partial class InGame
+    {
+        public void AppInstall()
+        {
+            QuestManager.Instance.onEndQuestEvent.AddListener(quest =>
+            {
+                if (quest.state == QuestState.Failed)
+                {
+                    currentSpawner.Stop();
+                    currentSpawner = eventIgnoreSpawner;
+                    currentSpawner.Play(1f);
+                    StartCoroutine(IgnoreSpawnerEnumerator());
+                }
+                else if (quest.state == QuestState.Completed && currentSpawner == eventIgnoreSpawner)
+                {
+                    currentSpawner.Stop();
+                    currentSpawner = objectSpawnerList[spawnerIndex];
+                    currentSpawner.Play(1f);
+                }
+            });
         }
     }
 }

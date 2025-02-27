@@ -343,6 +343,8 @@ namespace GamePlay.MiniGame.RunningGame
             exitButton.onClick.AddListener(phone.applicationControl.OnHome);
             lobbyExitButton.onClick.AddListener(phone.applicationControl.OnHome);
 
+            inGame.AppInstall();
+            
             QuestManager.Instance.onEndQuestEvent.AddListener(quest =>
             {
                 // 어떤 이벤트든 실패했을 경우

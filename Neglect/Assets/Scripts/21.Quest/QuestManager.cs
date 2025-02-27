@@ -61,7 +61,6 @@ namespace Quest
             questAddList.Clear();
             questPlayList.Clear();
             waitQuestList.Clear();
-            onEndQuestEvent.RemoveAllListeners();
         }
 
         public void QuestStart()
