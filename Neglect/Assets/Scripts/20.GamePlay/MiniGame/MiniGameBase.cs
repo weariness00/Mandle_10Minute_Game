@@ -211,7 +211,8 @@ namespace GamePlay.MiniGame
 
         public virtual void AppResume(PhoneControl phone)
         {
-            phone.PhoneViewRotate(PhoneViewType.Horizon);
+            phone.FadeOut(0f, Color.black);
+            phone.PhoneViewRotate(PhoneViewType.Horizon, () => phone.FadeIn(1f, Color.black));
         }
 
         public virtual void AppPause(PhoneControl phone)

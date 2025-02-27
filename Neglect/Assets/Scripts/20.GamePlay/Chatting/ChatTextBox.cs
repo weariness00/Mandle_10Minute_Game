@@ -3,7 +3,9 @@ using System.Collections;
 using System.Text.RegularExpressions;
 using TMPro;
 using UniRx;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace GamePlay.Chatting
@@ -13,51 +15,67 @@ namespace GamePlay.Chatting
         // Start is called before the first frame update
         public RectTransform boxTransform;
         public Image image;
-        public TextMeshProUGUI Text;
+        [SerializeField] private TMP_Text targetText;
 
-        public float paddingLeft;
-        public float paddingRight;
-        public float paddingBottom;
-        public float paddingTop;
-
+        public RectOffset padding;
         public float maxWidth;
 
         private RectTransform _rectTransform;
 
         public void Awake()
         {
-            _rectTransform = GetComponent<RectTransform>();
-            Text.enableWordWrapping = true; // 자동 줄바꿈 활성화
+            targetText.enableWordWrapping = true; // 자동 줄바꿈 활성화
         }
 
-        public void Update()
+        public void OnEnable()
         {
-            _rectTransform.sizeDelta = new(_rectTransform.sizeDelta.x, image.rectTransform.sizeDelta.y);
+            UpdateBoxSize();
+        }
+
+        public void UpdateBoxSize()
+        {
+            _rectTransform = GetComponent<RectTransform>();
             
-            float width = Text.preferredWidth;
-            float height = Text.preferredHeight;
+            float width = targetText.preferredWidth;
+            float height = targetText.preferredHeight;
 
             if (width > maxWidth)
             {
-                Text.rectTransform.sizeDelta = new Vector2(maxWidth, height);
-                height = Text.preferredHeight; // 줄바꿈 후 높이 다시 계산
-                width = maxWidth; // 고정된 최대 너비 적용
+                targetText.rectTransform.sizeDelta = new Vector2(maxWidth, height);
+                width = Mathf.Min(width, maxWidth);
+                height = targetText.preferredHeight; // 줄바꿈 후 높이 다시 계산
             }
             
-            Text.rectTransform.sizeDelta = new Vector2(width, height);
-            Text.rectTransform.anchoredPosition = new Vector3(paddingLeft, -paddingTop);
-            image.rectTransform.sizeDelta = new Vector2(width + paddingLeft + paddingRight, height + paddingTop + paddingBottom);
-        }
-        
-        public void SetText(string text)
-        {
-            Text.text = InsertNewlines(text,10);
-        }
-        
-        public static string InsertNewlines(string input, int chunkSize = 10)
-        {
-            return Regex.Replace(input, $"(.{{{chunkSize}}})", "$1\n");
+            targetText.rectTransform.sizeDelta = new Vector2(width, height);
+            targetText.rectTransform.anchoredPosition = new Vector3(padding.left, -padding.top);
+            image.rectTransform.sizeDelta = new Vector2(width + padding.horizontal, height + padding.vertical);
+            _rectTransform.sizeDelta = new(_rectTransform.sizeDelta.x, image.rectTransform.sizeDelta.y);
         }
 
+        public void SetText(string text)
+        {
+            this.targetText.text = text;
+            UpdateBoxSize();
+            UpdateBoxSize();
+        }
     }
+
+#if UNITY_EDITOR
+    [CustomEditor(typeof(ChatTextBox))]
+    public class ChatTextBoxEditor : Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+            if (EditorApplication.isPlaying)
+            {
+                var script = target as ChatTextBox;
+                if (GUILayout.Button("대화 박스 크기 업데이트"))
+                {
+                    script.UpdateBoxSize();
+                }
+            }
+        }
+    }
+#endif
 }

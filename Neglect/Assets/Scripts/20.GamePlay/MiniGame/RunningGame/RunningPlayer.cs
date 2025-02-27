@@ -224,7 +224,7 @@ namespace GamePlay.MiniGame.RunningGame
 
         public int GetComboMultiple()
         {
-            return Mathf.Clamp(currentCombo.Value / comboInterval + 1, 1, 4);
+            return Mathf.Clamp(currentCombo.Value / comboInterval + 1, 1, 5);
         }
     }
 

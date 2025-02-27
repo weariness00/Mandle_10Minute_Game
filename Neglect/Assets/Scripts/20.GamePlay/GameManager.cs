@@ -37,8 +37,10 @@ namespace GamePlay
 
         [HideInInspector] public UnityEvent<QuestBase> onLastEvent;
         
-        public void Awake()
+        public override void Awake()
         {
+            base.Awake();
+            
             QuestManager.Instance.Init();
             if (!SceneUtil.TryGetPhoneScene(out var s))
             {

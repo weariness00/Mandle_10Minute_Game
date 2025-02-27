@@ -1,5 +1,6 @@
 ﻿using GamePlay.Phone;
 using GamePlay.PopUp;
+using System.Linq;
 using UnityEngine;
 
 namespace Quest.Container
@@ -21,8 +22,8 @@ namespace Quest.Container
             if(eventData.textArray.Length >= 1) popUp.titleText.text = eventData.textArray[0];
             if(eventData.textArray.Length >= 2) popUp.explainText.text = eventData.textArray[1];
 
-            if (eventData.extraDataIDArray.Length >= 1) isReverse = eventData.extraDataIDArray[0] == -99;
-            if (eventData.extraDataIDArray.Length >= 2) isLoop = eventData.extraDataIDArray[0] == -45;
+            isReverse = eventData.extraDataIDArray.Contains(-99);
+            isLoop = eventData.extraDataIDArray.Contains(-45);
             
             popUp.button.onClick.AddListener(Complete);
             popUp.destroyPopUpEvent.AddListener(Ignore);

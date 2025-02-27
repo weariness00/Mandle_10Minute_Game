@@ -15,8 +15,10 @@ namespace Manager
 
         private Dictionary<string, AudioSource> audioSourceDictionary = new Dictionary<string, AudioSource>();
  
-        public void Awake()
+        public override void Awake()
         {
+            base.Awake();
+            
             setting = SoundManagerSettingsProviderHelper.setting;
             Debug.Assert(setting != null, $"Sound Manager Setting 스크립터블 오브젝트가 존재하지 않습니다.");
             if(ReferenceEquals(setting, null)) return;

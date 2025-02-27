@@ -17,6 +17,11 @@ namespace Util
         private static T _instance = null;
         public static bool HasInstance => _instance;
 
+        public virtual void Awake()
+        {
+            Init();
+        }
+
         private static void Init()
         {
             if (_instance == null)

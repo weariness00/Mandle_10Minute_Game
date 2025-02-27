@@ -186,11 +186,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boxTransform: {fileID: 2513140538887731488}
   image: {fileID: 1005197670064293139}
-  Text: {fileID: 7296849018280801478}
-  paddingLeft: 20
-  paddingRight: 20
-  paddingBottom: 20
-  paddingTop: 20
+  targetText: {fileID: 7296849018280801478}
+  padding:
+    m_Left: 10
+    m_Right: 10
+    m_Top: 10
+    m_Bottom: 30
   maxWidth: 400
 --- !u!1 &8545012230841785678
 GameObject:

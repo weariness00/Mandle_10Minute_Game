@@ -37,7 +37,7 @@ namespace GamePlay.Phone
             home.appGridControl.Insert(appButton, new(3, 0));
 
             conversation.canvas.worldCamera = _phone.phoneCamera;
-            conversation.backButton.onClick.AddListener(() => phone.applicationControl.CloseApp(this));
+            conversation.backButton.onClick.AddListener(() => phone.applicationControl.PauseApp(this));
             
             SetActiveBackground(false);
         }
@@ -46,15 +46,18 @@ namespace GamePlay.Phone
         {
             SetActiveBackground(true);
             conversation.StartConversation();
-            phone.PhoneViewRotate(PhoneViewType.Vertical, () => phone.FadeIn(1f, Color.black));
+            phone.FadeOut(0.1f, Color.black);
+            if (phone.viewType == PhoneViewType.Horizon)
+                phone.PhoneViewRotate(PhoneViewType.Vertical, () => phone.FadeIn(1f, Color.black));
+            else
+                phone.FadeIn(0.3f, Color.black);
         }
 
         public void AppResume(PhoneControl phone)
         {
             SetActiveBackground(true);
             conversation.StartConversation();
-            phone.FadeOut(0.1f, Color.black);
-            phone.PhoneViewRotate(PhoneViewType.Vertical, () => phone.FadeIn(1f, Color.black));
+            phone.PhoneViewRotate(PhoneViewType.Vertical);
         }
 
         public void AppPause(PhoneControl phone)

@@ -133,7 +133,7 @@ namespace GamePlay.Chatting
             otherChat.boxTransform.pivot = Vector2.up;
             otherChat.boxTransform.anchorMin = Vector2.up;
             otherChat.boxTransform.anchorMax = Vector2.up;
-            otherChat.Text.text = text;
+            otherChat.SetText(text);
 
             return otherChat;
         }
@@ -145,7 +145,7 @@ namespace GamePlay.Chatting
             answerChat.boxTransform.pivot = Vector2.one;
             answerChat.boxTransform.anchorMin = Vector2.one;
             answerChat.boxTransform.anchorMax = Vector2.one;
-            answerChat.Text.text = text;
+            answerChat.SetText(text);
             
             return answerChat;
         }
@@ -239,7 +239,6 @@ namespace GamePlay.Chatting
 
         public void ChoiceButton(AnswerBlock block) //버튼 클릭시
         {
-            
             Sequence UiSeq = DOTween.Sequence();
             
             foreach (AnswerBlock answerBlock in answerList)

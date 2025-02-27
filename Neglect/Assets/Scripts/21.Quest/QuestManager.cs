@@ -16,8 +16,9 @@ namespace Quest
 
         private MinMaxValue<float> questSpawnTimer;
         
-        public void Awake()
+        public override void Awake()
         {
+            base.Awake();
             questSpawnTimer = QuestDataList.Instance.questSpawnTimer;
         }
 

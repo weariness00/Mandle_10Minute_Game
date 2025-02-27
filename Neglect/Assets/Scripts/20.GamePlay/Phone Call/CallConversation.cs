@@ -192,7 +192,7 @@ namespace GamePlay.Event
             // ~ 상대 말풍선 애니메이션
             UiSeq.AppendCallback(() =>
             {
-                OtherTextBoxScript.SetNarration(talkData != null ? talkData.mainText : "Test", 17, ShowSelectButton); //가 끝나면 showSelectButton 실행
+                OtherTextBoxScript.SetNarration(talkData != null ? talkData.mainText : "Test", ShowSelectButton); //가 끝나면 showSelectButton 실행
             });
         }
         public void ShowSelectButton()
@@ -251,12 +251,12 @@ namespace GamePlay.Event
             {
                 MyChat.gameObject.SetActive(true);
                 MyText.gameObject.SetActive(true);
-                MyText.text = "";
+                MyTextBoxScript.narrationTextBox.SetText("");
             });
             UiSeq.Append(MyChat.gameObject.transform.DOLocalMoveY(10f, 0.5f).From().SetRelative(true)).Join(MyChat.DOFade(0f, 0f)).Join(MyChat.DOFade(1f, 0.5f));
             UiSeq.AppendCallback(() =>
             {
-                MyTextBoxScript.SetNarration(replyString[index], 17, FillGage);
+                MyTextBoxScript.SetNarration(replyString[index], FillGage);
             });
 
 
@@ -300,16 +300,15 @@ namespace GamePlay.Event
 
             UiSeq.AppendCallback(() =>
             {
-
                 MyChat.gameObject.SetActive(false);
                 MyText.gameObject.SetActive(false);
-                OtherText.text = "";
+                OtherTextBoxScript.narrationTextBox.SetText("");
             });
             UiSeq.Append(OtherChat.gameObject.transform.DOLocalMoveY(10f, 0.5f).From().SetRelative(true)).Join(OtherChat.DOFade(0f, 0f)).Join(OtherChat.DOFade(1f, 0.5f));
             // ~ 상대 말풍선 애니메이션
             UiSeq.AppendCallback(() =>
             {
-                OtherTextBoxScript.SetNarration(talkData != null ? talkData.mainText : "Test", 17, null); //가 끝나면 showSelectButton 실행
+                OtherTextBoxScript.SetNarration(talkData != null ? talkData.mainText : "Test", null); //가 끝나면 showSelectButton 실행
             });
             UiSeq.AppendCallback(() =>
             {

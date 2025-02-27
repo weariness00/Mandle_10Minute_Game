@@ -38,7 +38,8 @@ namespace GamePlay.MiniGame.RunningGame
             blockList.Add(block);
             playerData.score.Subscribe(value =>
             {
-                block.scoreText.text = $"{value}pt";
+                if (runningGame.isGamePlay.Value)
+                    block.scoreText.text = $"{value}pt";
                 UpdateRank();
             });
 
@@ -57,14 +58,17 @@ namespace GamePlay.MiniGame.RunningGame
             for (var i = 0; i < rankList.Count; i++)
             {
                 var block = rankList[i];
-                block.rankText.text = $"{i + 1}";
                 block.data.rank = i + 1;
 
-                var destPos = new Vector2(0, -25 + (-block.rectTransform.sizeDelta.y * i));
-                if (Math.Abs(block.rectTransform.anchoredPosition.y - destPos.y) > 0.1f)
+                if (runningGame.isGamePlay.Value)
                 {
-                    var tween = block.rectTransform.DOAnchorPos(destPos, 0.5f);
-                    blockPositionUpdateTweenList.Add(tween);
+                    block.rankText.text = $"{i + 1}";
+                    var destPos = new Vector2(0, -25 + (-block.rectTransform.sizeDelta.y * i));
+                    if (Math.Abs(block.rectTransform.anchoredPosition.y - destPos.y) > 0.1f)
+                    {
+                        var tween = block.rectTransform.DOAnchorPos(destPos, 0.5f);
+                        blockPositionUpdateTweenList.Add(tween);
+                    }
                 }
             }
         }

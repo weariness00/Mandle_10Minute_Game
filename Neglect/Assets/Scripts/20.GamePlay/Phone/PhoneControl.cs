@@ -61,13 +61,24 @@ namespace GamePlay.Phone
             applicationControl.OnAppEvent.AddListener(app =>
             {
                 var viewPort = phoneViewPortDictionary[app.AppName];
+                viewPort.vertical.spriteRenderer.sortingOrder = 1;
+                viewPort.horizon.spriteRenderer.sortingOrder = 1;
                 ChangeViewPort(viewPort);
             });
             
             applicationControl.OnAppResumeEvent.AddListener(app =>
             {
                 var viewPort = phoneViewPortDictionary[app.AppName];
+                viewPort.vertical.spriteRenderer.sortingOrder = 1;
+                viewPort.horizon.spriteRenderer.sortingOrder = 1;
                 ChangeViewPort(viewPort);
+            });
+            
+            applicationControl.OnAppPauseEvent.AddListener(app =>
+            {
+                var viewPort = phoneViewPortDictionary[app.AppName];
+                viewPort.vertical.spriteRenderer.sortingOrder = 0;
+                viewPort.horizon.spriteRenderer.sortingOrder = 0;
             });
 
             // 폰 카메라 생성 & 셋팅
@@ -124,7 +135,13 @@ namespace GamePlay.Phone
             var a = fadeRenderer.color.a;
             color.a = a;
             fadeRenderer.color = color;
-            fadeTween = fadeRenderer.DOFade(1f, duration).SetDelay(delay);
+            if (duration != 0)
+                fadeTween = fadeRenderer.DOFade(1f, duration).SetDelay(delay);
+            else
+            {
+                color.a = 1f;
+                fadeRenderer.color = color;
+            }
         }
         
         public void FadeIn(float duration, Color color, float delay = 0f)

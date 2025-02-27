@@ -11,6 +11,7 @@ namespace GamePlay.Phone
         public UnityEvent<IPhoneApplication> OnAddAppEvent = new();
         public UnityEvent<IPhoneApplication> OnAppEvent = new();
         public UnityEvent<IPhoneApplication> OnAppResumeEvent = new();
+        public UnityEvent<IPhoneApplication> OnAppPauseEvent = new();
         public IPhoneApplication currentPlayApplication;
 
         private Dictionary<string, IPhoneApplication> applicationDictionary = new(); // 앱 이름, 앱
@@ -52,8 +53,7 @@ namespace GamePlay.Phone
             if (currentPlayApplication == app && app.AppState == AppState.Open) return;
             if (currentPlayApplication != null && currentPlayApplication.AppState == AppState.Open)
             {
-                currentPlayApplication.AppPause(phone);
-                currentPlayApplication.AppState = AppState.Pause;
+                PauseApp(currentPlayApplication);
             }
 
             // 앱을 켰을시 처음 킨거면 dict에 추가한 후 add 이벤트 실행
@@ -80,6 +80,7 @@ namespace GamePlay.Phone
         {
             app.AppPause(phone);
             app.AppState = AppState.Pause;
+            OnAppPauseEvent?.Invoke(app);
         }
 
         public void CloseApp()

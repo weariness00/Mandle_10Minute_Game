@@ -26,7 +26,12 @@ namespace Quest.Container
             app = phone.applicationControl.currentPlayApplication;
             phone.interfaceGroupOnOffButton.gameObject.SetActive(false);
             phone.applicationControl.PauseApp(app);
-            phone.PhoneViewRotate(0);
+            if (phone.viewType == PhoneViewType.Horizon)
+            {
+                phone.FadeOut(0f, Color.black);
+                phone.PhoneViewRotate(PhoneViewType.Vertical, () => phone.FadeIn(1f, Color.black));
+            }
+
             app.SetActiveBackground(true);
             
             callingScreen.name.text = eventData.textArray.Length == 0 ? "mom" : eventData.textArray[0];
