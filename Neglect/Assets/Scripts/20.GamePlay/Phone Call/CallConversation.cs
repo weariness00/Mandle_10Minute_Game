@@ -297,15 +297,11 @@ namespace GamePlay.Event
                 return;
             }
 
+            MyChat.gameObject.SetActive(false);
+            MyText.gameObject.SetActive(false);
+            OtherText.text = "";
 
-            UiSeq.AppendCallback(() =>
-            {
-
-                MyChat.gameObject.SetActive(false);
-                MyText.gameObject.SetActive(false);
-                OtherText.text = "";
-            });
-            UiSeq.Append(OtherChat.gameObject.transform.DOLocalMoveY(10f, 0.5f).From().SetRelative(true)).Join(OtherChat.DOFade(0f, 0f)).Join(OtherChat.DOFade(1f, 0.5f));
+            UiSeq.Append(OtherChat.gameObject.transform.DOLocalMoveY(10f, 0.5f).From().SetRelative(true)).Join(OtherChat.DOFade(1f, 0.5f)).SetDelay(0.1f);
             // ~ 상대 말풍선 애니메이션
             UiSeq.AppendCallback(() =>
             {
