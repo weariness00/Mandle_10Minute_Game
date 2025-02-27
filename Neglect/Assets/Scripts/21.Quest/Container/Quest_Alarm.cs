@@ -1,3 +1,4 @@
+using DG.Tweening;
 using GamePlay;
 using GamePlay.Event;
 using GamePlay.Phone;
@@ -15,6 +16,8 @@ namespace Quest.Container
         private Alarm alarm;
         private IPhoneApplication app;
         private PhoneControl phone;
+
+        private Sequence vibrationSequence;
         public override void OnNext(object value)
         {
             
@@ -26,8 +29,7 @@ namespace Quest.Container
             
             if (eventData.extraDataIDArray.Length > 1) isLoop = eventData.extraDataIDArray[1] == -45;
             
-            alarm = PhoneUtil.InstantiateUI(questPrefab, out var phone_);
-            phone = phone_;
+            alarm = PhoneUtil.InstantiateUI(questPrefab, out phone);
             alarm.complete += Complete;
             alarm.ignoreEvent += Ignore;
 
@@ -40,27 +42,33 @@ namespace Quest.Container
             phone.applicationControl.PauseApp(app);
 
             phone.interfaceGroupOnOffButton.gameObject.SetActive(false);
-            phone.FadeOut(0.1f, Color.black);
+            phone.FadeOut(0, Color.black);
             phone.PhoneViewRotate(PhoneViewType.Vertical, ()=> phone.FadeIn(1f, Color.black));
-            
-            PhoneUtil.currentPhone.PhoneVibration();
+
+            vibrationSequence = phone.PhoneVibrationLoop(0.3f, 1f);
         }
 
         public override void Complete()
         {
             phone.applicationControl.OpenApp(app);
+            vibrationSequence?.Kill();
+            phone.FadeIn(0f, Color.black);
             base.Complete();
         }
 
         public override void Ignore()
         {
+            vibrationSequence?.Kill();
             phone.applicationControl.OpenApp(app);
+            phone.FadeIn(0f, Color.black);
             base.Ignore();
         }
 
         public override void Failed()
         {
             base.Failed();
+            vibrationSequence?.Kill();
+            phone.FadeIn(0f, Color.black);
             if(alarm) Destroy(alarm.gameObject);
         }
     }
