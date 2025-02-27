@@ -297,7 +297,7 @@ MonoBehaviour:
     - "\uC9D1\uC8FC\uC778"
     - "\uB9CC\uB4E4\uB798\uB2D8 \uC6D4\uC138\uB97C \uB35C \uBCF4\uB0B4\uC168\uC5B4\uC694
       \uB35C \uBCF4\uB0B4\uC2E0 \uB9CC\uD07C \uB2E4\uC2DC \uC785\uAE08 \uBD80\uD0C1\uB4DC\uB9AC\uACA0\uC2B5\uB2C8\uB2E4."
-    extraDataIDArray: 
+    extraDataIDArray: fa2a0000
   - id: 1103
     name: "\uC6D4\uC138 \uB9CE\uC774\uC785\uAE08\uD55C\uACBD\uC6B0 \uD31D\uC5C5"
     isMainEvent: 0
@@ -315,7 +315,7 @@ MonoBehaviour:
     - "\uB9CC\uB4E4\uB798\uB2D8 \uC6D4\uC138\uB97C \uB354 \uBCF4\uB0C8\uB358\uB370
       \uC740\uD589 \uACC4\uC88C\uBC88\uD638\uB97C \uC368\uC8FC\uBA74 \uB2E4\uC2DC
       \uC785\uAE08\uD574 \uB4DC\uB9B4\uAC8C\uC694"
-    extraDataIDArray: 
+    extraDataIDArray: f92a0000
   - id: 1104
     name: "\uCE5C\uAD6C\uC640\uC758 \uCC44\uD305 App \uB300\uD654"
     isMainEvent: 0
@@ -884,7 +884,7 @@ MonoBehaviour:
   questSpawnTimer:
     _min: 0
     _max: 30
-    _current: 3.499018
+    _current: 5.363408
     _isMin: 0
     _isMax: 0
     isOverMax: 1

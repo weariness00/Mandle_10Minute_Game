@@ -280,7 +280,7 @@ namespace GamePlay.Phone
             currentCash -= InputAmount;
             currentCashText.text = AddCommas(currentCash.ToString()); //소지금액 차감 후 갱신
             completeAction?.Invoke();
-            if (Amountdifference == 0)
+            if (Amountdifference >= 0)
             {
                 if (_phone)
                 {
@@ -289,13 +289,13 @@ namespace GamePlay.Phone
                     appButton.button.interactable = false;
                 }
                 GameManager.Instance.GameClear();
-            }
-            else if (Amountdifference > 0)
-            {
-                if (eventData.extraDataIDArray.Length > 0)
+                if (Amountdifference > 0)
                 {
-                    var quest = QuestDataList.Instance.InstantiateEvent(eventData.extraDataIDArray[0]);
-                    QuestManager.Instance.AddQuestQueue(quest);
+                    if (eventData.extraDataIDArray.Length > 0)
+                    {
+                        var quest = QuestDataList.Instance.InstantiateEvent(eventData.extraDataIDArray[0]);
+                        QuestManager.Instance.AddQuestQueue(quest);
+                    }
                 }
             }
             else
