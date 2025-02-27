@@ -12,7 +12,7 @@ namespace GamePlay.Event
         public Action ClearAction;
         public Action IgnoreAction;
         public TextMeshProUGUI name;
-
+        
         public void CallAcception()
         {
             if(ClearAction != null)

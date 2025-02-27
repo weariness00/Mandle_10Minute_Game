@@ -144,7 +144,7 @@ namespace GamePlay.MiniGame
             var appButton = home.GetAppButton(this);
             appButton.highlightObject.SetActive(true);
             appButton.button.interactable = false;
-            home.appGridControl.Insert(appButton, new(1,3));
+            home.appGridControl.Insert(appButton, new(2,2));
 
             // 러닝 게임 시작시 GameManager의 타이머가 흐르도록 설정
             isGameStart.Subscribe(value =>

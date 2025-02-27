@@ -66,18 +66,26 @@ namespace GamePlay.App.Home
                     break;
                 }
             }
-
-            for (int i = findIndex; i < gridList.Count; i++)
-            {
-                var data = gridList[i];
-                data.UpdateIndex(data.index + Vector2Int.right, gridCount);
-                data.UpdateCellTransform(padding, cellSize, spacing);
-            }
             
+            // 새로운 데터 삽입
             var newData = new CellData() { index = index, size = size, uiObject = uiObject };
             newData.UpdateIndex(index, gridCount);
             newData.UpdateCellTransform(padding, cellSize, spacing);
-            gridList.Add(newData);
+            gridList.Insert(findIndex, newData);
+            
+            // 그리드 겹치면 밀리게 하기
+            for (int i = findIndex + 1; i < gridList.Count; i++)
+            {
+                var data1 = gridList[i - 1];
+                var data2 = gridList[i];
+                if (data1.CompareTo(data2))
+                {
+                    data2.UpdateIndex(data2.index + Vector2Int.right, gridCount);
+                    data2.UpdateCellTransform(padding, cellSize, spacing);
+                }
+                else
+                    data1.UpdateIndex(data1.index - Vector2Int.right, gridCount);
+            }
             gridList.Sort((a, b) =>
             {
                 var aIndex = a.index.x + a.index.y * gridCount.x;
@@ -150,6 +158,21 @@ namespace GamePlay.App.Home
                 // 피봇을 움직이면 size만큼 더 움직이게 된다.
                 var realSize = cellSize * size + spacing * (size - Vector2Int.one);
                 uiRectTransform.localPosition = originLocalPosition + 0.5f * new Vector3(realSize.x, -realSize.y);
+            }
+
+            // 각 셀이 겹치는지
+            public bool CompareTo(CellData other)
+            {
+                // 한 사각형이 다른 사각형의 왼쪽에 위치하는 경우
+                if (index.x > other.endIndex.x || other.index.x > endIndex.x)
+                    return false;
+
+                // 한 사각형이 다른 사각형의 위쪽에 위치하는 경우
+                if (endIndex.y > other.index.y || other.endIndex.y > index.y)
+                    return false;
+
+                // 겹치는 경우
+                return true;
             }
         }
     }

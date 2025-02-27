@@ -259,7 +259,7 @@ namespace GamePlay.MiniGame.RunningGame
             matchingCanvas.gameStartButton.onClick.RemoveAllListeners();
             matchingCanvas.gameStartButtonText.text = "게임 끝!";
             matchingCanvas.seasonText.text = "시즌 종료";
-            matchingCanvas.warringText.text = "시즌이 종료되었습니다. 게임을 종료해주십시오.";
+            matchingCanvas.warringText.text = "시즌이 종료되었습니다.";
             matchingCanvas.gameStartButton.onClick.AddListener(() =>
             {
                 if (Phone)
@@ -304,7 +304,7 @@ namespace GamePlay.MiniGame.RunningGame
             matchingCanvas.gameStartButton.onClick.RemoveAllListeners();
             matchingCanvas.gameStartButtonText.text = "게임 끝!";
             matchingCanvas.seasonText.text = "시즌 종료";
-            matchingCanvas.warringText.text = "시즌이 종료되었습니다. 게임을 종료해주십시오.";
+            matchingCanvas.warringText.text = "시즌이 종료되었습니다.";
             matchingCanvas.gameStartButton.onClick.AddListener(() =>
             {
                 if (Phone)

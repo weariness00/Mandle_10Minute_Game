@@ -22,6 +22,7 @@ namespace GamePlay.MiniGame.RunningGame.UI
         public TMP_Text warringText;
         public Button gameStartButton;
         public TMP_Text gameStartButtonText;
+        public TMP_Text gamePlayTimeText;
 
         [Header("Match Loading 관련")] 
         public GameObject matchLoadingObject;
@@ -34,6 +35,11 @@ namespace GamePlay.MiniGame.RunningGame.UI
         
         [Space] 
         public RunningGame runningGame;
+
+        public void Awake()
+        {
+            gamePlayTimeText.text = "";
+        }
 
         public void Update()
         {
@@ -67,6 +73,12 @@ namespace GamePlay.MiniGame.RunningGame.UI
             rankIcon.sprite = rankSpriteList[hasRank ? data.rank - 1 : 1];
             rankText.text = $"현재 랭킹 : {(hasRank ? data.rank : 2)}위";
             topScoreText.text = "최고 점수 : " + (PlayerPrefs.HasKey($"{nameof(RunningGame)}Score") ? PlayerPrefs.GetInt($"{nameof(RunningGame)}Score").ToString() : data.score.ToString());
+
+            if (runningGame.isGameStart.Value && GameManager.HasInstance)
+            {
+                TimeSpan time = TimeSpan.FromSeconds(GameManager.Instance.playTimer.Current);
+                warringText.text = $"진행 시간 [{time.Minutes:D2}:{time.Seconds:D2}]";
+            }
         }
 
         public void OnDestroy()

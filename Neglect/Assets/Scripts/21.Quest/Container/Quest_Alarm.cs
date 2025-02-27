@@ -48,8 +48,14 @@ namespace Quest.Container
 
         public override void Complete()
         {
-            base.Complete();
             phone.applicationControl.OpenApp(app);
+            base.Complete();
+        }
+
+        public override void Ignore()
+        {
+            phone.applicationControl.OpenApp(app);
+            base.Ignore();
         }
 
         public override void Failed()

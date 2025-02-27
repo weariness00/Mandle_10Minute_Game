@@ -57,6 +57,7 @@ namespace GamePlay
                     StartCoroutine(LoadedHomeAppEnumerator());
                     
                     SceneUtil.AsyncAddDummy(AddApp);
+                    SceneUtil.AsyncAddSetting(AddApp);
                     SceneUtil.AsyncAddTutorial(AddApp);
                     SceneUtil.AsyncAddChatting(AddApp);
                     SceneUtil.AsyncAddBank(AddApp);

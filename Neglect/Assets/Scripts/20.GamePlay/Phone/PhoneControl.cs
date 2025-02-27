@@ -127,6 +127,8 @@ namespace GamePlay.Phone
         [Header("기타 효과 관련")] 
         [Tooltip("화면에 상호작용이 안되는 빈 공간을 눌렀을때")] public AudioClip emptyClickSound;
         [Tooltip("핸드폰 진동 사운드")]public AudioClip vibrationSound;
+
+        private Sequence rotateSequence;
         
         public void FadeOut(float duration, Color color, float delay = 0f)
         {
@@ -185,11 +187,12 @@ namespace GamePlay.Phone
         {
             viewType = (PhoneViewType)value;
 
-            var sequence = DOTween.Sequence();
+            rotateSequence?.Kill();
+            rotateSequence = DOTween.Sequence();
             switch (viewType)
             {
                 case PhoneViewType.Vertical:
-                    sequence.Append(transform.DORotate(new Vector3(0, 0, 0), 1f).OnComplete(() =>
+                    rotateSequence.Append(transform.DORotate(new Vector3(0, 0, 0), 1f).OnComplete(() =>
                     {
                         currentPhoneViewPort.horizon.SetActive(false);
                         currentPhoneViewPort.vertical.SetActive(true);
@@ -198,7 +201,7 @@ namespace GamePlay.Phone
                     }));
                     break;
                 case PhoneViewType.Horizon:
-                    sequence.Append(transform.DORotate(new Vector3(0, 0, 90), 1f).OnComplete(() =>
+                    rotateSequence.Append(transform.DORotate(new Vector3(0, 0, 90), 1f).OnComplete(() =>
                     {
                         currentPhoneViewPort.vertical.SetActive(false);
                         currentPhoneViewPort.horizon.SetActive(true);
