@@ -37,7 +37,7 @@ namespace GamePlay.Phone
             home.appGridControl.Insert(appButton, new(3, 0));
 
             conversation.canvas.worldCamera = _phone.phoneCamera;
-            conversation.backButton.onClick.AddListener(() => phone.applicationControl.PauseApp(this));
+            conversation.backButton.onClick.AddListener(() => phone.applicationControl.CloseApp(this));
             
             SetActiveBackground(false);
         }

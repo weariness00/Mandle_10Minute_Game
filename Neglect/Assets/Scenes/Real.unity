@@ -1285,9 +1285,45 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 329235023}
     m_Modifications:
+    - target: {fileID: 13091781714118958, guid: fe6bd0d11df96b543bfee1a6fc41f3b6, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 13091781714118958, guid: fe6bd0d11df96b543bfee1a6fc41f3b6, type: 3}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2626326694595257764, guid: fe6bd0d11df96b543bfee1a6fc41f3b6, type: 3}
       propertyPath: m_Name
       value: FailEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 2632627708724110336, guid: fe6bd0d11df96b543bfee1a6fc41f3b6, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2632627708724110336, guid: fe6bd0d11df96b543bfee1a6fc41f3b6, type: 3}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4045632082611830420, guid: fe6bd0d11df96b543bfee1a6fc41f3b6, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4219986383626599167, guid: fe6bd0d11df96b543bfee1a6fc41f3b6, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4219986383626599167, guid: fe6bd0d11df96b543bfee1a6fc41f3b6, type: 3}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461200598329889824, guid: fe6bd0d11df96b543bfee1a6fc41f3b6, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461200598329889824, guid: fe6bd0d11df96b543bfee1a6fc41f3b6, type: 3}
+      propertyPath: playOnAwake
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5971325720764816619, guid: fe6bd0d11df96b543bfee1a6fc41f3b6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2115,6 +2151,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1321941663}
     m_Modifications:
+    - target: {fileID: 84932885918805279, guid: 38bc8dd1a598cb1498e5196191d2d3fd, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 84932885918805279, guid: 38bc8dd1a598cb1498e5196191d2d3fd, type: 3}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2071359371841696338, guid: 38bc8dd1a598cb1498e5196191d2d3fd, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2071359371841696338, guid: 38bc8dd1a598cb1498e5196191d2d3fd, type: 3}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2724154207276835357, guid: 38bc8dd1a598cb1498e5196191d2d3fd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.03
@@ -2158,6 +2210,26 @@ PrefabInstance:
     - target: {fileID: 4616714440599223026, guid: 38bc8dd1a598cb1498e5196191d2d3fd, type: 3}
       propertyPath: m_Name
       value: ClearEmoEffects
+      objectReference: {fileID: 0}
+    - target: {fileID: 5524383004257718682, guid: 38bc8dd1a598cb1498e5196191d2d3fd, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5524383004257718682, guid: 38bc8dd1a598cb1498e5196191d2d3fd, type: 3}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054728712803631426, guid: 38bc8dd1a598cb1498e5196191d2d3fd, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054728712803631426, guid: 38bc8dd1a598cb1498e5196191d2d3fd, type: 3}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7682958316912999014, guid: 38bc8dd1a598cb1498e5196191d2d3fd, type: 3}
+      propertyPath: playOnAwake
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

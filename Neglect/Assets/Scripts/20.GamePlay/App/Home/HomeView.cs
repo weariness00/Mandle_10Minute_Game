@@ -66,6 +66,12 @@ namespace GamePlay.Phone
             UpdateHighlight();
         }
 
+        public void InterfaceActive(bool value)
+        {
+            if(_phone) _phone.interfaceGroupOnOffButton.gameObject.SetActive(!value);
+            interfaceRectTransform.gameObject.SetActive(value);
+            interfaceRectTransform.anchoredPosition = value ? interfaceOriginAnchorsPosition : new(0,-interfaceRectTransform.sizeDelta.y);
+        }
         public void InterfaceOnOff()
         {
             if (!isOnInterface)

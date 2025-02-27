@@ -60,11 +60,15 @@ namespace GamePlay.App.Setting
 
         public void AppPlay(PhoneControl phone)
         {
+            var home = phone.applicationControl.GetHomeApp();
+            home.InterfaceActive(true);
             SetActiveBackground(true);
         }
 
         public void AppResume(PhoneControl phone)
         {
+            var home = phone.applicationControl.GetHomeApp();
+            home.InterfaceActive(true);
             SetActiveBackground(true);
         }
 
