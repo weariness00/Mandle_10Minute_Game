@@ -104,7 +104,7 @@ namespace GamePlay.MiniGame.RunningGame
             });
             
             // 등수 확인 후 매칭으로 이동
-            resultCanvas.okButton.onClick.AddListener(() =>
+            resultCanvas.resultOkButton.onClick.AddListener(() =>
             {
                 settingCanvas.gameObject.SetActive(false);
                 
@@ -116,8 +116,6 @@ namespace GamePlay.MiniGame.RunningGame
                 
                 inGame.mainCanvas.gameObject.SetActive(false);
                 inGameObject.SetActive(false);
-            
-                resultCanvas.mainCanvas.gameObject.SetActive(false);
             });
 
             player.life.Subscribe(value =>
@@ -200,7 +198,7 @@ namespace GamePlay.MiniGame.RunningGame
                 increaseMultiple = originIncreaseMultiple;
                 originIncreaseMultiple = increaseMultiple;
                 increaseMultiple = value;
-                _disposable = Observable.Interval(TimeSpan.FromSeconds(duration)).Subscribe(_ => { increaseMultiple = originIncreaseMultiple; });
+                _disposable = Observable.Timer(TimeSpan.FromSeconds(duration)).Subscribe(_ => { increaseMultiple = originIncreaseMultiple; });
             }
             
         }
@@ -276,7 +274,7 @@ namespace GamePlay.MiniGame.RunningGame
             
             resultCanvas.mainCanvas.gameObject.SetActive(true);
             resultCanvas.InstantiateResult();
-            resultCanvas.okButton.onClick.AddListener(() =>
+            resultCanvas.resultOkButton.onClick.AddListener(() =>
             {
                 if (GameManager.HasInstance)
                 {
