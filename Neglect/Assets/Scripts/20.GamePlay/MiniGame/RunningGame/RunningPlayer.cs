@@ -86,6 +86,10 @@ namespace GamePlay.MiniGame.RunningGame
                     {
                         currentCombo.Value = 100;
                     }
+                    else if (quest.state == QuestState.Failed && runningGame.isGameStart.Value)
+                    {
+                        currentCombo.Value = 0;
+                    }
                 });
             }
         }
@@ -95,6 +99,8 @@ namespace GamePlay.MiniGame.RunningGame
             originColliderSize = collider2D.size;
             originCollideroffset = collider2D.offset;
 
+            animator.animator.speed = 0f;
+            
             isJumping = true;
             jumpTime.SetMax();
         }
@@ -209,7 +215,7 @@ namespace GamePlay.MiniGame.RunningGame
 
         public int GetComboMultiple()
         {
-            return Mathf.Clamp(currentCombo.Value / comboInterval + 1, 1, 3);
+            return Mathf.Clamp(currentCombo.Value / comboInterval + 1, 1, 4);
         }
     }
 

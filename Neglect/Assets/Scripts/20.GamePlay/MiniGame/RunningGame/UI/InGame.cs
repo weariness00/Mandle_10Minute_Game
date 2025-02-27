@@ -118,29 +118,39 @@ namespace GamePlay.MiniGame.RunningGame
 
         private IEnumerator IgnoreSpawnerEnumerator()
         {
-            yield return new WaitForSeconds(25f);
+            while (!runningGame.isGamePlay.Value)
+                yield return null;
+            if (currentSpawner != eventIgnoreSpawner)
+            {
+                currentSpawner.Stop();
+                currentSpawner = eventIgnoreSpawner;
+                currentSpawner.Play(1f);
+            }
+            
+            yield return new WaitForSeconds(20f);
             if (currentSpawner == eventIgnoreSpawner)
             {
                 currentSpawner.Stop();
                 currentSpawner = objectSpawnerList[spawnerIndex];
-                currentSpawner.Play();
+                currentSpawner.Play(1f);
             }
+
+            ignoreSpawnerCoroutine = null;
         }
     }
 
     // Running Game 스크립트에서 사용할 App 관련 함수
     public partial class InGame
     {
+        private Coroutine ignoreSpawnerCoroutine;
         public void AppInstall()
         {
             QuestManager.Instance.onEndQuestEvent.AddListener(quest =>
             {
                 if (quest.state == QuestState.Failed)
                 {
-                    currentSpawner.Stop();
-                    currentSpawner = eventIgnoreSpawner;
-                    currentSpawner.Play(1f);
-                    StartCoroutine(IgnoreSpawnerEnumerator());
+                    if(ignoreSpawnerCoroutine != null) StopCoroutine(ignoreSpawnerCoroutine);
+                    ignoreSpawnerCoroutine = StartCoroutine(IgnoreSpawnerEnumerator());
                 }
                 else if (quest.state == QuestState.Completed && currentSpawner == eventIgnoreSpawner)
                 {
