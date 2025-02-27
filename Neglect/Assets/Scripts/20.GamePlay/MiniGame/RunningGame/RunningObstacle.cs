@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GamePlay.MiniGame.RunningGame
@@ -6,7 +7,7 @@ namespace GamePlay.MiniGame.RunningGame
     public class RunningObstacle : MonoBehaviour
     {
         [HideInInspector] public RunningGame runningGame;
-        
+
         public float speed = 1f;
         [Tooltip("장애물을 피할 시 주는 추가 점수")]public int extraScore = 10;
         [Tooltip("플레이어가 성공적으로 피했을때")]public bool isCollision = false;
@@ -24,9 +25,8 @@ namespace GamePlay.MiniGame.RunningGame
             {
                 if (!isCollision)
                 {
-                    runningGame.player.currentCombo++;
+                    runningGame.player.currentCombo.Value++;
                     runningGame.CurrentPlayerData.score.Value += extraScore * runningGame.player.GetComboMultiple();
-                    runningGame.gameSpeed.Value = Mathf.Clamp(runningGame.player.currentCombo / 25f + 1, 1,2);
                     runningGame.player.healCounting.Current++;
                     if (runningGame.player.healCounting.IsMax)
                     {

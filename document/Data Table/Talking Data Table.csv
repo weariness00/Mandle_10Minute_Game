@@ -40,3 +40,4 @@ Header,TalkingID,Name,MainTextID,PositiveTextList,PositiveTalkID,NegativeTextLis
 ,11001,월세 초과 대화,4001,,,,,,
 ,11002,월세 부족 대화,4002,,,,,,
 ,10002,여행광고 메시지,3167,,,,,,
+,10003,주식광고 메시지,3168,,,,,,

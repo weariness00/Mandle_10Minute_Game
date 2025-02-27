@@ -12,14 +12,6 @@ namespace GamePlay.App.GameResult
     {
         [Header("Quest 결과 관련")] 
         public QuestResult questResult;
-
-        [Header("Ending 관련")] 
-        public GameEndingCanvas endingCanvas;
-
-        public void Awake()
-        {
-            endingCanvas.mainCanvas.gameObject.SetActive(false);
-        }
     }
 
     public partial class GameResultApp : IPhoneApplication
@@ -45,7 +37,6 @@ namespace GamePlay.App.GameResult
         {
             _phone = phone;
             questResult.mainCanvas.worldCamera = _phone.phoneCamera;
-            endingCanvas.mainCanvas.worldCamera = _phone.phoneCamera;
             
             questResult.nextButton.onClick.AddListener(() => AppUnInstall(_phone));
         }

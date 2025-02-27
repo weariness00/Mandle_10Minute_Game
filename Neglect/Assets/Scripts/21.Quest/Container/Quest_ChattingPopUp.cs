@@ -1,5 +1,6 @@
 ﻿using GamePlay.Phone;
 using GamePlay.PopUp;
+using UnityEngine;
 
 namespace Quest.Container
 {
@@ -7,7 +8,7 @@ namespace Quest.Container
     {
         public PopUpPad popUpPrefab;
 
-        private PopUpPad popUp;
+        [HideInInspector] public PopUpPad popUp;
 
         public override void OnNext(object value)
         {

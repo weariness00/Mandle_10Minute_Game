@@ -10,6 +10,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Util;
 
@@ -39,11 +40,9 @@ namespace GamePlay.MiniGame.RunningGame
         public MatchingCanvas matchingCanvas;
         public GameObject matchingObject;
         
-        [Header("In Game 관련")]
-        public InGameCanvas inGameCanvas;
+        [FormerlySerializedAs("inGameCanvas")] [Header("In Game 관련")]
+        public InGame inGame;
         public GameObject inGameObject;
-        
-        public List<ObjectSpawner> obstacleSpawnerList;
 
         [Header("Result 관련")] 
         public ResultCanvas resultCanvas;
@@ -64,7 +63,7 @@ namespace GamePlay.MiniGame.RunningGame
             matchingCanvas.mainCanvas.gameObject.SetActive(false);
             matchingObject.SetActive(false);
             
-            inGameCanvas.mainCanvas.gameObject.SetActive(false);
+            inGame.mainCanvas.gameObject.SetActive(false);
             inGameObject.gameObject.SetActive(false);
             
             resultCanvas.mainCanvas.gameObject.SetActive(false);
@@ -72,7 +71,7 @@ namespace GamePlay.MiniGame.RunningGame
             InputManager.running.ESC.performed += SettingOnOff;
             
             // 인게임 게임 시작 눌렀을때 카운트 다운 끝나고 동작
-            inGameCanvas.onGameStart += () =>
+            inGame.onGameStart += () =>
             {
                 lobbyCanvas.gameObject.SetActive(false);
                 lobbyObject.SetActive(false);
@@ -82,9 +81,6 @@ namespace GamePlay.MiniGame.RunningGame
                 
                 // 플레이어 애니메이션 활성화
                 player.animator.animator.enabled = true;
-
-                foreach (ObjectSpawner spawner in obstacleSpawnerList)
-                    spawner.Play();
             };
             
             // 매칭 시작 버튼 누르면
@@ -118,16 +114,10 @@ namespace GamePlay.MiniGame.RunningGame
                 matchingCanvas.mainCanvas.gameObject.SetActive(true);
                 matchingObject.SetActive(true);
                 
-                inGameCanvas.mainCanvas.gameObject.SetActive(false);
+                inGame.mainCanvas.gameObject.SetActive(false);
                 inGameObject.SetActive(false);
             
                 resultCanvas.mainCanvas.gameObject.SetActive(false);
-            });
-            
-            gameSpeed.Subscribe(value =>
-            {
-                foreach (ObjectSpawner spawner in obstacleSpawnerList)
-                    spawner.timeScale = value;
             });
 
             player.life.Subscribe(value =>
@@ -135,17 +125,6 @@ namespace GamePlay.MiniGame.RunningGame
                 if (value <= 0)
                     GameOver();
             });
-            
-            foreach (ObjectSpawner spawner in obstacleSpawnerList)
-            {
-                spawner.SpawnSuccessAction.AddListener(obj =>
-                {
-                    PhoneUtil.SetLayer(obj);
-                    SceneManager.MoveGameObjectToScene(obj, SceneUtil.GetRunningGameScene());
-                    obj.GetComponent<RunningObstacle>().runningGame = this;
-                    obj.transform.SetParent(inGameObject.transform);
-                });
-            }
         }
 
         public override void Start()
@@ -166,7 +145,7 @@ namespace GamePlay.MiniGame.RunningGame
 
         private void SettingOnOff(InputAction.CallbackContext context)
         {
-            if (inGameCanvas.gameObject.activeSelf)
+            if (inGame.gameObject.activeSelf)
             {
                 settingCanvas.gameObject.SetActive(true);
                 GameStop();
@@ -189,12 +168,11 @@ namespace GamePlay.MiniGame.RunningGame
             public int rank;
             public ReactiveProperty<int> score = new(0);
             public string name;
-            [SerializeField] private MinMaxValue<float> scoreRandomIncreaseTimer = new(0, 0, 1, false, true);
+            public MinMaxValue<float> scoreRandomIncreaseTimer = new(0, 0, 1, false, true);
             public MinMax<int> scoreRandomIncrease = new(0,0);
             [HideInInspector] public float increaseMultiple = 1f;
 
             public ReactiveProperty<Color> mainColor = new (Color.white);
-
 
             private float originIncreaseMultiple = 1f;
             private IDisposable _disposable;
@@ -249,11 +227,11 @@ namespace GamePlay.MiniGame.RunningGame
                 lobbyCanvas.gameObject.SetActive(false);
                 lobbyObject.gameObject.SetActive(false);
             
-                inGameCanvas.mainCanvas.gameObject.SetActive(true);
+                inGame.mainCanvas.gameObject.SetActive(true);
                 inGameObject.gameObject.SetActive(true);
 
                 isGamePlay.Value = false;
-                inGameCanvas.GameContinueCountDown();
+                inGame.GameContinueCountDown();
             }
             else
             {
@@ -265,17 +243,15 @@ namespace GamePlay.MiniGame.RunningGame
         public override void GameStop()
         {
             base.GameStop();
-            inGameCanvas.StopCountDown();
-
+            inGame.StopCountDown();
+            
             player.animator.animator.enabled = false;
-            foreach (ObjectSpawner spawner in obstacleSpawnerList)
-                spawner.Pause();
         }
 
         public override void GameClear()
         {
             base.GameClear();
-            inGameCanvas.StopCountDown();
+            inGame.StopCountDown();
             InputManager.running.ESC.performed -= SettingOnOff;
             if (QuestManager.HasInstance)
             {
@@ -301,12 +277,22 @@ namespace GamePlay.MiniGame.RunningGame
             
             resultCanvas.mainCanvas.gameObject.SetActive(true);
             resultCanvas.InstantiateResult();
+            resultCanvas.okButton.onClick.AddListener(() =>
+            {
+                if (GameManager.HasInstance)
+                {
+                    if(CurrentPlayerData.rank == 1)
+                        GameManager.Instance.ending.GoodEnding();
+                    else
+                        GameManager.Instance.ending.BadEnding();
+                }
+            });
         }
 
         public override void GameOver()
         {
             base.GameOver();
-            inGameCanvas.StopCountDown();
+            inGame.StopCountDown();
             InputManager.running.ESC.performed -= SettingOnOff;
             if (QuestManager.HasInstance)
             {
@@ -377,6 +363,7 @@ namespace GamePlay.MiniGame.RunningGame
                     {
                         for (var i = 1; i < playerDataArray.Length; i++)
                         {
+                            playerDataArray[i].scoreRandomIncreaseTimer.Max *= 0.3f;
                             playerDataArray[i].SetMultiple(2f);
                         }
                     });

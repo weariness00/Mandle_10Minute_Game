@@ -1,6 +1,8 @@
 using System;
 using Manager;
 using MoreMountains.Feedbacks;
+using Quest;
+using System.Collections;
 using UniRx;
 using UnityEngine;
 using Util;
@@ -14,6 +16,7 @@ namespace GamePlay.MiniGame.RunningGame
         [HideInInspector] public Rigidbody2D rigidbody2D;
         [HideInInspector] public BoxCollider2D collider2D;
         public SpriteRenderer modelRenderer;
+        public MaterialUtil modelMaterial;
         
         [Header("Hit 관련")]
         public MinMaxValue<float> immortalTime = new(0, 0, 1);
@@ -24,7 +27,7 @@ namespace GamePlay.MiniGame.RunningGame
 
         [Header("점수 관련")] 
         [Tooltip("몇 콤보다마다 추가 점수를 줄지")]public int comboInterval = 5;
-        [Tooltip("현재 콤보")] public int currentCombo = 0;
+        [Tooltip("현재 콤보")] public ReactiveProperty<int> currentCombo = new(0);
         
         [Header("체력 관련")]
         public ReactiveProperty<int> life = new (5);
@@ -61,6 +64,30 @@ namespace GamePlay.MiniGame.RunningGame
             runningGame.gameSpeed.Subscribe(value => animator.SetAllSpeed(value));
 
             effectSource = SoundManager.Instance.GetAudioSource("Effect");
+            
+            modelRenderer.material.EnableKeyword("GLOW_ON");
+            modelRenderer.material.EnableKeyword("OUTBASE_ON");
+            modelRenderer.material.SetFloat("_Glow", 0f);
+            modelRenderer.material.SetFloat("_OutlineAlpha", 0f);
+
+            currentCombo.Subscribe(value =>
+            {
+                modelRenderer.material.SetFloat("_Glow", Mathf.Clamp(value * 5.5f / 25f, 0, 5.5f));
+                modelRenderer.material.SetFloat("_OutlineAlpha", Mathf.Clamp(value / 25f, 0, 1f));
+
+                runningGame.gameSpeed.Value = Mathf.Clamp(value / 25f + 1, 1, 2);
+            });
+            
+            if (QuestManager.HasInstance)
+            {
+                QuestManager.Instance.onEndQuestEvent.AddListener(quest =>
+                {
+                    if (quest.state == QuestState.Completed && runningGame.isGameStart.Value)
+                    {
+                        currentCombo.Value = 100;
+                    }
+                });
+            }
         }
 
         public void Start()
@@ -109,13 +136,14 @@ namespace GamePlay.MiniGame.RunningGame
         {
             if (immortalTime.IsMin && other.CompareTag("Running Obstacle"))
             {
-                currentCombo = 0;
+                currentCombo.Value = 0;
                 runningGame.gameSpeed.Value = 1;
                 var obstacle = other.GetComponent<RunningObstacle>();
                 obstacle.isCollision = true;
                 immortalTime.SetMax();
                 life.Value--;
                 healCounting.SetMin();
+                
                 hitEffect.GetFeedbackOfType<MMF_Flicker>().FlickerDuration = immortalTime.Max;
                 if(hitEffect) hitEffect.PlayFeedbacks();
                 effectSource.PlayOneShot(hitSound);
@@ -181,7 +209,7 @@ namespace GamePlay.MiniGame.RunningGame
 
         public int GetComboMultiple()
         {
-            return currentCombo / comboInterval + 1;
+            return currentCombo.Value / comboInterval + 1;
         }
     }
 
