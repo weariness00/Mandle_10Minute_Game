@@ -349,6 +349,27 @@ MonoBehaviour:
     negativeTextArray: []
     positiveScore: 0
     negativeScore: 0
+  - id: 10002
+    mainText: "[Web\uBC1C\uC2E0]\r\n\uB3C4\uC2DC\uC5D0 \uAD00\uD55C \uD034\uC988\uB97C
+      \uB9DE\uCD94\uACE0 \uD574\uB2F9 \uB3C4\uC2DC\uB85C \uC5EC\uD589\uC744 \uB5A0\uB098\uC790!
+      \uD558\uB8E8\uC5D0 \uD55C\uBC88 \uB3C4\uC2DC \uD034\uC988\uC5D0 \uB3C4\uC804\uC744
+      \uD558\uACE0 \uCD94\uCCA8\uC744 \uD1B5\uD574 \uD574\uB2F9 \uB3C4\uC2DC\uB85C
+      \uC5EC\uD589\uC744 \uB5A0\uB098\uB294 \uD2F0\uCF13\uC744 \uC5BB\uC5B4\uBCF4\uC138\uC694"
+    positiveResultTalkID: -1
+    negativeResultTalkID: -1
+    positiveTextArray: []
+    negativeTextArray: []
+    positiveScore: 0
+    negativeScore: 0
+  - id: 10003
+    mainText: "[\uAD6D\uC678\uBC1C\uC2E0] \uAD6D\uB0B4 \uC0C1\uBC18\uAE30 \uC720\uB9DD
+      \uC8FC\uC2DD 5\uC885 \uC18C\uAC1C!! \uD655\uC778 \uC548\uD558\uBA74 \uD6C4\uD68C\uD569\uB2C8\uB2E4."
+    positiveResultTalkID: -1
+    negativeResultTalkID: -1
+    positiveTextArray: []
+    negativeTextArray: []
+    positiveScore: 0
+    negativeScore: 0
   - id: 10100
     mainText: "\uACE7 \uC2DC\uC98C 1 \uB7AD\uD0B9\uC804\uC774 \uC885\uB8CC\uAC00
       \uB429\uB2C8\uB2E4. \uC2DC\uC98C\uC774 \uC885\uB8CC\uAC00 \uB41C\uD6C4 \uD504\uB9AC\uC2DC\uC98C\uC774

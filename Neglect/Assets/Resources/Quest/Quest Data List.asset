@@ -213,6 +213,11 @@ MonoBehaviour:
     ignoreNarrationID: -1
     textArray:
     - "\uAD11\uACE0"
+    - "[Web\uBC1C\uC2E0]\r\n\uB3C4\uC2DC\uC5D0 \uAD00\uD55C \uD034\uC988\uB97C \uB9DE\uCD94\uACE0
+      \uD574\uB2F9 \uB3C4\uC2DC\uB85C \uC5EC\uD589\uC744 \uB5A0\uB098\uC790! \uD558\uB8E8\uC5D0
+      \uD55C\uBC88 \uB3C4\uC2DC \uD034\uC988\uC5D0 \uB3C4\uC804\uC744 \uD558\uACE0
+      \uCD94\uCCA8\uC744 \uD1B5\uD574 \uD574\uB2F9 \uB3C4\uC2DC\uB85C \uC5EC\uD589\uC744
+      \uB5A0\uB098\uB294 \uD2F0\uCF13\uC744 \uC5BB\uC5B4\uBCF4\uC138\uC694"
     extraDataIDArray: 9dffffffd3ffffff
   - id: 1014
     name: "\uC8FC\uC2DD\uAD11\uACE0 \uC774\uBCA4\uD2B8"
@@ -228,6 +233,8 @@ MonoBehaviour:
     ignoreNarrationID: -1
     textArray:
     - "\uAD11\uACE0"
+    - "[\uAD6D\uC678\uBC1C\uC2E0] \uAD6D\uB0B4 \uC0C1\uBC18\uAE30 \uC720\uB9DD \uC8FC\uC2DD
+      5\uC885 \uC18C\uAC1C!! \uD655\uC778 \uC548\uD558\uBA74 \uD6C4\uD68C\uD569\uB2C8\uB2E4."
     extraDataIDArray: 9dffffffd3ffffff
   - id: 1101
     name: "\uC5C4\uB9C8 \uC804\uD654 \uB2E4\uC2DC \uC54C\uB9BC"
@@ -240,7 +247,7 @@ MonoBehaviour:
     ignoreDuration: 0
     playNarrationID: -1
     completeNarrationID: -1
-    ignoreNarrationID: -1
+    ignoreNarrationID: 6005
     textArray:
     - "\uC5C4\uB9C8"
     extraDataIDArray: 
@@ -304,7 +311,7 @@ MonoBehaviour:
     ignoreEventID: -1
     ignoreDuration: 0
     playNarrationID: -1
-    completeNarrationID: -1
+    completeNarrationID: 6004
     ignoreNarrationID: -1
     textArray:
     - "\uC5C4\uB9C8"
@@ -487,7 +494,7 @@ MonoBehaviour:
     completeNarrationID: -1
     ignoreNarrationID: -1
     textArray:
-    - "\uC5C4\uB9C8"
+    - "\uAD11\uACE0"
     extraDataIDArray: 12270000
   - id: 1118
     name: "\uC8FC\uC2DD\uAD11\uACE0 \uCC44\uD305 App\uB300\uD654"
@@ -502,7 +509,7 @@ MonoBehaviour:
     completeNarrationID: -1
     ignoreNarrationID: -1
     textArray:
-    - "\uC5C4\uB9C8"
+    - "\uAD11\uACE0"
     extraDataIDArray: 13270000
   - id: 4004
     name: "\uC6D4\uC138 \uC801\uAC8C \uBCF4\uB0B8 \uB9CC\uD07C \uB2E4\uC2DC \uBCF4\uB0B4\uAE30"
@@ -750,6 +757,11 @@ MonoBehaviour:
     ignoreNarrationID: -1
     textArray:
     - "\uAD11\uACE0"
+    - "[Web\uBC1C\uC2E0]\r\n\uB3C4\uC2DC\uC5D0 \uAD00\uD55C \uD034\uC988\uB97C \uB9DE\uCD94\uACE0
+      \uD574\uB2F9 \uB3C4\uC2DC\uB85C \uC5EC\uD589\uC744 \uB5A0\uB098\uC790! \uD558\uB8E8\uC5D0
+      \uD55C\uBC88 \uB3C4\uC2DC \uD034\uC988\uC5D0 \uB3C4\uC804\uC744 \uD558\uACE0
+      \uCD94\uCCA8\uC744 \uD1B5\uD574 \uD574\uB2F9 \uB3C4\uC2DC\uB85C \uC5EC\uD589\uC744
+      \uB5A0\uB098\uB294 \uD2F0\uCF13\uC744 \uC5BB\uC5B4\uBCF4\uC138\uC694"
     extraDataIDArray: 9dffffffd3ffffff
   - id: 1014
     name: "\uC8FC\uC2DD\uAD11\uACE0 \uC774\uBCA4\uD2B8"
@@ -765,6 +777,8 @@ MonoBehaviour:
     ignoreNarrationID: -1
     textArray:
     - "\uAD11\uACE0"
+    - "[\uAD6D\uC678\uBC1C\uC2E0] \uAD6D\uB0B4 \uC0C1\uBC18\uAE30 \uC720\uB9DD \uC8FC\uC2DD
+      5\uC885 \uC18C\uAC1C!! \uD655\uC778 \uC548\uD558\uBA74 \uD6C4\uD68C\uD569\uB2C8\uB2E4."
     extraDataIDArray: 9dffffffd3ffffff
   questArray:
   - {fileID: 64922150804996188, guid: 05982b62e9cc2a34583ed13892cd2de5, type: 3}

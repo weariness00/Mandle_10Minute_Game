@@ -23,5 +23,36 @@ MonoBehaviour:
     text: "\uAE4C\uBA39\uC9C0\uB9D0\uACE0 \uC624\uB298 \uC740\uD589\uC571\uC73C\uB85C
       \uC785\uAE08\uD574\uB194\uC57C \uACA0\uB2E4"
     stayDuration: 2
+  - id: 6003
+    name: "\uAC8C\uC784 \uB3C4\uC785\uBD802"
+    text: "\uBB50?! \uB7AD\uD0B9 2\uB4F1\uC73C\uB85C \uB0B4\uB824\uC654\uC796\uC544
+      1\uC2DC\uAC04\uC804\uC5D0\uB9CC\uD574\uB3C4 1\uB4F1\uC774\uC5C8\uB294\uB370"
+    stayDuration: 2
+  - id: 6004
+    name: "\uC5C4\uB9C8\uC640\uC758 \uD1B5\uD654 \uD574\uACB0"
+    text: "\uBD80\uBAA8\uB2D8\uC758 \uC804\uD654\uB97C \uBC14\uB85C \uBC1B\uB294
+      \uB2F9\uC2E0\uC740 \uD6A8\uC790"
+    stayDuration: 2
+  - id: 6005
+    name: "\uC5C4\uB9C8\uC640\uC758 \uD1B5\uD654 \uBB34\uC2DC"
+    text: "\uC6B0\uC6B0 \uC4F0\uB808\uAE30 \uBD80\uBAA8\uB2D8\uC758 \uC804\uD654\uB97C
+      \uBB34\uC2DC\uD558\uB2E4\uB2C8"
+    stayDuration: 2
+  - id: 6006
+    name: "\uAD11\uACE0 \uBB34\uC2DC"
+    text: "\uAD11\uACE0\uB294 \uBB34\uC2DC\uD560\uBFD0\u2026"
+    stayDuration: 2
+  - id: 6007
+    name: "\uAD11\uACE0 \uD074\uB9AD\uC2DC"
+    text: "\uC774\uB7F0 \uAD11\uACE0\uC5D0 \uB09A\uC774\uC168\uAD70\uC694"
+    stayDuration: 2
+  - id: 6008
+    name: "\uC778\uD130\uB137 \uC7AC\uC811\uC18D \uD574\uACB0\uC2DC"
+    text: "\uC544! \uB809 \uC544!"
+    stayDuration: 2
+  - id: 6009
+    name: "\uD0DD\uBC30 \uBB38\uC790 \uB2F5\uC7A5\uC2DC"
+    text: "\uD0DD\uBC30\uAE30\uC0AC\uC758 \uD638\uAC10\uB3C4\uAC00 +1 \uC62C\uB790\uC2B5\uB2C8\uB2E4"
+    stayDuration: 2
   narrationCSV: {fileID: 4900000, guid: 7d40daf3eb555784394dedf71d5d159d, type: 3}
   textCSV: {fileID: 4900000, guid: 99da7b52953aa8648911dc3b551dee40, type: 3}
