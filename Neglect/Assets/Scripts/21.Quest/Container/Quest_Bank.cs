@@ -1,3 +1,4 @@
+using GamePlay;
 using GamePlay.App;
 using GamePlay.Phone;
 
@@ -6,7 +7,7 @@ namespace Quest.Container
     public class Quest_Bank : QuestBase
     {
         private BankApp bankApp;
-
+        
         private AppButton appButton;
 
         public override void OnNext(object value)
@@ -23,19 +24,34 @@ namespace Quest.Container
             var phoen = PhoneUtil.currentPhone;
             
             foreach (AppButton button in phoen.applicationControl.GetHomeApp().GetAllAppButton())
-            {
                 button.button.interactable = false;
-            }
             bankApp = phoen.applicationControl.GetApp("Bank") as BankApp;
             appButton = phoen.applicationControl.GetHomeApp().GetAppButton(bankApp);
             appButton.button.interactable = true;
             bankApp.InitPassword();
             bankApp.InitTransferMoney();
-            bankApp.eventData = eventData;
-            bankApp.completeAction += Complete;
-            bankApp.ignoreAction += Ignore;
+            if (bankApp.eventData != eventData)
+            {
+                bankApp.eventData = eventData;
+                bankApp.completeAction += Complete;
+                bankApp.ignoreAction += Ignore;
+            }
         }
-        
+
+        public override void Complete()
+        {
+            GameManager.Instance.GameClear();
+            if (bankApp.Amountdifference == 0)
+            {
+                appButton.button.interactable = false;
+            }
+            else if (bankApp.Amountdifference < 0)
+            {
+                bankApp.bankTransactionOnButton.onClick.AddListener(() => appButton.button.interactable = false);
+                base.Complete();
+            }
+        }
+
         public override void Failed()
         {
             base.Failed();
