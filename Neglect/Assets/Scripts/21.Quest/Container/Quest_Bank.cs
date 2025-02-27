@@ -35,18 +35,6 @@ namespace Quest.Container
             bankApp.completeAction += Complete;
             bankApp.ignoreAction += Ignore;
         }
-
-        public override void Complete()
-        {
-            base.Complete();
-            if (appButton) appButton.button.interactable = false;
-        }
-
-        public override void Ignore()
-        {
-            base.Ignore();
-            if(appButton) appButton.button.interactable = false;
-        }
         
         public override void Failed()
         {

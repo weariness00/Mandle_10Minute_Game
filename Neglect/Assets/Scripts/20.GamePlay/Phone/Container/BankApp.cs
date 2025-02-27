@@ -282,6 +282,12 @@ namespace GamePlay.Phone
             completeAction?.Invoke();
             if (Amountdifference == 0)
             {
+                if (_phone)
+                {
+                    var home = _phone.applicationControl.GetHomeApp();
+                    var appButton = home.GetAppButton(this);
+                    appButton.button.interactable = false;
+                }
                 GameManager.Instance.GameClear();
             }
             else if (Amountdifference > 0)
