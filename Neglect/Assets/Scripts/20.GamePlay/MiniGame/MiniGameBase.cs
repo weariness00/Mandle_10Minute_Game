@@ -83,16 +83,20 @@ namespace GamePlay.MiniGame
 
         public virtual void GameOver()
         {
-            QuestManager.Instance.AddAndPlay(rankQuest);
             isGamePlay.Value = false;
             gameSpeed.Value = 0;
+            if (GameManager.HasInstance) GameManager.Instance.GameClear();
+            if (QuestManager.HasInstance) QuestManager.Instance.AddAndPlay(rankQuest);
         }
 
         public virtual void GameClear()
         {
+            if(isGameClear.Value) return;
+            
             isGamePlay.Value = false;
             isGameClear.Value = true;
-            QuestManager.Instance.AddAndPlay(rankQuest);
+            if (GameManager.HasInstance) GameManager.Instance.GameClear();
+            if (QuestManager.HasInstance) QuestManager.Instance.AddAndPlay(rankQuest);
         }
 
         public virtual void GameExit()
@@ -164,7 +168,6 @@ namespace GamePlay.MiniGame
                     foreach (AppButton button in allButtonArray)
                         button.button.interactable = false;
                     appButton.button.interactable = true;
-                    GameClear();
                 }
             });
             
