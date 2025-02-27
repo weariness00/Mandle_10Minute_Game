@@ -23,8 +23,8 @@ MonoBehaviour:
     ignoreEventID: -1
     ignoreDuration: 0
     playNarrationID: -1
-    completeNarrationID: -1
-    ignoreNarrationID: -1
+    completeNarrationID: 6007
+    ignoreNarrationID: 6006
     textArray:
     - "\uAD11\uACE0"
     - "[web\uBC1C\uC2E0] \r\n\uB7EC\uB2DD\uC561\uC158\uAC8C\uC784 \uC774\uB984 \uC2DC\uC98C
@@ -102,7 +102,7 @@ MonoBehaviour:
     ignoreEventID: -1
     ignoreDuration: 0
     playNarrationID: -1
-    completeNarrationID: -1
+    completeNarrationID: 6009
     ignoreNarrationID: -1
     textArray:
     - "\uD0DD\uBC30\uAE30\uC0AC"
@@ -643,8 +643,8 @@ MonoBehaviour:
     ignoreEventID: -1
     ignoreDuration: 0
     playNarrationID: -1
-    completeNarrationID: -1
-    ignoreNarrationID: -1
+    completeNarrationID: 6007
+    ignoreNarrationID: 6006
     textArray:
     - "\uAD11\uACE0"
     - "[web\uBC1C\uC2E0] \r\n\uB7EC\uB2DD\uC561\uC158\uAC8C\uC784 \uC774\uB984 \uC2DC\uC98C
@@ -706,7 +706,7 @@ MonoBehaviour:
     ignoreEventID: -1
     ignoreDuration: 0
     playNarrationID: -1
-    completeNarrationID: -1
+    completeNarrationID: 6009
     ignoreNarrationID: -1
     textArray:
     - "\uD0DD\uBC30\uAE30\uC0AC"
@@ -884,7 +884,7 @@ MonoBehaviour:
   questSpawnTimer:
     _min: 0
     _max: 30
-    _current: 5.436559
+    _current: 3.499018
     _isMin: 0
     _isMax: 0
     isOverMax: 1
