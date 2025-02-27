@@ -14,6 +14,7 @@ namespace GamePlay.MiniGame.RunningGame
     public class InGame : MonoBehaviour
     {
         public RunningGame runningGame;
+        public GameObject mainObject;
         public Canvas mainCanvas;
 
         [Header("Game Play 관련")] 
@@ -43,7 +44,7 @@ namespace GamePlay.MiniGame.RunningGame
                     PhoneUtil.SetLayer(obj);
                     SceneManager.MoveGameObjectToScene(obj, SceneUtil.GetRunningGameScene());
                     obj.GetComponent<RunningObstacle>().runningGame = runningGame;
-                    obj.transform.SetParent(mainCanvas.transform);
+                    obj.transform.SetParent(mainObject.transform);
                 });
             }
             objectSpawnerList.Remove(eventIgnoreSpawner);

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9112ed31d0ed2f64e8f26d654606e45f
+guid: b142a66cff8c24842a5d68bf752ff3d9
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,232 +110,169 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Minigame_Objects-Sheet_0
+      name: Minigame_obstacles_bird-Sheet_0
       rect:
         serializedVersion: 2
-        x: 60
+        x: 0
         y: 0
-        width: 80
-        height: 150
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 180
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4bb7bf35e6fda27418fc306d88d73016
-      internalID: 52597359
+      spriteID: 0425c87c7296dd546b6c8c8d0c3b80c8
+      internalID: -295913751
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minigame_Objects-Sheet_1
+      name: Minigame_obstacles_bird-Sheet_1
       rect:
         serializedVersion: 2
-        x: 245
+        x: 180
         y: 0
-        width: 70
-        height: 150
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 180
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e7eef98fe752db74f91b61eaf5436f5b
-      internalID: -1765050716
+      spriteID: af32b19ae6f813b4caa631357bebd08f
+      internalID: 701262903
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minigame_Objects-Sheet_2
+      name: Minigame_obstacles_bird-Sheet_2
       rect:
         serializedVersion: 2
-        x: 420
+        x: 360
         y: 0
-        width: 80
-        height: 165
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 180
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 57f3bfc0e8c8a274590ec1a2b2db17e0
-      internalID: -1596757371
+      spriteID: 00d650c91e3a51640bafa4c79856e0ad
+      internalID: 1938661808
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minigame_Objects-Sheet_3
+      name: Minigame_obstacles_bird-Sheet_3
       rect:
         serializedVersion: 2
-        x: 605
-        y: 65
-        width: 55
-        height: 45
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 540
+        y: 0
+        width: 180
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6a5e26a7af517c04a80d763993d01773
-      internalID: 475429007
+      spriteID: 02060861b2431d14990d5936e2737716
+      internalID: 1058135344
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minigame_Objects-Sheet_4
+      name: Minigame_obstacles_bird-Sheet_4
       rect:
         serializedVersion: 2
-        x: 780
-        y: 50
-        width: 60
-        height: 60
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 720
+        y: 0
+        width: 180
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 43acb49aa6a86a64b8608985b4c4645a
-      internalID: 67275026
+      spriteID: e6c350ca63025694591bb9eae0cf97ca
+      internalID: -248680513
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minigame_Objects-Sheet_5
+      name: Minigame_obstacles_bird-Sheet_5
       rect:
         serializedVersion: 2
-        x: 950
-        y: 50
-        width: 80
-        height: 60
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 900
+        y: 0
+        width: 180
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b047a43987d7ac44c8afbad6fd066e16
-      internalID: -1758266364
+      spriteID: 8949caa4f2f13804ca4e571329fa1fbe
+      internalID: 2087426249
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minigame_Objects-Sheet_6
+      name: Minigame_obstacles_bird-Sheet_6
       rect:
         serializedVersion: 2
-        x: 1130
-        y: 50
-        width: 80
-        height: 60
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 1080
+        y: 0
+        width: 180
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 60144019db8ff6c44b3d79df4ed36444
-      internalID: 124235619
+      spriteID: f5487ab7f2b03c946b365f253feac882
+      internalID: -776972223
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minigame_Objects-Sheet_7
+      name: Minigame_obstacles_bird-Sheet_7
       rect:
         serializedVersion: 2
-        x: 1310
-        y: 50
-        width: 70
-        height: 60
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 1260
+        y: 0
+        width: 180
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 85687e15bfa82b14c839ef2d0422c9a7
-      internalID: 2097954671
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Minigame_Objects-Sheet_8
-      rect:
-        serializedVersion: 2
-        x: 1495
-        y: 40
-        width: 70
-        height: 75
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3e1f859f056538f4ab4c472b2525f8d9
-      internalID: 658606287
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Minigame_Objects-Sheet_9
-      rect:
-        serializedVersion: 2
-        x: 1675
-        y: 40
-        width: 70
-        height: 75
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 552a7d336a5eabd47bafb85709bc624f
-      internalID: -1652992868
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Minigame_Objects-Sheet_10
-      rect:
-        serializedVersion: 2
-        x: 1855
-        y: 40
-        width: 70
-        height: 75
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 74ec02182c67d3f46bee7404252c81a9
-      internalID: 835473733
+      spriteID: 1538b7f11adc7294daee06afde140874
+      internalID: -252550080
       vertices: []
       indices: 
       edges: []
@@ -351,17 +288,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Minigame_Objects-Sheet_0: 52597359
-      Minigame_Objects-Sheet_1: -1765050716
-      Minigame_Objects-Sheet_10: 835473733
-      Minigame_Objects-Sheet_2: -1596757371
-      Minigame_Objects-Sheet_3: 475429007
-      Minigame_Objects-Sheet_4: 67275026
-      Minigame_Objects-Sheet_5: -1758266364
-      Minigame_Objects-Sheet_6: 124235619
-      Minigame_Objects-Sheet_7: 2097954671
-      Minigame_Objects-Sheet_8: 658606287
-      Minigame_Objects-Sheet_9: -1652992868
+      Minigame_obstacles_bird-Sheet_0: -295913751
+      Minigame_obstacles_bird-Sheet_1: 701262903
+      Minigame_obstacles_bird-Sheet_2: 1938661808
+      Minigame_obstacles_bird-Sheet_3: 1058135344
+      Minigame_obstacles_bird-Sheet_4: -248680513
+      Minigame_obstacles_bird-Sheet_5: 2087426249
+      Minigame_obstacles_bird-Sheet_6: -776972223
+      Minigame_obstacles_bird-Sheet_7: -252550080
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

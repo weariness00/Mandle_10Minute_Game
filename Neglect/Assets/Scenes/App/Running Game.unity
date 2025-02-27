@@ -1797,7 +1797,7 @@ MonoBehaviour:
   isRandomObject: 1
   isRandomPlace: 0
   isRandomInterval: 0
-  parentTransform: {fileID: 0}
+  parentTransform: {fileID: 2146466121}
   spawnCount:
     _min: 0
     _max: 0
@@ -2219,7 +2219,7 @@ Transform:
   m_GameObject: {fileID: 460377567}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.5, y: -0.4, z: 0}
+  m_LocalPosition: {x: 8.5, y: -2.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2256,12 +2256,14 @@ MonoBehaviour:
     isOverMin: 0
   spawnObjectList:
   - {fileID: 3317822639263740956, guid: 85f56adc6552fad4c9376647a34a0607, type: 3}
+  - {fileID: 3317822639263740956, guid: 15ec958368f86e34ca9ec13dc8d02056, type: 3}
+  - {fileID: 3317822639263740956, guid: b13f680ff202c1747871dcbd09ba1903, type: 3}
   spawnObjectOrders: 
   spawnPlace:
     _spotList: []
   spawnPlaceOrders: 
   spawnIntervals:
-  - 1
+  - 2
   intervalTimer:
     _min: 0
     _max: 0
@@ -5068,7 +5070,7 @@ MonoBehaviour:
   isRandomObject: 1
   isRandomPlace: 0
   isRandomInterval: 0
-  parentTransform: {fileID: 0}
+  parentTransform: {fileID: 2146466121}
   spawnCount:
     _min: 0
     _max: 0
@@ -9272,7 +9274,7 @@ MonoBehaviour:
   isRandomObject: 1
   isRandomPlace: 0
   isRandomInterval: 0
-  parentTransform: {fileID: 0}
+  parentTransform: {fileID: 2146466121}
   spawnCount:
     _min: 0
     _max: 0
@@ -9840,6 +9842,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runningGame: {fileID: 1407920007}
+  mainObject: {fileID: 2146466120}
   mainCanvas: {fileID: 1493705817}
   updateGameChangeTimer:
     _min: 0
@@ -9853,10 +9856,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   objectSpawnerList:
-  - {fileID: 369168967}
+  - {fileID: 460377569}
   - {fileID: 1769709483}
   - {fileID: 959567159}
-  eventIgnoreSpawner: {fileID: 460377569}
+  eventIgnoreSpawner: {fileID: 369168967}
   currentSpawner: {fileID: 0}
   spawnerIndex: 0
   continueCanvas: {fileID: 1563962366}

@@ -11,6 +11,7 @@ namespace GamePlay.MiniGame.RunningGame
 
         public void Start()
         {
+            transform.position = new Vector3(transform.position.x, -0.4f, transform.position.z);
             moveCurve.curve = curveList.Random();
             moveCurve.Init();
         }
