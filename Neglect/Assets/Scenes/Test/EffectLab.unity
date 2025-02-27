@@ -343,63 +343,6 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!1001 &1041515869
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2724154207276835357, guid: 38bc8dd1a598cb1498e5196191d2d3fd, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 2724154207276835357, guid: 38bc8dd1a598cb1498e5196191d2d3fd, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 2724154207276835357, guid: 38bc8dd1a598cb1498e5196191d2d3fd, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.030276714
-      objectReference: {fileID: 0}
-    - target: {fileID: 2724154207276835357, guid: 38bc8dd1a598cb1498e5196191d2d3fd, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2724154207276835357, guid: 38bc8dd1a598cb1498e5196191d2d3fd, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2724154207276835357, guid: 38bc8dd1a598cb1498e5196191d2d3fd, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2724154207276835357, guid: 38bc8dd1a598cb1498e5196191d2d3fd, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2724154207276835357, guid: 38bc8dd1a598cb1498e5196191d2d3fd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2724154207276835357, guid: 38bc8dd1a598cb1498e5196191d2d3fd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2724154207276835357, guid: 38bc8dd1a598cb1498e5196191d2d3fd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4616714440599223026, guid: 38bc8dd1a598cb1498e5196191d2d3fd, type: 3}
-      propertyPath: m_Name
-      value: ClearEmoEffects
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 38bc8dd1a598cb1498e5196191d2d3fd, type: 3}
 --- !u!1001 &7170652365428192593
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -464,4 +407,3 @@ SceneRoots:
   - {fileID: 723939789}
   - {fileID: 7170652365428192593}
   - {fileID: 534937153}
-  - {fileID: 1041515869}
