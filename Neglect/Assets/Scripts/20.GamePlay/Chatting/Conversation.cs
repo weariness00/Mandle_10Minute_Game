@@ -62,6 +62,7 @@ namespace GamePlay.Chatting
         public void Init()
         {
             if (isInit) return;
+            prevTalkData = null;
             backButton.gameObject.SetActive(false);
             isInit = true;
             ignoreTimer.SetMax();
@@ -109,7 +110,7 @@ namespace GamePlay.Chatting
         public void SetTalkData(TalkingData data)
         {
             if (data == null || prevTalkData == data) return;
-            
+
             talkData = data;
             SettingAnswer();
             otherChatBox = SpawnOtherChat(talkData.mainText);
@@ -225,7 +226,7 @@ namespace GamePlay.Chatting
         private bool isInit = false;
         public void ConversationClear()
         {
-            if (gageBarImage.fillAmount >= 1 || talkData == null || answerList.Count == 0)
+            if (chatGage >= 100 || gageBarImage.fillAmount >= 1 || talkData == null || answerList.Count == 0)
             {
                 //클리어
                 isInit = false;
