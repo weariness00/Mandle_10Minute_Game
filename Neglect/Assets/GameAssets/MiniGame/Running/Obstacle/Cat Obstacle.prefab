@@ -102,7 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   runningGame: {fileID: 0}
   speed: 8
-  extraScore: 13
+  extraScore: 7
   isCollision: 0
 --- !u!61 &6366344109295495189
 BoxCollider2D:

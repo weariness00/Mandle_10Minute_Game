@@ -2257,13 +2257,15 @@ MonoBehaviour:
   spawnObjectList:
   - {fileID: 3317822639263740956, guid: 85f56adc6552fad4c9376647a34a0607, type: 3}
   - {fileID: 3317822639263740956, guid: 15ec958368f86e34ca9ec13dc8d02056, type: 3}
+  - {fileID: 3317822639263740956, guid: 85f56adc6552fad4c9376647a34a0607, type: 3}
   - {fileID: 3317822639263740956, guid: b13f680ff202c1747871dcbd09ba1903, type: 3}
+  - {fileID: 3317822639263740956, guid: 85f56adc6552fad4c9376647a34a0607, type: 3}
   spawnObjectOrders: 
   spawnPlace:
     _spotList: []
   spawnPlaceOrders: 
   spawnIntervals:
-  - 2
+  - 1.5
   intervalTimer:
     _min: 0
     _max: 0
@@ -4021,7 +4023,7 @@ MonoBehaviour:
     isOverMin: 0
   hitEffect: {fileID: 10803314}
   hitSound: {fileID: 8300000, guid: 138a2f7f4781b8e4a8a53f3edd26dc01, type: 3}
-  comboInterval: 5
+  comboInterval: 12
   currentCombo:
     value: 0
   life:

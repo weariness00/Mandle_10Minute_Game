@@ -63,6 +63,7 @@ namespace Quest
                     QuestManager.Instance.AddAndPlay(quest);
                 else
                     StartCoroutine(PlayQuestDurationEnumerator(quest, eventData.acceptDuration));
+                quest.isReverse = isReverse;
                 onCompleteEvent?.Invoke(quest);
             }
             else
@@ -90,7 +91,7 @@ namespace Quest
                     QuestManager.Instance.AddAndPlay(quest);
                 else
                     StartCoroutine(PlayQuestDurationEnumerator(quest, eventData.ignoreDuration));
-                
+                quest.isReverse = isReverse;
                 onIgnoreEvent?.Invoke(quest);
             }
             else

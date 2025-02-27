@@ -209,7 +209,7 @@ namespace GamePlay.MiniGame.RunningGame
 
         public int GetComboMultiple()
         {
-            return currentCombo.Value / comboInterval + 1;
+            return Mathf.Clamp(currentCombo.Value / comboInterval + 1, 1, 3);
         }
     }
 

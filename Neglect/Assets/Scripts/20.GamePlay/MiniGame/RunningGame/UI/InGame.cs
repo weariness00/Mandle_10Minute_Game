@@ -118,7 +118,7 @@ namespace GamePlay.MiniGame.RunningGame
 
         private IEnumerator IgnoreSpawnerEnumerator()
         {
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(25f);
             if (currentSpawner == eventIgnoreSpawner)
             {
                 currentSpawner.Stop();
