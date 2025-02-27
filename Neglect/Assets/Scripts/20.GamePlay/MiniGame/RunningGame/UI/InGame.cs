@@ -55,7 +55,8 @@ namespace GamePlay.MiniGame.RunningGame
                 {
                     currentSpawner.Pause();
                     currentSpawner = objectSpawnerList[++spawnerIndex];
-                    currentSpawner.Play(1f);
+                    if(runningGame.isGamePlay.Value)
+                        currentSpawner.Play(1f);
                 }
             });
 
@@ -124,7 +125,8 @@ namespace GamePlay.MiniGame.RunningGame
             {
                 currentSpawner.Stop();
                 currentSpawner = eventIgnoreSpawner;
-                currentSpawner.Play(1f);
+                if(runningGame.isGamePlay.Value)
+                    currentSpawner.Play(1f);
             }
             
             yield return new WaitForSeconds(20f);
@@ -132,7 +134,8 @@ namespace GamePlay.MiniGame.RunningGame
             {
                 currentSpawner.Stop();
                 currentSpawner = objectSpawnerList[spawnerIndex];
-                currentSpawner.Play(1f);
+                if(runningGame.isGamePlay.Value)
+                    currentSpawner.Play(1f);
             }
 
             ignoreSpawnerCoroutine = null;

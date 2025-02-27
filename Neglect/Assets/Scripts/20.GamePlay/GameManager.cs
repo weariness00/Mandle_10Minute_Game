@@ -155,10 +155,11 @@ namespace GamePlay
                         phone.applicationControl.OpenApp(app);
                     }
                 }
+                
+                Destroy(QuestManager.Instance.gameObject);
+                Destroy(NarrationManager.Instance.gameObject);
+                Destroy(gameObject);
             });
-            Destroy(QuestManager.Instance);
-            Destroy(NarrationManager.Instance);
-            Destroy(gameObject);
         }
     }
 }

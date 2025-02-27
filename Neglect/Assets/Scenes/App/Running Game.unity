@@ -6690,7 +6690,7 @@ MonoBehaviour:
     isOverMin: 0
   hitEffect: {fileID: 10803314}
   hitSound: {fileID: 8300000, guid: 138a2f7f4781b8e4a8a53f3edd26dc01, type: 3}
-  comboInterval: 12
+  comboInterval: 7
   currentCombo:
     value: 0
   life:
