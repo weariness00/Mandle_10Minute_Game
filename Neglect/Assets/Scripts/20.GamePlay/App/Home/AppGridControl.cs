@@ -131,7 +131,7 @@ namespace GamePlay.App.Home
             public Vector2Int size;
             public GameObject uiObject;
 
-            public Vector2Int endIndex => ((index + Vector2Int.one) * size) - Vector2Int.one;
+            public Vector2Int endIndex => Vector2Int.one * size - Vector2Int.one;
             public void UpdateIndex(Vector2Int _index, Vector2Int gridCount)
             {
                 // var newindex = _index + Vector2Int.right;
