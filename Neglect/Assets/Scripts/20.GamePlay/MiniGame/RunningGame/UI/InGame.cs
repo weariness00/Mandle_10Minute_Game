@@ -159,7 +159,8 @@ namespace GamePlay.MiniGame.RunningGame
                 {
                     currentSpawner.Stop();
                     currentSpawner = objectSpawnerList[spawnerIndex];
-                    currentSpawner.Play(1f);
+                    if(runningGame.isGamePlay.Value)
+                        currentSpawner.Play(1f);
                 }
             });
         }
