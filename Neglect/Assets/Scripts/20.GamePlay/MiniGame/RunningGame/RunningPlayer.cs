@@ -17,6 +17,7 @@ namespace GamePlay.MiniGame.RunningGame
         [HideInInspector] public BoxCollider2D collider2D;
         public SpriteRenderer modelRenderer;
         public MaterialUtil modelMaterial;
+        public ParticleSystem dashEffect;
         
         [Header("Hit 관련")]
         public MinMaxValue<float> immortalTime = new(0, 0, 1);
@@ -76,6 +77,14 @@ namespace GamePlay.MiniGame.RunningGame
                 modelRenderer.material.SetFloat("_OutlineAlpha", Mathf.Clamp(value / 25f, 0, 1f));
 
                 runningGame.gameSpeed.Value = Mathf.Clamp(value / 25f + 1, 1, 2);
+                if (runningGame.gameSpeed.Value >= 2)
+                {
+                    dashEffect.Play();
+                }
+                else
+                {
+                    dashEffect.Stop();
+                }
             });
             
             if (QuestManager.HasInstance)
@@ -86,6 +95,10 @@ namespace GamePlay.MiniGame.RunningGame
                     {
                         currentCombo.Value = 100;
                     }
+                    else if (quest.state == QuestState.Failed && runningGame.isGameStart.Value)
+                    {
+                        currentCombo.Value = 0;
+                    }
                 });
             }
         }
@@ -95,6 +108,8 @@ namespace GamePlay.MiniGame.RunningGame
             originColliderSize = collider2D.size;
             originCollideroffset = collider2D.offset;
 
+            animator.animator.speed = 0f;
+            
             isJumping = true;
             jumpTime.SetMax();
         }
@@ -209,7 +224,7 @@ namespace GamePlay.MiniGame.RunningGame
 
         public int GetComboMultiple()
         {
-            return Mathf.Clamp(currentCombo.Value / comboInterval + 1, 1, 3);
+            return Mathf.Clamp(currentCombo.Value / comboInterval + 1, 1, 4);
         }
     }
 

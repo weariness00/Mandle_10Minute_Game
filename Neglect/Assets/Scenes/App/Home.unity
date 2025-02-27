@@ -313,7 +313,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Impatiens
+  m_text: "\uB0A0 \uC880 \uB0B4\uBC84\uB824 \uB46C!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: baf5c9d798f886547996b18463ce07e6, type: 2}
   m_sharedMaterial: {fileID: 779453731389088032, guid: baf5c9d798f886547996b18463ce07e6, type: 2}
@@ -990,7 +990,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 160}
+  m_AnchoredPosition: {x: 0, y: 120}
   m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &513279328
@@ -1522,7 +1522,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &902044943
 RectTransform:
   m_ObjectHideFlags: 0

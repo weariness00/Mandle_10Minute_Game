@@ -80,7 +80,7 @@ namespace GamePlay.MiniGame.RunningGame
                 isGamePlay.Value = true;
                 
                 // 플레이어 애니메이션 활성화
-                player.animator.animator.enabled = true;
+                player.animator.animator.speed = 1f;
             };
             
             // 매칭 시작 버튼 누르면
@@ -130,7 +130,6 @@ namespace GamePlay.MiniGame.RunningGame
         public override void Start()
         {
             base.Start();
-            player.animator.animator.enabled = false;
         }
 
         public override void Update()
@@ -245,7 +244,7 @@ namespace GamePlay.MiniGame.RunningGame
             base.GameStop();
             inGame.StopCountDown();
             
-            player.animator.animator.enabled = false;
+            player.animator.animator.speed = 0;
         }
 
         public override void GameClear()
