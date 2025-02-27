@@ -1797,7 +1797,7 @@ MonoBehaviour:
   isRandomObject: 1
   isRandomPlace: 0
   isRandomInterval: 0
-  parentTransform: {fileID: 2146466121}
+  parentTransform: {fileID: 0}
   spawnCount:
     _min: 0
     _max: 0
@@ -5070,7 +5070,7 @@ MonoBehaviour:
   isRandomObject: 1
   isRandomPlace: 0
   isRandomInterval: 0
-  parentTransform: {fileID: 2146466121}
+  parentTransform: {fileID: 0}
   spawnCount:
     _min: 0
     _max: 0
@@ -9274,7 +9274,7 @@ MonoBehaviour:
   isRandomObject: 1
   isRandomPlace: 0
   isRandomInterval: 0
-  parentTransform: {fileID: 2146466121}
+  parentTransform: {fileID: 0}
   spawnCount:
     _min: 0
     _max: 0
@@ -9856,10 +9856,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   objectSpawnerList:
-  - {fileID: 460377569}
+  - {fileID: 369168967}
   - {fileID: 1769709483}
   - {fileID: 959567159}
-  eventIgnoreSpawner: {fileID: 369168967}
+  eventIgnoreSpawner: {fileID: 460377569}
   currentSpawner: {fileID: 0}
   spawnerIndex: 0
   continueCanvas: {fileID: 1563962366}
