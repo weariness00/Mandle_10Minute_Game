@@ -1,10 +1,14 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using DG.Tweening;
+using JetBrains.Annotations;
+using MoreMountains.Feedbacks;
+using Unity.VisualScripting;
 
 namespace GamePlay.MiniGame.RunningGame
 {
@@ -32,7 +36,14 @@ namespace GamePlay.MiniGame.RunningGame
         public Button rankOkButton;
         
         private IDisposable show;
-        
+
+
+        public MMF_Player showResultTextMMF; //처음 결과값 나오는 MMF;
+        public MMF_Player[] showRankMMF = new MMF_Player[3]; //금 은 동 트로피 나오는 MMF;
+        public MMF_Player showOkButtonAndTextMMF; //텍스트 나오는 MMF;
+        public MMF_Player timeOverMMF; //타임 오버 MMF
+        public List<ResultUIBlock> resultUIBlocks;
+
         public void Awake()
         {
             resultObject.SetActive(false);
@@ -46,6 +57,11 @@ namespace GamePlay.MiniGame.RunningGame
                 var index = runningGame.CurrentPlayerData.rank - 1;
                 rankIcon.sprite = rankIconList[index];
                 rankText.text = rankAchieveTextList[index];
+
+
+                rankOkButton.gameObject.SetActive(false);
+                rankText.gameObject.SetActive(false);
+                showRankMMF[index].PlayFeedbacks();
             });
             
             rankOkButton.onClick.AddListener(() =>
@@ -55,17 +71,26 @@ namespace GamePlay.MiniGame.RunningGame
                 mainCanvas.gameObject.SetActive(false);
             });
         }
-
+        public void RankOkButtonAndTextShow() // 트로피 MMF 끝나고 실행되겠끔 설정해둠
+        {
+            rankOkButton.gameObject.SetActive(true);
+            rankText.gameObject.SetActive(true);
+            showOkButtonAndTextMMF.PlayFeedbacks();
+        }
         public void OnEnable()
         {
             show?.Dispose();
             timeOverObject.SetActive(true);
+            timeOverMMF.PlayFeedbacks();
             resultObject.SetActive(false);
             show = Observable.Timer(TimeSpan.FromSeconds(3f)).Subscribe(_ =>
             {
                 timeOverObject.SetActive(false);
                 resultObject.SetActive(true);
+
+                showResultTextMMF.PlayFeedbacks(); // mmf 애니메이션
             });
+
         }
 
 
@@ -77,11 +102,31 @@ namespace GamePlay.MiniGame.RunningGame
 
             List<RunningGame.PlayerData> list = new(runningGame.playerDataArray);
             list.Sort((a,b) => a.rank.CompareTo(b.rank));
+
+            
+            resultUIBlocks.Clear();
             foreach (RunningGame.PlayerData data in list)
             {
                 var block = Instantiate(resultBlockPrefab, resultGroupTransform);
                 PhoneUtil.SetLayer(block);
                 block.resultText.text = $"{data.rank}등 : {data.name}";
+                resultUIBlocks.Add(block);
+            }
+            InitShowResultTextMMF();
+        }
+
+        public void InitShowResultTextMMF()
+        {
+            int i = 0;
+            foreach (MMF_Feedback Fed in showResultTextMMF.FeedbacksList)
+            {
+                if(Fed.Label == "TextSAS")
+                {
+                    if (Fed is MMF_SquashAndStretch sASFeedback)
+                    {
+                        sASFeedback.SquashAndStretchTarget = resultUIBlocks[i++].transform;
+                    }
+                }
             }
         }
     }
