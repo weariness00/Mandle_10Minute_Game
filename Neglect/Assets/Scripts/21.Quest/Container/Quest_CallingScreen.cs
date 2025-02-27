@@ -23,6 +23,7 @@ namespace Quest.Container
         {
             base.Play();
             callingScreen = PhoneUtil.InstantiateUI(phoneCallScreenPrefab, out phone);
+            callingScreen.phone = phone;
             app = phone.applicationControl.currentPlayApplication;
             phone.interfaceGroupOnOffButton.gameObject.SetActive(false);
             phone.applicationControl.PauseApp(app);

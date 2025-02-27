@@ -18,12 +18,21 @@ namespace GamePlay.PopUp
         public MMF_Player HideNotificationMMF; //알림 hide
         public MMF_Player ChargingStartMMF;
         public Action IgnoreAction;
-        public PhoneControl phone;
 
         public TextMeshProUGUI BetteryText;
         public TextMeshProUGUI ChargingText;
         public int energy;
         public AudioSource ChargeCompleteSound;
+        
+        [HideInInspector] public PhoneControl phone;
+        public void Update()
+        {
+            if (!ReferenceEquals(phone, null) && phone.viewType == PhoneViewType.Horizon)
+            {
+                phone.FadeOut(0f, Color.black);
+                phone.PhoneViewRotate(PhoneViewType.Vertical, () => phone.FadeIn(1f, Color.black));
+            }
+        }
         
         public void OnEnable()
         {
