@@ -11719,7 +11719,7 @@ MonoBehaviour:
   - rank: 0
     score:
       value: 0
-    name: Player
+    name: "\uB4E4\uB798"
     scoreRandomIncreaseTimer:
       _min: 0
       _max: 1
@@ -11737,7 +11737,7 @@ MonoBehaviour:
   - rank: 0
     score:
       value: 0
-    name: A
+    name: "\uACBD\uC77C"
     scoreRandomIncreaseTimer:
       _min: 0
       _max: 1
@@ -11755,7 +11755,7 @@ MonoBehaviour:
   - rank: 0
     score:
       value: 0
-    name: B
+    name: "\uC778\uB514"
     scoreRandomIncreaseTimer:
       _min: 0
       _max: 1
@@ -16712,13 +16712,13 @@ MonoBehaviour:
   - "\uC57D\uAC04 \uC544\uC27D\uC9C0\uB9CC \uADF8\uB798\uB3C4 2\uB4F1\uC774\uC5D0\uC694!"
   - "\uC800\uB7F0 \uB9D0\uC500\uB4DC\uB9AC\uAE34 \uC5B4\uB835\uC9C0\uB9CC 3\uB4F1\uC774\uC138\uC694"
   rankOkButton: {fileID: 1444232707}
+  timeOverMMF: {fileID: 1308954691}
   showResultTextMMF: {fileID: 1568883861}
   showRankMMF:
   - {fileID: 459739385}
   - {fileID: 880136116}
   - {fileID: 554703749}
   showOkButtonAndTextMMF: {fileID: 437702861}
-  timeOverMMF: {fileID: 1308954691}
   resultUIBlocks: []
 --- !u!114 &1912004836
 MonoBehaviour:

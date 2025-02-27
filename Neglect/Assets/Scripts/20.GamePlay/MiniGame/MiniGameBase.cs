@@ -231,18 +231,18 @@ namespace GamePlay.MiniGame
 #if UNITY_EDITOR
 
     [CustomEditor(typeof(MiniGameBase), true)]
-    public class MiniGameBaseEditor : Editor
+    public partial class MiniGameBaseEditor : Editor
     {
         public override void OnInspectorGUI()
         {
-            base.OnInspectorGUI();
-
             var script = target as MiniGameBase;
 
             if (GUILayout.Button("튜토리얼 초기화"))
             {
                 PlayerPrefs.SetInt($"{nameof(script.isOnTutorial)}{script.AppName}", 0);
             }
+            
+            base.OnInspectorGUI();
         }
     }
     

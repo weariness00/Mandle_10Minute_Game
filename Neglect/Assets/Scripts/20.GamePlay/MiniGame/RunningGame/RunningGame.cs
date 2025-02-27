@@ -7,6 +7,7 @@ using Quest.Container;
 using System.Collections;
 using System.Collections.Generic;
 using UniRx;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -402,5 +403,27 @@ namespace GamePlay.MiniGame.RunningGame
             InputManager.running.input.Disable();
         }
     }
+
+#if UNITY_EDITOR
+
+    [CustomEditor(typeof(RunningGame), true)]
+    public class RunningGameEditor : Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            var script = target as RunningGame;
+
+            if (EditorApplication.isPlaying)
+            {
+                if (GUILayout.Button("1등으로 게임 클리어"))
+                {
+                    script.CurrentPlayerData.rank = 1;
+                    script.GameClear();
+                }
+            }
+            base.OnInspectorGUI();
+        }
+    }
+#endif
 }
 
