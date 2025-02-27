@@ -3646,7 +3646,12 @@ MonoBehaviour:
     level: 0
     prefab: {fileID: 0}
     acceptEventID: 0
+    acceptDuration: 0
     ignoreEventID: 0
+    ignoreDuration: 0
+    playNarrationID: -1
+    completeNarrationID: -1
+    ignoreNarrationID: -1
     textArray: []
     extraDataIDArray: 
   RandomAmount: 0
@@ -3717,7 +3722,7 @@ MonoBehaviour:
   withdrawalText: {fileID: 0}
   mainCanvas: {fileID: 543994821}
   appName: Bank
-  icon: {fileID: 21300000, guid: 7cb16ca973d66194dada09e83e1753c3, type: 3}
+  icon: {fileID: 21300000, guid: 6845e3eed12ec6240a0fc9ac865681d6, type: 3}
   verticalResolution: {x: 600, y: 960}
   _phone: {fileID: 0}
 --- !u!4 &885292895

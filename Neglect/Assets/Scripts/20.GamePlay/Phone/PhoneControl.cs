@@ -153,7 +153,13 @@ namespace GamePlay.Phone
             var a = fadeRenderer.color.a;
             color.a = a;
             fadeRenderer.color = color;
-            fadeTween = fadeRenderer.DOFade(0f, duration).SetDelay(delay);
+            if (duration != 0)
+                fadeTween = fadeRenderer.DOFade(0f, duration).SetDelay(delay);
+            else
+            {
+                color.a = 0f;
+                fadeRenderer.color = color;
+            }
         }
         
         // 핸드폰 진동
@@ -161,6 +167,17 @@ namespace GamePlay.Phone
         {
             transform.DOShakePosition(duration, 0.3f, 50, 90f);
             SoundManager.Instance.GetAudioSource("Effect").PlayOneShot(vibrationSound);
+        }
+        
+        // 진동을 delay 마다 1번씩 울리게 한다.
+        public Sequence PhoneVibrationLoop(float duration = 0.1f, float delay = 1f)
+        {
+            var sequence = DOTween.Sequence();
+            sequence.AppendCallback(() => SoundManager.Instance.GetAudioSource("Effect").PlayOneShot(vibrationSound));
+            sequence.Append(transform.DOShakePosition(duration, 0.3f, 50, 90f));
+            sequence.AppendInterval(delay);
+            sequence.SetLoops(-1, LoopType.Restart);
+            return sequence;
         }
     }
         
