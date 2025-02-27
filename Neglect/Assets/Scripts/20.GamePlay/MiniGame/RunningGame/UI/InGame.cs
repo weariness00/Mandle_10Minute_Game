@@ -132,7 +132,7 @@ namespace GamePlay.MiniGame.RunningGame
             yield return new WaitForSeconds(20f);
             if (currentSpawner == eventIgnoreSpawner)
             {
-                currentSpawner.Pause();
+                currentSpawner.Stop();
                 currentSpawner = objectSpawnerList[spawnerIndex];
                 if(runningGame.isGamePlay.Value)
                     currentSpawner.Play(1f);
