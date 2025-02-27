@@ -9,6 +9,7 @@ namespace GamePlay.Narration
         public string name = "";
         public string text = "";
         public float stayDuration = 0;
+        public int target = 1;
     }
     
     public partial class NarrationData : IComparable

@@ -37,7 +37,8 @@ namespace Quest
                 
                 state = QuestState.InProgress;
             }
-            if (eventData.playNarrationID != -1) GameManager.Instance.narration.StartNarrationID(eventData.playNarrationID);
+
+            if (eventData.playNarrationID != -1) NarrationManager.Instance.StartNarrationID(eventData.playNarrationID);
 
             if (rootQuest != null)
             {
@@ -51,7 +52,7 @@ namespace Quest
             subscription?.Dispose();
             state = isReverse ? QuestState.Failed : QuestState.Completed;
             if (rootQuest != null) rootQuest.state = state;
-            if (eventData.completeNarrationID != -1) GameManager.Instance.narration.StartNarrationID(eventData.completeNarrationID);
+            if (eventData.completeNarrationID != -1) NarrationManager.Instance.StartNarrationID(eventData.completeNarrationID);
             if (eventData.acceptEventID != -1)
             {
                 var acceptEvent = QuestDataList.Instance.GetEventID(eventData.acceptEventID);
@@ -79,7 +80,7 @@ namespace Quest
             subscription?.Dispose();
             state = isReverse ? QuestState.Completed : QuestState.Failed;
             if (rootQuest != null) rootQuest.state = state;
-            if (eventData.ignoreNarrationID != -1) GameManager.Instance.narration.StartNarrationID(eventData.ignoreNarrationID);
+            if (eventData.ignoreNarrationID != -1) NarrationManager.Instance.StartNarrationID(eventData.ignoreNarrationID);
             if (eventData.ignoreEventID != -1)
             {
                 var ignoreEvent = QuestDataList.Instance.GetEventID(eventData.ignoreEventID);

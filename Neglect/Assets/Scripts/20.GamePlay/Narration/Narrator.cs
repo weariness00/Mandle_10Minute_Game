@@ -8,7 +8,7 @@ using Util;
 
 namespace GamePlay.Narration
 {
-    public class GamePlayerNarration : MonoBehaviour
+    public class Narrator : MonoBehaviour
     {
         public GameObject narrationObject; // 나레이션 오브젝트
         public CanvasGroup canvasGroup; // 알파 값 사용용도

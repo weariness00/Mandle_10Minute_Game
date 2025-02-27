@@ -12,13 +12,12 @@ namespace GamePlay.Narration
         public static NarrationScriptableObject Instance => NarrationSettingProviderHelper.setting;
 
         [SerializeField] private NarrationData[] narrationArray;
-        
+
         public NarrationData GetNarrationID(int id)
         {
             var index = Array.BinarySearch(narrationArray, id);
             return index >= 0 ? narrationArray[index] : null;
         }
-        
 #if UNITY_EDITOR
         [SerializeField] private TextAsset narrationCSV;
         [SerializeField] private TextAsset textCSV;
@@ -48,11 +47,13 @@ namespace GamePlay.Narration
                     var narrationName = data.DynamicCast("NarrationName", "");
                     var narrationTextID = data.DynamicCast("NarrationText", -1);
                     var stayDuration = data.DynamicCast("NarrationTime", 2);
+                    var narrationTarget = data.DynamicCast("TalkTarget", 1);
 
                     narration.id = id;
                     narration.name = narrationName;
                     narration.text = textDataDictionary.GetValueOrDefault(narrationTextID, "");
                     narration.stayDuration = stayDuration;
+                    narration.target = narrationTarget;
                     
                     list.Add(narration);
                 }
