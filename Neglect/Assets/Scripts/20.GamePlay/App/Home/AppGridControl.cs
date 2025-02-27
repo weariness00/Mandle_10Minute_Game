@@ -168,7 +168,7 @@ namespace GamePlay.App.Home
                     return false;
 
                 // 한 사각형이 다른 사각형의 위쪽에 위치하는 경우
-                if (endIndex.y > other.index.y || other.endIndex.y > index.y)
+                if (endIndex.y < other.index.y || other.endIndex.y < index.y)
                     return false;
 
                 // 겹치는 경우
