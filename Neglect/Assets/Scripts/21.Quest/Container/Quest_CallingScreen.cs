@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using DG.Tweening;
 
 namespace Quest.Container
 {
@@ -14,7 +15,8 @@ namespace Quest.Container
         private CallingScreen callingScreen;
         private PhoneControl phone;
         private IPhoneApplication app;
-        
+
+        private Sequence vibrationSequence;
         public override void OnNext(object value)
         {
 
@@ -41,17 +43,28 @@ namespace Quest.Container
             if (eventData.extraDataIDArray.Length >= 2) isLoop = eventData.extraDataIDArray[1] == -45;
             callingScreen.ClearAction += Complete;
             callingScreen.IgnoreAction += Ignore;
+
+
+            vibrationSequence = phone.PhoneVibrationLoop(0.3f, 1f);
         }
         public override void Ignore()
         {
+            vibrationSequence?.Kill();
             phone.applicationControl.OpenApp(app);
             base.Ignore();
         }
 
         public override void Failed()
         {
+            vibrationSequence?.Kill();
             base.Failed();
             if(callingScreen) Destroy(callingScreen.gameObject);
+        }
+
+        public override void Complete()
+        {
+            vibrationSequence?.Kill();
+            base.Complete();
         }
     }
 }
