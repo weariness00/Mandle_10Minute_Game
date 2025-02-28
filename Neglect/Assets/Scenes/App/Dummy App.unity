@@ -151,6 +151,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86964cc64fed4d34293ed6c7de2fccbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cellData:
+    index: {x: 0, y: 0}
+    size: {x: 0, y: 0}
+    uiObject: {fileID: 0}
   appGridPosition: {x: 0, y: 0}
   appCellSize: {x: 2, y: 2}
   appName: Weather
@@ -164,51 +168,6 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 937032545}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1071499621
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1071499623}
-  - component: {fileID: 1071499622}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1071499622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1071499621}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3087f59a147820944b87c168ff23e40f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  app: {fileID: 937032546}
---- !u!4 &1071499623
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1071499621}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -261,6 +220,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86964cc64fed4d34293ed6c7de2fccbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cellData:
+    index: {x: 0, y: 0}
+    size: {x: 0, y: 0}
+    uiObject: {fileID: 0}
   appGridPosition: {x: 3, y: 2}
   appCellSize: {x: 1, y: 1}
   appName: Dummy 1
@@ -443,4 +406,3 @@ SceneRoots:
   - {fileID: 1973795367}
   - {fileID: 1126374177}
   - {fileID: 937032547}
-  - {fileID: 1071499623}
