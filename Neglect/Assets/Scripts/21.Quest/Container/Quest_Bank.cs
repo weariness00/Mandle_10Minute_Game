@@ -73,6 +73,8 @@ namespace Quest.Container
                     appButton.button.interactable = false;
                     bankApp.Amountdifference = 0;
                 });
+                bankApp.AnswerAccount = "";
+                bankApp.BankMemo.memoText.text = "";
                 base.Complete();
                 phone.applicationControl.OnHome();
             }
@@ -87,8 +89,9 @@ namespace Quest.Container
         public override void Failed()
         {
             base.Failed();
-            if(appButton) appButton.button.interactable = false;
-            phone.applicationControl.OnHome();
+            if (appButton) appButton.button.interactable = false;
+            if (phone.applicationControl.currentPlayApplication == bankApp as IPhoneApplication)
+                phone.applicationControl.OnHome();
         }
     }
 }

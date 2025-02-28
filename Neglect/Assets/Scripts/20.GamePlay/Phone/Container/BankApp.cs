@@ -83,7 +83,6 @@ namespace GamePlay.Phone
             
             TradeHistoryInit();//거래 내역 초기화
             InitCurrentCash();
-          
         }
 
         // 패스워드 초기화
@@ -172,7 +171,7 @@ namespace GamePlay.Phone
         }
         public void CheckAccount() // 입력 정보 확인 텍스트 수정
         {
-            if (AnswerAccount == InputAccount)
+            if (AnswerAccount == InputAccount && AnswerAccount.Length != 0)
             {
                 ChangeView(3);
             }

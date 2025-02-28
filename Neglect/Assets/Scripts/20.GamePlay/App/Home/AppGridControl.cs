@@ -26,6 +26,11 @@ namespace GamePlay.App.Home
 
         public void OnRectTransformDimensionsChange()
         {
+            ForceUpdate();
+        }
+
+        public void ForceUpdate()
+        {
             rectTransform = GetComponent<RectTransform>();
 
             var size = rectTransform.sizeDelta;
@@ -44,7 +49,6 @@ namespace GamePlay.App.Home
         public void Insert(Component uiComponent, Vector2Int index, Vector2Int size) => Insert(uiComponent.gameObject, index, size);
         public void Insert(GameObject uiObject)
         {
-            return;
             if(gridList.Count == 0)
                 Insert(uiObject, Vector2Int.zero, Vector2Int.one);
             else

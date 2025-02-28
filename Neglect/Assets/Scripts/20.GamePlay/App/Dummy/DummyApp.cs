@@ -1,4 +1,4 @@
-using GamePlay.App.Home;
+﻿using GamePlay.App.Home;
 using GamePlay.Phone;
 using UnityEngine;
 
@@ -8,9 +8,6 @@ namespace GamePlay.App.Dummy
     {
         [Header("App Button 관련")] 
         public AppGridControl.CellData cellData;
-        [SerializeField] public Vector2Int appGridPosition;
-        [SerializeField] public Vector2Int appCellSize = Vector2Int.one;
-
     }
 
     public partial class DummyApp : IPhoneApplication
@@ -36,7 +33,9 @@ namespace GamePlay.App.Dummy
 
             var home = _phone.applicationControl.GetHomeApp();
             var appButton = home.GetAppButton(this);
-            home.appGridControl.Insert(appButton, appGridPosition, appCellSize);
+            cellData.uiObject = appButton.gameObject;
+            appButton.cellData = cellData;
+            home.appGridControl.Insert(cellData);
             
             appButton.button.onClick.RemoveAllListeners();
         }
