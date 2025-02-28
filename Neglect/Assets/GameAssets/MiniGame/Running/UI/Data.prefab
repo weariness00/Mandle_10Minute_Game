@@ -188,6 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data:
+    rank: 0
     score:
       value: 0
     name: 
@@ -202,6 +203,9 @@ MonoBehaviour:
     scoreRandomIncrease:
       _min: 0
       _max: 0
+    increaseMultiple: 1
+    mainColor:
+      value: {r: 1, g: 1, b: 1, a: 1}
   rankIcon: {fileID: 5293983470376499261}
   rankText: {fileID: 441896793787066051}
   nameText: {fileID: 6367017531203367778}
@@ -310,7 +314,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '100pt
+  m_text: '0pt
 
 '
   m_isRightToLeft: 0
@@ -448,8 +452,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC774\uB984"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: ee89d75a416f5fd4fa1f3b2033acde8d, type: 2}
-  m_sharedMaterial: {fileID: 6798511891574570026, guid: ee89d75a416f5fd4fa1f3b2033acde8d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ce50875118459ef48a0bd62c7491d7dd, type: 2}
+  m_sharedMaterial: {fileID: 8095778784461696725, guid: ce50875118459ef48a0bd62c7491d7dd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

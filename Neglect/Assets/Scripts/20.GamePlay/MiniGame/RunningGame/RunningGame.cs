@@ -248,6 +248,8 @@ namespace GamePlay.MiniGame.RunningGame
 
         public override void GameClear()
         {
+            if(isGameClear.Value) return;
+            
             base.GameClear();
             inGame.StopCountDown();
             InputManager.running.ESC.performed -= SettingOnOff;

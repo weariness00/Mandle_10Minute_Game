@@ -122,7 +122,7 @@ namespace Quest
                 if(nextQuest) nextQuest.Play();
             }
             
-            if(!quest.isLoop && quest.eventData.isMainEvent)
+            if(quest.isLoop && quest.eventData.isMainEvent)
                 eventList.Add(quest.eventData);
         }
 

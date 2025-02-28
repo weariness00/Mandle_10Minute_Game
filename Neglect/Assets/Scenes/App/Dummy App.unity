@@ -151,8 +151,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86964cc64fed4d34293ed6c7de2fccbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appGridPosition: {x: 0, y: 0}
-  appCellSize: {x: 2, y: 2}
+  cellData:
+    index: {x: 0, y: 0}
+    size: {x: 2, y: 2}
+    uiObject: {fileID: 0}
   appName: Weather
   icon: {fileID: 21300000, guid: 1e340db6478659a48bf82233d2110415, type: 3}
   verticalResolution: {x: 600, y: 960}
@@ -216,8 +218,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86964cc64fed4d34293ed6c7de2fccbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appGridPosition: {x: 3, y: 2}
-  appCellSize: {x: 1, y: 1}
+  cellData:
+    index: {x: 3, y: 2}
+    size: {x: 1, y: 1}
+    uiObject: {fileID: 0}
   appName: Dummy 1
   icon: {fileID: 21300000, guid: 2e66e537f7470dd418fd852f9a53b3aa, type: 3}
   verticalResolution: {x: 600, y: 960}

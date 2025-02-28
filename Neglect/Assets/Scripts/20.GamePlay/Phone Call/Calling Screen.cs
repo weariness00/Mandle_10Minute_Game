@@ -1,3 +1,4 @@
+using GamePlay.Phone;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,7 +13,17 @@ namespace GamePlay.Event
         public Action ClearAction;
         public Action IgnoreAction;
         public TextMeshProUGUI name;
-        
+
+        [HideInInspector] public PhoneControl phone;
+        public void Update()
+        {
+            if (!ReferenceEquals(phone, null) && phone.viewType == PhoneViewType.Horizon)
+            {
+                phone.FadeOut(0f, Color.black);
+                phone.PhoneViewRotate(PhoneViewType.Vertical, () => phone.FadeIn(1f, Color.black));
+            }
+        }
+
         public void CallAcception()
         {
             if(ClearAction != null)

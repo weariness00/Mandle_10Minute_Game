@@ -286,9 +286,9 @@ MonoBehaviour:
     isMainEvent: 0
     level: 0
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
-    acceptEventID: -1
+    acceptEventID: 1115
     acceptDuration: 0
-    ignoreEventID: -1
+    ignoreEventID: 1115
     ignoreDuration: 0
     playNarrationID: -1
     completeNarrationID: -1
@@ -303,18 +303,18 @@ MonoBehaviour:
     isMainEvent: 0
     level: 0
     prefab: {fileID: 3832750028274978365, guid: 6e74e298262d14f4f9bd526fa0786e42, type: 3}
-    acceptEventID: -1
+    acceptEventID: 1114
     acceptDuration: 0
-    ignoreEventID: -1
+    ignoreEventID: 1114
     ignoreDuration: 0
     playNarrationID: -1
     completeNarrationID: -1
     ignoreNarrationID: -1
     textArray:
     - "\uC9D1\uC8FC\uC778"
-    - "\uB9CC\uB4E4\uB798\uB2D8 \uC6D4\uC138\uB97C \uB354 \uBCF4\uB0C8\uB358\uB370
-      \uC740\uD589 \uACC4\uC88C\uBC88\uD638\uB97C \uC368\uC8FC\uBA74 \uB2E4\uC2DC
-      \uC785\uAE08\uD574 \uB4DC\uB9B4\uAC8C\uC694"
+    - "\uB9CC\uB4E4\uB798\uB2D8 \uC6D4\uC138\uB97C \uB354 \uBCF4\uB0C8\uAE38\uB808
+      \uCD08\uACFC\uAE08 \uB9CC\uD07C \uC785\uAE08\uD588\uC2B5\uB2C8\uB2E4. \uD655\uC778
+      \uBD80\uD0C1\uB4DC\uB824\uC694."
     extraDataIDArray: 
   - id: 1104
     name: "\uCE5C\uAD6C\uC640\uC758 \uCC44\uD305 App \uB300\uD654"
@@ -351,15 +351,15 @@ MonoBehaviour:
     isMainEvent: 0
     level: 2
     prefab: {fileID: 2421299613985424272, guid: 5731f7c4bf27ea54599fdaf7529a4899, type: 3}
-    acceptEventID: -1
+    acceptEventID: 1103
     acceptDuration: 0
-    ignoreEventID: -1
+    ignoreEventID: 1102
     ignoreDuration: 0
     playNarrationID: -1
     completeNarrationID: -1
     ignoreNarrationID: -1
     textArray: []
-    extraDataIDArray: 4e0400004f040000
+    extraDataIDArray: 
   - id: 1107
     name: "\uAD11\uACE0\uB85C \uC778\uD55C \uCC44\uD305 App \uC774\uB3D9"
     isMainEvent: 0
@@ -471,7 +471,7 @@ MonoBehaviour:
     isMainEvent: 0
     level: 2
     prefab: {fileID: 6792380495647651490, guid: f3c1eec8e61df8547939c86f4313a64a, type: 3}
-    acceptEventID: -1
+    acceptEventID: 1106
     acceptDuration: 0
     ignoreEventID: -1
     ignoreDuration: 0
@@ -486,7 +486,7 @@ MonoBehaviour:
     isMainEvent: 0
     level: 2
     prefab: {fileID: 6792380495647651490, guid: f3c1eec8e61df8547939c86f4313a64a, type: 3}
-    acceptEventID: -1
+    acceptEventID: 1106
     acceptDuration: 0
     ignoreEventID: -1
     ignoreDuration: 0
@@ -884,7 +884,7 @@ MonoBehaviour:
   questSpawnTimer:
     _min: 0
     _max: 30
-    _current: 3.499018
+    _current: 1.5415497
     _isMin: 0
     _isMax: 0
     isOverMax: 1

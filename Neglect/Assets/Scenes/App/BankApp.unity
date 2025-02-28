@@ -3702,6 +3702,7 @@ MonoBehaviour:
   - {fileID: 5147373576468125089}
   AnswerAccount: 123456
   AnswerAmount: 123456
+  Amountdifference: 0
   PassbookOwner: Owner
   CurrentView: -1
   targetPassbookOwnerText: {fileID: 8321838331130501413}
@@ -3714,6 +3715,7 @@ MonoBehaviour:
   bankAmountRectTransform: {fileID: 2022900091651439681}
   bankFinishRectTransform: {fileID: 5310893630371713783}
   bankResultRectTransform: {fileID: 1271045108}
+  bankTransactionOnButton: {fileID: 1021527304}
   bankTransactionTransform: {fileID: 1914277128}
   HistroyBoxs:
   - {fileID: 77377148}

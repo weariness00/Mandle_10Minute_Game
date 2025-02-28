@@ -1,3 +1,4 @@
+using GamePlay.Phone;
 using System;
 using TMPro;
 using UnityEngine;
@@ -9,6 +10,17 @@ namespace GamePlay.Event
         public Action complete;
         public Action ignoreEvent;
         public TextMeshProUGUI timeText;
+        
+        [HideInInspector] public PhoneControl phone;
+
+        public void Update()
+        {
+            if (!ReferenceEquals(phone, null) && phone.viewType == PhoneViewType.Horizon)
+            {
+                phone.FadeOut(0f, Color.black);
+                phone.PhoneViewRotate(PhoneViewType.Vertical, () => phone.FadeIn(1f, Color.black));
+            }
+        }
         public void TimeSet(string text)
         {
             timeText.text = text;

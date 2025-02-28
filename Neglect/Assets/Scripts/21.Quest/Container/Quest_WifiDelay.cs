@@ -1,13 +1,8 @@
 using GamePlay.Event;
 using GamePlay.Phone;
-using Quest;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace Quest.Container
 {
-
     public class Quest_WifiDelay : QuestBase
     {
         public WiFiDelay WifiDelayPrefab;

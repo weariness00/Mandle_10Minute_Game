@@ -209,22 +209,28 @@ namespace GamePlay.Phone
             switch (viewType)
             {
                 case PhoneViewType.Vertical:
-                    rotateSequence.Append(transform.DORotate(new Vector3(0, 0, 0), 1f).OnComplete(() =>
+
+                    void VerticalEnd()
                     {
                         currentPhoneViewPort.horizon.SetActive(false);
                         currentPhoneViewPort.vertical.SetActive(true);
                         phoneCamera.targetTexture = currentPhoneViewPort.vertical.renderTexture;
                         isRotated?.Invoke();
-                    }));
+                    }
+
+                    rotateSequence.OnKill(VerticalEnd);
+                    rotateSequence.Append(transform.DORotate(new Vector3(0, 0, 0), 1f).OnComplete(VerticalEnd));
                     break;
                 case PhoneViewType.Horizon:
-                    rotateSequence.Append(transform.DORotate(new Vector3(0, 0, 90), 1f).OnComplete(() =>
+                    void HorizonEnd()
                     {
                         currentPhoneViewPort.vertical.SetActive(false);
                         currentPhoneViewPort.horizon.SetActive(true);
                         phoneCamera.targetTexture = currentPhoneViewPort.horizon.renderTexture;
                         isRotated?.Invoke();
-                    }));
+                    }
+                    rotateSequence.OnKill(HorizonEnd);
+                    rotateSequence.Append(transform.DORotate(new Vector3(0, 0, 90), 1f).OnComplete(HorizonEnd));
                     break;
             }
         }

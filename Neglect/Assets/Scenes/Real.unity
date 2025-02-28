@@ -446,7 +446,7 @@ MonoBehaviour:
   phoneControl: {fileID: 0}
   miniGameName: x
   isMiniGameAddToApp: 0
-  eventID: 1012
+  eventID: 1004
 --- !u!4 &607314949
 Transform:
   m_ObjectHideFlags: 0
@@ -1048,7 +1048,7 @@ Transform:
   m_GameObject: {fileID: 941211126}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 500}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1498,8 +1498,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86964cc64fed4d34293ed6c7de2fccbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appGridPosition: {x: 3, y: 2}
-  appCellSize: {x: 1, y: 1}
+  cellData:
+    index: {x: 0, y: 0}
+    size: {x: 0, y: 0}
+    uiObject: {fileID: 0}
   appName: Dummy 1
   icon: {fileID: 21300000, guid: 2e66e537f7470dd418fd852f9a53b3aa, type: 3}
   verticalResolution: {x: 600, y: 960}
@@ -2043,6 +2045,7 @@ MonoBehaviour:
     extraDataIDArray: 
   isReverse: 0
   isLoop: 0
+  rootQuest: {fileID: 0}
   onCompleteEvent:
     m_PersistentCalls:
       m_Calls: []

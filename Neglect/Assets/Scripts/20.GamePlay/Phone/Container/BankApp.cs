@@ -49,6 +49,7 @@ namespace GamePlay.Phone
         [Header("이체 해야 할 정보")]
         public string AnswerAccount;
         public int AnswerAmount;
+        [HideInInspector] public int Amountdifference;
         public string PassbookOwner;
         private bool IsKeyPad = false;
         public int CurrentView = -1; //현재 화면
@@ -68,7 +69,8 @@ namespace GamePlay.Phone
         public RectTransform bankFinishRectTransform;
         public RectTransform bankResultRectTransform;
 
-        [Header("거래내역 확인 은행 화면 정보")]
+        [Header("거래내역 확인 은행 화면 정보")] 
+        public Button bankTransactionOnButton; // 거래내역 확인 정보 키는 버튼
         public RectTransform bankTransactionTransform;
 
         public Action completeAction;
@@ -81,7 +83,6 @@ namespace GamePlay.Phone
             
             TradeHistoryInit();//거래 내역 초기화
             InitCurrentCash();
-          
         }
 
         // 패스워드 초기화
@@ -170,7 +171,7 @@ namespace GamePlay.Phone
         }
         public void CheckAccount() // 입력 정보 확인 텍스트 수정
         {
-            if (AnswerAccount == InputAccount)
+            if (AnswerAccount == InputAccount && AnswerAccount.Length != 0)
             {
                 ChangeView(3);
             }
@@ -273,37 +274,21 @@ namespace GamePlay.Phone
 
         public void BankComplete() // 입력정보 최종 확인 후 송금 사실상 마지막장면에는 뒤로가기 버튼이 없으므로 확정임 
         {
-            int Amountdifference = 0;
             Amountdifference = AnswerAmount - InputAmount;
 
             HistoryUpload(2, InputAmount); //송금한 금액 거래내역에 넣기
             currentCash -= InputAmount;
             currentCashText.text = AddCommas(currentCash.ToString()); //소지금액 차감 후 갱신
-            completeAction?.Invoke();
-            if (Amountdifference == 0)
+            if (Amountdifference <= 0)
             {
-                GameManager.Instance.GameClear();
-            }
-            else if (Amountdifference > 0)
-            {
-                if (eventData.extraDataIDArray.Length > 0)
-                {
-                    var quest = QuestDataList.Instance.InstantiateEvent(eventData.extraDataIDArray[0]);
-                    QuestManager.Instance.AddQuestQueue(quest);
-                }
+                HistoryUpload(1, -Amountdifference); //초과금 거래내역에 넣기
+                currentCash += Amountdifference;
+                currentCashText.text = AddCommas(currentCash.ToString()); //환불받은 초과금 추가 후 갱신
+                completeAction?.Invoke();
             }
             else
             {
-                if(eventData.extraDataIDArray.Length > 1)
-                {
-
-                    HistoryUpload(1, -Amountdifference); //초과금 거래내역에 넣기
-                    currentCash += Amountdifference;
-                    currentCashText.text = AddCommas(currentCash.ToString()); //환불받은 초과금 추가 후 갱신
-
-                    var quest = QuestDataList.Instance.InstantiateEvent(eventData.extraDataIDArray[1]);
-                    QuestManager.Instance.AddQuestQueue(quest);
-                }
+                ignoreAction?.Invoke();
             }
             inputAmountsum += InputAmount;
             InputAccount = "";
@@ -457,11 +442,6 @@ namespace GamePlay.Phone
             BankMemo.gameObject.layer = 0;
             BankMemo.gameObject.SetActive(false);
             mainCanvas.gameObject.SetActive(false);
-
-            resultOkButton.onClick.AddListener(() =>
-            {
-                _phone.applicationControl.OnHome();
-            });
 
             var home = _phone.applicationControl.GetHomeApp();
             var appButton = home.GetAppButton(this);

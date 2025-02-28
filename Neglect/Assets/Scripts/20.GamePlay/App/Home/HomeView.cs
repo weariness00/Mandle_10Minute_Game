@@ -169,8 +169,9 @@ namespace GamePlay.Phone
                 if (app.AppIcon) appButton.button.image.sprite = app.AppIcon;
                 appButton.button.onClick.AddListener(() => phone.applicationControl.OpenApp(app));
                 PhoneUtil.SetLayer(appButton);
-                
-                appGridControl.Insert(appButton);
+                if (appButton.cellData.uiObject == null)
+                    appButton.cellData.uiObject = appButton.gameObject;
+                appGridControl.Insert(appButton.cellData);
                 appButtonDictionary.TryAdd(app.AppName, appButton);
             });
             
@@ -192,6 +193,8 @@ namespace GamePlay.Phone
             
             interfaceRectTransform.gameObject.SetActive(true);
             interfaceRectTransform.anchoredPosition = interfaceOriginAnchorsPosition;
+            
+            appGridControl.ForceUpdate();
             
             var bgmSource = SoundManager.Instance.GetBGMSource();
             if (bgmSource.isPlaying == false)

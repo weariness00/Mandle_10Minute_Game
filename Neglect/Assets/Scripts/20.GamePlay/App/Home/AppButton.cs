@@ -1,7 +1,6 @@
-﻿using System;
+﻿using GamePlay.App.Home;
 using UnityEngine;
 using UnityEngine.UI;
-using Util;
 
 namespace GamePlay.App
 {
@@ -9,6 +8,7 @@ namespace GamePlay.App
     {
         public Button button;
         public GameObject highlightObject;
+        public AppGridControl.CellData cellData;
 
         public void Awake()
         {

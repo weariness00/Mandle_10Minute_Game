@@ -93,6 +93,7 @@ namespace GamePlay.MiniGame.RunningGame
                 {
                     if (quest.state == QuestState.Completed && runningGame.isGameStart.Value)
                     {
+                        immortalTime.SetMax();
                         currentCombo.Value = 100;
                     }
                     else if (quest.state == QuestState.Failed && runningGame.isGameStart.Value)

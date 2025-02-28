@@ -23,7 +23,7 @@ namespace Quest
         [HideInInspector] public bool isLoop = false; // 재활용 가능한 퀘스트인지 ( 해결해도 다시 큐에 돌아가서 또 나타날 수 있다.)
         protected IDisposable subscription; // 퀘스트 매니저에서 구독하면 자동 할당됨
 
-        private QuestBase rootQuest = null;
+        [HideInInspector] public QuestBase rootQuest = null;
         public UnityEvent<QuestBase> onCompleteEvent = new();
         public UnityEvent<QuestBase> onIgnoreEvent = new();
         
@@ -120,7 +120,8 @@ namespace Quest
         private IEnumerator PlayQuestDurationEnumerator(QuestBase quest, float duration)
         {
             yield return new WaitForSeconds(duration);
-            QuestManager.Instance.AddQuestQueue(quest);
+            if(GameManager.HasInstance && !GameManager.Instance.isGameClear.Value)
+                QuestManager.Instance.AddQuestQueue(quest);
         }
     }
 
