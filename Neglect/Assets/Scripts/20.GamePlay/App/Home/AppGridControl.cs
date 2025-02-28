@@ -44,6 +44,7 @@ namespace GamePlay.App.Home
         public void Insert(Component uiComponent, Vector2Int index, Vector2Int size) => Insert(uiComponent.gameObject, index, size);
         public void Insert(GameObject uiObject)
         {
+            return;
             if(gridList.Count == 0)
                 Insert(uiObject, Vector2Int.zero, Vector2Int.one);
             else
@@ -72,6 +73,48 @@ namespace GamePlay.App.Home
             newData.UpdateIndex(index, gridCount);
             newData.UpdateCellTransform(padding, cellSize, spacing);
             gridList.Insert(findIndex, newData);
+            
+            // 그리드 겹치면 밀리게 하기
+            for (int i = findIndex + 1; i < gridList.Count; i++)
+            {
+                var data1 = gridList[i - 1];
+                var data2 = gridList[i];
+                if (data1.CompareTo(data2))
+                {
+                    data2.UpdateIndex(data2.index + Vector2Int.right, gridCount);
+                    data2.UpdateCellTransform(padding, cellSize, spacing);
+                }
+                else
+                    data1.UpdateIndex(data1.index - Vector2Int.right, gridCount);
+            }
+            gridList.Sort((a, b) =>
+            {
+                var aIndex = a.index.x + a.index.y * gridCount.x;
+                var bIndex = b.index.x + b.index.y * gridCount.x;
+                return aIndex.CompareTo(bIndex);
+            });
+        }
+
+        public void Insert(CellData cellData)
+        {
+            var index = cellData.index;
+            var size = cellData.size;
+            var uiObject = cellData.uiObject;
+            var findIndex = gridList.Count;
+            for (int i = 0; i < gridList.Count; i++)
+            {
+                var data = gridList[i];
+                if (data.index == index)
+                {
+                    findIndex = i;
+                    break;
+                }
+            }
+            
+            // 새로운 데터 삽입
+            cellData.UpdateIndex(index, gridCount);
+            cellData.UpdateCellTransform(padding, cellSize, spacing);
+            gridList.Insert(findIndex, cellData);
             
             // 그리드 겹치면 밀리게 하기
             for (int i = findIndex + 1; i < gridList.Count; i++)
@@ -125,6 +168,7 @@ namespace GamePlay.App.Home
 
     public partial class AppGridControl
     {
+        [Serializable]
         public class CellData
         {
             public Vector2Int index;

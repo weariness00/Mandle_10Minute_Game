@@ -1,3 +1,4 @@
+using GamePlay.App.Home;
 using GamePlay.Phone;
 using UnityEngine;
 
@@ -5,7 +6,8 @@ namespace GamePlay.App.Dummy
 {
     public partial class DummyApp : MonoBehaviour
     {
-        [Header("App Button 관련")]
+        [Header("App Button 관련")] 
+        public AppGridControl.CellData cellData;
         [SerializeField] public Vector2Int appGridPosition;
         [SerializeField] public Vector2Int appCellSize = Vector2Int.one;
 
