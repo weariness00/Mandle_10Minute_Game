@@ -142,7 +142,7 @@ namespace GamePlay.MiniGame.RunningGame
             
             if (runningGameObjectRoot.activeSelf && !ReferenceEquals(Phone, null) && Phone.viewType == PhoneViewType.Vertical)
             {
-                _phone.PhoneViewRotate(PhoneViewType.Horizon);
+                Phone.PhoneViewRotate(PhoneViewType.Horizon);
             }
         }
 
