@@ -139,13 +139,12 @@ namespace GamePlay.MiniGame.RunningGame
             {
                 UpdatePlayerData();
             }
-            
-            if (runningGameObjectRoot.activeSelf && !ReferenceEquals(Phone, null) && Phone.viewType == PhoneViewType.Vertical)
+            if (isGamePlay.Value && !ReferenceEquals(Phone, null) && Phone.viewType == PhoneViewType.Vertical)
             {
-                Phone.PhoneViewRotate(PhoneViewType.Horizon);
+                Phone.PhoneViewRotate(PhoneViewType.Horizon, () => Phone.FadeIn(0f, Color.black));
             }
         }
-
+        
         private void SettingOnOff(InputAction.CallbackContext context)
         {
             if (inGame.gameObject.activeSelf)

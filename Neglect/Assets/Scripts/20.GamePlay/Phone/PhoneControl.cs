@@ -207,6 +207,7 @@ namespace GamePlay.Phone
 
             rotateSequence?.Kill();
             rotateSequence = DOTween.Sequence();
+            rotateSequence.OnKill(()=> isRotated?.Invoke());
             switch (viewType)
             {
                 case PhoneViewType.Vertical:
@@ -218,8 +219,6 @@ namespace GamePlay.Phone
                         phoneCamera.targetTexture = currentPhoneViewPort.vertical.renderTexture;
                         isRotated?.Invoke();
                     }
-
-                    rotateSequence.OnKill(VerticalEnd);
                     rotateSequence.Append(transform.DORotate(new Vector3(0, 0, 0), 1f).OnComplete(VerticalEnd));
                     break;
                 case PhoneViewType.Horizon:
@@ -230,7 +229,6 @@ namespace GamePlay.Phone
                         phoneCamera.targetTexture = currentPhoneViewPort.horizon.renderTexture;
                         isRotated?.Invoke();
                     }
-                    rotateSequence.OnKill(HorizonEnd);
                     rotateSequence.Append(transform.DORotate(new Vector3(0, 0, 90), 1f).OnComplete(HorizonEnd));
                     break;
             }
