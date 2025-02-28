@@ -6,8 +6,8 @@ namespace GamePlay.App.Dummy
     public partial class DummyApp : MonoBehaviour
     {
         [Header("App Button 관련")]
-        [SerializeField] private Vector2Int appGridPosition;
-        [SerializeField] private Vector2Int appCellSize = Vector2Int.one;
+        [SerializeField] public Vector2Int appGridPosition;
+        [SerializeField] public Vector2Int appCellSize = Vector2Int.one;
 
     }
 

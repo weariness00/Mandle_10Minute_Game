@@ -39,6 +39,9 @@ namespace GamePlay.App.GameResult
             questResult.mainCanvas.worldCamera = _phone.phoneCamera;
             
             questResult.nextButton.onClick.AddListener(() => AppUnInstall(_phone));
+            var home = phone.applicationControl.GetHomeApp();
+            var appButton = home.GetAppButton(this);
+            home.appGridControl.Insert(appButton, new(3,3));
         }
 
         public void AppPlay(PhoneControl phone)

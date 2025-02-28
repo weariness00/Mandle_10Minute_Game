@@ -248,9 +248,9 @@ MonoBehaviour:
     positiveScore: 0
     negativeScore: 0
   - id: 4023
-    mainText: "\uB9CC\uB4E4\uB798\uB2D8 \uC6D4\uC138\uB97C \uB354 \uBCF4\uB0C8\uB358\uB370
-      \uC740\uD589 \uACC4\uC88C\uBC88\uD638\uB97C \uC368\uC8FC\uBA74 \uB2E4\uC2DC
-      \uC785\uAE08\uD574 \uB4DC\uB9B4\uAC8C\uC694"
+    mainText: "\uB9CC\uB4E4\uB798\uB2D8 \uC6D4\uC138\uB97C \uB354 \uBCF4\uB0C8\uAE38\uB808
+      \uCD08\uACFC\uAE08 \uB9CC\uD07C \uC785\uAE08\uD588\uC2B5\uB2C8\uB2E4. \uD655\uC778
+      \uBD80\uD0C1\uB4DC\uB824\uC694."
     positiveResultTalkID: -1
     negativeResultTalkID: -1
     positiveTextArray: []
@@ -420,9 +420,9 @@ MonoBehaviour:
     positiveScore: 0
     negativeScore: 0
   - id: 11001
-    mainText: "\uB9CC\uB4E4\uB798\uB2D8 \uC6D4\uC138\uB97C \uB354 \uBCF4\uB0C8\uB358\uB370
-      \uC740\uD589 \uACC4\uC88C\uBC88\uD638\uB97C \uC368\uC8FC\uBA74 \uB2E4\uC2DC
-      \uC785\uAE08\uD574 \uB4DC\uB9B4\uAC8C\uC694"
+    mainText: "\uB9CC\uB4E4\uB798\uB2D8 \uC6D4\uC138\uB97C \uB354 \uBCF4\uB0C8\uAE38\uB808
+      \uCD08\uACFC\uAE08 \uB9CC\uD07C \uC785\uAE08\uD588\uC2B5\uB2C8\uB2E4. \uD655\uC778
+      \uBD80\uD0C1\uB4DC\uB824\uC694."
     positiveResultTalkID: -1
     negativeResultTalkID: -1
     positiveTextArray: []

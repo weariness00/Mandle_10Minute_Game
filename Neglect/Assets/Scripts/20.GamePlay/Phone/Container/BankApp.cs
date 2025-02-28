@@ -444,11 +444,6 @@ namespace GamePlay.Phone
             BankMemo.gameObject.SetActive(false);
             mainCanvas.gameObject.SetActive(false);
 
-            resultOkButton.onClick.AddListener(() =>
-            {
-                _phone.applicationControl.OnHome();
-            });
-
             var home = _phone.applicationControl.GetHomeApp();
             var appButton = home.GetAppButton(this);
             appButton.button.interactable = false;

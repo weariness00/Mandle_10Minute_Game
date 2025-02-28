@@ -168,15 +168,7 @@ namespace GamePlay.MiniGame
                     foreach (AppButton button in allButtonArray)
                         button.button.interactable = false;
                     appButton.button.interactable = true;
-                }
-            });
-            
-            QuestManager.Instance.onEndQuestEvent.AddListener(quest =>
-            {
-                // 뱅크앱이 끝났을 경우
-                if (quest is Quest_Bank bank)
-                {
-                    appButton.button.interactable = true;
+                    GameClear();
                 }
             });
             

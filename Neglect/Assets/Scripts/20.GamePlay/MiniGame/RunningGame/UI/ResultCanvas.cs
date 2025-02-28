@@ -55,7 +55,7 @@ namespace GamePlay.MiniGame.RunningGame
                 resultObject.SetActive(false);
                 rankResultCanvas.gameObject.SetActive(true);
 
-                var index = runningGame.CurrentPlayerData.rank - 1;
+                var index = Mathf.Clamp(runningGame.CurrentPlayerData.rank - 1,0,2);
                 rankIcon.sprite = rankIconList[index];
                 rankText.text = rankAchieveTextList[index];
                 showRankMMF[index].PlayFeedbacks();

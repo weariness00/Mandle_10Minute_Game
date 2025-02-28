@@ -3708,14 +3708,14 @@ MonoBehaviour:
   targetPassbookOwnerText: {fileID: 8321838331130501413}
   currentCash: 0
   currentCashText: {fileID: 705782438}
-  resultOkButton: {fileID: 1021527304}
+  resultOkButton: {fileID: 1766063402}
   resultText: {fileID: 2027912623}
   bankMenuRectTransform: {fileID: 989229648}
   bankAccountRectTransform: {fileID: 8472809314107619649}
   bankAmountRectTransform: {fileID: 2022900091651439681}
   bankFinishRectTransform: {fileID: 5310893630371713783}
   bankResultRectTransform: {fileID: 1271045108}
-  bankTransactionOnButton: {fileID: 0}
+  bankTransactionOnButton: {fileID: 1021527304}
   bankTransactionTransform: {fileID: 1914277128}
   HistroyBoxs:
   - {fileID: 77377148}
