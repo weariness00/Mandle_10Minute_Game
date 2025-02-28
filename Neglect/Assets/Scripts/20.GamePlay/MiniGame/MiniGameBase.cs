@@ -55,6 +55,11 @@ namespace GamePlay.MiniGame
                     GameClear();
                 }
             }
+
+            if (isGamePlay.Value && !ReferenceEquals(_phone, null) && _phone.viewType == PhoneViewType.Vertical)
+            {
+                _phone.PhoneViewRotate(PhoneViewType.Horizon);
+            }
         }
 
         public virtual void GamePlay()
@@ -123,6 +128,7 @@ namespace GamePlay.MiniGame
         [SerializeField] private Sprite appIcon;
         [SerializeField] private Vector2Int resolution;
         [SerializeField] private PhoneControl _phone;
+        private PhoneViewPort viewPort;
 
         public string AppName => gameName;
         public Sprite AppIcon { get => appIcon; set => appIcon = value; }
@@ -138,6 +144,7 @@ namespace GamePlay.MiniGame
         public virtual void AppInstall(PhoneControl phone)
         {
             _phone = phone;
+            viewPort = _phone.GetAppViewPort(this);
             foreach (GameObject rootGameObject in gameObject.scene.GetRootGameObjects())
             {
                 // 카메라에 따라 마우스 클릭 위치 변경 가능
