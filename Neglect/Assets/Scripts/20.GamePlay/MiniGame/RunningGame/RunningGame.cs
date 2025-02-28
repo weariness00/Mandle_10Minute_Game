@@ -140,7 +140,7 @@ namespace GamePlay.MiniGame.RunningGame
                 UpdatePlayerData();
             }
             
-            if (runningGameObjectRoot.activeSelf && !ReferenceEquals(_phone, null) && _phone.viewType == PhoneViewType.Vertical)
+            if (runningGameObjectRoot.activeSelf && !ReferenceEquals(Phone, null) && Phone.viewType == PhoneViewType.Vertical)
             {
                 _phone.PhoneViewRotate(PhoneViewType.Horizon);
             }
