@@ -55,11 +55,6 @@ namespace GamePlay.MiniGame
                     GameClear();
                 }
             }
-
-            if (isGamePlay.Value && !ReferenceEquals(_phone, null) && _phone.viewType == PhoneViewType.Vertical)
-            {
-                _phone.PhoneViewRotate(PhoneViewType.Horizon);
-            }
         }
 
         public virtual void GamePlay()

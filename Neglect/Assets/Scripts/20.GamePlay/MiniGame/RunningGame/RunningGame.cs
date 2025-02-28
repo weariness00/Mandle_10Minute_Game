@@ -139,6 +139,11 @@ namespace GamePlay.MiniGame.RunningGame
             {
                 UpdatePlayerData();
             }
+            
+            if (runningGameObjectRoot.activeSelf && !ReferenceEquals(_phone, null) && _phone.viewType == PhoneViewType.Vertical)
+            {
+                _phone.PhoneViewRotate(PhoneViewType.Horizon);
+            }
         }
 
         private void SettingOnOff(InputAction.CallbackContext context)
