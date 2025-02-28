@@ -1,7 +1,9 @@
 using GamePlay;
 using GamePlay.App;
+using GamePlay.MiniGame;
 using GamePlay.Narration;
 using GamePlay.Phone;
+using System.Collections.Generic;
 
 namespace Quest.Container
 {
@@ -11,6 +13,7 @@ namespace Quest.Container
         
         private PhoneControl phone;
         private AppButton appButton;
+        private AppButton miniGameButton;
         public override void OnNext(object value)
         {
         }
@@ -23,8 +26,9 @@ namespace Quest.Container
         {
             base.Play();
             phone = PhoneUtil.currentPhone;
-            
-            foreach (AppButton button in phone.applicationControl.GetHomeApp().GetAllAppButton())
+
+            var buttons = phone.applicationControl.GetHomeApp().GetAllAppButton();
+            foreach (AppButton button in buttons)
                 button.button.interactable = false;
             bankApp = phone.applicationControl.GetApp("Bank") as BankApp;
             appButton = phone.applicationControl.GetHomeApp().GetAppButton(bankApp);
@@ -32,6 +36,7 @@ namespace Quest.Container
             bankApp.InitPassword();
             if (bankApp.eventData != eventData)
             {
+                miniGameButton = phone.applicationControl.GetHomeApp().GetAppButton(phone.applicationControl.GetApp<MiniGameBase>());
                 // 마지막 확인 누를때 돈 잘 보내면 홈으로 가기
                 bankApp.resultOkButton.onClick.AddListener(() =>
                 {
@@ -59,10 +64,10 @@ namespace Quest.Container
                 if (eventData.completeNarrationID != -1) NarrationManager.Instance.StartNarrationID(eventData.completeNarrationID);
                 appButton.button.interactable = false;
                 onCompleteEvent?.Invoke(null);
+                miniGameButton.button.interactable = true;
                 
                 QuestManager.Instance.Remove(this);
                 bankApp.eventData = null;
-                GameManager.Instance.GameClear();
             }
             else if (bankApp.Amountdifference < 0)
             {

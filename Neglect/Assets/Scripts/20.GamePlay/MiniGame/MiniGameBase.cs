@@ -32,6 +32,8 @@ namespace GamePlay.MiniGame
             tutorial.gameObject.SetActive(false);
             isGamePlay.Value = false;
             playTime.SetMin();
+            if (GameManager.HasInstance)
+                playTime = GameManager.Instance.playTimer;
             
             if(PlayerPrefs.HasKey($"{nameof(isOnTutorial)}{AppName}"))
                 isOnTutorial = PlayerPrefs.GetInt($"{nameof(isOnTutorial)}{AppName}") == 1;
@@ -46,7 +48,8 @@ namespace GamePlay.MiniGame
         {
             if (isGamePlay.Value && !isGameClear.Value)
             {
-                playTime.Current += Time.deltaTime;
+                if (!GameManager.HasInstance)
+                    playTime.Current += Time.deltaTime;
                 if (playTime.IsMax)
                 {
                     GameClear();

@@ -10,6 +10,7 @@ namespace GamePlay
 {
     public class SceneUtil : Singleton<SceneUtil>
     {
+        private static readonly string TitleScene = "Title";
         private static readonly string RealScene = "Real";
         private static readonly string PhoneScene = "Phone";
         private static readonly string HomeScene = "Home";
@@ -21,7 +22,8 @@ namespace GamePlay
         private static readonly string BankScene = "BankApp";
         private static readonly string ChattingScene = "Chatting App";
         private static readonly string GameResultScene = "Game Result App";
-
+        
+        public static void LoadTitle(Action<Scene> loadedAction = null) =>Instance.StartCoroutine(Instance.LoadSceneEnumerator(TitleScene, loadedAction));
         public static void LoadReal(Action<Scene> loadedAction = null) =>Instance.StartCoroutine(Instance.LoadSceneEnumerator(RealScene, loadedAction));
         
         public static bool TryGetPhoneScene(out Scene scene)

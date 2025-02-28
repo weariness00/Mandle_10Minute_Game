@@ -207,10 +207,7 @@ namespace GamePlay.Phone
         public void AppPause(PhoneControl phone)
         {
             tween?.Kill();
-            // Observable.Timer(TimeSpan.FromSeconds(0.3f)).Subscribe(_ =>
-            // {
-            //     mainCanvas.gameObject.SetActive(false);
-            // });
+            mainCanvas.gameObject.SetActive(false);
 
             interfaceRectTransform.gameObject.SetActive(false);
             interfaceRectTransform.anchoredPosition = new(0,-interfaceRectTransform.sizeDelta.y);

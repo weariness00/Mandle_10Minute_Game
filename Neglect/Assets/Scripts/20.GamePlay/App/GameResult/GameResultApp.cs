@@ -68,7 +68,7 @@ namespace GamePlay.App.GameResult
 
         public void AppUnInstall(PhoneControl phone)
         {
-            SceneUtil.LoadReal();
+            SceneUtil.LoadTitle();
         }
     }
     

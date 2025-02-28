@@ -11686,7 +11686,7 @@ MonoBehaviour:
     value: 1
   playTime:
     _min: 0
-    _max: 660
+    _max: 600
     _current: 0
     _isMin: 1
     _isMax: 0
@@ -16528,7 +16528,7 @@ MonoBehaviour:
   mainCanvas: {fileID: 1493705817}
   updateGameChangeTimer:
     _min: 0
-    _max: 150
+    _max: 120
     _current: 0
     _isMin: 1
     _isMax: 0
@@ -16631,6 +16631,7 @@ MonoBehaviour:
     extraDataIDArray: 
   isReverse: 0
   isLoop: 0
+  rootQuest: {fileID: 0}
   onCompleteEvent:
     m_PersistentCalls:
       m_Calls: []
