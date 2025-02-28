@@ -208,6 +208,7 @@ namespace GamePlay.Phone
         {
             tween?.Kill();
             mainCanvas.gameObject.SetActive(false);
+
             interfaceRectTransform.gameObject.SetActive(false);
             interfaceRectTransform.anchoredPosition = new(0,-interfaceRectTransform.sizeDelta.y);
         }
