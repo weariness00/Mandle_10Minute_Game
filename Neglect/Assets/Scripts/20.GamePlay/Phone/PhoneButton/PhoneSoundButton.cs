@@ -55,12 +55,14 @@ namespace GamePlay.Phone
             if(!isInit) return;
             tween?.Kill();
             tween = blockectTransform.DOAnchorPos(new Vector2(-40, 0), 0.3f).SetEase(Ease.Flash);
+            soundBlock.slider.interactable = true;
         }
         public void DisappearSlider()
         {
             if(!isInit) return;
             tween?.Kill();
             tween = blockectTransform.DOAnchorPos(new Vector2(blockectTransform.sizeDelta.y, 0), 0.3f).SetEase(Ease.Flash);
+            soundBlock.slider.interactable = false;
         }
         
         public void SoundUp()
