@@ -27,7 +27,7 @@ namespace GamePlay.Talk
         {
             Dictionary<int, string> textDataDictionary = new();
             { // Text Data Table 초기화
-                var csv = textDataCSV.ReadHorizon();
+                var csv = textDataCSV.Read();
                 foreach (Dictionary<string, object> data in csv)
                 {
                     var id = data.DynamicCast("TextID", -1);
@@ -37,7 +37,7 @@ namespace GamePlay.Talk
                 }
             }
             { // Talking Data Table 초기화
-                var csv = talkDataCSV.ReadHorizon();
+                var csv = talkDataCSV.Read();
                 List<TalkingData> talkList = new();
 
                 for (var i = 0; i < csv.Count; i++)

@@ -26,7 +26,7 @@ namespace GamePlay.Narration
         {
             Dictionary<int, string> textDataDictionary = new();
             { // Text Data Table 초기화
-                var csv = textCSV.ReadHorizon();
+                var csv = textCSV.Read();
                 foreach (Dictionary<string, object> data in csv)
                 {
                     var id = data.DynamicCast("TextID", -1);
@@ -36,7 +36,7 @@ namespace GamePlay.Narration
                 }
             }
             { // Narration Data Table 초기화
-                var csv = narrationCSV.ReadHorizon();
+                var csv = narrationCSV.Read();
                 List<NarrationData> list = new();
                 foreach (Dictionary<string, object> data in csv)
                 {

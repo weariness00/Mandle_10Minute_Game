@@ -108,7 +108,7 @@ namespace Quest
 
         public void SetEventCSV()
         {
-            var eventCSV = eventDataTableCSV.ReadHorizon();
+            var eventCSV = eventDataTableCSV.Read();
             SetQuestTextData(out var textDataDictionary);
 
             List<EventData> eventList = new List<EventData>();
@@ -181,7 +181,7 @@ namespace Quest
         {
             textDataDictionary = new();
             { // Text Data Table 초기화
-                var csv = textDataTableCSV.ReadHorizon();
+                var csv = textDataTableCSV.Read();
                 foreach (Dictionary<string, object> data in csv)
                 {
                     var id = data.DynamicCast("TextID", -1);
