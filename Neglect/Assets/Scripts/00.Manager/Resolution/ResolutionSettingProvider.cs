@@ -21,12 +21,17 @@ namespace Manager
                     // 설정 창에 표시할 UI
                     ResolutionSettingProviderHelper.IsDebug = EditorGUILayout.Toggle("Is Debug", ResolutionSettingProviderHelper.IsDebug); 
                     EditorGUILayout.LabelField("Resolution Manager Data", EditorStyles.boldLabel);
-                    ResolutionSettingProviderHelper.setting = (ResolutionSetting)EditorGUILayout.ObjectField(
+                    var setting = ResolutionSettingProviderHelper.setting = (ResolutionSetting)EditorGUILayout.ObjectField(
                         $"Setting Data",
                         ResolutionSettingProviderHelper.setting,
                         typeof(ResolutionSetting),
                         false
                     );
+
+                    if (setting != null)
+                    {
+                        Editor.CreateEditor(setting).OnInspectorGUI();
+                    }
                     
                     // setting이 변경되었을 경우 Save() 호출
                     if (GUI.changed)
@@ -103,6 +108,14 @@ namespace Manager
                 setting = AssetDatabase.LoadAssetAtPath<ResolutionSetting>(settingPath);
                 Debug.Assert(setting != null, "해당 경로에 Sound Manager Setting 데이터가 존재하지 않습니다.");
             }
+            else
+            {
+                var path = GetDataPath();
+                if (path != string.Empty)
+                {
+                    setting = Resources.Load<ResolutionSetting>(path);
+                }
+            }
         }
 #else
         static ResolutionSettingProviderHelper()
@@ -125,5 +138,22 @@ namespace Manager
             }
         }
 #endif
+        public static string GetDataPath()
+        {
+            var settingTextFile = Resources.Load<TextAsset>(SettingJsonPath.Replace("Resources/", "").Replace(".json",""));
+            if (settingTextFile != null)
+            {
+                string json = settingTextFile.text;
+                var data = JsonUtility.FromJson<SoundManagerSettingJson>(json);
+                var path = data.SettingPath;
+                path = path.Replace("Assets/", "");
+                path = path.Replace("Resources/", "");
+                path = path.Replace(".asset", "");
+                return path;
+            }
+
+            Debug.LogError($"{SettingJsonPath}에 {nameof(setting)}이 존재 하지 않습니다.");
+            return "";
+        }
     }
 }

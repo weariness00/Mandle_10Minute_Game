@@ -20,12 +20,17 @@ namespace Manager
                     // 설정 창에 표시할 UI
                     SoundManagerSettingsProviderHelper.IsDebug = EditorGUILayout.Toggle("Is Debug", SoundManagerSettingsProviderHelper.IsDebug); 
                     EditorGUILayout.LabelField("Sound Manager Data", EditorStyles.boldLabel);
-                    SoundManagerSettingsProviderHelper.setting = (SoundManagerSetting)EditorGUILayout.ObjectField(
+                    var setting = SoundManagerSettingsProviderHelper.setting = (SoundManagerSetting)EditorGUILayout.ObjectField(
                         $"Setting Data",
                         SoundManagerSettingsProviderHelper.setting,
                         typeof(SoundManagerSetting),
                         false
                     );
+                    
+                    if (setting != null)
+                    {
+                        Editor.CreateEditor(setting).OnInspectorGUI();
+                    }
                     
                     // setting이 변경되었을 경우 Save() 호출
                     if (GUI.changed)
@@ -51,7 +56,7 @@ namespace Manager
         private static bool _IsDebug = true;
         public static SoundManagerSetting setting;
 
-        private static readonly string SettingJsonPath = "Resources/Data/Json/Sound/Sound Setting.json";
+        private static readonly string SettingJsonPath = "Resources/Data/Json/Sound Setting.json";
         private static readonly string DefaultKey = "Managers,Sound";
         private static readonly string DebugKey = "IsDebug";
         private static readonly string SettingKey = nameof(SoundManagerSetting);
@@ -101,6 +106,14 @@ namespace Manager
                 setting = AssetDatabase.LoadAssetAtPath<SoundManagerSetting>(settingPath);
                 Debug.Assert(setting != null, "해당 경로에 Sound Manager Setting 데이터가 존재하지 않습니다.");
             }
+            else
+            {
+                var path = GetDataPath();
+                if (path != string.Empty)
+                {
+                    setting = Resources.Load<SoundManagerSetting>(path);
+                }
+            }
         }
 #else
         static SoundManagerSettingsProviderHelper()
@@ -123,5 +136,23 @@ namespace Manager
             }
         }
 #endif
+
+        public static string GetDataPath()
+        {
+            var settingTextFile = Resources.Load<TextAsset>(SettingJsonPath.Replace("Resources/", "").Replace(".json",""));
+            if (settingTextFile != null)
+            {
+                string json = settingTextFile.text;
+                var data = JsonUtility.FromJson<SoundManagerSettingJson>(json);
+                var path = data.SettingPath;
+                path = path.Replace("Assets/", "");
+                path = path.Replace("Resources/", "");
+                path = path.Replace(".asset", "");
+                return path;
+            }
+
+            Debug.LogError($"{SettingJsonPath}에 Sound Setting Data가 존재 하지 않습니다.");
+            return "";
+        }
     }
 }

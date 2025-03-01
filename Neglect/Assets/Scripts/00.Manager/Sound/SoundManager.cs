@@ -22,47 +22,34 @@ namespace Manager
             setting = SoundManagerSettingsProviderHelper.setting;
             Debug.Assert(setting != null, $"Sound Manager Setting 스크립터블 오브젝트가 존재하지 않습니다.");
             if(ReferenceEquals(setting, null)) return;
-
-            if (setting.isInstantiate)
-            {
-                setting.InstantiateGroupBlock(out soundCanvas);
-                soundCanvasRectTransform = soundCanvas.GetComponent<RectTransform>();
-            }
-
-            AudioSourcesGenerate();
+            
+            // 본래 있던 오디오 소스 삭제
+            foreach (AudioSource audioSource in audioSourceDictionary.Values)
+                Destroy(audioSource.gameObject);
+            audioSourceDictionary.Clear();
             var groups = mixer.FindMatchingGroups("");
             foreach (AudioMixerGroup group in groups)
             {
+                AudioSourcesGenerate(group);
                 if(group.name == "Master")
                     SetVolume(group.name, GetVolume(group.name));
                 else
                     SetVolume(group.name, 100);
             }
-            AudioListener.pause = false;
         }
         
-        public void AudioSourcesGenerate()
+        public AudioSource AudioSourcesGenerate(AudioMixerGroup group)
         {
-            // 본래 있던 오디오 소스 삭제
-            foreach (AudioSource audioSource in audioSourceDictionary.Values)
-                Destroy(audioSource.gameObject);
-            audioSourceDictionary.Clear();
-            
-            // 새로운 오디오 소스를 생성
-            // mixer의 있는 그룹 수 만큼 생성
-            var groups = mixer.FindMatchingGroups("");
-            foreach (AudioMixerGroup audioMixerGroup in groups)
-            {
-                GameObject obj = new GameObject { name = audioMixerGroup.name };
-                var audioSource = obj.AddComponent<AudioSource>();
+            GameObject obj = new GameObject { name = group.name };
+            var audioSource = obj.AddComponent<AudioSource>();
 
-                audioSource.transform.SetParent(transform);
-                audioSource.playOnAwake = false;
-                audioSource.outputAudioMixerGroup = audioMixerGroup;
-                if (audioSource.name == "BGM") audioSource.loop = true;
-                
-                audioSourceDictionary.TryAdd(audioMixerGroup.name, audioSource);
-            }
+            audioSource.transform.SetParent(transform);
+            audioSource.playOnAwake = false;
+            audioSource.outputAudioMixerGroup = group;
+            if (audioSource.name == "BGM") audioSource.loop = true;
+
+            audioSourceDictionary.TryAdd(group.name, audioSource);
+            return audioSource;
         }
 
         public AudioSource GetAudioSource(string groupName)
